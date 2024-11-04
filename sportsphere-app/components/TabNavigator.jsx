@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import ActivityScreen from '../screens/ActivityScreen';
 import ChatScreen from '../screens/ChatScreen';
 import MapScreen from '../screens/MapScreen';
@@ -17,19 +17,19 @@ const TabNavigator = () => {
         tabBarIcon: ({ focused }) => {
           let iconName;
           if (route.name === 'Activity') {
-            iconName = 'badminton';
+            iconName = 'basketball-outline';
           } else if (route.name === 'Chat') {
-            iconName = 'chat-outline';
+            iconName = 'chatbubble-outline';
           } else if (route.name === 'Map') {
-            iconName = 'map-marker-outline';
+            iconName = 'map-outline';
           } else if (route.name === 'Profile') {
-            iconName = 'account-circle-outline';
+            iconName = 'person-outline';
           }
 
           // Conditional styling for focused (active) tab
           return (
             <View style={focused ? styles.activeIconContainer : styles.iconContainer}>
-              <MaterialCommunityIcons
+              <Ionicons
                 name={iconName}
                 size={SIZE.tabIcon}
                 color={focused ? COLORS.background : COLORS.foreground}
