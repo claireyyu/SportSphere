@@ -22,6 +22,7 @@ export default CustomSearchBar;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: COLORS.inputArea,
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING.small,
   },
   icon: {
-    marginHorizontal: 5,
+    marginHorizontal: SPACING.xsmall,
   },
   input: {
     flex: 1,
