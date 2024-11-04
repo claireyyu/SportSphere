@@ -7,6 +7,7 @@ import ChatScreen from '../screens/ChatScreen';
 import MapScreen from '../screens/MapScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import { COLORS, ROUNDED, SPACING, SHADOW, SIZE } from '../constants';
+import ActivityScreenHeader from './ActivityScreenHeader';
 
 const Tab = createBottomTabNavigator();
 
@@ -41,7 +42,13 @@ const TabNavigator = () => {
         tabBarStyle: styles.tabBarStyle,
       })}
     >
-      <Tab.Screen name="Activity" component={ActivityScreen} />
+      <Tab.Screen
+        name="Activity"
+        component={ActivityScreen}
+        options={{
+          header: ActivityScreenHeader,
+        }}
+      />
       <Tab.Screen name="Chat" component={ChatScreen} />
       <Tab.Screen name="Map" component={MapScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
