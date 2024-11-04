@@ -21,3 +21,8 @@ export const SHADOW = {
   radius: 5,
   elevation: 10, // For Android shadow
 };
+
+export const SIZE = {
+  'tabBar': 80,
+  'tabIcon': 28,
+}

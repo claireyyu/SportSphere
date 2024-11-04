@@ -6,7 +6,7 @@ import ActivityScreen from '../screens/ActivityScreen';
 import ChatScreen from '../screens/ChatScreen';
 import MapScreen from '../screens/MapScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import { COLORS, ROUNDED, SPACING, SHADOW } from '../constants';
+import { COLORS, ROUNDED, SPACING, SHADOW, SIZE } from '../constants';
 
 const Tab = createBottomTabNavigator();
 
@@ -14,7 +14,7 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: ({ focused }) => {
           let iconName;
           if (route.name === 'Activity') {
             iconName = 'badminton';
@@ -31,8 +31,8 @@ const TabNavigator = () => {
             <View style={focused ? styles.activeIconContainer : styles.iconContainer}>
               <MaterialCommunityIcons
                 name={iconName}
-                size={28}
-                color={focused ? 'white' : COLORS.foreground}
+                size={SIZE.tabIcon}
+                color={focused ? COLORS.background : COLORS.foreground}
               />
             </View>
           );
@@ -54,10 +54,11 @@ export default TabNavigator;
 const styles = StyleSheet.create({
   tabBarStyle: {
     backgroundColor: COLORS.background,
-    minHeight: 80,
+    minHeight: SIZE.tabBar,
     borderRadius: ROUNDED.default,
     marginBottom: SPACING.medium,
     marginHorizontal: SPACING.medium,
+
     // Shadow properties
     shadowColor: SHADOW.color,
     shadowOffset: SHADOW.offset,
@@ -72,9 +73,9 @@ const styles = StyleSheet.create({
   },
   activeIconContainer: {
     flex: 1,
-    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
     backgroundColor: COLORS.primary,
     borderRadius: ROUNDED.default,
   },
