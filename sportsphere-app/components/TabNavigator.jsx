@@ -9,6 +9,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import { COLORS, ROUNDED, SPACING, SHADOW, SIZE } from '../constants';
 import ActivityScreenHeader from './ActivityScreenHeader';
 import TitleScreenHeader from './TitleScreenHeader';
+import ProfileScreenHeader from './ProfileScreenHeader';
 
 const Tab = createBottomTabNavigator();
 
@@ -68,7 +69,7 @@ const TabNavigator = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
-          header: () => <TitleScreenHeader title="Profile" />,
+          header: ProfileScreenHeader,
         }}
       />
     </Tab.Navigator>
