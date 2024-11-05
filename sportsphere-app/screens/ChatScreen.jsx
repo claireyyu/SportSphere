@@ -5,7 +5,6 @@ import ChatCard from '../components/ChatCard'
 export default function ChatScreen() {
   return (
     <View style={styles.container}>
-      {/* <Text>ChatScreen</Text> */}
       <ChatCard />
     </View>
   )
