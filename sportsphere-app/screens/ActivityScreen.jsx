@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import ActivityCard from '../components/ActivityCard'
 
 export default function ActivityScreen() {
   return (
     <View style={styles.container}>
-      <Text>ActivityScreen</Text>
+      {/* just a placeholder for now */}
+      <ActivityCard />
     </View>
   )
 }

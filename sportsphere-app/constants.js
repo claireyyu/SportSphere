@@ -15,6 +15,7 @@ export const ROUNDED = {
   'small': 10,
   'medium': 15,
   'default': 20,
+  'large': 50,
 };
 
 export const SPACING = {
@@ -34,8 +35,10 @@ export const SHADOW = {
 };
 
 export const SIZE = {
+  'progressBar': 20,
   'pressableIcon': 26,
   'tabIcon': 28,
+  'smallAvatar': 45,
   'headerBar': 75,
   'tabBar': 80,
   'avatar': 90,
