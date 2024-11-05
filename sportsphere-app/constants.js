@@ -11,6 +11,7 @@ export const FONTSIZE = {
 };
 
 export const ROUNDED = {
+  'xsmall': 5,
   'small': 10,
   'medium': 15,
   'default': 20,
@@ -33,7 +34,10 @@ export const SHADOW = {
 };
 
 export const SIZE = {
+  'pressableIcon': 26,
   'tabIcon': 28,
   'headerBar': 75,
   'tabBar': 80,
+  'avatar': 90,
+  'profileHeader': 200,
 }

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import React, { useState } from 'react';
 import DefaultScreenHeaderWrapper from './DefaultScreenHeaderWrapper';
-import { COLORS, SPACING } from '../constants';
+import { COLORS, SPACING, SIZE } from '../constants';
 import CustomSearchBar from './CustomSearchBar';
 import PressableButton from './PressableButton';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -24,10 +24,10 @@ export default function ActivityScreenHeader() {
         />
         <View style={styles.buttons}>
           <PressableButton>
-            <Ionicons name="add-circle-outline" size={24} color={COLORS.background} />
+            <Ionicons name="add-circle-outline" size={SIZE.pressableIcon} color={COLORS.background} />
           </PressableButton>
           <PressableButton>
-            <Ionicons name="filter" size={24} color={COLORS.background} />
+            <Ionicons name="filter" size={SIZE.pressableIcon} color={COLORS.background} />
           </PressableButton>
         </View>
       </SafeAreaView>
