@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import ActivityCard from '../components/ActivityCard'
 
 export default function ProfileScreen() {
   return (
     <View style={styles.container}>
-      <Text>ProfileScreen</Text>
+      <ActivityCard />
     </View>
   )
 }

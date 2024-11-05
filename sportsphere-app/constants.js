@@ -3,6 +3,7 @@ export const COLORS = {
   'foreground': '#000000',
   'background': '#FFFFFF',
   'inputArea': '#F2F2F2',
+  'secondaryText': 'gray',
 };
 
 export const FONTSIZE = {
