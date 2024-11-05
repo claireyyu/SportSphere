@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     marginTop: SPACING.xsmall,
   },
   buttonContainer: {
-    flex: 1,
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
