@@ -10,6 +10,7 @@ import { COLORS, ROUNDED, SPACING, SHADOW, SIZE } from '../constants';
 import ActivityScreenHeader from './ActivityScreenHeader';
 import TitleScreenHeader from './TitleScreenHeader';
 import ProfileScreenHeader from './ProfileScreenHeader';
+import ActivityStack from './ActivityStack';
 
 const Tab = createBottomTabNavigator();
 

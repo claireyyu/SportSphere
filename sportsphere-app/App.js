@@ -6,6 +6,8 @@ import TabNavigator from './components/TabNavigator'
 import { COLORS } from './constants';
 import CustomStatusBar from './components/StatusBar';
 import db from './Firebase/firebaseSetup';
+import ActivityDetailScreen from './screens/ActivityDetailScreen';
+import AddActivityScreen from './screens/AddActivityScreen';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -18,6 +20,16 @@ export default function App() {
             name="TabNavigator"
             component={TabNavigator}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ActivityDetails"
+            component={ActivityDetailScreen}
+            options={{title: "Activity Details"}}
+        />
+          <Stack.Screen
+            name="AddActivity"
+            component={AddActivityScreen}
+            options={{title: "New Activity"}}
           />
         </Stack.Navigator>
       </NavigationContainer>
