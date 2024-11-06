@@ -4,6 +4,7 @@ export const COLORS = {
   'background': '#FFFFFF',
   'inputArea': '#F2F2F2',
   'secondaryText': 'gray',
+  'inputBorder': '#C6C5C5',
 };
 
 export const FONTSIZE = {
