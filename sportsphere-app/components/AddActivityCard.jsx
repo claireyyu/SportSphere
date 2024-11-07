@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, TextInput } from 'react-native'
+import { View, Text, StyleSheet, TextInput, SafeAreaView } from 'react-native'
 import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../constants';
 import CalendarInput from './CalendarInput';
 
+
 export default function AddActivityCard() {
-  [sportName, setSportName] = useState('');
-  [venue, setVenue] = useState('');
-  [date, setDate] = useState('');
-  [time, setTime] = useState('');
-  [totalMembers, setTotalMembers] = useState(0);
-  [description, setDescription] = useState('');
-  [showDatePicker, setShowDatePicker] = useState(false);
-  [showTimePicker, setShowTimePicker] = useState(false);
+  const [sportName, setSportName] = useState('');
+  const [venue, setVenue] = useState('');
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+  const [totalMembers, setTotalMembers] = useState(0);
+  const [description, setDescription] = useState('');
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
 
   function handleDate() {
     setDate(date);
@@ -20,7 +21,7 @@ export default function AddActivityCard() {
     setShowDatePicker(!showDatePicker);
   }
   return (
-    <View style={styles.cardContainer}>
+    < SafeAreaView style={styles.cardContainer}>
         <View style={styles.inputContainer}>
             <Text style={styles.textInfo}>Sports: </Text>
             <TextInput 
@@ -43,7 +44,7 @@ export default function AddActivityCard() {
             <Text style={styles.textInfo}>Date: </Text>
             <CalendarInput date={date} setDate={handleDate} datePicker={showDatePicker} datePickerHandler={handleDatePicker}/>
         </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
@@ -76,7 +77,7 @@ export const styles = StyleSheet.create({
       },
       inputContainer: {
         flexDirection: 'row',
-        alignItems: showDatePicker?'':'center',
+        alignItems: 'center',
       },
       textInfo: {
         fontSize: FONTSIZE.medium,
