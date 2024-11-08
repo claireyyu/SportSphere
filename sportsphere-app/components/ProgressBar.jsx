@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { COLORS, ROUNDED, SIZE } from '../constants';
+import { COLORS, ROUNDED, SIZE } from '../global';
 
 export function ProgressBar({ value, total }) {
   const progress = (value / total) * 100;
@@ -15,7 +15,7 @@ export function ProgressBar({ value, total }) {
 const styles = StyleSheet.create({
   progressContainer: {
     height: SIZE.progressBar,
-    backgroundColor: COLORS.lightGray,
+    backgroundColor: COLORS.border,
     borderRadius: ROUNDED.large,
     overflow: 'hidden',
     flex: 1,

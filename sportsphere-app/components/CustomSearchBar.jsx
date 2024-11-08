@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { COLORS, ROUNDED, SPACING, FONTSIZE } from '../constants';
+import { COLORS, ROUNDED, SPACING, FONTSIZE } from '../global';
 
 const CustomSearchBar = ({ placeholder, value, onChangeText }) => {
   return (
@@ -10,7 +10,7 @@ const CustomSearchBar = ({ placeholder, value, onChangeText }) => {
       <TextInput
         style={styles.input}
         placeholder={placeholder}
-        placeholderTextColor={COLORS.lightGray}
+        placeholderTextColor={COLORS.border}
         value={value}
         onChangeText={onChangeText}
       />
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: COLORS.defaultBackground,
-    borderRadius: ROUNDED.small, 
+    borderRadius: ROUNDED.medium, 
     paddingVertical: SPACING.small,
   },
   icon: {
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    fontSize: FONTSIZE.medium,
+    fontSize: FONTSIZE.body,
     color: COLORS.black,
   },
 });

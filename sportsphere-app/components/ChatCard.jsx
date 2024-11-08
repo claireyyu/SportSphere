@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { COLORS, FONTSIZE, SPACING, SIZE } from '../constants';
+import { COLORS, FONTSIZE, SPACING, SIZE } from '../global';
 import { Avatar } from '@rneui/themed';
 import PressableButton from './PressableButton';
 
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     marginLeft: SPACING.medium,
   },
   username: {
-    fontSize: FONTSIZE.medium,
+    fontSize: FONTSIZE.body,
     fontWeight: 'bold',
     color: COLORS.foreground,
     marginBottom: SPACING.xsmall,

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import TabNavigator from './components/TabNavigator'
-import { COLORS, FONTSIZE } from './constants';
+import { COLORS, FONTSIZE, SIZE } from './global';
 import CustomStatusBar from './components/StatusBar';
 import db from './Firebase/firebaseSetup';
 import ActivityDetailScreen from './screens/ActivityDetailScreen';
@@ -45,7 +45,7 @@ export default function App() {
                 backgroundColor: COLORS.primary,
               },
               headerTitleStyle: {
-                fontSize: FONTSIZE.large,
+                fontSize: FONTSIZE.h3,
                 color: COLORS.background,
                 fontWeight: 'bold',
               },
@@ -62,7 +62,7 @@ export default function App() {
                 backgroundColor: COLORS.primary,
               },
               headerTitleStyle: {
-                fontSize: FONTSIZE.default,
+                fontSize: FONTSIZE.h3,
                 color: COLORS.background,
                 fontWeight: 'bold',
               },
@@ -80,7 +80,7 @@ export default function App() {
                 backgroundColor: COLORS.primary,
               },
               headerTitleStyle: {
-                fontSize: FONTSIZE.default,
+                fontSize: FONTSIZE.h3,
                 color: COLORS.background,
                 fontWeight: 'bold',
               },
@@ -98,7 +98,7 @@ export default function App() {
                 backgroundColor: COLORS.primary,
               },
               headerTitleStyle: {
-                fontSize: FONTSIZE.default,
+                fontSize: FONTSIZE.h3,
                 color: COLORS.background,
                 fontWeight: 'bold',
               },

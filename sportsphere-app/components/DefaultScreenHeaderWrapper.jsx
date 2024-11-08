@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { COLORS, SIZE } from '../constants'
+import { COLORS, SIZE } from '../global'
 
 export default function DefaultScreenHeaderWrapper({children}) {
   return (

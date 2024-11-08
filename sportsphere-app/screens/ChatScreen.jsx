@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import ChatCard from '../components/ChatCard'
-import { COLORS } from '../constants'
+import { COLORS } from '../global'
 import ChatCardList from '../components/ChatCardList'
 
 export default function ChatScreen({ navigation }) {

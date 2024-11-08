@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Avatar } from '@rneui/themed';
-import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../constants';
+import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
 import { ProgressBar } from './ProgressBar';
 import PressableButton from './PressableButton';
   
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: FONTSIZE.large,
+    fontSize: FONTSIZE.h2,
     fontWeight: 'bold',
     color: COLORS.text,
   },
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     marginVertical: SPACING.small,
   },
   infoText: {
-    fontSize: FONTSIZE.medium,
+    fontSize: FONTSIZE.body,
     color: COLORS.secondaryText,
     marginBottom: SPACING.xsmall,
   },
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     marginVertical: SPACING.small,
   },
   peopleCount: {
-    fontSize: FONTSIZE.medium,
+    fontSize: FONTSIZE.body,
     color: COLORS.foreground,
     marginLeft: SPACING.small,
     fontWeight: 'bold',
@@ -96,12 +96,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     paddingVertical: SPACING.small,
     paddingHorizontal: SPACING.small,
-    borderRadius: ROUNDED.small,
+    borderRadius: ROUNDED.medium,
     alignSelf: 'flex-end',
   },
   buttonText: {
     color: COLORS.background,
-    fontSize: FONTSIZE.medium,
+    fontSize: FONTSIZE.body,
     fontWeight: 'bold',
   },
 });

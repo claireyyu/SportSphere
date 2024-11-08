@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
-import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../constants';
+import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
 import { useState, useEffect, useRef } from 'react';
   
 export default function ProfileCard({ name, email, bio }) {
@@ -51,16 +51,16 @@ const styles = StyleSheet.create({
   profileCardRow: {
     flexDirection: 'row',
     alignItems: 'center', // Center items vertically
-    marginBottom: SPACING.small,
+    marginBottom: SPACING.medium,
   },
   title: {
-    fontSize: FONTSIZE.medium,
+    fontSize: FONTSIZE.body,
     fontWeight: 'bold',
     color: COLORS.text,
     width: '40%',
   },
   infoText: {
-    fontSize: FONTSIZE.medium,
+    fontSize: FONTSIZE.body,
     color: COLORS.secondaryText,
     width: '60%',
   },

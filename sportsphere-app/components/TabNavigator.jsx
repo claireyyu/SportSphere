@@ -6,7 +6,7 @@ import ActivityScreen from '../screens/ActivityScreen';
 import ChatScreen from '../screens/ChatScreen';
 import MapScreen from '../screens/MapScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import { COLORS, ROUNDED, SPACING, SHADOW, SIZE } from '../constants';
+import { COLORS, ROUNDED, SPACING, SHADOW, SIZE } from '../global';
 import ActivityScreenHeader from './ActivityScreenHeader';
 import TitleScreenHeader from './TitleScreenHeader';
 import ProfileScreenHeader from './ProfileScreenHeader';
@@ -82,7 +82,7 @@ export default TabNavigator;
 const styles = StyleSheet.create({
   tabBarStyle: {
     minHeight: SIZE.tabBar,
-    borderRadius: ROUNDED.default,
+    borderRadius: ROUNDED.medium,
     marginBottom: SPACING.medium,
     marginHorizontal: SPACING.medium,
     backgroundColor: COLORS.background,
@@ -105,6 +105,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     backgroundColor: COLORS.primary,
-    borderRadius: ROUNDED.default,
+    borderRadius: ROUNDED.medium,
   },
 });

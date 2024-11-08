@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import ActivityCard from '../components/ActivityCard'
 import ActivityCardList from '../components/ActivityCardList'
-import { COLORS } from '../constants'
+import { COLORS } from '../global'
 
 export default function ProfileScreen() {
   return (

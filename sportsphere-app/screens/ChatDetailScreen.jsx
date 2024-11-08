@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { COLORS, SPACING } from '../constants'
+import { COLORS, SPACING } from '../global'
 
 export default function ChatDetailScreen() {
   return (

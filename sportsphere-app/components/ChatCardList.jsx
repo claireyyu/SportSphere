@@ -1,7 +1,7 @@
 import ChatCard from './ChatCard.jsx';
 import { StyleSheet, Text, View, FlatList } from 'react-native'
 import React from 'react'
-import { SPACING } from '../constants'
+import { SPACING } from '../global.js'
 
 export default function ChatCardList({ navigation }) {
   const data = [

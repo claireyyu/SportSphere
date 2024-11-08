@@ -2,7 +2,7 @@ import React from 'react'
 import { View, TextInput, StyleSheet, Modal, Button } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from 'date-fns';
-import { COLORS, ROUNDED, FONTSIZE } from '../constants'
+import { COLORS, ROUNDED, FONTSIZE } from '../global'
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 
@@ -82,8 +82,8 @@ export const styles = StyleSheet.create({
         borderColor: COLORS.inputBorder,
         padding: 5,
         backgroundColor: COLORS.inputArea,
-        borderRadius: ROUNDED.small,
-        fontSize: FONTSIZE.medium,
+        borderRadius: ROUNDED.medium,
+        fontSize: FONTSIZE.body,
         color: COLORS.text,
   },
     modalContainer: {

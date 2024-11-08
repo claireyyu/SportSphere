@@ -2,7 +2,7 @@ import ActivityCard from "./ActivityCard";
 
 import { StyleSheet, Text, View, FlatList } from 'react-native'
 import React from 'react'
-import { SPACING } from '../constants'
+import { SPACING } from '../global'
 
 export default function ActivityCardList() {
   const data = [

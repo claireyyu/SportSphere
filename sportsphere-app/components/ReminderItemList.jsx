@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Switch, FlatList } from 'react-native';
-import { COLORS, FONTSIZE, SPACING, ROUNDED, SHADOW } from '../constants';
+import { COLORS, FONTSIZE, SPACING, ROUNDED, SHADOW } from '../global';
 
 export default function ReminderItemList() {
   const data = [
@@ -60,18 +60,18 @@ const styles = StyleSheet.create({
     elevation: SHADOW.elevation,
   },
   title: {
-    fontSize: FONTSIZE.medium,
+    fontSize: FONTSIZE.body,
     fontWeight: 'bold',
     marginBottom: SPACING.xsmall,
     color: COLORS.foreground,
   },
   time: {
-    fontSize: FONTSIZE.xlarge,
+    fontSize: FONTSIZE.h1,
     fontWeight: 'bold',
     color: COLORS.foreground,
   },
   date: {
-    fontSize: FONTSIZE.medium,
+    fontSize: FONTSIZE.body,
     color: COLORS.secondaryText,
   },
 });

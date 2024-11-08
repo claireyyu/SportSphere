@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import ActivityCard from '../components/ActivityCard'
-import { COLORS } from '../constants'
+import { COLORS } from '../global'
 import ActivityCardList from '../components/ActivityCardList'
 
 export default function ActivityScreen() {

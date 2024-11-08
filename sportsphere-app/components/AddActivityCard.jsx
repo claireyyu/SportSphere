@@ -1,6 +1,6 @@
 import React, { act, useState } from 'react'
 import { View, Text, StyleSheet, TextInput, SafeAreaView, Pressable } from 'react-native'
-import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../constants';
+import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
 import CalendarInput from './CalendarInput';
 import TimeInput from './TimeInput';
 import PressableButton from './PressableButton';
@@ -118,8 +118,8 @@ export const styles = StyleSheet.create({
         borderColor: COLORS.inputBorder,
         padding: 5,
         backgroundColor: COLORS.inputArea,
-        borderRadius: ROUNDED.small,
-        fontSize: FONTSIZE.medium,
+        borderRadius: ROUNDED.medium,
+        fontSize: FONTSIZE.body,
         color: COLORS.text,
       },
       inputDescription: {
@@ -130,25 +130,25 @@ export const styles = StyleSheet.create({
         borderColor: COLORS.inputBorder,
         padding: 5,
         backgroundColor: COLORS.inputArea,
-        borderRadius: ROUNDED.small,
-        fontSize: FONTSIZE.medium,
+        borderRadius: ROUNDED.medium,
+        fontSize: FONTSIZE.body,
         color: COLORS.text,
       },
       textInfo: {
-        fontSize: FONTSIZE.medium,
+        fontSize: FONTSIZE.body,
         fontWeight: 'bold',
         color: COLORS.text,
       },
       buttonText: {
         color: COLORS.background,
-        fontSize: FONTSIZE.medium,
+        fontSize: FONTSIZE.body,
         fontWeight: 'bold',
       },
       button: {
         backgroundColor: COLORS.primary,
         paddingVertical: SPACING.small,
         paddingHorizontal: SPACING.small,
-        borderRadius: ROUNDED.small,
+        borderRadius: ROUNDED.medium,
         alignSelf: 'flex-end',
       },
     });

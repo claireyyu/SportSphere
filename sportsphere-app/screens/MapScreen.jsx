@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { COLORS } from '../constants'
+import { COLORS } from '../global'
 
 export default function MapScreen() {
   return (
