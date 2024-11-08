@@ -8,43 +8,48 @@ export default function ActivityCardList() {
   const data = [
     {
       id: '1',
-      title: 'Morning Yoga',
-      location: 'Central Park',
+      activityName: 'Morning Yoga',
+      venue: 'Central Park',
       time: '6:00 AM',
       peopleGoing: 15,
-      totalPeople: 20,
+      totalMembers: 20,
+      description: 'lorem ipsum dolor sit amet',
     },
     {
       id: '2',
-      title: 'Tech Meetup',
-      location: 'Tech Hub',
+      activityName: 'Tech Meetup',
+      venue: 'Tech Hub',
       time: '10:00 AM',
       peopleGoing: 50,
-      totalPeople: 100,
+      totalMembers: 100,
+      description: 'lorem ipsum dolor sit amet',
     },
     {
       id: '3',
-      title: 'Cooking Class',
-      location: 'Community Center',
+      activityName: 'Cooking Class',
+      venue: 'Community Center',
       time: '2:00 PM',
       peopleGoing: 10,
-      totalPeople: 15,
+      totalMembers: 15,
+      description: 'lorem ipsum dolor sit amet',
     },
     {
       id: '4',
-      title: 'Evening Run',
-      location: 'Riverside Park',
+      activityName: 'Evening Run',
+      venue: 'Riverside Park',
       time: '6:00 PM',
       peopleGoing: 25,
-      totalPeople: 30,
+      totalMembers: 30,
+      description: 'lorem ipsum dolor sit amet',
     },
     {
       id: '5',
-      title: 'Book Club',
-      location: 'City Library',
+      activityName: 'Book Club',
+      venue: 'City Library',
       time: '7:00 PM',
       peopleGoing: 8,
-      totalPeople: 10,
+      totalMembers: 10,
+      description: 'lorem ipsum dolor sit amet',
     },
   ];
 
@@ -54,11 +59,12 @@ export default function ActivityCardList() {
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
         <ActivityCard
-          title={item.title}
-          location={item.location}
+          activityName={item.activityName}
+          venue={item.venue}
           time={item.time}
           peopleGoing={item.peopleGoing}
-          totalPeople={item.totalPeople}
+          totalMembers={item.totalMembers}
+          description={item.description}
         />
       )}
       contentContainerStyle={styles.listContainer}

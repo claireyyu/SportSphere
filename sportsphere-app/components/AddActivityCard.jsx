@@ -38,6 +38,7 @@ export default function AddActivityCard() {
       venue: venue,
       date: date,
       time: time,
+      peopleGoing: 1,  // default to 1
       totalMembers: totalMembers,
       description: description,
     }
