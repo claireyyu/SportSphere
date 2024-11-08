@@ -81,11 +81,11 @@ export default TabNavigator;
 
 const styles = StyleSheet.create({
   tabBarStyle: {
-    backgroundColor: COLORS.background,
     minHeight: SIZE.tabBar,
     borderRadius: ROUNDED.default,
     marginBottom: SPACING.medium,
     marginHorizontal: SPACING.medium,
+    backgroundColor: COLORS.background,
 
     // Shadow properties
     shadowColor: SHADOW.color,

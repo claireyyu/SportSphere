@@ -7,7 +7,11 @@ import PressableButton from './PressableButton';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Avatar } from '@rneui/themed';
 
-export default function ProfileScreenHeader() {
+export default function ProfileScreenHeader({ navigation }) {
+
+  function handleOpenEditProfile() {
+    navigation.navigate("EditProfile");
+  }
 
   return (
     <SafeAreaView style={styles.view}>
@@ -31,6 +35,7 @@ export default function ProfileScreenHeader() {
       <View style={styles.buttonContainer}>
         <PressableButton
           componentStyle={styles.editButton}
+          pressedFunction={handleOpenEditProfile}
         >
           <Text style={styles.buttonStyle}>Edit Profile</Text>
         </PressableButton>

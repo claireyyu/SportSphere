@@ -9,12 +9,14 @@ import db from './Firebase/firebaseSetup';
 import ActivityDetailScreen from './screens/ActivityDetailScreen';
 import AddActivityScreen from './screens/AddActivityScreen';
 import TitleScreenHeader from './components/TitleScreenHeader';
-
+import EditProfileScreen from './screens/EditProfileScreen';
+import ConfirmEditProfileButton from './components/ConfirmEditProfileButton';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
 
   return (
+    <View style={styles.container}>
     <CustomStatusBar statusBgColor={COLORS.primary} barStyle="light-content">
       <NavigationContainer>
         <Stack.Navigator>
@@ -55,9 +57,28 @@ export default function App() {
               headerTintColor: COLORS.background,
             }}
           />
+          <Stack.Screen
+            name="EditProfile"
+            component={EditProfileScreen}
+            options={{
+              title: "Edit Profile",
+              headerStyle: {
+                backgroundColor: COLORS.primary,
+              },
+              headerTitleStyle: {
+                fontSize: FONTSIZE.large,
+                color: COLORS.background,
+                fontWeight: 'bold',
+              },
+              headerBackTitleVisible: false,
+              headerTintColor: COLORS.background,
+              headerRight: () => <ConfirmEditProfileButton />,
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
-    </CustomStatusBar>
+      </CustomStatusBar>
+    </View>
   );
 }
 

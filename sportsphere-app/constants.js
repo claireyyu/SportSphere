@@ -5,6 +5,7 @@ export const COLORS = {
   'inputArea': '#F2F2F2',
   'secondaryText': 'gray',
   'inputBorder': '#C6C5C5',
+  'lightGray': '#C7C7CC',
 };
 
 export const FONTSIZE = {
@@ -37,7 +38,7 @@ export const SHADOW = {
 };
 
 export const SIZE = {
-  'progressBar': 20,
+  'progressBar': 26,
   'pressableIcon': 26,
   'tabIcon': 28,
   'smallAvatar': 45,

@@ -10,7 +10,7 @@ const CustomSearchBar = ({ placeholder, value, onChangeText }) => {
       <TextInput
         style={styles.input}
         placeholder={placeholder}
-        placeholderTextColor={COLORS.gray}
+        placeholderTextColor={COLORS.lightGray}
         value={value}
         onChangeText={onChangeText}
       />
