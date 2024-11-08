@@ -95,7 +95,7 @@ export default function AddActivityCard() {
 export const styles = StyleSheet.create({
     cardContainer: {
         backgroundColor: COLORS.background,
-        borderRadius: ROUNDED.medium,
+        borderRadius: ROUNDED.default,
         padding: SPACING.medium,
         margin: SPACING.medium,
         // Shadow properties
@@ -118,7 +118,7 @@ export const styles = StyleSheet.create({
         borderColor: COLORS.inputBorder,
         padding: 5,
         backgroundColor: COLORS.inputArea,
-        borderRadius: ROUNDED.medium,
+        borderRadius: ROUNDED.default,
         fontSize: FONTSIZE.body,
         color: COLORS.text,
       },
@@ -130,7 +130,7 @@ export const styles = StyleSheet.create({
         borderColor: COLORS.inputBorder,
         padding: 5,
         backgroundColor: COLORS.inputArea,
-        borderRadius: ROUNDED.medium,
+        borderRadius: ROUNDED.default,
         fontSize: FONTSIZE.body,
         color: COLORS.text,
       },
@@ -148,7 +148,7 @@ export const styles = StyleSheet.create({
         backgroundColor: COLORS.primary,
         paddingVertical: SPACING.small,
         paddingHorizontal: SPACING.small,
-        borderRadius: ROUNDED.medium,
+        borderRadius: ROUNDED.default,
         alignSelf: 'flex-end',
       },
     });

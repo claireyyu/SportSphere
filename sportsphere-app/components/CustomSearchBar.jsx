@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: COLORS.defaultBackground,
-    borderRadius: ROUNDED.medium, 
+    borderRadius: ROUNDED.default, 
     paddingVertical: SPACING.small,
   },
   icon: {

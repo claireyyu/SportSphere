@@ -82,7 +82,7 @@ export default TabNavigator;
 const styles = StyleSheet.create({
   tabBarStyle: {
     minHeight: SIZE.tabBar,
-    borderRadius: ROUNDED.medium,
+    borderRadius: ROUNDED.default,
     marginBottom: SPACING.medium,
     marginHorizontal: SPACING.medium,
     backgroundColor: COLORS.background,
@@ -105,6 +105,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     backgroundColor: COLORS.primary,
-    borderRadius: ROUNDED.medium,
+    borderRadius: ROUNDED.default,
   },
 });

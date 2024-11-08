@@ -16,8 +16,7 @@ export const FONTSIZE = {
 };
 
 export const ROUNDED = {
-  'medium': 15,
-  'default': 20,
+  'default': 15,
   'large': 50,
 };
 

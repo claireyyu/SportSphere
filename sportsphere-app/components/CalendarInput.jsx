@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
     borderColor: COLORS.inputBorder,
     padding: 5,
     backgroundColor: COLORS.inputArea,
-    borderRadius: ROUNDED.medium,
+    borderRadius: ROUNDED.default,
     fontSize: FONTSIZE.body,
     color: COLORS.text,
   },

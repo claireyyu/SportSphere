@@ -37,7 +37,7 @@ export default function ProfileCard({ name, email, bio }) {
 const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: COLORS.background,
-    borderRadius: ROUNDED.medium,
+    borderRadius: ROUNDED.default,
     padding: SPACING.large,
     marginVertical: SPACING.medium,
     marginHorizontal: SPACING.large,

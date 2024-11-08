@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'start',
     alignItems: 'center',
-    // backgroundColor: COLORS.background,
   },
   avatarContainer: {
     alignItems: 'center',

@@ -39,7 +39,7 @@ export default function ActivityCard({ title, location, time, peopleGoing, total
 const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: COLORS.background,
-    borderRadius: ROUNDED.medium,
+    borderRadius: ROUNDED.default,
     paddingVertical: SPACING.small,
     paddingHorizontal: SPACING.medium,
     margin: SPACING.medium,
@@ -50,12 +50,6 @@ const styles = StyleSheet.create({
     shadowRadius: SHADOW.radius,
     elevation: SHADOW.elevation,
 
-    // height: SIZE.tabBar,
-    // backgroundColor: COLORS.background,
-    // flexDirection: 'row',
-    // alignItems: 'center',
-    // paddingVertical: SPACING.small,
-    // paddingHorizontal: SPACING.medium,
   },
   headerContainer: {
     flexDirection: 'row',
@@ -96,7 +90,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     paddingVertical: SPACING.small,
     paddingHorizontal: SPACING.small,
-    borderRadius: ROUNDED.medium,
+    borderRadius: ROUNDED.default,
     alignSelf: 'flex-end',
   },
   buttonText: {

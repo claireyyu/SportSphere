@@ -82,7 +82,7 @@ export const styles = StyleSheet.create({
         borderColor: COLORS.inputBorder,
         padding: 5,
         backgroundColor: COLORS.inputArea,
-        borderRadius: ROUNDED.medium,
+        borderRadius: ROUNDED.default,
         fontSize: FONTSIZE.body,
         color: COLORS.text,
   },
@@ -97,7 +97,7 @@ export const styles = StyleSheet.create({
         backgroundColor: COLORS.background,
         width: 250,
         padding: 20,
-        borderRadius: ROUNDED.medium,
+        borderRadius: ROUNDED.default,
         alignItems: 'center',
         shadowColor: 'black',
         shadowOffset: {

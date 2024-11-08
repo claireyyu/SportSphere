@@ -16,6 +16,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: SPACING.medium,
-    // backgroundColor: COLORS.background,
   },
 })
