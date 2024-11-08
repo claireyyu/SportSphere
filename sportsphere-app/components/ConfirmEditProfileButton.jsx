@@ -4,9 +4,15 @@ import PressableButton from './PressableButton'
 import { COLORS, FONTSIZE } from '../constants'
 
 export default function ConfirmEditProfileButton() {
+  function handleEditProfile() {
+    console.log("Edit Profile button pressed")
+  }
+
   return (
-    <PressableButton>
-      <Text style={styles.btnText}>Done</Text>
+    <PressableButton
+    pressedFunction={handleEditProfile}
+    >
+      <Text style={styles.btnText} >Done</Text>
     </PressableButton>
   )
 }

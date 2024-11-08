@@ -1,25 +1,27 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { Avatar } from '@rneui/themed';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../constants';
-import { ProgressBar } from './ProgressBar';
-import PressableButton from './PressableButton';
+import {useState} from 'react';
   
-export default function ProfileCard({name, email, bio}) {
+export default function ProfileCard({ name, email, bio }) {
+  const [nameInput, setNameInput] = useState(name);
+  const [emailInput, setEmailInput] = useState(email);
+  const [bioInput, setBioInput] = useState(bio);
+
   return (
     <View style={styles.cardContainer}>
       <View style={styles.profileCardRow}>
         <Text style={styles.title}>Name</Text>
-        <Text style={styles.infoText}>{name}</Text>
+        <TextInput style={styles.infoText} value={nameInput} onChangeText={setNameInput} placeholder={name}></TextInput>
       </View>
       <View style={styles.profileCardRow}>
         <Text style={styles.title}>Email</Text>
-        <Text style={styles.infoText}>{email}</Text>
+        <TextInput style={styles.infoText} value={emailInput} onChangeText={setEmailInput} placeholder={email}></TextInput>
       </View>
       <View style={styles.profileCardRow}>
         <Text style={styles.title}>Bio</Text>
-        <Text style={styles.infoText}>{bio}</Text>
-        </View>
+        <TextInput style={styles.infoText} value={bioInput} onChangeText={setBioInput} placeholder={bio}></TextInput>
+      </View>
     </View>
   );
 }
@@ -28,8 +30,9 @@ const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: COLORS.background,
     borderRadius: ROUNDED.medium,
-    padding: SPACING.medium,
-    margin: SPACING.medium,
+    padding: SPACING.large,
+    marginVertical: SPACING.medium,
+    marginHorizontal: SPACING.large,
     // Shadow properties
     shadowColor: SHADOW.color,
     shadowOffset: SHADOW.offset,
@@ -39,16 +42,18 @@ const styles = StyleSheet.create({
   },
   profileCardRow: {
     flexDirection: 'row',
-    gap: SPACING.small,
+    alignItems: 'center', // Center items vertically
+    marginBottom: SPACING.small,
   },
   title: {
     fontSize: FONTSIZE.medium,
     fontWeight: 'bold',
     color: COLORS.text,
+    width: '40%',
   },
   infoText: {
     fontSize: FONTSIZE.medium,
     color: COLORS.secondaryText,
-    marginBottom: SPACING.xsmall,
+    width: '60%',
   },
 });

@@ -66,7 +66,7 @@ export default function App() {
                 backgroundColor: COLORS.primary,
               },
               headerTitleStyle: {
-                fontSize: FONTSIZE.large,
+                fontSize: FONTSIZE.default,
                 color: COLORS.background,
                 fontWeight: 'bold',
               },
