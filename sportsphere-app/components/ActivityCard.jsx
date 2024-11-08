@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: FONTSIZE.h2,
+    fontSize: FONTSIZE.h3,
     fontWeight: 'bold',
     color: COLORS.text,
   },
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: COLORS.background,
-    fontSize: FONTSIZE.body,
+    fontSize: FONTSIZE.small,
     fontWeight: 'bold',
   },
 });
