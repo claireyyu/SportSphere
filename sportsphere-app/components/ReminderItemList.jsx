@@ -14,6 +14,7 @@ export default function ReminderItemList() {
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => <ReminderItem title={item.title} time={item.time} date={item.date} />}
       contentContainerStyle={styles.listContainer}
+      showsVerticalScrollIndicator={false}
     />
   );
 }

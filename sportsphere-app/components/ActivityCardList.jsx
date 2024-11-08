@@ -62,6 +62,7 @@ export default function ActivityCardList() {
         />
       )}
       contentContainerStyle={styles.listContainer}
+      showsVerticalScrollIndicator={false}
     />
   )
 }

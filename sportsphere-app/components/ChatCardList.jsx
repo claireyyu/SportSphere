@@ -23,6 +23,7 @@ export default function ChatCardList({ navigation }) {
         />
       )}
       contentContainerStyle={styles.listContainer}
+      showsVerticalScrollIndicator={false}
     />
   )
 }

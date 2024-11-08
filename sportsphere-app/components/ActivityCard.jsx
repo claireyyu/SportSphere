@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: COLORS.background,
     borderRadius: ROUNDED.medium,
-    padding: SPACING.medium,
+    paddingVertical: SPACING.small,
+    paddingHorizontal: SPACING.medium,
     margin: SPACING.medium,
     // Shadow properties
     shadowColor: SHADOW.color,
@@ -44,6 +45,13 @@ const styles = StyleSheet.create({
     shadowOpacity: SHADOW.opacity,
     shadowRadius: SHADOW.radius,
     elevation: SHADOW.elevation,
+
+    // height: SIZE.tabBar,
+    // backgroundColor: COLORS.background,
+    // flexDirection: 'row',
+    // alignItems: 'center',
+    // paddingVertical: SPACING.small,
+    // paddingHorizontal: SPACING.medium,
   },
   headerContainer: {
     flexDirection: 'row',
