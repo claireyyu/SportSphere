@@ -118,9 +118,6 @@ export const styles = StyleSheet.create({
         borderColor: COLORS.inputBorder,
         padding: 5,
         backgroundColor: COLORS.inputArea,
-        borderRadius: ROUNDED.small,
-        fontSize: FONTSIZE.medium,
-        color: COLORS.text,
       },
       inputDescription: {
         height: 60,

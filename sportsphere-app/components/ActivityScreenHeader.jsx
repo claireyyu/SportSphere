@@ -7,7 +7,6 @@ import PressableButton from './PressableButton';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 
-
 export default function ActivityScreenHeader({navigation}) {
   
   const [search, setSearch] = useState("");
