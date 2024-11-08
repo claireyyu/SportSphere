@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.inputArea,
+    backgroundColor: COLORS.defaultBackground,
     borderRadius: ROUNDED.small, 
     paddingVertical: SPACING.small,
   },

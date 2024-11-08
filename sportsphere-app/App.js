@@ -11,6 +11,8 @@ import AddActivityScreen from './screens/AddActivityScreen';
 import TitleScreenHeader from './components/TitleScreenHeader';
 import EditProfileScreen from './screens/EditProfileScreen';
 import ConfirmEditProfileButton from './components/ConfirmEditProfileButton';
+import ReminderScreen from './screens/ReminderScreen';
+import AddReminderButton from './components/AddReminderButton';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -18,7 +20,7 @@ export default function App() {
   return (
     <View style={styles.container}>
     <CustomStatusBar statusBgColor={COLORS.primary} barStyle="light-content">
-      <NavigationContainer>
+        <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
             name="TabNavigator"
@@ -30,16 +32,9 @@ export default function App() {
             component={ActivityDetailScreen}
             options={{title: "Activity Details", 
               header: () => <TitleScreenHeader title="Activity Details" />
+              }
             }
-          }
-        />
-          {/* <Stack.Screen
-            name="AddActivity"
-            component={AddActivityScreen}
-            options={{title: "New Activity",
-              header: () => <TitleScreenHeader title="New Activity" />
-            }}
-          /> */}
+          />
           <Stack.Screen
             name="AddActivity"
             component={AddActivityScreen}
@@ -74,6 +69,24 @@ export default function App() {
               headerTintColor: COLORS.background,
               headerRight: () => <ConfirmEditProfileButton />,
             }}
+            />
+          <Stack.Screen
+            name="Reminder"
+            component={ReminderScreen}
+            options={{
+              title: "Schedule Your Workout",
+              headerStyle: {
+                backgroundColor: COLORS.primary,
+              },
+              headerTitleStyle: {
+                fontSize: FONTSIZE.default,
+                color: COLORS.background,
+                fontWeight: 'bold',
+              },
+              headerBackTitleVisible: false,
+              headerTintColor: COLORS.background,
+              headerRight: () => <AddReminderButton />,
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
@@ -85,5 +98,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // backgroundColor: COLORS.background,
   },
 });

@@ -2,7 +2,7 @@ export const COLORS = {
   'primary': '#1BAE76',
   'foreground': '#000000',
   'background': '#FFFFFF',
-  'inputArea': '#F2F2F2',
+  'defaultBackground': '#F2F2F2',
   'secondaryText': 'gray',
   'inputBorder': '#C6C5C5',
   'lightGray': '#C7C7CC',

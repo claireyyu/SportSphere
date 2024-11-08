@@ -13,10 +13,16 @@ export default function ProfileScreenHeader({ navigation }) {
     navigation.navigate("EditProfile");
   }
 
+  function handleOpenReminder() {
+    navigation.navigate("Reminder");
+  }
+
   return (
     <SafeAreaView style={styles.view}>
       <View style={styles.alarmContainer}>
-        <PressableButton>
+        <PressableButton
+          pressedFunction={handleOpenReminder}
+        >
           <Ionicons name="alarm-outline" size={SIZE.pressableIcon} color={COLORS.background} />
         </PressableButton>
       </View>
