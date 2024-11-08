@@ -52,7 +52,7 @@ export default function AddActivityCard() {
                 style={styles.input}
                 onChangeText={setActivityName}
                 value={activityName}
-                placeholder="Enter the name of your activity"
+                placeholder="Badminton at Bonsor"
             />
         
             <Text style={styles.textInfo}>Venue: </Text>
@@ -60,7 +60,7 @@ export default function AddActivityCard() {
                 style={styles.input}
                 onChangeText={setVenue}
                 value={venue}
-                placeholder="Enter the location of your activity"
+                placeholder="123 Main Street, Burnaby"
             />
             <Text style={styles.textInfo}>Date: </Text>
             <CalendarInput date={date} setDate={handleDate} datePicker={showDatePicker} datePickerHandler={handleDatePicker}/>
@@ -71,7 +71,6 @@ export default function AddActivityCard() {
                 style={styles.input}
                 onChangeText={setTotalMembers}
                 value={totalMembers}
-                placeholder="Enter the number of members"
                 keyboardType="numeric"
             />
             <Text style={styles.textInfo}>Description: </Text>
@@ -79,7 +78,7 @@ export default function AddActivityCard() {
                 style={styles.inputDescription}
                 onChangeText={setDescription}
                 value={description}
-                placeholder="Enter a description of your activity"
+                placeholder="Please bring your own racket..."
                 multiline={true}
                 numberOfLines={4} 
             />
@@ -113,32 +112,31 @@ export const styles = StyleSheet.create({
       },
       input: {
         height: 35,
-        marginTop: 5,
-        marginBottom: 10,
+        marginTop: SPACING.small,
+        marginBottom: SPACING.medium,
         borderWidth: 1,
-        borderColor: COLORS.inputBorder,
-        padding: 5,
+        borderColor: COLORS.border,
+        padding: SPACING.xsmall,
         backgroundColor: COLORS.inputArea,
-        borderRadius: ROUNDED.default,
+        borderRadius: ROUNDED.small,
         fontSize: FONTSIZE.body,
-        color: COLORS.text,
+        color: COLORS.foreground,
       },
       inputDescription: {
         height: 60,
-        marginTop: 5,
-        marginBottom: 10,
+        marginTop: SPACING.small,
+        marginBottom: SPACING.medium,
         borderWidth: 1,
-        borderColor: COLORS.inputBorder,
-        padding: 5,
-        backgroundColor: COLORS.inputArea,
-        borderRadius: ROUNDED.default,
+        borderColor: COLORS.border,
+        padding: SPACING.xsmall,
+        borderRadius: ROUNDED.small,
         fontSize: FONTSIZE.body,
-        color: COLORS.text,
+        color: COLORS.foreground,
       },
       textInfo: {
         fontSize: FONTSIZE.body,
         fontWeight: 'bold',
-        color: COLORS.text,
+        color: COLORS.foreground,
       },
       buttonText: {
         color: COLORS.background,

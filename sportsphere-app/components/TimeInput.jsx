@@ -2,7 +2,7 @@ import React from 'react'
 import { View, TextInput, StyleSheet, Modal, Button } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from 'date-fns';
-import { COLORS, ROUNDED, FONTSIZE } from '../global'
+import { COLORS, ROUNDED, FONTSIZE, SPACING } from '../global'
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 
@@ -76,13 +76,13 @@ export default function TimeInput({time, setTime, timePicker, timePickerHandler}
 export const styles = StyleSheet.create({
     input: {
         height: 35,
-        marginTop: 5,
-        marginBottom: 10,
+        marginTop: SPACING.small,
+        marginBottom: SPACING.medium,
         borderWidth: 1,
-        borderColor: COLORS.inputBorder,
+        borderColor: COLORS.border,
         padding: 5,
         backgroundColor: COLORS.inputArea,
-        borderRadius: ROUNDED.default,
+        borderRadius: ROUNDED.small,
         fontSize: FONTSIZE.body,
         color: COLORS.text,
   },
@@ -91,21 +91,20 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.3)',
-
     },
     pickerContainer: {
         backgroundColor: COLORS.background,
         width: 250,
         padding: 20,
-        borderRadius: ROUNDED.default,
+        borderRadius: ROUNDED.small,
         alignItems: 'center',
         shadowColor: 'black',
         shadowOffset: {
             width: 0,
             height: 2,
       },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
     },
 })

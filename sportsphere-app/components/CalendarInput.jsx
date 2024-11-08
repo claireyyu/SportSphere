@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { View, TextInput, StyleSheet } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from 'date-fns';
-import { COLORS, ROUNDED, FONTSIZE } from '../global'
+import { COLORS, ROUNDED, FONTSIZE, SPACING } from '../global'
 
 // CalendarInput component
 export default function CalendarInput({date, setDate, datePicker, datePickerHandler}) {
@@ -43,13 +43,12 @@ export default function CalendarInput({date, setDate, datePicker, datePickerHand
 export const styles = StyleSheet.create({
   input: {
     height: 35,
-    marginTop: 5,
-    marginBottom: 10,
+    marginTop: SPACING.small,
+    marginBottom: SPACING.medium,
     borderWidth: 1,
-    borderColor: COLORS.inputBorder,
+    borderColor: COLORS.border,
     padding: 5,
-    backgroundColor: COLORS.inputArea,
-    borderRadius: ROUNDED.default,
+    borderRadius: ROUNDED.small,
     fontSize: FONTSIZE.body,
     color: COLORS.text,
   },
