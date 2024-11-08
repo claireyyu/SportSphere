@@ -10,7 +10,7 @@ const CustomSearchBar = ({ placeholder, value, onChangeText }) => {
       <TextInput
         style={styles.input}
         placeholder={placeholder}
-        placeholderTextColor={COLORS.gray}
+        placeholderTextColor={COLORS.lightGray}
         value={value}
         onChangeText={onChangeText}
       />
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.inputArea,
+    backgroundColor: COLORS.defaultBackground,
     borderRadius: ROUNDED.small, 
     paddingVertical: SPACING.small,
   },

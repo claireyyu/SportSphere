@@ -10,6 +10,7 @@ import { COLORS, ROUNDED, SPACING, SHADOW, SIZE } from '../constants';
 import ActivityScreenHeader from './ActivityScreenHeader';
 import TitleScreenHeader from './TitleScreenHeader';
 import ProfileScreenHeader from './ProfileScreenHeader';
+import ActivityStack from './ActivityStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -80,11 +81,11 @@ export default TabNavigator;
 
 const styles = StyleSheet.create({
   tabBarStyle: {
-    backgroundColor: COLORS.background,
     minHeight: SIZE.tabBar,
     borderRadius: ROUNDED.default,
     marginBottom: SPACING.medium,
     marginHorizontal: SPACING.medium,
+    backgroundColor: COLORS.background,
 
     // Shadow properties
     shadowColor: SHADOW.color,

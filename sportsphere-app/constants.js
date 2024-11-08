@@ -2,12 +2,15 @@ export const COLORS = {
   'primary': '#1BAE76',
   'foreground': '#000000',
   'background': '#FFFFFF',
-  'inputArea': '#F2F2F2',
+  'defaultBackground': '#F2F2F2',
   'secondaryText': 'gray',
+  'inputBorder': '#C6C5C5',
+  'lightGray': '#C7C7CC',
 };
 
 export const FONTSIZE = {
   'medium': 16,
+  'default': 18,
   'large': 20,
 };
 
@@ -36,7 +39,7 @@ export const SHADOW = {
 };
 
 export const SIZE = {
-  'progressBar': 20,
+  'progressBar': 26,
   'pressableIcon': 26,
   'tabIcon': 28,
   'smallAvatar': 45,

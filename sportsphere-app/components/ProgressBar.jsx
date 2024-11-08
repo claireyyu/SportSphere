@@ -17,8 +17,6 @@ const styles = StyleSheet.create({
     height: SIZE.progressBar,
     backgroundColor: COLORS.lightGray,
     borderRadius: ROUNDED.large,
-    borderColor: COLORS.primary,
-    borderWidth: 1,
     overflow: 'hidden',
     flex: 1,
   },

@@ -3,30 +3,101 @@ import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import TabNavigator from './components/TabNavigator'
-import { COLORS } from './constants';
+import { COLORS, FONTSIZE } from './constants';
 import CustomStatusBar from './components/StatusBar';
 import db from './Firebase/firebaseSetup';
+import ActivityDetailScreen from './screens/ActivityDetailScreen';
+import AddActivityScreen from './screens/AddActivityScreen';
+import TitleScreenHeader from './components/TitleScreenHeader';
+import EditProfileScreen from './screens/EditProfileScreen';
+import ConfirmEditProfileButton from './components/ConfirmEditProfileButton';
+import ReminderScreen from './screens/ReminderScreen';
+import AddReminderButton from './components/AddReminderButton';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
 
   return (
+    <View style={styles.container}>
     <CustomStatusBar statusBgColor={COLORS.primary} barStyle="light-content">
-      <NavigationContainer>
+        <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
             name="TabNavigator"
             component={TabNavigator}
             options={{ headerShown: false }}
           />
+          <Stack.Screen
+            name="ActivityDetails"
+            component={ActivityDetailScreen}
+            options={{title: "Activity Details", 
+              header: () => <TitleScreenHeader title="Activity Details" />
+              }
+            }
+          />
+          <Stack.Screen
+            name="AddActivity"
+            component={AddActivityScreen}
+            options={{
+              title: "New Activity",
+              headerStyle: {
+                backgroundColor: COLORS.primary,
+              },
+              headerTitleStyle: {
+                fontSize: FONTSIZE.large,
+                color: COLORS.background,
+                fontWeight: 'bold',
+              },
+              headerBackTitleVisible: false,
+              headerTintColor: COLORS.background,
+            }}
+          />
+          <Stack.Screen
+            name="EditProfile"
+            component={EditProfileScreen}
+            options={{
+              title: "Edit Profile",
+              headerStyle: {
+                backgroundColor: COLORS.primary,
+              },
+              headerTitleStyle: {
+                fontSize: FONTSIZE.default,
+                color: COLORS.background,
+                fontWeight: 'bold',
+              },
+              headerBackTitleVisible: false,
+              headerTintColor: COLORS.background,
+              headerRight: () => <ConfirmEditProfileButton />,
+            }}
+            />
+          <Stack.Screen
+            name="Reminder"
+            component={ReminderScreen}
+            options={{
+              title: "Schedule Your Workout",
+              headerStyle: {
+                backgroundColor: COLORS.primary,
+              },
+              headerTitleStyle: {
+                fontSize: FONTSIZE.default,
+                color: COLORS.background,
+                fontWeight: 'bold',
+              },
+              headerBackTitleVisible: false,
+              headerTintColor: COLORS.background,
+              headerRight: () => <AddReminderButton />,
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
-    </CustomStatusBar>
+      </CustomStatusBar>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // backgroundColor: COLORS.background,
   },
 });

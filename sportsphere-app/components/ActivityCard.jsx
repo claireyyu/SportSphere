@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
   },
   peopleCount: {
     fontSize: FONTSIZE.medium,
-    color: COLORS.secondaryText,
+    color: COLORS.foreground,
     marginLeft: SPACING.small,
     fontWeight: 'bold',
   },
   goingText: {
     fontSize: FONTSIZE.small,
-    color: COLORS.secondaryText,
+    color: COLORS.foreground,
     marginBottom: SPACING.small,
     fontWeight: 'bold',
   },

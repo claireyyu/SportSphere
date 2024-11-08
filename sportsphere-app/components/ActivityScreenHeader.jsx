@@ -7,7 +7,8 @@ import PressableButton from './PressableButton';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 
-export default function ActivityScreenHeader() {
+export default function ActivityScreenHeader({navigation}) {
+  
   const [search, setSearch] = useState("");
 
   const updateSearch = (search) => {
@@ -23,7 +24,7 @@ export default function ActivityScreenHeader() {
           onChangeText={updateSearch}
         />
         <View style={styles.buttons}>
-          <PressableButton>
+          <PressableButton pressedFunction={()=>navigation.navigate("AddActivity")}>
             <Ionicons name="add-circle-outline" size={SIZE.pressableIcon} color={COLORS.background} />
           </PressableButton>
           <PressableButton>
