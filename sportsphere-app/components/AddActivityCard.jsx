@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import { View, Text, StyleSheet, TextInput, SafeAreaView } from 'react-native'
 import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../constants';
 import CalendarInput from './CalendarInput';
+import TimeInput from './TimeInput';
 
 
 export default function AddActivityCard() {
   const [sportName, setSportName] = useState('');
   const [venue, setVenue] = useState('');
   const [date, setDate] = useState(null);
-  const [time, setTime] = useState('');
+  const [time, setTime] = useState(null);
   const [totalMembers, setTotalMembers] = useState(0);
   const [description, setDescription] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -19,6 +20,12 @@ export default function AddActivityCard() {
   }
   function handleDatePicker() {
     setShowDatePicker(!showDatePicker);
+  }
+  function handleTime(time) {
+    setTime(time);
+  }
+  function handleTimePicker() {
+    setShowTimePicker(!showTimePicker);
   }
   return (
     < View style={styles.cardContainer}>
@@ -44,6 +51,8 @@ export default function AddActivityCard() {
             <Text style={styles.textInfo}>Date: </Text>
             <CalendarInput date={date} setDate={handleDate} datePicker={showDatePicker} datePickerHandler={handleDatePicker}/>
         {/* </View> */}
+            <Text style={styles.textInfo}>Time: </Text>
+            <TimeInput time={time} setTime={handleTime} timePicker={showTimePicker} timePickerHandler={handleTimePicker}/>
     </View>
   )
 }
