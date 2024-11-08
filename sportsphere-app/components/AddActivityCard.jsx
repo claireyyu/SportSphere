@@ -29,7 +29,6 @@ export default function AddActivityCard() {
   }
   return (
     < View style={styles.cardContainer}>
-        {/* <View style={styles.inputContainer}> */}
             <Text style={styles.textInfo}>Activity Name: </Text>
             <TextInput 
                 style={styles.input}
@@ -37,8 +36,7 @@ export default function AddActivityCard() {
                 value={sportName}
                 placeholder="Enter the name of your activity"
             />
-        {/* </View>
-        <View style={styles.inputContainer}> */}
+        
             <Text style={styles.textInfo}>Venue: </Text>
             <TextInput 
                 style={styles.input}
@@ -46,13 +44,19 @@ export default function AddActivityCard() {
                 value={venue}
                 placeholder="Enter the location of your activity"
             />
-        {/* </View>
-        <View style={styles.inputContainer}> */}
             <Text style={styles.textInfo}>Date: </Text>
             <CalendarInput date={date} setDate={handleDate} datePicker={showDatePicker} datePickerHandler={handleDatePicker}/>
-        {/* </View> */}
             <Text style={styles.textInfo}>Time: </Text>
             <TimeInput time={time} setTime={handleTime} timePicker={showTimePicker} timePickerHandler={handleTimePicker}/>
+            <Text style={styles.textInfo}>Total Members: </Text>
+            <TextInput 
+                style={styles.input}
+                onChangeText={setTotalMembers}
+                value={totalMembers}
+                placeholder="Enter the number of members"
+                keyboardType="numeric"
+            />
+
     </View>
   )
 }
