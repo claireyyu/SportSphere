@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import TabNavigator from './components/TabNavigator'
 import { COLORS } from './constants';
 import CustomStatusBar from './components/StatusBar';
+import db from './Firebase/firebaseSetup';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
