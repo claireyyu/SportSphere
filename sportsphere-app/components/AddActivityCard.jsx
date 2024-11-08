@@ -1,6 +1,6 @@
 import React, { act, useState } from 'react'
 import { View, Text, StyleSheet, TextInput, SafeAreaView, Pressable } from 'react-native'
-import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../constants';
+import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
 import CalendarInput from './CalendarInput';
 import TimeInput from './TimeInput';
 import PressableButton from './PressableButton';
@@ -38,6 +38,7 @@ export default function AddActivityCard() {
       venue: venue,
       date: date,
       time: time,
+      peopleGoing: 1,  // default to 1
       totalMembers: totalMembers,
       description: description,
     }
@@ -51,7 +52,7 @@ export default function AddActivityCard() {
                 style={styles.input}
                 onChangeText={setActivityName}
                 value={activityName}
-                placeholder="Enter the name of your activity"
+                placeholder="Badminton at Bonsor"
             />
         
             <Text style={styles.textInfo}>Venue: </Text>
@@ -59,7 +60,7 @@ export default function AddActivityCard() {
                 style={styles.input}
                 onChangeText={setVenue}
                 value={venue}
-                placeholder="Enter the location of your activity"
+                placeholder="123 Main Street, Burnaby"
             />
             <Text style={styles.textInfo}>Date: </Text>
             <CalendarInput date={date} setDate={handleDate} datePicker={showDatePicker} datePickerHandler={handleDatePicker}/>
@@ -70,7 +71,6 @@ export default function AddActivityCard() {
                 style={styles.input}
                 onChangeText={setTotalMembers}
                 value={totalMembers}
-                placeholder="Enter the number of members"
                 keyboardType="numeric"
             />
             <Text style={styles.textInfo}>Description: </Text>
@@ -78,7 +78,7 @@ export default function AddActivityCard() {
                 style={styles.inputDescription}
                 onChangeText={setDescription}
                 value={description}
-                placeholder="Enter a description of your activity"
+                placeholder="Please bring your own racket..."
                 multiline={true}
                 numberOfLines={4} 
             />
@@ -95,7 +95,7 @@ export default function AddActivityCard() {
 export const styles = StyleSheet.create({
     cardContainer: {
         backgroundColor: COLORS.background,
-        borderRadius: ROUNDED.medium,
+        borderRadius: ROUNDED.default,
         padding: SPACING.medium,
         margin: SPACING.medium,
         // Shadow properties
@@ -112,43 +112,42 @@ export const styles = StyleSheet.create({
       },
       input: {
         height: 35,
-        marginTop: 5,
-        marginBottom: 10,
+        marginTop: SPACING.small,
+        marginBottom: SPACING.medium,
         borderWidth: 1,
-        borderColor: COLORS.inputBorder,
-        padding: 5,
+        borderColor: COLORS.border,
+        padding: SPACING.xsmall,
         backgroundColor: COLORS.inputArea,
         borderRadius: ROUNDED.small,
-        fontSize: FONTSIZE.medium,
-        color: COLORS.text,
+        fontSize: FONTSIZE.body,
+        color: COLORS.foreground,
       },
       inputDescription: {
         height: 60,
-        marginTop: 5,
-        marginBottom: 10,
+        marginTop: SPACING.small,
+        marginBottom: SPACING.medium,
         borderWidth: 1,
-        borderColor: COLORS.inputBorder,
-        padding: 5,
-        backgroundColor: COLORS.inputArea,
+        borderColor: COLORS.border,
+        padding: SPACING.xsmall,
         borderRadius: ROUNDED.small,
-        fontSize: FONTSIZE.medium,
-        color: COLORS.text,
+        fontSize: FONTSIZE.body,
+        color: COLORS.foreground,
       },
       textInfo: {
-        fontSize: FONTSIZE.medium,
+        fontSize: FONTSIZE.body,
         fontWeight: 'bold',
-        color: COLORS.text,
+        color: COLORS.foreground,
       },
       buttonText: {
         color: COLORS.background,
-        fontSize: FONTSIZE.medium,
+        fontSize: FONTSIZE.body,
         fontWeight: 'bold',
       },
       button: {
         backgroundColor: COLORS.primary,
         paddingVertical: SPACING.small,
         paddingHorizontal: SPACING.small,
-        borderRadius: ROUNDED.small,
+        borderRadius: ROUNDED.default,
         alignSelf: 'flex-end',
       },
     });

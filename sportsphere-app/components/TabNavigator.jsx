@@ -6,7 +6,7 @@ import ActivityScreen from '../screens/ActivityScreen';
 import ChatScreen from '../screens/ChatScreen';
 import MapScreen from '../screens/MapScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import { COLORS, ROUNDED, SPACING, SHADOW, SIZE } from '../constants';
+import { COLORS, ROUNDED, SPACING, SHADOW, SIZE } from '../global';
 import ActivityScreenHeader from './ActivityScreenHeader';
 import TitleScreenHeader from './TitleScreenHeader';
 import ProfileScreenHeader from './ProfileScreenHeader';

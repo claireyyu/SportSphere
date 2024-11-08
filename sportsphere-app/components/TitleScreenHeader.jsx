@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import React, { useState } from 'react';
 import DefaultScreenHeaderWrapper from './DefaultScreenHeaderWrapper';
-import { COLORS, SPACING, FONTSIZE } from '../constants';
+import { COLORS, SPACING, FONTSIZE } from '../global';
 
 
 export default function TitleScreenHeader({title}) {
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING.xsmall,
   },
   title: {
-    fontSize: FONTSIZE.large,
+    fontSize: FONTSIZE.h2,
     color: COLORS.background,
     fontWeight: 'bold',
   },

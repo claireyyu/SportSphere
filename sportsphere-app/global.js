@@ -3,22 +3,21 @@ export const COLORS = {
   'foreground': '#000000',
   'background': '#FFFFFF',
   'defaultBackground': '#F2F2F2',
-  'secondaryText': 'gray',
-  'inputBorder': '#C6C5C5',
-  'lightGray': '#C7C7CC',
+  'border': '#C7C7CC',
+  'secondaryText': '#808080',
 };
 
 export const FONTSIZE = {
-  'medium': 16,
-  'default': 18,
-  'large': 20,
+  'h1': 36,
+  'h2': 20,
+  'h3': 18,
+  'body': 16,
+  'small': 14,
 };
 
 export const ROUNDED = {
-  'xsmall': 5,
-  'small': 10,
-  'medium': 15,
-  'default': 20,
+  'small': 5,
+  'default': 15,
   'large': 50,
 };
 

@@ -1,12 +1,13 @@
 import { Text, StyleSheet, View } from 'react-native'
 import React, { Component } from 'react'
-import { COLORS } from '../constants'
+import { COLORS } from '../global'
+import ReminderItemList from '../components/ReminderItemList'
 
 export default class ReminderScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>ReminderScreen</Text>
+        <ReminderItemList />
       </View>
     )
   }
@@ -17,6 +18,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: COLORS.background,
   },
 })

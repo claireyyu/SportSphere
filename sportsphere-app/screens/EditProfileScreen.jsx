@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Avatar } from '@rneui/themed';
-import { COLORS, SIZE, SPACING } from '../constants';
+import { COLORS, FONTSIZE, SIZE, SPACING } from '../global';
 import PressableButton from '../components/PressableButton';
 import ProfileCard from '../components/ProfileCard';
 
@@ -32,13 +32,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'start',
     alignItems: 'center',
-    // backgroundColor: COLORS.background,
   },
   avatarContainer: {
     alignItems: 'center',
     marginTop: SPACING.large,
   },
   editProfile: {
+    fontSize: FONTSIZE.body,
     fontWeight: 'bold',
     marginTop: SPACING.small,
   },

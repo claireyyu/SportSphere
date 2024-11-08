@@ -1,15 +1,19 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Avatar } from '@rneui/themed';
-import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../constants';
+import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
 import { ProgressBar } from './ProgressBar';
 import PressableButton from './PressableButton';
   
-export default function ActivityCard() {
+export default function ActivityCard({ activityName, venue, time, peopleGoing, totalMembers, description }) {
+  function handleToActivityDetail() {
+    console.log('Navigating to Activity Detail');
+  }
+
   return (
     <View style={styles.cardContainer}>
       <View style={styles.headerContainer}>
-        <Text style={styles.title}>Badminton at 10am</Text>
+        <Text style={styles.title}>{activityName}</Text>
         <Avatar
           size={SIZE.smallAvatar}
           rounded
@@ -17,16 +21,15 @@ export default function ActivityCard() {
         />
       </View>
       <View style={styles.infoContainer}>
-        <Text style={styles.infoText}>Location: 123 Main St.</Text>
-        <Text style={styles.infoText}>Time: 10:00 a.m. Aug 20th, 2024</Text>
+        <Text style={styles.infoText}>Location: {venue}</Text>
+        <Text style={styles.infoText}>Time: {time}</Text>
       </View>
       <View style={styles.progressContainer}>
-        {/* placeholder value for now!!! */}
-        <ProgressBar value={3} total={10} />
-        <Text style={styles.peopleCount}>10 ppl</Text>
+        <ProgressBar value={peopleGoing} total={totalMembers} />
+        <Text style={styles.peopleCount}>{totalMembers} ppl</Text>
       </View>
-      <Text style={styles.goingText}>3 ppl going</Text>
-      <PressableButton componentStyle={styles.button}>
+      <Text style={styles.goingText}>{peopleGoing} ppl going</Text>
+      <PressableButton componentStyle={styles.button} pressedFunction={handleToActivityDetail}>
         <Text style={styles.buttonText}>Learn More</Text>
       </PressableButton>
     </View>
@@ -36,8 +39,9 @@ export default function ActivityCard() {
 const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: COLORS.background,
-    borderRadius: ROUNDED.medium,
-    padding: SPACING.medium,
+    borderRadius: ROUNDED.default,
+    paddingVertical: SPACING.small,
+    paddingHorizontal: SPACING.medium,
     margin: SPACING.medium,
     // Shadow properties
     shadowColor: SHADOW.color,
@@ -45,6 +49,7 @@ const styles = StyleSheet.create({
     shadowOpacity: SHADOW.opacity,
     shadowRadius: SHADOW.radius,
     elevation: SHADOW.elevation,
+
   },
   headerContainer: {
     flexDirection: 'row',
@@ -52,7 +57,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: FONTSIZE.large,
+    fontSize: FONTSIZE.h3,
     fontWeight: 'bold',
     color: COLORS.text,
   },
@@ -60,7 +65,7 @@ const styles = StyleSheet.create({
     marginVertical: SPACING.small,
   },
   infoText: {
-    fontSize: FONTSIZE.medium,
+    fontSize: FONTSIZE.body,
     color: COLORS.secondaryText,
     marginBottom: SPACING.xsmall,
   },
@@ -70,7 +75,7 @@ const styles = StyleSheet.create({
     marginVertical: SPACING.small,
   },
   peopleCount: {
-    fontSize: FONTSIZE.medium,
+    fontSize: FONTSIZE.body,
     color: COLORS.foreground,
     marginLeft: SPACING.small,
     fontWeight: 'bold',
@@ -85,12 +90,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     paddingVertical: SPACING.small,
     paddingHorizontal: SPACING.small,
-    borderRadius: ROUNDED.small,
+    borderRadius: ROUNDED.default,
     alignSelf: 'flex-end',
   },
   buttonText: {
     color: COLORS.background,
-    fontSize: FONTSIZE.medium,
+    fontSize: FONTSIZE.small,
     fontWeight: 'bold',
   },
 });

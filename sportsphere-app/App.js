@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import TabNavigator from './components/TabNavigator'
-import { COLORS, FONTSIZE } from './constants';
+import { COLORS, FONTSIZE, SIZE } from './global';
 import CustomStatusBar from './components/StatusBar';
 import db from './Firebase/firebaseSetup';
 import ActivityDetailScreen from './screens/ActivityDetailScreen';
@@ -13,6 +13,7 @@ import EditProfileScreen from './screens/EditProfileScreen';
 import ConfirmEditProfileButton from './components/ConfirmEditProfileButton';
 import ReminderScreen from './screens/ReminderScreen';
 import AddReminderButton from './components/AddReminderButton';
+import ChatDetailScreen from './screens/ChatDetailScreen';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -44,7 +45,7 @@ export default function App() {
                 backgroundColor: COLORS.primary,
               },
               headerTitleStyle: {
-                fontSize: FONTSIZE.large,
+                fontSize: FONTSIZE.h3,
                 color: COLORS.background,
                 fontWeight: 'bold',
               },
@@ -61,7 +62,7 @@ export default function App() {
                 backgroundColor: COLORS.primary,
               },
               headerTitleStyle: {
-                fontSize: FONTSIZE.default,
+                fontSize: FONTSIZE.h3,
                 color: COLORS.background,
                 fontWeight: 'bold',
               },
@@ -79,7 +80,7 @@ export default function App() {
                 backgroundColor: COLORS.primary,
               },
               headerTitleStyle: {
-                fontSize: FONTSIZE.default,
+                fontSize: FONTSIZE.h3,
                 color: COLORS.background,
                 fontWeight: 'bold',
               },
@@ -87,7 +88,24 @@ export default function App() {
               headerTintColor: COLORS.background,
               headerRight: () => <AddReminderButton />,
             }}
-          />
+            />
+          <Stack.Screen
+            name="ChatDetail"
+            component={ChatDetailScreen}
+            options={{
+              title: "Chat Detail",
+              headerStyle: {
+                backgroundColor: COLORS.primary,
+              },
+              headerTitleStyle: {
+                fontSize: FONTSIZE.h3,
+                color: COLORS.background,
+                fontWeight: 'bold',
+              },
+              headerBackTitleVisible: false,
+              headerTintColor: COLORS.background,
+            }}
+            />
         </Stack.Navigator>
       </NavigationContainer>
       </CustomStatusBar>
@@ -98,6 +116,5 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: COLORS.background,
   },
 });

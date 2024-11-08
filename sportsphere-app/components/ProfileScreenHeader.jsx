@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import React, { useState } from 'react';
 import DefaultScreenHeaderWrapper from './DefaultScreenHeaderWrapper';
-import { COLORS, SPACING, ROUNDED, SIZE, FONTSIZE } from '../constants';
+import { COLORS, SPACING, ROUNDED, SIZE, FONTSIZE } from '../global';
 import CustomSearchBar from './CustomSearchBar';
 import PressableButton from './PressableButton';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
     minHeight: SIZE.profileHeader,
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
-    borderBottomLeftRadius: ROUNDED.medium,
-    borderBottomRightRadius: ROUNDED.medium,
+    borderBottomLeftRadius: ROUNDED.default,
+    borderBottomRightRadius: ROUNDED.default,
     backgroundColor: COLORS.primary,
     paddingHorizontal: SPACING.default,
     paddingVertical: SPACING.xsmall,
@@ -77,12 +77,12 @@ const styles = StyleSheet.create({
   },
   username: {
     color: COLORS.background,
-    fontSize: FONTSIZE.large,
+    fontSize: FONTSIZE.h2,
     fontWeight: 'bold',
   },
   bio: {
     color: COLORS.background,
-    fontSize: FONTSIZE.medium,
+    fontSize: FONTSIZE.body,
     marginTop: SPACING.xsmall,
   },
   buttonContainer: {
@@ -94,13 +94,13 @@ const styles = StyleSheet.create({
   },
   editButton: {
     backgroundColor: COLORS.background,
-    borderRadius: ROUNDED.xsmall,
+    borderRadius: ROUNDED.default,
     paddingVertical: SPACING.small,
     paddingHorizontal: SPACING.medium,
   },
   buttonStyle: {
     color: COLORS.primary,
-    fontSize: FONTSIZE.medium,
+    fontSize: FONTSIZE.body,
     fontWeight: 'bold',
   },
 });

@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import PressableButton from './PressableButton'
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { SIZE, COLORS } from '../constants';
+import { SIZE, COLORS } from '../global';
 
 export default function AddReminderButton() {
   function handleOpenAddReminder() {

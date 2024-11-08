@@ -1,7 +1,7 @@
 // statusBar.js
 import React, { Fragment } from 'react';
 import { SafeAreaView, StatusBar } from 'react-native';
-import { COLORS } from '../constants';
+import { COLORS } from '../global';
 
 export default function CustomStatusBar({
   children,

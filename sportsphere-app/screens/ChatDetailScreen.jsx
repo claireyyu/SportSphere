@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { COLORS } from '../global'
+import { COLORS, SPACING } from '../global'
 
-export default function MapScreen() {
+export default function ChatDetailScreen() {
   return (
     <View style={styles.container}>
-      <Text>MapScreen</Text>
+      <Text>This feature requires integration of third-party API, expected to be implemented in following iterations.</Text>
     </View>
   )
 }
@@ -15,5 +15,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: SPACING.medium,
   },
 })

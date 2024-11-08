@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import ActivityCard from '../components/ActivityCard'
-import { COLORS } from '../constants'
+import ActivityCardList from '../components/ActivityCardList'
+import { COLORS, SPACING } from '../global'
 
 export default function ProfileScreen() {
   return (
     <View style={styles.container}>
-      <ActivityCard />
+      <ActivityCardList />
     </View>
   )
 }
@@ -14,8 +14,6 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    // backgroundColor: COLORS.background,
+    marginHorizontal: SPACING.medium,
   },
 })

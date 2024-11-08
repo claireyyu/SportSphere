@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import React, { useState } from 'react';
 import DefaultScreenHeaderWrapper from './DefaultScreenHeaderWrapper';
-import { COLORS, SPACING, SIZE } from '../constants';
+import { COLORS, SPACING, SIZE } from '../global';
 import CustomSearchBar from './CustomSearchBar';
 import PressableButton from './PressableButton';
 import Ionicons from '@expo/vector-icons/Ionicons';

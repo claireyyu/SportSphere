@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import PressableButton from './PressableButton'
-import { COLORS, FONTSIZE } from '../constants'
+import { COLORS, FONTSIZE } from '../global'
 
 export default function ConfirmEditProfileButton() {
   function handleEditProfile() {
@@ -20,6 +20,6 @@ export default function ConfirmEditProfileButton() {
 const styles = StyleSheet.create({
   btnText: {
     color: COLORS.background,
-    fontSize: FONTSIZE.medium,
+    fontSize: FONTSIZE.body,
   },
 })

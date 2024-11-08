@@ -1,18 +1,26 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
-import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../constants';
-import {useState} from 'react';
+import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
+import { useState, useEffect, useRef } from 'react';
   
 export default function ProfileCard({ name, email, bio }) {
   const [nameInput, setNameInput] = useState(name);
   const [emailInput, setEmailInput] = useState(email);
   const [bioInput, setBioInput] = useState(bio);
 
+  const nameInputRef = useRef(null);
+
+  useEffect(() => {
+    if (nameInputRef.current) {
+      nameInputRef.current.focus();
+    }
+  }, []);
+
   return (
     <View style={styles.cardContainer}>
       <View style={styles.profileCardRow}>
         <Text style={styles.title}>Name</Text>
-        <TextInput style={styles.infoText} value={nameInput} onChangeText={setNameInput} placeholder={name}></TextInput>
+        <TextInput ref={nameInputRef} style={styles.infoText} value={nameInput} onChangeText={setNameInput} placeholder={name} ></TextInput>
       </View>
       <View style={styles.profileCardRow}>
         <Text style={styles.title}>Email</Text>
@@ -29,7 +37,7 @@ export default function ProfileCard({ name, email, bio }) {
 const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: COLORS.background,
-    borderRadius: ROUNDED.medium,
+    borderRadius: ROUNDED.default,
     padding: SPACING.large,
     marginVertical: SPACING.medium,
     marginHorizontal: SPACING.large,
@@ -43,16 +51,16 @@ const styles = StyleSheet.create({
   profileCardRow: {
     flexDirection: 'row',
     alignItems: 'center', // Center items vertically
-    marginBottom: SPACING.small,
+    marginBottom: SPACING.medium,
   },
   title: {
-    fontSize: FONTSIZE.medium,
+    fontSize: FONTSIZE.body,
     fontWeight: 'bold',
     color: COLORS.text,
     width: '40%',
   },
   infoText: {
-    fontSize: FONTSIZE.medium,
+    fontSize: FONTSIZE.body,
     color: COLORS.secondaryText,
     width: '60%',
   },
