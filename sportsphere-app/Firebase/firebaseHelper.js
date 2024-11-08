@@ -1,12 +1,12 @@
 import { db } from './firebaseSetup';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, addDoc } from 'firebase/firestore';
 
-export async function writeToDB(data, collection) {
+export async function writeToDB(data, collectionName) {
     try {
-        const docRef = await addDoc(collection(db, collection), data);
+        const docRef = await addDoc(collection(db, collectionName), data);
         console.log("Document written with ID: ", docRef.id);
-    } catch {
-    console.error("Error adding document: ", error);
+    } catch (error) {
+        console.error("Error adding document: ", error);
     }
 
 }
