@@ -7,31 +7,31 @@ import CalendarInput from './CalendarInput';
 export default function AddActivityCard() {
   const [sportName, setSportName] = useState('');
   const [venue, setVenue] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(null);
   const [time, setTime] = useState('');
   const [totalMembers, setTotalMembers] = useState(0);
   const [description, setDescription] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
 
-  function handleDate() {
+  function handleDate(date) {
     setDate(date);
   }
   function handleDatePicker() {
     setShowDatePicker(!showDatePicker);
   }
   return (
-    < SafeAreaView style={styles.cardContainer}>
-        <View style={styles.inputContainer}>
-            <Text style={styles.textInfo}>Sports: </Text>
+    < View style={styles.cardContainer}>
+        {/* <View style={styles.inputContainer}> */}
+            <Text style={styles.textInfo}>Activity Name: </Text>
             <TextInput 
                 style={styles.input}
                 onChangeText={setSportName}
                 value={sportName}
                 placeholder="Enter the name of your activity"
             />
-        </View>
-        <View style={styles.inputContainer}>
+        {/* </View>
+        <View style={styles.inputContainer}> */}
             <Text style={styles.textInfo}>Venue: </Text>
             <TextInput 
                 style={styles.input}
@@ -39,12 +39,12 @@ export default function AddActivityCard() {
                 value={venue}
                 placeholder="Enter the location of your activity"
             />
-        </View>
-        <View style={styles.inputContainer}>
+        {/* </View>
+        <View style={styles.inputContainer}> */}
             <Text style={styles.textInfo}>Date: </Text>
             <CalendarInput date={date} setDate={handleDate} datePicker={showDatePicker} datePickerHandler={handleDatePicker}/>
-        </View>
-    </SafeAreaView>
+        {/* </View> */}
+    </View>
   )
 }
 
@@ -67,13 +67,16 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
       },
       input: {
-        height: 40,
-        margin: 12,
+        height: 35,
+        marginTop: 5,
+        marginBottom: 10,
         borderWidth: 1,
         borderColor: COLORS.inputBorder,
+        padding: 5,
         backgroundColor: COLORS.inputArea,
         borderRadius: ROUNDED.small,
-        width: '80%',
+        fontSize: FONTSIZE.medium,
+        color: COLORS.text,
       },
       inputContainer: {
         flexDirection: 'row',
