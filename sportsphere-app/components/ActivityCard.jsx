@@ -5,7 +5,11 @@ import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../constants';
 import { ProgressBar } from './ProgressBar';
 import PressableButton from './PressableButton';
   
-export default function ActivityCard({title, location, time, peopleGoing, totalPeople}) {
+export default function ActivityCard({ title, location, time, peopleGoing, totalPeople }) {
+  function handleToActivityDetail() {
+    console.log('Navigating to Activity Detail');
+  }
+
   return (
     <View style={styles.cardContainer}>
       <View style={styles.headerContainer}>
@@ -25,7 +29,7 @@ export default function ActivityCard({title, location, time, peopleGoing, totalP
         <Text style={styles.peopleCount}>{totalPeople} ppl</Text>
       </View>
       <Text style={styles.goingText}>{peopleGoing} ppl going</Text>
-      <PressableButton componentStyle={styles.button}>
+      <PressableButton componentStyle={styles.button} pressedFunction={handleToActivityDetail}>
         <Text style={styles.buttonText}>Learn More</Text>
       </PressableButton>
     </View>
