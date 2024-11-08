@@ -2,12 +2,12 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import ActivityCard from '../components/ActivityCard'
 import { COLORS } from '../constants'
+import ActivityCardList from '../components/ActivityCardList'
 
 export default function ActivityScreen() {
   return (
     <View style={styles.container}>
-      {/* just a placeholder for now */}
-      <ActivityCard />
+      <ActivityCardList />
     </View>
   )
 }

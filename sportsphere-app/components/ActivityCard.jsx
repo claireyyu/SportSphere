@@ -5,11 +5,11 @@ import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../constants';
 import { ProgressBar } from './ProgressBar';
 import PressableButton from './PressableButton';
   
-export default function ActivityCard() {
+export default function ActivityCard({title, location, time, peopleGoing, totalPeople}) {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.headerContainer}>
-        <Text style={styles.title}>Badminton at 10am</Text>
+        <Text style={styles.title}>{title}</Text>
         <Avatar
           size={SIZE.smallAvatar}
           rounded
@@ -17,15 +17,14 @@ export default function ActivityCard() {
         />
       </View>
       <View style={styles.infoContainer}>
-        <Text style={styles.infoText}>Location: 123 Main St.</Text>
-        <Text style={styles.infoText}>Time: 10:00 a.m. Aug 20th, 2024</Text>
+        <Text style={styles.infoText}>Location: {location}</Text>
+        <Text style={styles.infoText}>Time: {time}</Text>
       </View>
       <View style={styles.progressContainer}>
-        {/* placeholder value for now!!! */}
-        <ProgressBar value={3} total={10} />
-        <Text style={styles.peopleCount}>10 ppl</Text>
+        <ProgressBar value={peopleGoing} total={totalPeople} />
+        <Text style={styles.peopleCount}>{totalPeople} ppl</Text>
       </View>
-      <Text style={styles.goingText}>3 ppl going</Text>
+      <Text style={styles.goingText}>{peopleGoing} ppl going</Text>
       <PressableButton componentStyle={styles.button}>
         <Text style={styles.buttonText}>Learn More</Text>
       </PressableButton>
