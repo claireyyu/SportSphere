@@ -1,37 +1,59 @@
-import React, { useState } from 'react'
-import { View, Text, StyleSheet, TextInput, SafeAreaView } from 'react-native'
+import React, { act, useState } from 'react'
+import { View, Text, StyleSheet, TextInput, SafeAreaView, Pressable } from 'react-native'
 import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../constants';
 import CalendarInput from './CalendarInput';
+import TimeInput from './TimeInput';
+import PressableButton from './PressableButton';
+import { writeToDB } from '../Firebase/firebaseHelper';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function AddActivityCard() {
-  const [sportName, setSportName] = useState('');
+  const navigation = useNavigation();
+  const [activityName, setActivityName] = useState('');
   const [venue, setVenue] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
+  const [date, setDate] = useState(null);
+  const [time, setTime] = useState(null);
   const [totalMembers, setTotalMembers] = useState(0);
   const [description, setDescription] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
 
-  function handleDate() {
+  function handleDate(date) {
     setDate(date);
   }
   function handleDatePicker() {
     setShowDatePicker(!showDatePicker);
   }
+  function handleTime(time) {
+    setTime(time);
+  }
+  function handleTimePicker() {
+    setShowTimePicker(!showTimePicker);
+  }
+
+  function handleSave() {
+    const newActivity = {
+      activityName: activityName,
+      venue: venue,
+      date: date,
+      time: time,
+      totalMembers: totalMembers,
+      description: description,
+    }
+    writeToDB(newActivity, "activities");
+    navigation.goBack();
+  }
   return (
-    < SafeAreaView style={styles.cardContainer}>
-        <View style={styles.inputContainer}>
-            <Text style={styles.textInfo}>Sports: </Text>
+    < View style={styles.cardContainer}>
+            <Text style={styles.textInfo}>Activity Name: </Text>
             <TextInput 
                 style={styles.input}
-                onChangeText={setSportName}
-                value={sportName}
+                onChangeText={setActivityName}
+                value={activityName}
                 placeholder="Enter the name of your activity"
             />
-        </View>
-        <View style={styles.inputContainer}>
+        
             <Text style={styles.textInfo}>Venue: </Text>
             <TextInput 
                 style={styles.input}
@@ -39,12 +61,34 @@ export default function AddActivityCard() {
                 value={venue}
                 placeholder="Enter the location of your activity"
             />
-        </View>
-        <View style={styles.inputContainer}>
             <Text style={styles.textInfo}>Date: </Text>
             <CalendarInput date={date} setDate={handleDate} datePicker={showDatePicker} datePickerHandler={handleDatePicker}/>
-        </View>
-    </SafeAreaView>
+            <Text style={styles.textInfo}>Time: </Text>
+            <TimeInput time={time} setTime={handleTime} timePicker={showTimePicker} timePickerHandler={handleTimePicker}/>
+            <Text style={styles.textInfo}>Total Members: </Text>
+            <TextInput 
+                style={styles.input}
+                onChangeText={setTotalMembers}
+                value={totalMembers}
+                placeholder="Enter the number of members"
+                keyboardType="numeric"
+            />
+            <Text style={styles.textInfo}>Description: </Text>
+            <TextInput 
+                style={styles.inputDescription}
+                onChangeText={setDescription}
+                value={description}
+                placeholder="Enter a description of your activity"
+                multiline={true}
+                numberOfLines={4} 
+            />
+            <Text style={styles.textInfo}>Select Photo: </Text>
+            <PressableButton 
+            componentStyle={styles.button}
+            pressedFunction={handleSave} >
+                <Text style={styles.buttonText}>Submit</Text>
+            </PressableButton>
+    </View>
   )
 }
 
@@ -67,21 +111,44 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
       },
       input: {
-        height: 40,
-        margin: 12,
+        height: 35,
+        marginTop: 5,
+        marginBottom: 10,
         borderWidth: 1,
         borderColor: COLORS.inputBorder,
-        backgroundColor: COLORS.defaultBackground,
+        padding: 5,
+        backgroundColor: COLORS.inputArea,
         borderRadius: ROUNDED.small,
-        width: '80%',
+        fontSize: FONTSIZE.medium,
+        color: COLORS.text,
       },
-      inputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
+      inputDescription: {
+        height: 60,
+        marginTop: 5,
+        marginBottom: 10,
+        borderWidth: 1,
+        borderColor: COLORS.inputBorder,
+        padding: 5,
+        backgroundColor: COLORS.inputArea,
+        borderRadius: ROUNDED.small,
+        fontSize: FONTSIZE.medium,
+        color: COLORS.text,
       },
       textInfo: {
         fontSize: FONTSIZE.medium,
         fontWeight: 'bold',
         color: COLORS.text,
+      },
+      buttonText: {
+        color: COLORS.background,
+        fontSize: FONTSIZE.medium,
+        fontWeight: 'bold',
+      },
+      button: {
+        backgroundColor: COLORS.primary,
+        paddingVertical: SPACING.small,
+        paddingHorizontal: SPACING.small,
+        borderRadius: ROUNDED.small,
+        alignSelf: 'flex-end',
       },
     });
