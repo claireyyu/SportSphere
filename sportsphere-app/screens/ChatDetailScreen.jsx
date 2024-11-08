@@ -1,13 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import ChatCard from '../components/ChatCard'
-import { COLORS } from '../constants'
-import ChatCardList from '../components/ChatCardList'
+import { COLORS, SPACING } from '../constants'
 
-export default function ChatScreen({ navigation }) {
+export default function ChatDetailScreen() {
   return (
     <View style={styles.container}>
-      <ChatCardList navigation={navigation} />
+      <Text>This feature requires integration of third-party API, expected to be implemented in following iterations.</Text>
     </View>
   )
 }
@@ -15,7 +13,9 @@ export default function ChatScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
+    padding: SPACING.medium,
     // backgroundColor: COLORS.background,
   },
 })

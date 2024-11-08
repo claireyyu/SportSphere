@@ -13,6 +13,7 @@ import EditProfileScreen from './screens/EditProfileScreen';
 import ConfirmEditProfileButton from './components/ConfirmEditProfileButton';
 import ReminderScreen from './screens/ReminderScreen';
 import AddReminderButton from './components/AddReminderButton';
+import ChatDetailScreen from './screens/ChatDetailScreen';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -87,7 +88,24 @@ export default function App() {
               headerTintColor: COLORS.background,
               headerRight: () => <AddReminderButton />,
             }}
-          />
+            />
+          <Stack.Screen
+            name="ChatDetail"
+            component={ChatDetailScreen}
+            options={{
+              title: "Chat Detail",
+              headerStyle: {
+                backgroundColor: COLORS.primary,
+              },
+              headerTitleStyle: {
+                fontSize: FONTSIZE.default,
+                color: COLORS.background,
+                fontWeight: 'bold',
+              },
+              headerBackTitleVisible: false,
+              headerTintColor: COLORS.background,
+            }}
+            />
         </Stack.Navigator>
       </NavigationContainer>
       </CustomStatusBar>
