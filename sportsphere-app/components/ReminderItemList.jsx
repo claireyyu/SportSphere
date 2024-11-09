@@ -16,8 +16,8 @@ export default function ReminderItemList() {
       querySnapshot.forEach((docSnapshot) => {
         const id = docSnapshot.id;
         const data = docSnapshot.data();
-        if (!data.time) {
-          console.log("No time data found for reminder with id", id);
+        if (!data.time || !data.date) {
+          console.log("No date or time data found for reminder with id", id);
           return;
         }
 

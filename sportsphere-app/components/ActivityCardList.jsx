@@ -1,66 +1,67 @@
 import ActivityCard from "./ActivityCard";
-
 import { StyleSheet, Text, View, FlatList } from 'react-native'
 import React from 'react'
 import { SPACING } from '../global'
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../Firebase/firebaseSetup";
+import { useEffect, useState } from 'react';
 
 export default function ActivityCardList() {
-  const data = [
-    {
-      id: '1',
-      activityName: 'Morning Yoga',
-      venue: 'Central Park',
-      time: '6:00 AM',
-      peopleGoing: 15,
-      totalMembers: 20,
-      description: 'lorem ipsum dolor sit amet',
-    },
-    {
-      id: '2',
-      activityName: 'Tech Meetup',
-      venue: 'Tech Hub',
-      time: '10:00 AM',
-      peopleGoing: 50,
-      totalMembers: 100,
-      description: 'lorem ipsum dolor sit amet',
-    },
-    {
-      id: '3',
-      activityName: 'Cooking Class',
-      venue: 'Community Center',
-      time: '2:00 PM',
-      peopleGoing: 10,
-      totalMembers: 15,
-      description: 'lorem ipsum dolor sit amet',
-    },
-    {
-      id: '4',
-      activityName: 'Evening Run',
-      venue: 'Riverside Park',
-      time: '6:00 PM',
-      peopleGoing: 25,
-      totalMembers: 30,
-      description: 'lorem ipsum dolor sit amet',
-    },
-    {
-      id: '5',
-      activityName: 'Book Club',
-      venue: 'City Library',
-      time: '7:00 PM',
-      peopleGoing: 8,
-      totalMembers: 10,
-      description: 'lorem ipsum dolor sit amet',
-    },
-  ];
+  const collectionName = "activities";
+  const [activityItems, setActivityItems] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, collectionName), (querySnapshot) => {
+      const currActivityItems = [];
+      querySnapshot.forEach((docSnapshot) => {
+        const id = docSnapshot.id;
+        const data = docSnapshot.data();
+        if (!data.time || !data.date) {
+          console.log("No date or time data found for reminder with id", id);
+          return;
+        }
+
+        const dtDate = new Date(data.date.seconds * 1000);
+        // Format date to "Aug 24, 2024"
+        const formattedDate = dtDate.toLocaleDateString("en-US", {
+          month: "short",
+          day: "2-digit",
+          year: "numeric"
+        });
+        
+        const dtTime = new Date(data.time.seconds * 1000);
+        // Format time to "14:32" (24-hour format)
+        const formattedTime = dtTime.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false
+        });
+
+        console.log(`Date: ${formattedDate}`);
+        console.log(`Time: ${formattedTime}`);
+        currActivityItems.push({ ...data, id, time: formattedTime, date: formattedDate});
+      });
+      setActivityItems(currActivityItems);
+    }, (error) => {
+      console.log("on snapshot", error);
+      Alert.alert("Error", error.message);
+    });
+
+    return () => {
+      console.log("unsubscribing");
+      unsubscribe();
+    };
+  }, []);
 
   return (
     <FlatList
-      data={data}
+      data={activityItems}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
         <ActivityCard
           activityName={item.activityName}
           venue={item.venue}
+          date={item.date}
           time={item.time}
           peopleGoing={item.peopleGoing}
           totalMembers={item.totalMembers}

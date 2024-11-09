@@ -5,7 +5,7 @@ import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
 import { ProgressBar } from './ProgressBar';
 import PressableButton from './PressableButton';
   
-export default function ActivityCard({ activityName, venue, time, peopleGoing, totalMembers, description }) {
+export default function ActivityCard({ activityName, venue, date, time, peopleGoing, totalMembers, description }) {
   function handleToActivityDetail() {
     console.log('Navigating to Activity Detail');
   }
@@ -22,7 +22,7 @@ export default function ActivityCard({ activityName, venue, time, peopleGoing, t
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.infoText}>Location: {venue}</Text>
-        <Text style={styles.infoText}>Time: {time}</Text>
+        <Text style={styles.infoText}>Time: {`${date} - ${time}`}</Text>
       </View>
       <View style={styles.progressContainer}>
         <ProgressBar value={peopleGoing} total={totalMembers} />
