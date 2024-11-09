@@ -46,7 +46,7 @@ export const styles = StyleSheet.create({
     marginTop: SPACING.small,
     marginBottom: SPACING.medium,
     borderBottomWidth: 1,
-    borderColor: COLORS.foreground,
+    borderColor: COLORS.secondaryText,
     padding: 5,
     borderRadius: ROUNDED.small,
     fontSize: FONTSIZE.body,
