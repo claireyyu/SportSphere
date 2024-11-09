@@ -76,7 +76,7 @@ export default function TimeInput({time, setTime, timePicker, timePickerHandler}
 export const styles = StyleSheet.create({
     input: {
         height: 35,
-        marginTop: SPACING.small,
+        marginTop: SPACING.xsmall,
         marginBottom: SPACING.medium,
         borderBottomWidth: 1,
         borderColor: COLORS.secondaryText,
