@@ -6,7 +6,7 @@ import { COLORS, ROUNDED } from '../global'
 import { writeToDB } from '../Firebase/firebaseHelper';
 
 export default function AddReminder({modalVisible, handleModalVisible}) {
-  const [time, setTime] = useState(null);
+  const [time, setTime] = useState(new Date());
   function handleNewReminder() {
     const newReminder = {
       time: time,

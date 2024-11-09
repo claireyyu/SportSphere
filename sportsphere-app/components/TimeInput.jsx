@@ -45,7 +45,11 @@ export default function TimeInput({time, setTime, timePicker, timePickerHandler}
             <Button
               title="Confirm"
               onPress={() => {
-                setTime(time); // Confirm the time when button is pressed
+                if (!time) {
+                  setTime(new Date());
+                } else {
+                setTime(time);
+                } 
                 timePickerHandler(false);
               }}
             />

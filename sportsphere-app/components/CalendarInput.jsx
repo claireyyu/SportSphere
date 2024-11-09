@@ -32,6 +32,8 @@ export default function CalendarInput({date, setDate, datePicker, datePickerHand
               datePickerHandler(false);
               if (selectedDate) {
                 setDate(selectedDate);
+              } else {
+                setDate(new Date());
               }
             }}
           />
