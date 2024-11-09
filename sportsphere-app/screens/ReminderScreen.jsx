@@ -6,13 +6,13 @@ import AddReminder from '../components/AddReminder'
 import AddReminderButton from '../components/AddReminderButton'
 
 export default function ReminderScreen({ navigation }) {
-     const [modalVisible, setModalVisible] = useState(false)
+    const [modalVisible, setModalVisible] = useState(false)
 
-     function handleModalVisible() {
-       setModalVisible(!modalVisible)
-     }
+    function handleModalVisible() {
+      setModalVisible(!modalVisible)
+    }
 
-     useLayoutEffect(() => {
+    useLayoutEffect(() => {
       navigation.setOptions({
         headerRight: () => (
           <AddReminderButton
@@ -22,11 +22,11 @@ export default function ReminderScreen({ navigation }) {
         ),
       });
     }, [navigation, modalVisible]); // ensure that the effect runs only when the navigation or modalVisible changes
-    return (
+    
+  return (
       <View style={styles.container}>
         <ReminderItemList />
         <AddReminder modalVisible={modalVisible} handleModalVisible={handleModalVisible} />
-
       </View>
     )
   }
