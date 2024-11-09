@@ -86,7 +86,6 @@ export default function App() {
               },
               headerBackTitleVisible: false,
               headerTintColor: COLORS.background,
-              headerRight: () => <AddReminderButton />,
             }}
             />
           <Stack.Screen
