@@ -4,7 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { COLORS, ROUNDED, SPACING } from '../global'
 import { writeToDB } from '../Firebase/firebaseHelper';
-import DatePicker from './DatePicker';
 import PressableButton from './PressableButton';
 
 export default function AddReminder({ modalVisible, handleModalVisible }) {
