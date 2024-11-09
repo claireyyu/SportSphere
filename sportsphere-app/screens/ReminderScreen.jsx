@@ -3,14 +3,12 @@ import React, { Component } from 'react'
 import { COLORS } from '../global'
 import ReminderItemList from '../components/ReminderItemList'
 
-export default class ReminderScreen extends Component {
-  render() {
+export default function ReminderScreen() {
     return (
       <View style={styles.container}>
         <ReminderItemList />
       </View>
     )
-  }
 }
 
 const styles = StyleSheet.create({
