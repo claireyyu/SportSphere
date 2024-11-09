@@ -7,7 +7,13 @@ import { writeToDB } from '../Firebase/firebaseHelper';
 
 export default function AddReminder({modalVisible, handleModalVisible}) {
   const [time, setTime] = useState(null);
-  
+  function handleNewReminder() {
+    const newReminder = {
+      time: time,
+      turnedOn: true,
+    }
+    writeToDB(newReminder, "reminders");
+  }
   return (
     <SafeAreaView>
       <Modal
@@ -36,6 +42,7 @@ export default function AddReminder({modalVisible, handleModalVisible}) {
               onPress={() => {
                 setTime(time); // Confirm the time when button is pressed
                 handleModalVisible();
+                handleNewReminder();
               }}
             />
           </View>
