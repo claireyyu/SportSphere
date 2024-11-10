@@ -61,12 +61,15 @@ export const ActivityProvider = ({ children }) => {
     };
   }, []);
 
-  const filteredActivityItems = activityItems.filter(item =>
-    item.activityName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.venue.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
+  const filteredActivityItems = activityItems.filter(item => {
+    const terms = searchQuery.toLowerCase().split(' ');
+    return terms.some(term =>
+      item.activityName.toLowerCase().includes(term) ||
+      item.venue.toLowerCase().includes(term) ||
+      item.description.toLowerCase().includes(term) ||
+      item.date.toLowerCase().includes(term)
+    );
+  });
 
   return (
     <ActivityContext.Provider value={{ activityItems: filteredActivityItems, setActivityItems, searchQuery, setSearchQuery }}>
