@@ -3,10 +3,15 @@ import React from 'react'
 import PressableButton from './PressableButton'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { SIZE, COLORS } from '../global';
+import AddReminder from './AddReminder';
 
-export default function AddReminderButton() {
+
+export default function AddReminderButton({modalVisible, handleModalVisible}) {
+  
   function handleOpenAddReminder() {
-    console.log("Add Reminder Button Pressed");
+    if (!modalVisible) {
+      handleModalVisible(true)
+    }
   }
   
   return (

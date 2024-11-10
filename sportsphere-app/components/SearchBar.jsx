@@ -3,7 +3,8 @@ import { View, TextInput, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { COLORS, ROUNDED, SPACING, FONTSIZE } from '../global';
 
-const CustomSearchBar = ({ placeholder, value, onChangeText }) => {
+const SearchBar = ({ placeholder, value, onChangeText }) => {
+
   return (
     <View style={styles.container}>
       <MaterialCommunityIcons name="magnify" size={26} color={COLORS.primary} style={styles.icon} />
@@ -18,7 +19,7 @@ const CustomSearchBar = ({ placeholder, value, onChangeText }) => {
   );
 };
 
-export default CustomSearchBar;
+export default SearchBar;
 
 const styles = StyleSheet.create({
   container: {

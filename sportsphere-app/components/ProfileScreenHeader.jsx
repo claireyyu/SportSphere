@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import React, { useState } from 'react';
 import DefaultScreenHeaderWrapper from './DefaultScreenHeaderWrapper';
 import { COLORS, SPACING, ROUNDED, SIZE, FONTSIZE } from '../global';
-import CustomSearchBar from './CustomSearchBar';
+import SearchBar from './SearchBar';
 import PressableButton from './PressableButton';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Avatar } from '@rneui/themed';

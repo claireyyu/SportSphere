@@ -20,23 +20,6 @@ export default function TimeInput({time, setTime, timePicker, timePickerHandler}
           timePickerHandler(true);
         }}
         />
-        {/* {timePicker && (
-          <DateTimePicker
-            value={time || new Date()} 
-            mode="time"
-            display="default"
-            onChange={(event, selectedTime) => {
-              console.log('Time picked:', selectedTime); 
-              if (selectedTime) {
-                setTime(selectedTime);
-              }
-            }}
-            onBlur={() => {
-              console.log('onBlur'); 
-              timePickerHandler(false);
-            }}
-          />
-        )} */}
       <SafeAreaView style={styles.modalContainer}>
         <Modal
         transparent={true}
@@ -62,7 +45,11 @@ export default function TimeInput({time, setTime, timePicker, timePickerHandler}
             <Button
               title="Confirm"
               onPress={() => {
-                setTime(time); // Confirm the time when button is pressed
+                if (!time) {
+                  setTime(new Date());
+                } else {
+                setTime(time);
+                } 
                 timePickerHandler(false);
               }}
             />

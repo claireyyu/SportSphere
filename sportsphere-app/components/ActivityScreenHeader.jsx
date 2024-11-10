@@ -1,26 +1,27 @@
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import DefaultScreenHeaderWrapper from './DefaultScreenHeaderWrapper';
 import { COLORS, SPACING, SIZE } from '../global';
-import CustomSearchBar from './CustomSearchBar';
+import SearchBar from './SearchBar';
 import PressableButton from './PressableButton';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { ActivityContext } from '../context/ActivityProvider';
 
 
 export default function ActivityScreenHeader({navigation}) {
-  
+  const { activityItems, searchQuery, setSearchQuery } = useContext(ActivityContext);
   const [search, setSearch] = useState("");
 
-  const updateSearch = (search) => {
-    setSearch(search);
+  const updateSearch = (text) => {
+    setSearchQuery(text);
   };
 
   return (
     <DefaultScreenHeaderWrapper>
       <SafeAreaView style={styles.view}>
-        <CustomSearchBar
-          placeholder="Search Activities"
-          value={search}
+        <SearchBar
+          placeholder="Explore activities..."
+          value={searchQuery}
           onChangeText={updateSearch}
         />
         <View style={styles.buttons}>
