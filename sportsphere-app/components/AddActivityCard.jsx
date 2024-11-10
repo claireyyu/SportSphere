@@ -47,7 +47,7 @@ export default function AddActivityCard() {
   }
   return (
     < View style={styles.cardContainer}>
-            <Text style={styles.textInfo}>Activity Name: </Text>
+            <Text style={styles.textInfo}>Activity Name</Text>
             <TextInput 
                 style={styles.input}
                 onChangeText={setActivityName}
@@ -55,25 +55,25 @@ export default function AddActivityCard() {
                 placeholder="Badminton at Bonsor"
             />
         
-            <Text style={styles.textInfo}>Venue: </Text>
+            <Text style={styles.textInfo}>Venue</Text>
             <TextInput 
                 style={styles.input}
                 onChangeText={setVenue}
                 value={venue}
                 placeholder="123 Main Street, Burnaby"
             />
-            <Text style={styles.textInfo}>Date: </Text>
+            <Text style={styles.textInfo}>Date</Text>
             <CalendarInput date={date} setDate={handleDate} datePicker={showDatePicker} datePickerHandler={handleDatePicker}/>
-            <Text style={styles.textInfo}>Time: </Text>
+            <Text style={styles.textInfo}>Time</Text>
             <TimeInput time={time} setTime={handleTime} timePicker={showTimePicker} timePickerHandler={handleTimePicker}/>
-            <Text style={styles.textInfo}>Total Members: </Text>
+            <Text style={styles.textInfo}>Total Members</Text>
             <TextInput 
                 style={styles.input}
                 onChangeText={setTotalMembers}
                 value={totalMembers}
                 keyboardType="numeric"
             />
-            <Text style={styles.textInfo}>Description: </Text>
+            <Text style={styles.textInfo}>Description</Text>
             <TextInput 
                 style={styles.inputDescription}
                 onChangeText={setDescription}
@@ -82,7 +82,7 @@ export default function AddActivityCard() {
                 multiline={true}
                 numberOfLines={4} 
             />
-            <Text style={styles.textInfo}>Select Photo: </Text>
+            <Text style={styles.textInfo}>Select Photo</Text>
             <PressableButton 
             componentStyle={styles.button}
             pressedFunction={handleSave} >
@@ -112,10 +112,10 @@ export const styles = StyleSheet.create({
       },
       input: {
         height: 35,
-        marginTop: SPACING.small,
+        marginTop: SPACING.xsmall,
         marginBottom: SPACING.medium,
-        borderWidth: 1,
-        borderColor: COLORS.border,
+        borderBottomWidth: 1,
+        borderColor: COLORS.secondaryText,
         padding: SPACING.xsmall,
         backgroundColor: COLORS.inputArea,
         borderRadius: ROUNDED.small,
@@ -123,12 +123,12 @@ export const styles = StyleSheet.create({
         color: COLORS.foreground,
       },
       inputDescription: {
-        height: 60,
+        height: 100,
         marginTop: SPACING.small,
         marginBottom: SPACING.medium,
         borderWidth: 1,
-        borderColor: COLORS.border,
-        padding: SPACING.xsmall,
+        borderColor: COLORS.secondaryText,
+        padding: SPACING.small,
         borderRadius: ROUNDED.small,
         fontSize: FONTSIZE.body,
         color: COLORS.foreground,
