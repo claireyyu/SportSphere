@@ -64,6 +64,23 @@ export default function App() {
             }}
           />
           <Stack.Screen
+            name="EditActivity"
+            component={EditActivityScreen}
+            options={{
+              title: "Edit Activity",
+              headerStyle: {
+                backgroundColor: COLORS.primary,
+              },
+              headerTitleStyle: {
+                fontSize: FONTSIZE.h3,
+                color: COLORS.background,
+                fontWeight: 'bold',
+              },
+              headerBackTitleVisible: false,
+              headerTintColor: COLORS.background,
+            }}
+          />
+          <Stack.Screen
             name="EditProfile"
             component={EditProfileScreen}
             options={{

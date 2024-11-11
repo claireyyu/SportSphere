@@ -1,4 +1,4 @@
-import React, { act, useState, useEffect } from 'react'
+import React, { act, useEffect, useState } from 'react'
 import { View, Text, StyleSheet, TextInput, SafeAreaView, Pressable } from 'react-native'
 import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
 import CalendarInput from './CalendarInput';
@@ -6,8 +6,12 @@ import TimeInput from './TimeInput';
 import PressableButton from './PressableButton';
 import { writeToDB } from '../Firebase/firebaseHelper';
 import { useNavigation } from '@react-navigation/native';
+import { parse, format } from 'date-fns';
+import { updateDB } from '../Firebase/firebaseHelper';
 
-export default function AddActivityCard() {
+
+export default function AddActivityCard({ route }) {
+  const [id, setId] = useState(null);
   const navigation = useNavigation();
   const [error, setError] = useState('');
   const [activityName, setActivityName] = useState('');
@@ -18,16 +22,7 @@ export default function AddActivityCard() {
   const [description, setDescription] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
-
-  useEffect(() => {
-    if (activityName.split(" ").length > 5) {
-      setError("Activity name should be no more than five words");
-    } else if (venue.split(" ").length > 20) {
-      setError("Venue should be no more than twenty words");
-    } else {
-      setError('');
-    }
-  }, [activityName, venue]);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   function handleDate(date) {
     setDate(date);
@@ -69,10 +64,58 @@ export default function AddActivityCard() {
       peopleGoing: 1,  // default to 1
       totalMembers: totalMembers,
       description: description,
-    }
+    } 
+    
+    if (isEditMode) {
+    updateDB(id, newActivity, "activities");
+    
+    //Ensure date and time are converted to Date objects
+    console.log("New Activity: ", newActivity);
+    const dtDate = new Date(newActivity.date);
+    console.log("Date: ", dtDate);
+    const date = dtDate.toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" });
+    console.log("Date: ", date);
+
+    const dtTime = new Date(newActivity.time);
+    const time = dtTime.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false });
+
+    navigation.navigate('ActivityDetails', {
+        id,
+        activityName,
+        venue,
+        date,
+        time,
+        peopleGoing: 1,
+        totalMembers,
+        description,
+    });
+} else {
     writeToDB(newActivity, "activities");
     navigation.goBack();
+}
+    
   }
+
+  useEffect(() => {
+    if (route?.params) {
+      console.log("Route Params: ", route.params);
+      const { id, activityName, venue, date, time, totalMembers, description } = route.params;
+      const dateObj = parse(date, 'MMM dd, yyyy', new Date());
+      const formattedDate = format(dateObj, 'yyyy-MM-dd');
+      const dateTimeString = `${formattedDate}T${time}:00`;
+      const timeObj = new Date(dateTimeString);
+      setActivityName(activityName);
+      setVenue(venue);
+      setDate(dateObj);
+      setTime(timeObj);
+      setTotalMembers(totalMembers);
+      setDescription(description);
+      setIsEditMode(true);
+      console.log("Passed ID: ", id);
+      setId(id);
+    }
+  }, [route?.params]);
+
   return (
     < View style={styles.cardContainer}>
       <Text style={styles.textInfo}>Activity Name</Text>
