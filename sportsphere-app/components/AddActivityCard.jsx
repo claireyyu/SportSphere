@@ -222,7 +222,7 @@ export const styles = StyleSheet.create({
       },
       buttonText: {
         color: COLORS.background,
-        fontSize: FONTSIZE.body,
+        fontSize: FONTSIZE.small,
         fontWeight: 'bold',
       },
       button: {
