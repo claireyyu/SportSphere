@@ -31,12 +31,14 @@ export default function ActivityDetailCard({ route, navigation }) {
         <Text style={styles.peopleCount}>{totalMembers} ppl</Text>
       </View>
       <Text style={styles.goingText}>{peopleGoing} ppl going</Text>
-      <PressableButton componentStyle={styles.button}>
-        <Text style={styles.buttonText}>Edit</Text>
-      </PressableButton>
-      <PressableButton componentStyle={[styles.button, {backgroundColor: COLORS.delete}]}>
-        <Text style={styles.buttonText}>Delete</Text>
-      </PressableButton>
+      <View style={styles.buttonContainer}>
+        <PressableButton componentStyle={styles.button}>
+          <Text style={styles.buttonText}>Edit</Text>
+        </PressableButton>
+        <PressableButton componentStyle={[styles.button, {backgroundColor: COLORS.delete}]}>
+          <Text style={styles.buttonText}>Delete</Text>
+        </PressableButton>
+      </View>
 
     </View>
   );
@@ -98,15 +100,20 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.medium,
     fontWeight: 'bold',
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   button: {
+    flex: 1,
     backgroundColor: COLORS.primary,
     paddingVertical: SPACING.xsmall,
     paddingHorizontal: SPACING.small,
     borderRadius: ROUNDED.small,
     alignSelf: 'center',
     alignItems: 'center',
-    margin: SPACING.xsmall,
-    width: 200,
+    margin: SPACING.small,
   },
   buttonText: {
     color: COLORS.background,
