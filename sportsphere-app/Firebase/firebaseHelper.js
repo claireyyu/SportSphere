@@ -39,7 +39,6 @@ export async function updateDB(id, updatedItem, collectionName) {
     try {
         const docRef = doc(db, collectionName, id);
         await updateDoc(docRef, updatedItem);
-        console.log("Document updated with ID: ", id);
     } catch (err) {
         console.error(err);
     }
