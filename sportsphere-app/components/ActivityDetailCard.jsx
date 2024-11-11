@@ -55,6 +55,14 @@ export default function ActivityDetailCard({ route }) {
           source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
         />
       </View>
+      <View style={styles.joinBtnContainer}>
+      <PressableButton 
+        componentStyle={styles.button}
+        pressedFunction={handleJoinActivity}>
+          <Text style={styles.buttonText}>Join</Text>
+        </PressableButton>
+      </View>
+
       <View style={styles.infoContainer}>
         <Text style={styles.labelText}>Location</Text>
         <Text style={styles.infoText}>{venue}{`\n`}</Text>
@@ -81,12 +89,14 @@ export default function ActivityDetailCard({ route }) {
         pressedFunction={handleDeleteActivity}>
           <Text style={styles.buttonText}>Delete</Text>
         </PressableButton>
-        <PressableButton 
+      </View>
+      {/* <View style={styles.btnContainer}>
+      <PressableButton 
         componentStyle={styles.button}
         pressedFunction={handleJoinActivity}>
           <Text style={styles.buttonText}>Join</Text>
         </PressableButton>
-      </View>
+      </View> */}
 
     </View>
   );
@@ -147,6 +157,11 @@ const styles = StyleSheet.create({
     color: COLORS.foreground,
     marginBottom: SPACING.medium,
     fontWeight: 'bold',
+  },
+  joinBtnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   btnContainer: {
     flexDirection: 'row',
