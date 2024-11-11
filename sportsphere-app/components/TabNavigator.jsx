@@ -11,10 +11,18 @@ import ActivityScreenHeader from './ActivityScreenHeader';
 import TitleScreenHeader from './TitleScreenHeader';
 import ProfileScreenHeader from './ProfileScreenHeader';
 import ActivityStack from './ActivityStack';
+import { useState } from 'react';
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  function handleModalVisible() {
+    setModalVisible(!modalVisible);
+  }
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -47,11 +55,15 @@ const TabNavigator = () => {
     >
       <Tab.Screen
         name="Activity"
-        component={ActivityScreen}
+        // component={ActivityScreen}
         options={{
-          header: ActivityScreenHeader,
+          header: () => <ActivityScreenHeader modalHandler={handleModalVisible} />,
         }}
-      />
+      >
+        {() => (
+          <ActivityScreen modalVisible={modalVisible} modalHandler={handleModalVisible} />
+        )}
+      </Tab.Screen>
       <Tab.Screen
         name="Chat"
         component={ChatScreen}

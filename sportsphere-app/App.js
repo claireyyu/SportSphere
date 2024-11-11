@@ -15,6 +15,7 @@ import ReminderScreen from './screens/ReminderScreen';
 import AddReminderButton from './components/AddReminderButton';
 import ChatDetailScreen from './screens/ChatDetailScreen';
 import { QueryProvider } from './context/QueryProvider';
+import EditActivityScreen from './screens/EditActivityScreen';
 
 export default function App() {
   const Stack = createNativeStackNavigator();

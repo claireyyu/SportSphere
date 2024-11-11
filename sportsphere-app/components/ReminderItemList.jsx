@@ -75,11 +75,6 @@ function ReminderItem({ title, time, date, id, reminderItemHandler }) {
   }
 
 
-  function renderRightActions() {
-    <RectButton style={styles.deleteButton} onPress={handleDelete}>
-      <Text style={styles.deleteText}>Delete</Text>
-    </RectButton>
-  }
   return (
     <Pressable onLongPress={handleDelete} style={styles.deleteButton}>
     <View style={styles.card}>

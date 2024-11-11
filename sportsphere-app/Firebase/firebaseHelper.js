@@ -1,5 +1,5 @@
 import { db } from './firebaseSetup';
-import { collection, getDocs, addDoc, onSnapshot, updateDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, onSnapshot, updateDoc, doc, deleteDoc } from 'firebase/firestore';
 import { manageReminder } from '../utils/readDBHelper';
 import { manageActivity } from '../utils/readDBHelper';
 
