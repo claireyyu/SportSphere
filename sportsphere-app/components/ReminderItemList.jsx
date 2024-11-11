@@ -4,7 +4,8 @@ import { COLORS, FONTSIZE, SPACING, ROUNDED, SHADOW } from '../global';
 import { db } from "../Firebase/firebaseSetup";
 import { onSnapshot, collection, doc, query, where } from "firebase/firestore";
 import { useEffect } from 'react';
-import { readAllFiles } from '../Firebase/firebaseHelper';
+import { readAllFiles, updateDB } from '../Firebase/firebaseHelper';
+import { parse, format } from 'date-fns';
 
 export default function ReminderItemList() {
   const [reminderItems, setReminderItems] = React.useState([]);
@@ -13,7 +14,7 @@ export default function ReminderItemList() {
   
   
   useEffect(() => {
-    readAllFiles("reminders", setReminderItems, (error) => {
+    readAllFiles(collectionName, setReminderItems, (error) => {
       Alert.alert("Error fetching reminders", error.message);
     });
   }, []);
@@ -23,16 +24,30 @@ export default function ReminderItemList() {
     <FlatList
       data={reminderItems}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <ReminderItem title={item.title} time={item.time} date={item.date} />}
+      renderItem={({ item }) => <ReminderItem title={item.title} time={item.time} date={item.date} id={item.id} />}
       contentContainerStyle={styles.listContainer}
       showsVerticalScrollIndicator={false}
     />
   );
 }
 
-function ReminderItem({ title, time, date }) {
+function ReminderItem({ title, time, date, id }) {
   const [isEnabled, setIsEnabled] = React.useState(true);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  function toggleSwitch(id) {
+    const dateObj = parse(date, 'MMM dd, yyyy', new Date());
+    const formattedDate = format(dateObj, 'yyyy-MM-dd');
+    const dateTimeString = `${formattedDate}T${time}:00`;
+    const timeObj = new Date(dateTimeString);
+    
+    const newReminder = {
+      title,
+      time: timeObj,
+      date: dateObj,
+      turnedOn: !isEnabled,
+    };
+    updateDB(id, newReminder, "reminders");
+    setIsEnabled(previousState => !previousState);
+  }
 
   return (
     <View style={styles.card}>
@@ -44,7 +59,7 @@ function ReminderItem({ title, time, date }) {
       <Switch
         trackColor={{ false: COLORS.background, true: COLORS.primary }}
         thumbColor={isEnabled ? COLORS.background : COLORS.background}
-        onValueChange={toggleSwitch}
+        onValueChange={() => toggleSwitch(id)}
         value={isEnabled}
       />
     </View>
