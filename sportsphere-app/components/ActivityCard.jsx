@@ -4,10 +4,20 @@ import { Avatar } from '@rneui/themed';
 import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
 import { ProgressBar } from './ProgressBar';
 import PressableButton from './PressableButton';
+import { useNavigation } from '@react-navigation/native';
   
 export default function ActivityCard({ activityName, venue, date, time, peopleGoing, totalMembers, description }) {
+  const navigation = useNavigation();
   function handleToActivityDetail() {
-    console.log('Navigating to Activity Detail');
+    navigation.navigate('ActivityDetails', {
+      activityName,
+      venue,
+      date,
+      time,
+      peopleGoing,
+      totalMembers,
+      description,
+    });
   }
 
   return (
