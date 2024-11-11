@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { Avatar } from 'react-native-elements'
+import { Avatar } from '@rneui/themed';
 import { COLORS, FONTSIZE, ROUNDED, SHADOW, SIZE, SPACING } from '../global'
 import { ProgressBar } from './ProgressBar'
 import PressableButton from './PressableButton'
@@ -12,17 +12,17 @@ export default function ActivityDetailCard({ route, navigation }) {
       <View style={styles.headerContainer}>
         <Text style={styles.title}>{activityName}</Text>
         <Avatar
-          size={SIZE.smallAvatar}
+          size={SIZE.mediumAvatar}
           rounded
           source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
         />
       </View>
       <View style={styles.infoContainer}>
-        <Text style={styles.infoText}>Location:</Text>
+        <Text style={styles.labelText}>Location</Text>
         <Text style={styles.infoText}>{venue}{`\n`}</Text>
-        <Text style={styles.infoText}>Date & Time: </Text>
+        <Text style={styles.labelText}>Date & Time</Text>
         <Text style={styles.infoText}>{`${date} - ${time}\n`}</Text>
-        <Text style={styles.infoText}>Description: </Text>
+        <Text style={styles.labelText}>Description</Text>
         <Text style={styles.infoText}>{description}{`\n`}</Text>
         <Text style={styles.goingText}>Pictures</Text>
       </View>
@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
     shadowOpacity: SHADOW.opacity,
     shadowRadius: SHADOW.radius,
     elevation: SHADOW.elevation,
-
   },
   headerContainer: {
     flexDirection: 'row',
@@ -63,15 +62,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: FONTSIZE.h2,
+    fontSize: FONTSIZE.h1,
     fontWeight: 'bold',
     color: COLORS.text,
   },
   infoContainer: {
     marginVertical: SPACING.small,
   },
+  labelText: {
+    fontSize: FONTSIZE.body,
+    fontWeight: 'bold',
+    color: COLORS.foreground,
+    marginBottom: SPACING.xsmall,
+  },
   infoText: {
-    fontSize: FONTSIZE.h3,
+    fontSize: FONTSIZE.body,
     color: COLORS.secondaryText,
     marginBottom: SPACING.xsmall,
     //marginVertical: SPACING.xsmall,
@@ -90,14 +95,14 @@ const styles = StyleSheet.create({
   goingText: {
     fontSize: FONTSIZE.small,
     color: COLORS.foreground,
-    marginBottom: SPACING.small,
+    marginBottom: SPACING.medium,
     fontWeight: 'bold',
   },
   button: {
     backgroundColor: COLORS.primary,
-    paddingVertical: SPACING.small,
+    paddingVertical: SPACING.xsmall,
     paddingHorizontal: SPACING.small,
-    borderRadius: ROUNDED.default,
+    borderRadius: ROUNDED.small,
     alignSelf: 'center',
     alignItems: 'center',
     margin: SPACING.xsmall,
