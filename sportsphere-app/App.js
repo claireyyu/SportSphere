@@ -34,9 +34,17 @@ export default function App() {
             name="ActivityDetails"
             component={ActivityDetailScreen}
             options={{title: "Activity Details", 
-              header: () => <TitleScreenHeader title="Activity Details" />
-              }
-            }
+              headerStyle: {
+                backgroundColor: COLORS.primary,
+              },
+              headerTitleStyle: {
+                fontSize: FONTSIZE.h3,
+                color: COLORS.background,
+                fontWeight: 'bold',
+              },
+              headerBackTitleVisible: false,
+              headerTintColor: COLORS.background,
+            }}
           />
           <Stack.Screen
             name="AddActivity"

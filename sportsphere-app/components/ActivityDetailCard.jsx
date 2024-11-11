@@ -1,48 +1,43 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 import { Avatar } from '@rneui/themed';
-import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
-import { ProgressBar } from './ProgressBar';
-import PressableButton from './PressableButton';
-import { useNavigation } from '@react-navigation/native';
-  
-export default function ActivityCard({ activityName, venue, date, time, peopleGoing, totalMembers, description }) {
-  const navigation = useNavigation();
-  
-  function handleToActivityDetail() {
-    navigation.navigate('ActivityDetails', {
-      activityName,
-      venue,
-      date,
-      time,
-      peopleGoing,
-      totalMembers,
-      description,
-    });
-  }
+import { COLORS, FONTSIZE, ROUNDED, SHADOW, SIZE, SPACING } from '../global'
+import { ProgressBar } from './ProgressBar'
+import PressableButton from './PressableButton'
 
+export default function ActivityDetailCard({ route, navigation }) {
+    const { activityName, venue, date, time, peopleGoing, totalMembers, description } = route.params;
   return (
     <View style={styles.cardContainer}>
       <View style={styles.headerContainer}>
         <Text style={styles.title}>{activityName}</Text>
         <Avatar
-          size={SIZE.smallAvatar}
+          size={SIZE.mediumAvatar}
           rounded
           source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
         />
       </View>
       <View style={styles.infoContainer}>
-        <Text style={styles.infoText}>Location: {venue}</Text>
-        <Text style={styles.infoText}>Time: {`${date} - ${time}`}</Text>
+        <Text style={styles.labelText}>Location</Text>
+        <Text style={styles.infoText}>{venue}{`\n`}</Text>
+        <Text style={styles.labelText}>Date & Time</Text>
+        <Text style={styles.infoText}>{`${date} - ${time}\n`}</Text>
+        <Text style={styles.labelText}>Description</Text>
+        <Text style={styles.infoText}>{description}{`\n`}</Text>
+        <Text style={styles.goingText}>Pictures</Text>
       </View>
       <View style={styles.progressContainer}>
         <ProgressBar value={peopleGoing} total={totalMembers} />
         <Text style={styles.peopleCount}>{totalMembers} ppl</Text>
       </View>
       <Text style={styles.goingText}>{peopleGoing} ppl going</Text>
-      <PressableButton componentStyle={styles.button} pressedFunction={handleToActivityDetail}>
-        <Text style={styles.buttonText}>Learn More</Text>
+      <PressableButton componentStyle={styles.button}>
+        <Text style={styles.buttonText}>Edit</Text>
       </PressableButton>
+      <PressableButton componentStyle={[styles.button, {backgroundColor: COLORS.delete}]}>
+        <Text style={styles.buttonText}>Delete</Text>
+      </PressableButton>
+
     </View>
   );
 }
@@ -60,7 +55,6 @@ const styles = StyleSheet.create({
     shadowOpacity: SHADOW.opacity,
     shadowRadius: SHADOW.radius,
     elevation: SHADOW.elevation,
-
   },
   headerContainer: {
     flexDirection: 'row',
@@ -68,17 +62,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: FONTSIZE.h3,
+    fontSize: FONTSIZE.h1,
     fontWeight: 'bold',
     color: COLORS.text,
   },
   infoContainer: {
     marginVertical: SPACING.small,
   },
+  labelText: {
+    fontSize: FONTSIZE.body,
+    fontWeight: 'bold',
+    color: COLORS.foreground,
+    marginBottom: SPACING.xsmall,
+  },
   infoText: {
     fontSize: FONTSIZE.body,
     color: COLORS.secondaryText,
     marginBottom: SPACING.xsmall,
+    //marginVertical: SPACING.xsmall,
   },
   progressContainer: {
     flexDirection: 'row',
@@ -94,15 +95,18 @@ const styles = StyleSheet.create({
   goingText: {
     fontSize: FONTSIZE.small,
     color: COLORS.foreground,
-    marginBottom: SPACING.small,
+    marginBottom: SPACING.medium,
     fontWeight: 'bold',
   },
   button: {
     backgroundColor: COLORS.primary,
-    paddingVertical: SPACING.small,
+    paddingVertical: SPACING.xsmall,
     paddingHorizontal: SPACING.small,
-    borderRadius: ROUNDED.default,
-    alignSelf: 'flex-end',
+    borderRadius: ROUNDED.small,
+    alignSelf: 'center',
+    alignItems: 'center',
+    margin: SPACING.xsmall,
+    width: 200,
   },
   buttonText: {
     color: COLORS.background,

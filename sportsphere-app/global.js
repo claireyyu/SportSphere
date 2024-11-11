@@ -5,10 +5,12 @@ export const COLORS = {
   'defaultBackground': '#F2F2F2',
   'border': '#C7C7CC',
   'secondaryText': '#808080',
+  'delete': '#FF3B30',
 };
 
 export const FONTSIZE = {
-  'h1': 36,
+  'h0': 36,
+  'h1': 24,
   'h2': 20,
   'h3': 18,
   'body': 16,
@@ -42,6 +44,7 @@ export const SIZE = {
   'pressableIcon': 26,
   'tabIcon': 28,
   'smallAvatar': 45,
+  'mediumAvatar': 70,
   'headerBar': 75,
   'tabBar': 80,
   'avatar': 90,
