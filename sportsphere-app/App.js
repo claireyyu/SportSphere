@@ -21,37 +21,21 @@ import LoginForm from './components/LoginForm';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from './Firebase/firebaseSetup';
 import { useEffect, useState } from 'react';
+import AuthScreenHeader from './components/AuthScreenHeader';
+import { useFonts, Inter_400Regular, Inter_600SemiBold } from '@expo-google-fonts/inter';
 
 const Stack = createNativeStackNavigator();
 
 const AuthStack = (
   <>
     <Stack.Screen name="Login" component={LoginForm}
-      options={{title: "Login", 
-        headerStyle: {
-          backgroundColor: COLORS.primary,
-        },
-        headerTitleStyle: {
-          fontSize: FONTSIZE.h3,
-          color: COLORS.background,
-          fontWeight: 'bold',
-        },
-        headerBackTitleVisible: false,
-        headerTintColor: COLORS.background,
+      options={{
+        header: AuthScreenHeader,
       }}
     />
     <Stack.Screen name="SignUp" component={SignUpForm}
-      options={{title: "Sign Up", 
-        headerStyle: {
-          backgroundColor: COLORS.primary,
-        },
-        headerTitleStyle: {
-          fontSize: FONTSIZE.h3,
-          color: COLORS.background,
-          fontWeight: 'bold',
-        },
-        headerBackTitleVisible: false,
-        headerTintColor: COLORS.background,
+      options={{
+        header: AuthScreenHeader,
       }}
     />
   </>
@@ -186,9 +170,22 @@ export default function App() {
     }
   }, []);
 
+  const getBackgroundColor = (stackName) => {
+    switch (stackName) {
+      case 'AuthStack':
+        return COLORS.background;
+      default:
+        return COLORS.defaultBackground;
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <CustomStatusBar statusBgColor={COLORS.primary} barStyle="light-content">
+      <CustomStatusBar
+        statusBgColor={COLORS.primary}
+        barStyle="light-content"
+        backgroundColor={getBackgroundColor(isUserLoggedIn ? 'AppStack' : 'AuthStack')}
+      >
         <QueryProvider>
         <NavigationContainer>
         <Stack.Navigator>
