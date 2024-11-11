@@ -1,6 +1,7 @@
 import { db } from './firebaseSetup';
 import { collection, getDocs, addDoc, onSnapshot } from 'firebase/firestore';
 import { manageReminder } from '../databaseUtils';
+import { manageActivity } from '../databaseUtils';
 
 
 export async function writeToDB(data, collectionName) {
@@ -18,7 +19,11 @@ export function readAllFiles(collectionName, callback, errorCallback) {
   const unsubscribe = onSnapshot(collection(db, collectionName), (querySnapshot) => {
     const items = [];
     querySnapshot.forEach((doc) => {
+      if (collectionName === "activities") {
+        manageActivity(doc, items);
+      } else if (collectionName === "reminders") {
       manageReminder(doc, items);
+      }
     });
     items.sort((a, b) => a.dtCombined - b.dtCombined);
     callback(items);
