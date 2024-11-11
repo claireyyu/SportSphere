@@ -6,6 +6,7 @@ import { QueryContext } from "../context/QueryProvider";
 import { readAllFiles } from '../Firebase/firebaseHelper';
 
 export default function ActivityCardList({modalVisible, modalHandler}) {
+export default function ActivityCardList({modalVisible, modalHandler}) {
   const {searchQuery} = useContext(QueryContext);
 
   const collectionName = "activities";
@@ -33,31 +34,32 @@ export default function ActivityCardList({modalVisible, modalHandler}) {
     );
   });
 
-  const collectionName = "activities";
-  const [activityItems, setActivityItems] = useState([]);
+  // const collectionName = "activities";
+  // const [activityItems, setActivityItems] = useState([]);
 
-  function handleActivityItems(newItems) {
-    setActivityItems(newItems);
-  }
+  // function handleActivityItems(newItems) {
+  //   setActivityItems(newItems);
+  // }
 
-  useEffect(() => {
-    // const unsubscribe = onSnapshot(collection(db, collectionName), (querySnapshot) => {
-    //   const currActivityItems = [];
-    readAllFiles(collectionName, handleActivityItems, (error) => {
-      console.log("Error fetching activities", error.message);
-    });
-  }, []);
+  // useEffect(() => {
+  //   // const unsubscribe = onSnapshot(collection(db, collectionName), (querySnapshot) => {
+  //   //   const currActivityItems = [];
+  //   readAllFiles(collectionName, handleActivityItems, (error) => {
+  //     console.log("Error fetching activities", error.message);
+  //   });
+  // }, []);
 
-  const filteredActivityItems = activityItems.filter(item => {
-    const terms = searchQuery.toLowerCase().split(' ');
-    return terms.some(term =>
-      item.activityName.toLowerCase().includes(term) ||
-      item.venue.toLowerCase().includes(term) ||
-      item.description.toLowerCase().includes(term) ||
-      item.date.toLowerCase().includes(term)
-    );
-  });
+  // const filteredActivityItems = activityItems.filter(item => {
+  //   const terms = searchQuery.toLowerCase().split(' ');
+  //   return terms.some(term =>
+  //     item.activityName.toLowerCase().includes(term) ||
+  //     item.venue.toLowerCase().includes(term) ||
+  //     item.description.toLowerCase().includes(term) ||
+  //     item.date.toLowerCase().includes(term)
+  //   );
+  // });
   return (
+    <View>
     <View>
     <FlatList
       data={filteredActivityItems}
@@ -77,6 +79,7 @@ export default function ActivityCardList({modalVisible, modalHandler}) {
       contentContainerStyle={styles.listContainer}
       showsVerticalScrollIndicator={false}
     />
+    </View>
     </View>
   )
 }
