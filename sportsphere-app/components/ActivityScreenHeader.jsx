@@ -6,11 +6,13 @@ import SearchBar from './SearchBar';
 import PressableButton from './PressableButton';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { ActivityContext } from '../context/ActivityProvider';
+import { useNavigation } from '@react-navigation/native';
 
 
-export default function ActivityScreenHeader({navigation, modalHandler}) {
+export default function ActivityScreenHeader({modalHandler}) {
   const { activityItems, searchQuery, setSearchQuery } = useContext(ActivityContext);
   const [search, setSearch] = useState("");
+  const navigation = useNavigation();
 
   const updateSearch = (text) => {
     setSearchQuery(text);

@@ -1,13 +1,33 @@
 import React from 'react'
 import { Modal, View, StyleSheet, Text } from 'react-native'
 import { Pressable } from 'react-native'
+import { COLORS, FONTSIZE, ROUNDED, SPACING } from '../global'
+import Checkbox from 'expo-checkbox';
 
 export default function FilterModal({modalVisible, modalHandler}) {
+  const [isDateSelected, setDateSelection] = React.useState(true);
+  const [isDistanceSelected, setDistanceSelection] = React.useState(false);
   return (
     <Modal animationType='none' transparent={true} visible={modalVisible}>
         <View style={styles.card}>
             <View style={styles.modal}>
-                <Text style={styles.modalText}>Filter by:</Text>
+                <Text style={styles.modalText}>Sort by:</Text>
+                <View style={styles.checkboxContainer}>
+                <Checkbox
+                    value={isDateSelected}
+                    onValueChange={setDateSelection}
+                    style={styles.checkbox}
+                />
+                <Text style={styles.selectionText}>Latest Event</Text>
+                </View>
+                <View style={styles.checkboxContainer}>
+                <Checkbox
+                    value={isDistanceSelected}
+                    onValueChange={setDistanceSelection}
+                    style={styles.checkbox}
+                />
+                <Text style={styles.selectionText}>Distance</Text>
+                </View>
                 <Pressable style={styles.button} onPress={() => modalHandler(!modalVisible)}>
                 <Text style={styles.buttonText}>Close</Text>
                 </Pressable>
@@ -25,23 +45,40 @@ export const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.5)',
     },
     modal: {
-        backgroundColor: 'white',
+        backgroundColor: COLORS.background,
         padding: 20,
-        borderRadius: 10,
+        borderRadius: ROUNDED.default,
         width: '80%',
         alignItems: 'center',
     },
     modalText: {
-        fontSize: 20,
-        marginBottom: 20,
+        fontSize: FONTSIZE.h3,
+        marginBottom: 15,
+        fontWeight: 'bold',
     },
     button: {
-        backgroundColor: 'blue',
-        padding: 10,
+        backgroundColor: COLORS.primary,
+        padding: SPACING.xsmall,
+        width: 100,
+        alignItems: 'center',
+        marginTop: SPACING.xsmall,
         borderRadius: 5,
     },
     buttonText: {
-        color: 'white',
-        fontSize: 20,
+        color: COLORS.background,
+        fontSize: FONTSIZE.h2,
+        fontWeight: 'bold',
+    },
+    checkboxContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: 150,
+        marginBottom: 10,
+    },
+    checkbox: {
+        marginRight: 10,
+    },
+    selectionText: {
+        fontSize: FONTSIZE.body,
     },
     })
