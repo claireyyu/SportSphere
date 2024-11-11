@@ -41,6 +41,10 @@ export default function ActivityDetailCard({ route }) {
     ]);
   }
 
+  function handleJoinActivity() {
+    Alert.alert("You joined the event!")
+  }
+
   return (
     <View style={styles.cardContainer}>
       <View style={styles.headerContainer}>
@@ -79,7 +83,7 @@ export default function ActivityDetailCard({ route }) {
         </PressableButton>
         <PressableButton 
         componentStyle={styles.button}
-        pressedFunction={Alert.alert("You joined the event!")}>
+        pressedFunction={handleJoinActivity}>
           <Text style={styles.buttonText}>Join</Text>
         </PressableButton>
       </View>
