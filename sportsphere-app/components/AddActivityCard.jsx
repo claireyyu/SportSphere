@@ -26,9 +26,9 @@ export default function AddActivityCard({ route }) {
 
   useEffect(() => {
     if (activityName.split(" ").length > 5) {
-      setError("Activity name should be no more than five words");
+      setError("Activity name should be no more than five words!");
     } else if (venue.split(" ").length > 20) {
-      setError("Venue should be no more than twenty words");
+      setError("Venue should be no more than twenty words!");
     } else {
       setError('');
     }
