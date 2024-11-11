@@ -1,5 +1,5 @@
 import { db } from './firebaseSetup';
-import { collection, getDocs, addDoc, onSnapshot, updateDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, onSnapshot, updateDoc, doc, deleteDoc } from 'firebase/firestore';
 import { manageReminder } from '../databaseUtils';
 import { manageActivity } from '../databaseUtils';
 
@@ -39,6 +39,15 @@ export async function updateDB(id, updatedItem, collectionName) {
     try {
         const docRef = doc(db, collectionName, id);
         await updateDoc(docRef, updatedItem);
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+export async function deleteDB(id, collectionName) {
+    try {
+        await deleteDoc(doc(db, collectionName, id));
+        console.log("Document with ID: ", id, " deleted");
     } catch (err) {
         console.error(err);
     }
