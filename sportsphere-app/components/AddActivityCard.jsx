@@ -46,12 +46,32 @@ export default function AddActivityCard({ route }) {
       totalMembers: totalMembers,
       description: description,
     } 
+    
     if (isEditMode) {
-      updateDB(id, newActivity, "activities");
-    } else {
-      writeToDB(newActivity, "activities");
-    }
+    updateDB(id, newActivity, "activities");
+    
+    // Ensure date and time are converted to Date objects
+    const dtDate = new Date(newActivity.date.seconds * 1000);
+    const date = dtDate.toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" });
+
+    const dtTime = new Date(newActivity.time.seconds * 1000);
+    const time = dtTime.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false });
+
+    navigation.navigate('ActivityDetails', {
+        id,
+        activityName,
+        venue,
+        date: date.toISOString,
+        time: time.toISOString,
+        peopleGoing: 1, 
+        totalMembers,
+        description,
+    });
+} else {
+    writeToDB(newActivity, "activities");
     navigation.goBack();
+}
+    
   }
 
   useEffect(() => {
