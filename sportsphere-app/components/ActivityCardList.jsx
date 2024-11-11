@@ -23,6 +23,7 @@ export default function ActivityCardList() {
           peopleGoing={item.peopleGoing}
           totalMembers={item.totalMembers}
           description={item.description}
+          id={item.id}
         />
       )}
       contentContainerStyle={styles.listContainer}

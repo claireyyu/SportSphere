@@ -1,5 +1,5 @@
 import { db } from './firebaseSetup';
-import { collection, getDocs, addDoc, onSnapshot } from 'firebase/firestore';
+import { collection, getDocs, addDoc, onSnapshot, updateDoc, doc } from 'firebase/firestore';
 import { manageReminder } from '../databaseUtils';
 import { manageActivity } from '../databaseUtils';
 
@@ -34,3 +34,12 @@ export function readAllFiles(collectionName, callback, errorCallback) {
 
   return unsubscribe;
 };
+
+export async function updateDB(id, updatedItem, collectionName) {
+    try {
+        const docRef = doc(db, collectionName, id);
+        await updateDoc(docRef, updatedItem);
+    } catch (err) {
+        console.error(err);
+    }
+}

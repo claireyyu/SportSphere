@@ -14,6 +14,7 @@ export function manageReminder(doc, items) {
         date,
         dtCombined: new Date(`${dtDate.toISOString().split('T')[0]}T${time}:00`)
       });
+      console.log(items)
     } else {
       console.log("Missing date or time for reminder:", doc.id);
     }

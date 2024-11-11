@@ -7,9 +7,11 @@ import PressableButton from './PressableButton';
 import { writeToDB } from '../Firebase/firebaseHelper';
 import { useNavigation } from '@react-navigation/native';
 import { parse, format } from 'date-fns';
+import { updateDB } from '../Firebase/firebaseHelper';
 
 
 export default function AddActivityCard({ route }) {
+  const [id, setId] = useState(null);
   const navigation = useNavigation();
   const [activityName, setActivityName] = useState('');
   const [venue, setVenue] = useState('');
@@ -43,14 +45,19 @@ export default function AddActivityCard({ route }) {
       peopleGoing: 1,  // default to 1
       totalMembers: totalMembers,
       description: description,
+    } 
+    if (isEditMode) {
+      updateDB(id, newActivity, "activities");
+    } else {
+      writeToDB(newActivity, "activities");
     }
-    writeToDB(newActivity, "activities");
     navigation.goBack();
   }
 
   useEffect(() => {
     if (route?.params) {
-      const { activityName, venue, date, time, totalMembers, description } = route.params;
+      console.log("Route Params: ", route.params);
+      const { id, activityName, venue, date, time, totalMembers, description } = route.params;
       const dateObj = parse(date, 'MMM dd, yyyy', new Date());
       const formattedDate = format(dateObj, 'yyyy-MM-dd');
       const dateTimeString = `${formattedDate}T${time}:00`;
@@ -62,6 +69,8 @@ export default function AddActivityCard({ route }) {
       setTotalMembers(totalMembers);
       setDescription(description);
       setIsEditMode(true);
+      console.log("Passed ID: ", id);
+      setId(id);
     }
   }, [route?.params]);
 

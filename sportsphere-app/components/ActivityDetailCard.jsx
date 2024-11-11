@@ -7,10 +7,12 @@ import PressableButton from './PressableButton'
 import { useNavigation } from '@react-navigation/native';
 
 export default function ActivityDetailCard({ route }) {
-  const { activityName, venue, date, time, peopleGoing, totalMembers, description } = route.params;
+  const { id, activityName, venue, date, time, peopleGoing, totalMembers, description } = route.params;
+  console.log("Route Params ActivityDetailCard: ", route.params);
   const navigation = useNavigation();
   function handleEditActivity() {
     navigation.navigate('EditActivity', {
+      id,
       activityName,
       venue,
       date,
