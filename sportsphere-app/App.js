@@ -14,8 +14,7 @@ import ConfirmEditProfileButton from './components/ConfirmEditProfileButton';
 import ReminderScreen from './screens/ReminderScreen';
 import AddReminderButton from './components/AddReminderButton';
 import ChatDetailScreen from './screens/ChatDetailScreen';
-import { ActivityProvider } from './context/ActivityProvider';
-import EditActivityScreen from './screens/EditActivityScreen';
+import { QueryProvider } from './context/QueryProvider';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -23,7 +22,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <CustomStatusBar statusBgColor={COLORS.primary} barStyle="light-content">
-        <ActivityProvider>
+        <QueryProvider>
         <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
@@ -135,7 +134,7 @@ export default function App() {
             />
         </Stack.Navigator>
           </NavigationContainer>
-        </ActivityProvider>
+        </QueryProvider>
       </CustomStatusBar>
     </View>
   );
