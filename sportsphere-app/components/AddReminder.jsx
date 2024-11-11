@@ -1,16 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Modal, StyleSheet, Button, TextInput, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { COLORS, ROUNDED, SPACING } from '../global'
-import { writeToDB } from '../Firebase/firebaseHelper';
+import { updateDB, writeToDB } from '../Firebase/firebaseHelper';
 import PressableButton from './PressableButton';
+import { parse, format } from 'date-fns';
 
-export default function AddReminder({ modalVisible, handleModalVisible }) {
+export default function AddReminder({ modalVisible, handleModalVisible, route }) {
   const [title, setTitle] = useState('');
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   function handleClearDate() { 
     setDate(null);
@@ -22,6 +24,20 @@ export default function AddReminder({ modalVisible, handleModalVisible }) {
     handleClearDate();
     handleModalVisible();
   }
+  useEffect(() => {
+    if (route?.params) {
+      const { title, date, time, id } = route.params;
+      const dateObj = parse(date, 'MMM dd, yyyy', new Date());
+      const formattedDate = format(dateObj, 'yyyy-MM-dd');
+      const dateTimeString = `${formattedDate}T${time}:00`;
+      const timeObj = new Date(dateTimeString);
+      setTitle(title);
+      setDate(dateObj);
+      setTime(timeObj);
+      setIsEditMode(true);
+      console.log("Passed id: ", id);
+    }
+  }, [route?.params]);
 
   function handleNewReminder() {
     try {
@@ -31,7 +47,12 @@ export default function AddReminder({ modalVisible, handleModalVisible }) {
         time: time || new Date(),
         turnedOn: true,
       };
+      if (isEditMode) {
+        updateDB(route.params.id, newReminder, "reminders");
+        setIsEditMode(false);
+      } else {
       writeToDB(newReminder, "reminders");
+      }
     } catch (error) {
       console.error("Error adding document: ", error);
     }

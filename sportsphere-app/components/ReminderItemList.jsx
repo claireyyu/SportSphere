@@ -6,6 +6,8 @@ import { onSnapshot, collection, doc, query, where } from "firebase/firestore";
 import { useEffect } from 'react';
 import { readAllFiles, updateDB } from '../Firebase/firebaseHelper';
 import { parse, format } from 'date-fns';
+import PressableButton from './PressableButton';
+import EditReminderModal from './EditReminderModal';
 
 export default function ReminderItemList() {
   const [reminderItems, setReminderItems] = React.useState([]);
@@ -33,6 +35,12 @@ export default function ReminderItemList() {
 
 function ReminderItem({ title, time, date, id }) {
   const [isEnabled, setIsEnabled] = React.useState(true);
+  const [modalVisible, setModalVisible] = React.useState(false);
+
+  function handleModalVisible() {
+    setModalVisible(!modalVisible);
+  }
+
   function toggleSwitch(id) {
     const dateObj = parse(date, 'MMM dd, yyyy', new Date());
     const formattedDate = format(dateObj, 'yyyy-MM-dd');
@@ -50,6 +58,10 @@ function ReminderItem({ title, time, date, id }) {
   }
 
   return (
+    <View>
+    <PressableButton
+      pressedFunction={handleModalVisible}
+      childrenDirection={{ flexDirection: 'row', justifyContent: 'space-between' }}> 
     <View style={styles.card}>
       <View>
         <Text style={styles.title}>{title}</Text>
@@ -62,6 +74,9 @@ function ReminderItem({ title, time, date, id }) {
         onValueChange={() => toggleSwitch(id)}
         value={isEnabled}
       />
+    </View>
+    </PressableButton>
+    <EditReminderModal modalVisible={modalVisible} handleModalVisible={handleModalVisible} route={{params: {title, time, date, id}}} />
     </View>
   );
 }
