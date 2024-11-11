@@ -1,4 +1,4 @@
-import React, { act, useState } from 'react'
+import React, { act, useEffect, useState } from 'react'
 import { View, Text, StyleSheet, TextInput, SafeAreaView, Pressable } from 'react-native'
 import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
 import CalendarInput from './CalendarInput';
@@ -6,9 +6,10 @@ import TimeInput from './TimeInput';
 import PressableButton from './PressableButton';
 import { writeToDB } from '../Firebase/firebaseHelper';
 import { useNavigation } from '@react-navigation/native';
+import { parse, format } from 'date-fns';
 
 
-export default function AddActivityCard() {
+export default function AddActivityCard({ route }) {
   const navigation = useNavigation();
   const [activityName, setActivityName] = useState('');
   const [venue, setVenue] = useState('');
@@ -18,6 +19,7 @@ export default function AddActivityCard() {
   const [description, setDescription] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   function handleDate(date) {
     setDate(date);
@@ -45,6 +47,24 @@ export default function AddActivityCard() {
     writeToDB(newActivity, "activities");
     navigation.goBack();
   }
+
+  useEffect(() => {
+    if (route.params) {
+      const { activityName, venue, date, time, totalMembers, description } = route.params;
+      const dateObj = parse(date, 'MMM dd, yyyy', new Date());
+      const formattedDate = format(dateObj, 'yyyy-MM-dd');
+      const dateTimeString = `${formattedDate}T${time}:00`;
+      const timeObj = new Date(dateTimeString);
+      setActivityName(activityName);
+      setVenue(venue);
+      setDate(dateObj);
+      setTime(timeObj);
+      setTotalMembers(totalMembers);
+      setDescription(description);
+      setIsEditMode(true);
+    }
+  }, [route.params]);
+
   return (
     < View style={styles.cardContainer}>
             <Text style={styles.textInfo}>Activity Name</Text>
