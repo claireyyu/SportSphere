@@ -4,54 +4,18 @@ import { COLORS, FONTSIZE, SPACING, ROUNDED, SHADOW } from '../global';
 import { db } from "../Firebase/firebaseSetup";
 import { onSnapshot, collection, doc, query, where } from "firebase/firestore";
 import { useEffect } from 'react';
+import { readAllFiles } from '../Firebase/firebaseHelper';
 
 export default function ReminderItemList() {
   const [reminderItems, setReminderItems] = React.useState([]);
 
   const collectionName = "reminders";
   
+  
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, collectionName), (querySnapshot) => {
-      const currReminderItems = [];
-      querySnapshot.forEach((docSnapshot) => {
-        const id = docSnapshot.id;
-        const data = docSnapshot.data();
-        if (!data.time || !data.date) {
-          console.log("No date or time data found for reminder with id", id);
-          return;
-        }
-
-        const dtDate = new Date(data.date.seconds * 1000);
-        // Format date to "Aug 24, 2024"
-        const date = dtDate.toLocaleDateString("en-US", {
-          month: "short",
-          day: "2-digit",
-          year: "numeric"
-        });
-        
-        const dtTime = new Date(data.time.seconds * 1000);
-        // Format time to "14:32" (24-hour format)
-        const time = dtTime.toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false
-        });
-
-        console.log(`Date: ${date}`);
-        console.log(`Time: ${time}`);
-        currReminderItems.push({ ...data, id, time, date, dtCombined: new Date(`${dtDate.toISOString().split('T')[0]}T${time}:00`) });
-      });
-      currReminderItems.sort((a, b) => a.dtCombined - b.dtCombined);
-      setReminderItems(currReminderItems);
-    }, (error) => {
-      console.log("on snapshot", error);
-      Alert.alert("Error", error.message);
+    readAllFiles("reminders", setReminderItems, (error) => {
+      Alert.alert("Error fetching reminders", error.message);
     });
-
-    return () => {
-      console.log("unsubscribing");
-      unsubscribe();
-    };
   }, []);
 
 

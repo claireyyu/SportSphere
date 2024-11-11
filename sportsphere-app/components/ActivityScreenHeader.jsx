@@ -5,12 +5,11 @@ import { COLORS, SPACING, SIZE } from '../global';
 import SearchBar from './SearchBar';
 import PressableButton from './PressableButton';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { ActivityContext } from '../context/ActivityProvider';
+import { QueryContext } from '../context/QueryProvider';
 
 
 export default function ActivityScreenHeader({navigation}) {
-  const { activityItems, searchQuery, setSearchQuery } = useContext(ActivityContext);
-  const [search, setSearch] = useState("");
+  const { searchQuery, setSearchQuery } = useContext(QueryContext);
 
   const updateSearch = (text) => {
     setSearchQuery(text);
