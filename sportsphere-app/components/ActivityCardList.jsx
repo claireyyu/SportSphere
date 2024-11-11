@@ -6,11 +6,20 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../Firebase/firebaseSetup";
 import { useEffect, useState, useContext } from 'react';
 import { useActivity, ActivityContext } from "../context/ActivityProvider";
+import FilterModal from "./FilterModal";
+import ActivityScreenHeader from "./ActivityScreenHeader";
 
-export default function ActivityCardList() {
+export default function ActivityCardList({modalVisible, modalHandler}) {
   const {activityItems, setActivityItems} = useContext(ActivityContext);
+  // const [modalVisible, setModalVisible] = useState(false);
+
+  // function handleModalVisible() {
+  //   setModalVisible(!modalVisible);
+  // }
 
   return (
+    <View>
+    <FilterModal modalVisible={modalVisible} modalHandler={modalHandler}/>
     <FlatList
       data={activityItems}
       keyExtractor={(item) => item.id}
@@ -29,6 +38,7 @@ export default function ActivityCardList() {
       contentContainerStyle={styles.listContainer}
       showsVerticalScrollIndicator={false}
     />
+    </View>
   )
 }
 

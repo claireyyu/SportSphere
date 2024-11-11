@@ -8,13 +8,15 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { ActivityContext } from '../context/ActivityProvider';
 
 
-export default function ActivityScreenHeader({navigation}) {
+export default function ActivityScreenHeader({navigation, modalHandler}) {
   const { activityItems, searchQuery, setSearchQuery } = useContext(ActivityContext);
   const [search, setSearch] = useState("");
 
   const updateSearch = (text) => {
     setSearchQuery(text);
   };
+
+  
 
   return (
     <DefaultScreenHeaderWrapper>
@@ -28,7 +30,7 @@ export default function ActivityScreenHeader({navigation}) {
           <PressableButton pressedFunction={()=>navigation.navigate("AddActivity")}>
             <Ionicons name="add-circle-outline" size={SIZE.pressableIcon} color={COLORS.background} />
           </PressableButton>
-          <PressableButton>
+          <PressableButton pressedFunction={modalHandler}>
             <Ionicons name="filter" size={SIZE.pressableIcon} color={COLORS.background} />
           </PressableButton>
         </View>
