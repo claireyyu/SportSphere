@@ -1,4 +1,4 @@
-import React, { act, useState } from 'react'
+import React, { act, useState, useEffect } from 'react'
 import { View, Text, StyleSheet, TextInput, SafeAreaView, Pressable } from 'react-native'
 import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
 import CalendarInput from './CalendarInput';
@@ -7,9 +7,9 @@ import PressableButton from './PressableButton';
 import { writeToDB } from '../Firebase/firebaseHelper';
 import { useNavigation } from '@react-navigation/native';
 
-
 export default function AddActivityCard() {
   const navigation = useNavigation();
+  const [error, setError] = useState('');
   const [activityName, setActivityName] = useState('');
   const [venue, setVenue] = useState('');
   const [date, setDate] = useState(null);
@@ -19,20 +19,48 @@ export default function AddActivityCard() {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
 
+  useEffect(() => {
+    if (activityName.split(" ").length > 5) {
+      setError("Activity name should be no more than five words");
+    } else if (venue.split(" ").length > 20) {
+      setError("Venue should be no more than twenty words");
+    } else {
+      setError('');
+    }
+  }, [activityName, venue]);
+
   function handleDate(date) {
     setDate(date);
   }
+
   function handleDatePicker() {
     setShowDatePicker(!showDatePicker);
   }
+
   function handleTime(time) {
     setTime(time);
   }
+
   function handleTimePicker() {
     setShowTimePicker(!showTimePicker);
   }
 
   function handleSave() {
+    if (!activityName || !venue || !date || !time || !totalMembers || !description) {
+      setError("Please fill in all fields!");
+      return;
+    }
+    
+    if (activityName.split(" ").length > 5) {
+      setError("Activity name should be no more than five words!");
+      return;
+    }
+
+    if (venue.split(" ").length > 20) {
+      setError("Venue should be no more than twenty words!");
+      return;
+    }
+    
     const newActivity = {
       activityName: activityName,
       venue: venue,
@@ -47,47 +75,48 @@ export default function AddActivityCard() {
   }
   return (
     < View style={styles.cardContainer}>
-            <Text style={styles.textInfo}>Activity Name</Text>
-            <TextInput 
-                style={styles.input}
-                onChangeText={setActivityName}
-                value={activityName}
-                placeholder="Badminton at Bonsor"
-            />
-        
-            <Text style={styles.textInfo}>Venue</Text>
-            <TextInput 
-                style={styles.input}
-                onChangeText={setVenue}
-                value={venue}
-                placeholder="123 Main Street, Burnaby"
-            />
-            <Text style={styles.textInfo}>Date</Text>
-            <CalendarInput date={date} setDate={handleDate} datePicker={showDatePicker} datePickerHandler={handleDatePicker}/>
-            <Text style={styles.textInfo}>Time</Text>
-            <TimeInput time={time} setTime={handleTime} timePicker={showTimePicker} timePickerHandler={handleTimePicker}/>
-            <Text style={styles.textInfo}>Total Members</Text>
-            <TextInput 
-                style={styles.input}
-                onChangeText={setTotalMembers}
-                value={totalMembers}
-                keyboardType="numeric"
-            />
-            <Text style={styles.textInfo}>Description</Text>
-            <TextInput 
-                style={styles.inputDescription}
-                onChangeText={setDescription}
-                value={description}
-                placeholder="Please bring your own racket..."
-                multiline={true}
-                numberOfLines={4} 
-            />
-            <Text style={styles.textInfo}>Select Photo</Text>
-            <PressableButton 
-            componentStyle={styles.button}
-            pressedFunction={handleSave} >
-                <Text style={styles.buttonText}>Submit</Text>
-            </PressableButton>
+      <Text style={styles.textInfo}>Activity Name</Text>
+      <TextInput 
+          style={styles.input}
+          onChangeText={setActivityName}
+          value={activityName}
+          placeholder="Badminton at Bonsor"
+      />
+  
+      <Text style={styles.textInfo}>Venue</Text>
+      <TextInput 
+          style={styles.input}
+          onChangeText={setVenue}
+          value={venue}
+          placeholder="123 Main Street, Burnaby"
+      />
+      <Text style={styles.textInfo}>Date</Text>
+      <CalendarInput date={date} setDate={handleDate} datePicker={showDatePicker} datePickerHandler={handleDatePicker}/>
+      <Text style={styles.textInfo}>Time</Text>
+      <TimeInput time={time} setTime={handleTime} timePicker={showTimePicker} timePickerHandler={handleTimePicker}/>
+      <Text style={styles.textInfo}>Total Members</Text>
+      <TextInput 
+          style={styles.input}
+          onChangeText={setTotalMembers}
+          value={totalMembers}
+          keyboardType="numeric"
+      />
+      <Text style={styles.textInfo}>Description</Text>
+      <TextInput 
+          style={styles.inputDescription}
+          onChangeText={setDescription}
+          value={description}
+          placeholder="Please bring your own racket..."
+          multiline={true}
+          numberOfLines={4} 
+      />
+      <Text style={styles.textInfo}>Select Photo</Text>
+      <PressableButton 
+      componentStyle={styles.button}
+      pressedFunction={handleSave} >
+          <Text style={styles.buttonText}>Submit</Text>
+      </PressableButton>
+      <Text style={styles.erroText}>{error}</Text>
     </View>
   )
 }
@@ -149,5 +178,12 @@ export const styles = StyleSheet.create({
         paddingHorizontal: SPACING.small,
         borderRadius: ROUNDED.default,
         alignSelf: 'flex-end',
-      },
-    });
+  },
+  erroText: {
+    color: COLORS.delete,
+    fontSize: FONTSIZE.small,
+    fontWeight: 'bold',
+    marginTop: SPACING.small,
+    textAlign: 'center',
+  },
+  });
