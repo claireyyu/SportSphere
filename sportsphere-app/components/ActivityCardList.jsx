@@ -7,6 +7,7 @@ import { readAllFiles } from '../Firebase/firebaseHelper';
 
 export default function ActivityCardList({modalVisible, modalHandler}) {
   const {searchQuery} = useContext(QueryContext);
+
   const collectionName = "activities";
   const [activityItems, setActivityItems] = useState([]);
 
@@ -15,8 +16,6 @@ export default function ActivityCardList({modalVisible, modalHandler}) {
   }
 
   useEffect(() => {
-    // const unsubscribe = onSnapshot(collection(db, collectionName), (querySnapshot) => {
-    //   const currActivityItems = [];
     readAllFiles(collectionName, handleActivityItems, (error) => {
       console.log("Error fetching activities", error.message);
     });
@@ -31,7 +30,9 @@ export default function ActivityCardList({modalVisible, modalHandler}) {
       item.date.toLowerCase().includes(term)
     );
   });
+
   return (
+    <View>
     <View>
     <FlatList
       data={filteredActivityItems}
@@ -51,6 +52,7 @@ export default function ActivityCardList({modalVisible, modalHandler}) {
       contentContainerStyle={styles.listContainer}
       showsVerticalScrollIndicator={false}
     />
+    </View>
     </View>
   )
 }

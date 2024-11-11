@@ -1,12 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, Switch, FlatList, Alert, Pressable } from 'react-native';
 import { COLORS, FONTSIZE, SPACING, ROUNDED, SHADOW } from '../global';
-import { db } from "../Firebase/firebaseSetup";
-import { onSnapshot, collection, doc, query, where } from "firebase/firestore";
 import { useEffect } from 'react';
 import { readAllFiles, updateDB, deleteDB } from '../Firebase/firebaseHelper';
-import { parse, format, set } from 'date-fns';
-
+import { parse, format } from 'date-fns';
+import PressableButton from './PressableButton';
+import EditReminderModal from './EditReminderModal';
 
 
 export default function ReminderItemList() {
@@ -38,6 +37,12 @@ export default function ReminderItemList() {
 
 function ReminderItem({ title, time, date, id, reminderItemHandler }) {
   const [isEnabled, setIsEnabled] = React.useState(true);
+  const [modalVisible, setModalVisible] = React.useState(false);
+
+  function handleModalVisible() {
+    setModalVisible(!modalVisible);
+  }
+
   function toggleSwitch(id) {
     const dateObj = parse(date, 'MMM dd, yyyy', new Date());
     const formattedDate = format(dateObj, 'yyyy-MM-dd');
@@ -76,7 +81,10 @@ function ReminderItem({ title, time, date, id, reminderItemHandler }) {
 
 
   return (
-    <Pressable onLongPress={handleDelete} style={styles.deleteButton}>
+    <View>
+    <PressableButton
+      pressedFunction={handleModalVisible}
+      childrenDirection={{ flexDirection: 'row', justifyContent: 'space-between' }}> 
     <View style={styles.card}>
       <View>
         <Text style={styles.title}>{title}</Text>
@@ -90,7 +98,9 @@ function ReminderItem({ title, time, date, id, reminderItemHandler }) {
         value={isEnabled}
       />
     </View>
-    </Pressable>
+    </PressableButton>
+    <EditReminderModal modalVisible={modalVisible} handleModalVisible={handleModalVisible} route={{params: {title, time, date, id}}} />
+    </View>
   );
 }
 
