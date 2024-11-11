@@ -5,13 +5,13 @@ import { COLORS, SPACING, SIZE } from '../global';
 import SearchBar from './SearchBar';
 import PressableButton from './PressableButton';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { ActivityContext } from '../context/ActivityProvider';
+import { QueryContext } from '../context/QueryProvider';
 import { useNavigation } from '@react-navigation/native';
 
 
-export default function ActivityScreenHeader({modalHandler}) {
-  const { activityItems, searchQuery, setSearchQuery } = useContext(ActivityContext);
-  const [search, setSearch] = useState("");
+
+export default function ActivityScreenHeader({ navigation }) {
+  const { searchQuery, setSearchQuery } = useContext(QueryContext);
   const navigation = useNavigation();
 
   const updateSearch = (text) => {

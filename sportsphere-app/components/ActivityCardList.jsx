@@ -5,23 +5,42 @@ import { SPACING } from '../global'
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../Firebase/firebaseSetup";
 import { useEffect, useState, useContext } from 'react';
-import { useActivity, ActivityContext } from "../context/ActivityProvider";
+import { QueryContext } from "../context/QueryProvider";
 import FilterModal from "./FilterModal";
 import ActivityScreenHeader from "./ActivityScreenHeader";
 
 export default function ActivityCardList({modalVisible, modalHandler}) {
-  const {activityItems, setActivityItems} = useContext(ActivityContext);
-  // const [modalVisible, setModalVisible] = useState(false);
+  const {searchQuery} = useContext(QueryContext);
 
-  // function handleModalVisible() {
-  //   setModalVisible(!modalVisible);
-  // }
+  const collectionName = "activities";
+  const [activityItems, setActivityItems] = useState([]);
 
+  function handleActivityItems(newItems) {
+    setActivityItems(newItems);
+  }
+
+  useEffect(() => {
+    // const unsubscribe = onSnapshot(collection(db, collectionName), (querySnapshot) => {
+    //   const currActivityItems = [];
+    readAllFiles(collectionName, handleActivityItems, (error) => {
+      console.log("Error fetching activities", error.message);
+    });
+  }, []);
+
+  const filteredActivityItems = activityItems.filter(item => {
+    const terms = searchQuery.toLowerCase().split(' ');
+    return terms.some(term =>
+      item.activityName.toLowerCase().includes(term) ||
+      item.venue.toLowerCase().includes(term) ||
+      item.description.toLowerCase().includes(term) ||
+      item.date.toLowerCase().includes(term)
+    );
+  });
   return (
     <View>
     <FilterModal modalVisible={modalVisible} modalHandler={modalHandler}/>
     <FlatList
-      data={activityItems}
+      data={filteredActivityItems}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
         <ActivityCard

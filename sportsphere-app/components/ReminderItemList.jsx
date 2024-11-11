@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     color: COLORS.foreground,
   },
   time: {
-    fontSize: FONTSIZE.h1,
+    fontSize: FONTSIZE.h0,
     fontWeight: 'bold',
     color: COLORS.foreground,
   },

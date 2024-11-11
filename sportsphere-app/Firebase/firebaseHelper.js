@@ -1,19 +1,17 @@
 import { db } from './firebaseSetup';
 import { collection, getDocs, addDoc, onSnapshot, updateDoc, doc, deleteDoc } from 'firebase/firestore';
-import { manageReminder } from '../databaseUtils';
-import { manageActivity } from '../databaseUtils';
+import { manageReminder } from '../utils/readDBHelper';
+import { manageActivity } from '../utils/readDBHelper';
 
 
 export async function writeToDB(data, collectionName) {
-    try {
-        const docRef = await addDoc(collection(db, collectionName), data);
-        console.log("Document written with ID: ", docRef.id);
-    } catch (error) {
-        console.error("Error adding document: ", error);
-    }
-
+  try {
+      const docRef = await addDoc(collection(db, collectionName), data);
+      console.log("Document written with ID: ", docRef.id);
+  } catch (error) {
+      console.error("Error adding document: ", error);
+  }
 }
-
 
 export function readAllFiles(collectionName, callback, errorCallback) {
   const unsubscribe = onSnapshot(collection(db, collectionName), (querySnapshot) => {
