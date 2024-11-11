@@ -18,6 +18,7 @@ export default function FilterModal({modalVisible, modalHandler}) {
                     value={isDateSelected}
                     onValueChange={setDateSelection}
                     style={styles.checkbox}
+                    color={COLORS.primary}
                 />
                 <Text style={styles.selectionText}>Latest Event</Text>
                 </View>
