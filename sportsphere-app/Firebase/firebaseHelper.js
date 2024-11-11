@@ -40,3 +40,12 @@ export async function updateDB(id, updatedItem, collectionName) {
         console.error(err);
     }
 }
+
+export async function deleteDB(id, collectionName) {
+    try {
+        await deleteDoc(doc(db, collectionName, id));
+        console.log("Document with ID: ", id, " deleted");
+    } catch (err) {
+        console.error(err);
+    }
+}

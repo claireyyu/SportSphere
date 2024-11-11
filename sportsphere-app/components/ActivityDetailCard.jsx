@@ -5,6 +5,7 @@ import { COLORS, FONTSIZE, ROUNDED, SHADOW, SIZE, SPACING } from '../global'
 import { ProgressBar } from './ProgressBar'
 import PressableButton from './PressableButton'
 import { useNavigation } from '@react-navigation/native';
+import { deleteDB } from '../Firebase/firebaseHelper'
 
 export default function ActivityDetailCard({ route }) {
   const { id, activityName, venue, date, time, peopleGoing, totalMembers, description } = route.params;
@@ -22,6 +23,12 @@ export default function ActivityDetailCard({ route }) {
       description,
     });
   }
+
+  function handleDeleteActivity() {
+    deleteDB(id, "activities");
+    navigation.navigate('TabNavigator');
+  }
+
   return (
     <View style={styles.cardContainer}>
       <View style={styles.headerContainer}>
@@ -51,7 +58,9 @@ export default function ActivityDetailCard({ route }) {
         pressedFunction={handleEditActivity}>
         <Text style={styles.buttonText}>Edit</Text>
       </PressableButton>
-      <PressableButton componentStyle={[styles.button, {backgroundColor: COLORS.delete}]}>
+      <PressableButton 
+      componentStyle={[styles.button, {backgroundColor: COLORS.delete}]}
+      pressedFunction={handleDeleteActivity}>
         <Text style={styles.buttonText}>Delete</Text>
       </PressableButton>
 
