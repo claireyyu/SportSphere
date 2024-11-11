@@ -1,5 +1,5 @@
 import { db } from './firebaseSetup';
-import { collection, getDocs, addDoc, onSnapshot, updateDoc, doc, deleteDoc } from 'firebase/firestore';
+import { collection, getDoc, getDocs, addDoc, onSnapshot, updateDoc, doc, deleteDoc, query, where } from 'firebase/firestore';
 import { manageReminder } from '../utils/readDBHelper';
 import { manageActivity } from '../utils/readDBHelper';
 
@@ -48,4 +48,38 @@ export async function deleteDB(id, collectionName) {
     } catch (err) {
         console.error(err);
     }
+}
+
+export async function readProfile(collectionName, userId, callback) {
+  const docRef = doc(db, collectionName, userId);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    callback(docSnap.data());
+  } else {
+    console.log("No such document!");
+  }
+}
+
+export async function findUserByUid(uid) {
+  try {
+    // Create a reference to the users collection
+    const usersRef = collection(db, "users");
+
+    // Create a query against the collection where uid matches
+    const q = query(usersRef, where("uid", "==", uid));
+
+    // Execute the query
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      // Return the first matching document's data (assuming uid is unique)
+      return querySnapshot.docs[0].data();
+    } else {
+      console.log("No matching user found!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error finding user by uid:", error);
+    throw error; // Optionally throw error to handle it in the calling function
+  }
 }

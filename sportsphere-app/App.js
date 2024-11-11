@@ -23,6 +23,7 @@ import { auth } from './Firebase/firebaseSetup';
 import { useEffect, useState } from 'react';
 import AuthScreenHeader from './components/AuthScreenHeader';
 import { useFonts, Inter_400Regular, Inter_600SemiBold } from '@expo-google-fonts/inter';
+import { UserProvider } from './context/UserProvider';
 
 const Stack = createNativeStackNavigator();
 
@@ -186,13 +187,15 @@ export default function App() {
         barStyle="light-content"
         backgroundColor={getBackgroundColor(isUserLoggedIn ? 'AppStack' : 'AuthStack')}
       >
-        <QueryProvider>
-        <NavigationContainer>
-        <Stack.Navigator>
-          {isUserLoggedIn ? AppStack : AuthStack}
-        </Stack.Navigator>
-          </NavigationContainer>
-        </QueryProvider>
+        <UserProvider>
+          <QueryProvider>
+            <NavigationContainer>
+              <Stack.Navigator>
+                {isUserLoggedIn ? AppStack : AuthStack}
+              </Stack.Navigator>
+            </NavigationContainer>
+          </QueryProvider>
+        </UserProvider>
       </CustomStatusBar>
     </View>
   );

@@ -9,9 +9,15 @@ import { Avatar } from '@rneui/themed';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { signOut } from 'firebase/auth';
 import { auth } from '../Firebase/firebaseSetup';
+import { findUserByUid } from '../Firebase/firebaseHelper';
+import { useEffect, useContext } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { UserContext } from '../context/UserProvider';
 
-export default function ProfileScreenHeader({ navigation }) {
-
+export default function ProfileScreenHeader() {
+  const { userProfile } = useContext(UserContext);
+  const navigation = useNavigation();
+  
   async function signOutUser() {
     try {
       await signOut(auth);
@@ -70,8 +76,8 @@ export default function ProfileScreenHeader({ navigation }) {
           source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
         />
         <View style={styles.profileInfo}>
-          <Text style={styles.username}>User Name</Text>
-          <Text style={styles.bio}>The user bio.</Text>
+          <Text style={styles.username}>{userProfile?.username || 'User Name'}</Text>
+          <Text style={styles.bio}>{userProfile?.bio || 'User Bio'}</Text>
         </View>
       </View>
 

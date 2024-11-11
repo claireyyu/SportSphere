@@ -82,7 +82,7 @@ const TabNavigator = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
-          header: ProfileScreenHeader,
+          header: () => <ProfileScreenHeader />,
         }}
       />
     </Tab.Navigator>
