@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Alert } from 'react-native'
 import { Avatar } from '@rneui/themed';
 import { COLORS, FONTSIZE, ROUNDED, SHADOW, SIZE, SPACING } from '../global'
 import { ProgressBar } from './ProgressBar'
@@ -24,9 +24,20 @@ export default function ActivityDetailCard({ route }) {
     });
   }
 
-  function handleDeleteActivity() {
+  const deleteActivity = () => {
     deleteDB(id, "activities");
     navigation.navigate('TabNavigator');
+  }
+
+  function handleDeleteActivity() {
+    Alert.alert("Delete Activity", "Are you sure you want to delete this activity?", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel"
+      },
+      { text: "OK", onPress: deleteActivity }
+    ]);
   }
 
   return (
@@ -134,9 +145,9 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     backgroundColor: COLORS.primary,
-    paddingVertical: SPACING.xsmall,
+    paddingVertical: SPACING.small,
     paddingHorizontal: SPACING.small,
-    borderRadius: ROUNDED.small,
+    borderRadius: ROUNDED.default,
     alignSelf: 'center',
     alignItems: 'center',
     margin: SPACING.xsmall,
