@@ -134,9 +134,9 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     backgroundColor: COLORS.primary,
-    paddingVertical: SPACING.small,
+    paddingVertical: SPACING.xsmall,
     paddingHorizontal: SPACING.small,
-    borderRadius: ROUNDED.default,
+    borderRadius: ROUNDED.small,
     alignSelf: 'center',
     alignItems: 'center',
     margin: SPACING.xsmall,

@@ -3,7 +3,6 @@ import { collection, getDocs, addDoc, onSnapshot, updateDoc, doc, deleteDoc } fr
 import { manageReminder } from '../utils/readDBHelper';
 import { manageActivity } from '../utils/readDBHelper';
 
-
 export async function writeToDB(data, collectionName) {
   try {
       const docRef = await addDoc(collection(db, collectionName), data);
