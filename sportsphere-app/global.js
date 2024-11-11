@@ -5,6 +5,7 @@ export const COLORS = {
   'defaultBackground': '#F2F2F2',
   'border': '#C7C7CC',
   'secondaryText': '#808080',
+  'delete': '#FF3B30',
 };
 
 export const FONTSIZE = {

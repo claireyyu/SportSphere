@@ -1,10 +1,11 @@
 import React from 'react'
 import { View, Text } from 'react-native'
+import ActivityDetailCard from '../components/ActivityDetailCard'
 
-export default function ActivityDetailScreen() {
+export default function ActivityDetailScreen({ route }) {
   return (
     <View>
-        <Text>Activity Detail</Text>
+        <ActivityDetailCard route={route}/>
     </View>
   )
 }
