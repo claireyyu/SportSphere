@@ -15,6 +15,7 @@ import ReminderScreen from './screens/ReminderScreen';
 import AddReminderButton from './components/AddReminderButton';
 import ChatDetailScreen from './screens/ChatDetailScreen';
 import { ActivityProvider } from './context/ActivityProvider';
+import EditActivityScreen from './screens/EditActivityScreen';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -51,6 +52,23 @@ export default function App() {
             component={AddActivityScreen}
             options={{
               title: "New Activity",
+              headerStyle: {
+                backgroundColor: COLORS.primary,
+              },
+              headerTitleStyle: {
+                fontSize: FONTSIZE.h3,
+                color: COLORS.background,
+                fontWeight: 'bold',
+              },
+              headerBackTitleVisible: false,
+              headerTintColor: COLORS.background,
+            }}
+          />
+          <Stack.Screen
+            name="EditActivity"
+            component={EditActivityScreen}
+            options={{
+              title: "Edit Activity",
               headerStyle: {
                 backgroundColor: COLORS.primary,
               },

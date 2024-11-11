@@ -4,9 +4,22 @@ import { Avatar } from 'react-native-elements'
 import { COLORS, FONTSIZE, ROUNDED, SHADOW, SIZE, SPACING } from '../global'
 import { ProgressBar } from './ProgressBar'
 import PressableButton from './PressableButton'
+import { useNavigation } from '@react-navigation/native';
 
-export default function ActivityDetailCard({ route, navigation }) {
-    const { activityName, venue, date, time, peopleGoing, totalMembers, description } = route.params;
+export default function ActivityDetailCard({ route }) {
+  const { activityName, venue, date, time, peopleGoing, totalMembers, description } = route.params;
+  const navigation = useNavigation();
+  function handleEditActivity() {
+    navigation.navigate('EditActivity', {
+      activityName,
+      venue,
+      date,
+      time,
+      peopleGoing,
+      totalMembers,
+      description,
+    });
+  }
   return (
     <View style={styles.cardContainer}>
       <View style={styles.headerContainer}>
@@ -31,7 +44,9 @@ export default function ActivityDetailCard({ route, navigation }) {
         <Text style={styles.peopleCount}>{totalMembers} ppl</Text>
       </View>
       <Text style={styles.goingText}>{peopleGoing} ppl going</Text>
-      <PressableButton componentStyle={styles.button}>
+      <PressableButton 
+        componentStyle={styles.button}
+        pressedFunction={handleEditActivity}>
         <Text style={styles.buttonText}>Edit</Text>
       </PressableButton>
       <PressableButton componentStyle={[styles.button, {backgroundColor: COLORS.delete}]}>
