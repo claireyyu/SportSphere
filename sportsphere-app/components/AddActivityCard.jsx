@@ -49,7 +49,7 @@ export default function AddActivityCard({ route }) {
   }
 
   useEffect(() => {
-    if (route.params) {
+    if (route?.params) {
       const { activityName, venue, date, time, totalMembers, description } = route.params;
       const dateObj = parse(date, 'MMM dd, yyyy', new Date());
       const formattedDate = format(dateObj, 'yyyy-MM-dd');
@@ -63,7 +63,7 @@ export default function AddActivityCard({ route }) {
       setDescription(description);
       setIsEditMode(true);
     }
-  }, [route.params]);
+  }, [route?.params]);
 
   return (
     < View style={styles.cardContainer}>
