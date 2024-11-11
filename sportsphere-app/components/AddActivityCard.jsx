@@ -24,6 +24,16 @@ export default function AddActivityCard({ route }) {
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
 
+  useEffect(() => {
+    if (activityName.split(" ").length > 5) {
+      setError("Activity name should be no more than five words");
+    } else if (venue.split(" ").length > 20) {
+      setError("Venue should be no more than twenty words");
+    } else {
+      setError('');
+    }
+  }, [activityName, venue]);
+
   function handleDate(date) {
     setDate(date);
   }

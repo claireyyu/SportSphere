@@ -5,6 +5,7 @@ import { COLORS, FONTSIZE, ROUNDED, SHADOW, SIZE, SPACING } from '../global'
 import { ProgressBar } from './ProgressBar'
 import PressableButton from './PressableButton'
 import { useNavigation } from '@react-navigation/native';
+import { deleteDB } from '../Firebase/firebaseHelper'
 
 export default function ActivityDetailCard({ route }) {
   const { id, activityName, venue, date, time, peopleGoing, totalMembers, description } = route.params;
@@ -22,6 +23,12 @@ export default function ActivityDetailCard({ route }) {
       description,
     });
   }
+
+  function handleDeleteActivity() {
+    deleteDB(id, "activities");
+    navigation.navigate('TabNavigator');
+  }
+
   return (
     <View style={styles.cardContainer}>
       <View style={styles.headerContainer}>
@@ -46,14 +53,19 @@ export default function ActivityDetailCard({ route }) {
         <Text style={styles.peopleCount}>{totalMembers} ppl</Text>
       </View>
       <Text style={styles.goingText}>{peopleGoing} ppl going</Text>
-      <PressableButton 
-        componentStyle={styles.button}
-        pressedFunction={handleEditActivity}>
-        <Text style={styles.buttonText}>Edit</Text>
-      </PressableButton>
-      <PressableButton componentStyle={[styles.button, {backgroundColor: COLORS.delete}]}>
-        <Text style={styles.buttonText}>Delete</Text>
-      </PressableButton>
+
+      <View style={styles.btnContainer}>
+        <PressableButton 
+          componentStyle={styles.button}
+          pressedFunction={handleEditActivity}>
+          <Text style={styles.buttonText}>Edit</Text>
+        </PressableButton>
+        <PressableButton 
+        componentStyle={[styles.button, {backgroundColor: COLORS.delete}]}
+        pressedFunction={handleDeleteActivity}>
+          <Text style={styles.buttonText}>Delete</Text>
+        </PressableButton>
+      </View>
 
     </View>
   );
@@ -115,7 +127,12 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.medium,
     fontWeight: 'bold',
   },
+  btnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   button: {
+    flex: 1,
     backgroundColor: COLORS.primary,
     paddingVertical: SPACING.xsmall,
     paddingHorizontal: SPACING.small,
@@ -123,7 +140,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     margin: SPACING.xsmall,
-    width: 200,
   },
   buttonText: {
     color: COLORS.background,

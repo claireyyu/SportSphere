@@ -6,6 +6,7 @@ import { QueryContext } from "../context/QueryProvider";
 import { readAllFiles } from '../Firebase/firebaseHelper';
 
 export default function ActivityCardList({modalVisible, modalHandler}) {
+export default function ActivityCardList({modalVisible, modalHandler}) {
   const {searchQuery} = useContext(QueryContext);
 
   const collectionName = "activities";
@@ -59,6 +60,7 @@ export default function ActivityCardList({modalVisible, modalHandler}) {
   // });
   return (
     <View>
+    <View>
     <FlatList
       data={filteredActivityItems}
       keyExtractor={(item) => item.id}
@@ -77,6 +79,7 @@ export default function ActivityCardList({modalVisible, modalHandler}) {
       contentContainerStyle={styles.listContainer}
       showsVerticalScrollIndicator={false}
     />
+    </View>
     </View>
   )
 }

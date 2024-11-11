@@ -4,10 +4,10 @@ import ActivityCard from '../components/ActivityCard'
 import { COLORS, SPACING } from '../global'
 import ActivityCardList from '../components/ActivityCardList'
 
-export default function ActivityScreen() {
+export default function ActivityScreen({modalVisible, modalHandler}) {
   return (
     <View style={styles.container}>
-      <ActivityCardList />
+      <ActivityCardList modalVisible={modalVisible} modalHandler={modalHandler}/>
     </View>
   )
 }

@@ -1,20 +1,29 @@
 import React from 'react';
-import { StyleSheet, Text, View, Switch, FlatList, Alert } from 'react-native';
+import { StyleSheet, Text, View, Switch, FlatList, Alert, Pressable } from 'react-native';
 import { COLORS, FONTSIZE, SPACING, ROUNDED, SHADOW } from '../global';
 import { db } from "../Firebase/firebaseSetup";
 import { onSnapshot, collection, doc, query, where } from "firebase/firestore";
 import { useEffect } from 'react';
+<<<<<<< HEAD
 import { readAllFiles, updateDB } from '../Firebase/firebaseHelper';
 import { parse, format } from 'date-fns';
 import PressableButton from './PressableButton';
 import EditReminderModal from './EditReminderModal';
+=======
+import { readAllFiles, updateDB, deleteDB } from '../Firebase/firebaseHelper';
+import { parse, format, set } from 'date-fns';
+
+
+>>>>>>> main
 
 export default function ReminderItemList() {
   const [reminderItems, setReminderItems] = React.useState([]);
 
   const collectionName = "reminders";
   
-  
+  function handleReminderItems(reminderItems) {
+    setReminderItems(reminderItems);
+  }
   useEffect(() => {
     readAllFiles(collectionName, setReminderItems, (error) => {
       Alert.alert("Error fetching reminders", error.message);
@@ -26,14 +35,15 @@ export default function ReminderItemList() {
     <FlatList
       data={reminderItems}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <ReminderItem title={item.title} time={item.time} date={item.date} id={item.id} />}
+      renderItem={({ item }) => (
+        <ReminderItem title={item.title} time={item.time} date={item.date} id={item.id} reminderItemHandler = {handleReminderItems} />)}
       contentContainerStyle={styles.listContainer}
       showsVerticalScrollIndicator={false}
     />
   );
 }
 
-function ReminderItem({ title, time, date, id }) {
+function ReminderItem({ title, time, date, id, reminderItemHandler }) {
   const [isEnabled, setIsEnabled] = React.useState(true);
   const [modalVisible, setModalVisible] = React.useState(false);
 
@@ -56,6 +66,27 @@ function ReminderItem({ title, time, date, id }) {
     updateDB(id, newReminder, "reminders");
     setIsEnabled(previousState => !previousState);
   }
+
+  function handleDelete() {
+    Alert.alert(
+      "Delete Reminder",
+      "Are you sure you want to delete this reminder?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        { text: "Yes", 
+          onPress: () => {
+            deleteDB(id, "reminders")
+            reminderItemHandler(prevItems => prevItems.filter(item => item.id !== id));
+          },
+        }
+      ]
+    );
+
+  }
+
 
   return (
     <View>
