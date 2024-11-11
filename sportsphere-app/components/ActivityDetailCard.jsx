@@ -11,6 +11,7 @@ export default function ActivityDetailCard({ route }) {
   const { id, activityName, venue, date, time, peopleGoing, totalMembers, description } = route.params;
   console.log("Route Params ActivityDetailCard: ", route.params);
   const navigation = useNavigation();
+
   function handleEditActivity() {
     navigation.navigate('EditActivity', {
       id,
@@ -67,7 +68,7 @@ export default function ActivityDetailCard({ route }) {
 
       <View style={styles.btnContainer}>
         <PressableButton 
-          componentStyle={styles.button}
+          componentStyle={[styles.button, {backgroundColor: COLORS.edit}]}
           pressedFunction={handleEditActivity}>
           <Text style={styles.buttonText}>Edit</Text>
         </PressableButton>
@@ -75,6 +76,11 @@ export default function ActivityDetailCard({ route }) {
         componentStyle={[styles.button, {backgroundColor: COLORS.delete}]}
         pressedFunction={handleDeleteActivity}>
           <Text style={styles.buttonText}>Delete</Text>
+        </PressableButton>
+        <PressableButton 
+        componentStyle={styles.button}
+        pressedFunction={Alert.alert("You joined the event!")}>
+          <Text style={styles.buttonText}>Join</Text>
         </PressableButton>
       </View>
 
