@@ -5,8 +5,9 @@ import { COLORS, FONTSIZE, ROUNDED, SPACING } from '../global'
 import Checkbox from 'expo-checkbox';
 
 export default function FilterModal({modalVisible, modalHandler}) {
-  const [isDateSelected, setDateSelection] = React.useState(true);
-  const [isDistanceSelected, setDistanceSelection] = React.useState(false);
+    const [isDateSelected, setDateSelection] = React.useState(true);
+    const [isDistanceSelected, setDistanceSelection] = React.useState(false);
+    
   return (
     <Modal animationType='none' transparent={true} visible={modalVisible}>
         <View style={styles.card}>
@@ -28,7 +29,7 @@ export default function FilterModal({modalVisible, modalHandler}) {
                 />
                 <Text style={styles.selectionText}>Distance</Text>
                 </View>
-                <Pressable style={styles.button} onPress={() => modalHandler(!modalVisible)}>
+                <Pressable style={styles.button} onPress={modalHandler}>
                 <Text style={styles.buttonText}>Close</Text>
                 </Pressable>
             </View>

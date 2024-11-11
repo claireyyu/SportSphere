@@ -7,18 +7,20 @@ import PressableButton from './PressableButton';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { QueryContext } from '../context/QueryProvider';
 import { useNavigation } from '@react-navigation/native';
+import FilterModal from './FilterModal';
 
-
-
-export default function ActivityScreenHeader({ navigation }) {
+export default function ActivityScreenHeader() {
   const { searchQuery, setSearchQuery } = useContext(QueryContext);
+  const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
 
   const updateSearch = (text) => {
     setSearchQuery(text);
   };
 
-  
+  const modalHandler = () => {
+    setModalVisible(!modalVisible);
+  };
 
   return (
     <DefaultScreenHeaderWrapper>
@@ -36,6 +38,7 @@ export default function ActivityScreenHeader({ navigation }) {
             <Ionicons name="filter" size={SIZE.pressableIcon} color={COLORS.background} />
           </PressableButton>
         </View>
+        <FilterModal modalVisible={modalVisible} modalHandler={modalHandler}/>
       </SafeAreaView>
     </DefaultScreenHeaderWrapper>
   );

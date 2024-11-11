@@ -53,16 +53,19 @@ export default function ActivityDetailCard({ route }) {
         <Text style={styles.peopleCount}>{totalMembers} ppl</Text>
       </View>
       <Text style={styles.goingText}>{peopleGoing} ppl going</Text>
-      <PressableButton 
-        componentStyle={styles.button}
-        pressedFunction={handleEditActivity}>
-        <Text style={styles.buttonText}>Edit</Text>
-      </PressableButton>
-      <PressableButton 
-      componentStyle={[styles.button, {backgroundColor: COLORS.delete}]}
-      pressedFunction={handleDeleteActivity}>
-        <Text style={styles.buttonText}>Delete</Text>
-      </PressableButton>
+
+      <View style={styles.btnContainer}>
+        <PressableButton 
+          componentStyle={styles.button}
+          pressedFunction={handleEditActivity}>
+          <Text style={styles.buttonText}>Edit</Text>
+        </PressableButton>
+        <PressableButton 
+        componentStyle={[styles.button, {backgroundColor: COLORS.delete}]}
+        pressedFunction={handleDeleteActivity}>
+          <Text style={styles.buttonText}>Delete</Text>
+        </PressableButton>
+      </View>
 
     </View>
   );
@@ -124,15 +127,19 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.medium,
     fontWeight: 'bold',
   },
+  btnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   button: {
+    flex: 1,
     backgroundColor: COLORS.primary,
-    paddingVertical: SPACING.xsmall,
+    paddingVertical: SPACING.small,
     paddingHorizontal: SPACING.small,
-    borderRadius: ROUNDED.small,
+    borderRadius: ROUNDED.default,
     alignSelf: 'center',
     alignItems: 'center',
     margin: SPACING.xsmall,
-    width: 200,
   },
   buttonText: {
     color: COLORS.background,

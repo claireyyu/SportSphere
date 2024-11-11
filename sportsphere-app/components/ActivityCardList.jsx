@@ -1,13 +1,9 @@
 import ActivityCard from "./ActivityCard";
 import { StyleSheet, Text, View, FlatList } from 'react-native'
 import React from 'react'
-import { SPACING } from '../global'
-import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "../Firebase/firebaseSetup";
 import { useEffect, useState, useContext } from 'react';
 import { QueryContext } from "../context/QueryProvider";
-import FilterModal from "./FilterModal";
-import ActivityScreenHeader from "./ActivityScreenHeader";
+import { readAllFiles } from "../Firebase/firebaseHelper";
 
 export default function ActivityCardList({modalVisible, modalHandler}) {
   const {searchQuery} = useContext(QueryContext);
@@ -38,7 +34,6 @@ export default function ActivityCardList({modalVisible, modalHandler}) {
   });
   return (
     <View>
-    <FilterModal modalVisible={modalVisible} modalHandler={modalHandler}/>
     <FlatList
       data={filteredActivityItems}
       keyExtractor={(item) => item.id}
