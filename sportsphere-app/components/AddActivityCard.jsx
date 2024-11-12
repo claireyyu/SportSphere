@@ -1,4 +1,4 @@
-import React, { act, useEffect, useState } from 'react'
+import React, { act, useEffect, useState, useContext } from 'react'
 import { View, Text, StyleSheet, TextInput, SafeAreaView, Pressable } from 'react-native'
 import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
 import CalendarInput from './CalendarInput';
@@ -8,9 +8,11 @@ import { writeToDB } from '../Firebase/firebaseHelper';
 import { useNavigation } from '@react-navigation/native';
 import { parse, format } from 'date-fns';
 import { updateDB } from '../Firebase/firebaseHelper';
-
+import { UserContext } from '../context/UserProvider';
 
 export default function AddActivityCard({ route }) {
+  const { userProfile } = useContext(UserContext);
+
   const [id, setId] = useState(null);
   const navigation = useNavigation();
   const [error, setError] = useState('');
@@ -71,9 +73,10 @@ export default function AddActivityCard({ route }) {
       venue: venue,
       date: date,
       time: time,
-      peopleGoing: 1,  // default to 1
       totalMembers: totalMembers,
       description: description,
+      owner: userProfile.uid,
+      peopleGoing: [userProfile.uid],
     } 
     
     if (isEditMode) {
@@ -89,21 +92,22 @@ export default function AddActivityCard({ route }) {
     const dtTime = new Date(newActivity.time);
     const time = dtTime.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false });
 
+    console.log("PeopleGoing: ", newActivity.peopleGoing);
     navigation.navigate('ActivityDetails', {
         id,
         activityName,
         venue,
         date,
         time,
-        peopleGoing: 1,
+        peopleGoing,
         totalMembers,
-        description,
+      description,
+      owner,
     });
 } else {
     writeToDB(newActivity, "activities");
     navigation.goBack();
 }
-    
   }
 
   useEffect(() => {

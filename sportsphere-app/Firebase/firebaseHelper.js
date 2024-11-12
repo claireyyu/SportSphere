@@ -5,7 +5,8 @@ import { manageActivity } from '../utils/readDBHelper';
 
 export async function writeToDB(data, collectionName) {
   try {
-      const docRef = await addDoc(collection(db, collectionName), data);
+    const docRef = await addDoc(collection(db, collectionName), data);
+    console.log(data); // Check for any undefined fields
       console.log("Document written with ID: ", docRef.id);
   } catch (error) {
       console.error("Error adding document: ", error);

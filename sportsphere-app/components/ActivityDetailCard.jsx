@@ -11,7 +11,7 @@ export default function ActivityDetailCard({ route }) {
   const { id, activityName, venue, date, time, peopleGoing, totalMembers, description } = route.params;
   console.log("Route Params ActivityDetailCard: ", route.params);
   const navigation = useNavigation();
-
+  
   function handleEditActivity() {
     navigation.navigate('EditActivity', {
       id,
@@ -63,6 +63,7 @@ export default function ActivityDetailCard({ route }) {
         </PressableButton>
       </View>
 
+      
       <View style={styles.infoContainer}>
         <Text style={styles.labelText}>Location</Text>
         <Text style={styles.infoText}>{venue}{`\n`}</Text>
@@ -73,11 +74,10 @@ export default function ActivityDetailCard({ route }) {
         <Text style={styles.goingText}>Pictures</Text>
       </View>
       <View style={styles.progressContainer}>
-        <ProgressBar value={peopleGoing} total={totalMembers} />
+        <ProgressBar value={peopleGoing.length} total={totalMembers} />
         <Text style={styles.peopleCount}>{totalMembers} ppl</Text>
       </View>
-      <Text style={styles.goingText}>{peopleGoing} ppl going</Text>
-
+      <Text style={styles.goingText}>{peopleGoing.length} ppl going</Text>
       <View style={styles.btnContainer}>
         <PressableButton 
           componentStyle={[styles.button, {backgroundColor: COLORS.edit}]}
