@@ -74,7 +74,7 @@ export async function findUserByUid(uid) {
 
     if (!querySnapshot.empty) {
       // Return the first matching document's data (assuming uid is unique)
-      return querySnapshot.docs[0].data();
+      return querySnapshot.docs[0];
     } else {
       console.log("No matching user found!");
       return null;

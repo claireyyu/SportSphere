@@ -24,6 +24,9 @@ import { useEffect, useState } from 'react';
 import AuthScreenHeader from './components/AuthScreenHeader';
 import { useFonts, Inter_400Regular, Inter_600SemiBold } from '@expo-google-fonts/inter';
 import { UserProvider } from './context/UserProvider';
+import UserInfoForm from './components/UserInfoForm';
+import SkipButton from './components/SkipButton';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -44,6 +47,15 @@ const AuthStack = (
 
 const AppStack = (
   <>
+    <Stack.Screen
+      name="UserInfoForm"
+      component={UserInfoForm}
+      options={{
+        header: TitleScreenHeader,
+        title: "User Information",
+        headerRight: () => <SkipButton />,
+      }}
+    />
     <Stack.Screen
       name="TabNavigator"
       component={TabNavigator}

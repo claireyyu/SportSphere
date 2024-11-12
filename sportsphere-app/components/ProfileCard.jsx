@@ -24,7 +24,7 @@ export default function ProfileCard({ name, email, bio }) {
       </View>
       <View style={styles.profileCardRow}>
         <Text style={styles.title}>Email</Text>
-        <TextInput style={styles.infoText} value={emailInput} onChangeText={setEmailInput} placeholder={email}></TextInput>
+        <Text style={styles.infoText}>{email}</Text>
       </View>
       <View style={styles.profileCardRow}>
         <Text style={styles.title}>Bio</Text>
