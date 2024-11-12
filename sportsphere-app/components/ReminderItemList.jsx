@@ -83,7 +83,8 @@ function ReminderItem({ title, time, date, id, reminderItemHandler }) {
   return (
     <View>
     <PressableButton
-      pressedFunction={handleModalVisible}
+        pressedFunction={handleModalVisible}
+        onLongPress={handleDelete}
       childrenDirection={{ flexDirection: 'row', justifyContent: 'space-between' }}> 
     <View style={styles.card}>
       <View>

@@ -1,5 +1,5 @@
 import React, { act, useEffect, useState, useContext } from 'react'
-import { View, Text, StyleSheet, TextInput, SafeAreaView, Pressable } from 'react-native'
+import { View, Text, StyleSheet, TextInput, SafeAreaView, Pressable, Alert } from 'react-native'
 import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
 import CalendarInput from './CalendarInput';
 import TimeInput from './TimeInput';
@@ -41,12 +41,13 @@ export default function AddActivityCard({ route }) {
       const today = new Date();
       today.setHours(0, 0, 0, 0); // Set time to midnight to compare only the date part
       if (date < today) {
+        Alert.alert("Invalid Date", "Date cannot be earlier than today.");
         setDate(today);
       } else {
         setError('');
       }
     }
-  }, [date]);
+  }, [date]);  
 
   function handleDate(date) {
     setDate(date);

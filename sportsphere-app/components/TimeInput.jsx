@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TextInput, StyleSheet, Modal, Button } from 'react-native'
+import { View, TextInput, StyleSheet, Modal, Button, Alert } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from 'date-fns';
 import { COLORS, ROUNDED, FONTSIZE, SPACING } from '../global'
@@ -38,7 +38,16 @@ export default function TimeInput({time, setTime, timePicker, timePickerHandler}
               onChange={(event, selectedTime) => {
                 console.log('Time picked:', selectedTime);
                 if (selectedTime) {
-                  setTime(selectedTime); // Update temporary time state
+                  const now = new Date();
+                  const selectedDateTime = new Date();
+                  selectedDateTime.setHours(selectedTime.getHours());
+                  selectedDateTime.setMinutes(selectedTime.getMinutes());
+                  if (selectedDateTime < now) {
+                    Alert.alert("Invalid Time", "Time cannot be earlier than the current time.");
+                    setTime(now);
+                  } else {
+                    setTime(selectedTime); // Update temporary time state
+                  }
                 }
               }}
             />
