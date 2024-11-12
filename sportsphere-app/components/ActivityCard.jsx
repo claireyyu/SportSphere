@@ -6,7 +6,7 @@ import { ProgressBar } from './ProgressBar';
 import PressableButton from './PressableButton';
 import { useNavigation } from '@react-navigation/native';
   
-export default function ActivityCard({ activityName, venue, date, time, peopleGoing, totalMembers, description, id}) {
+export default function ActivityCard({ activityName, venue, date, time, peopleGoing, totalMembers, description, id, owner}) {
   const navigation = useNavigation();
   
   function handleToActivityDetail() {
@@ -20,6 +20,7 @@ export default function ActivityCard({ activityName, venue, date, time, peopleGo
       peopleGoing,
       totalMembers,
       description,
+      owner,
     });
   }
 
@@ -38,10 +39,10 @@ export default function ActivityCard({ activityName, venue, date, time, peopleGo
         <Text style={styles.infoText}>Time: {`${date} - ${time}`}</Text>
       </View>
       <View style={styles.progressContainer}>
-        <ProgressBar value={peopleGoing} total={totalMembers} />
+        <ProgressBar value={peopleGoing.length} total={totalMembers} />
         <Text style={styles.peopleCount}>{totalMembers} ppl</Text>
       </View>
-      <Text style={styles.goingText}>{peopleGoing} ppl going</Text>
+      <Text style={styles.goingText}>{peopleGoing.length} ppl going</Text>
       <PressableButton componentStyle={styles.button} pressedFunction={handleToActivityDetail}>
         <Text style={styles.buttonText}>Learn More</Text>
       </PressableButton>
@@ -70,9 +71,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
+    flex: 1,
+    flexWrap: 'wrap',
     fontSize: FONTSIZE.h3,
     fontWeight: 'bold',
     color: COLORS.text,
+    marginRight: SPACING.xsmall,
   },
   infoContainer: {
     marginVertical: SPACING.small,

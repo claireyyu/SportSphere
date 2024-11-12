@@ -18,6 +18,7 @@ export default function FilterModal({modalVisible, modalHandler}) {
                     value={isDateSelected}
                     onValueChange={setDateSelection}
                     style={styles.checkbox}
+                    color={COLORS.primary}
                 />
                 <Text style={styles.selectionText}>Latest Event</Text>
                 </View>
@@ -30,7 +31,7 @@ export default function FilterModal({modalVisible, modalHandler}) {
                 <Text style={styles.selectionText}>Distance</Text>
                 </View>
                 <Pressable style={styles.button} onPress={modalHandler}>
-                <Text style={styles.buttonText}>Close</Text>
+                <Text style={styles.buttonText}>Confirm</Text>
                 </Pressable>
             </View>
         </View>
@@ -53,21 +54,20 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     modalText: {
-        fontSize: FONTSIZE.h3,
+        fontSize: FONTSIZE.h2,
         marginBottom: 15,
         fontWeight: 'bold',
     },
     button: {
         backgroundColor: COLORS.primary,
-        padding: SPACING.xsmall,
-        width: 100,
+        padding: SPACING.small,
         alignItems: 'center',
         marginTop: SPACING.xsmall,
-        borderRadius: 5,
+        borderRadius: ROUNDED.default,
     },
     buttonText: {
         color: COLORS.background,
-        fontSize: FONTSIZE.h2,
+        fontSize: FONTSIZE.body,
         fontWeight: 'bold',
     },
     checkboxContainer: {

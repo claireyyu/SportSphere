@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Alert } from 'react-native';
 import React, { useState } from 'react';
 import DefaultScreenHeaderWrapper from './DefaultScreenHeaderWrapper';
 import { COLORS, SPACING, ROUNDED, SIZE, FONTSIZE } from '../global';
@@ -6,8 +6,41 @@ import SearchBar from './SearchBar';
 import PressableButton from './PressableButton';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Avatar } from '@rneui/themed';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { signOut } from 'firebase/auth';
+import { auth } from '../Firebase/firebaseSetup';
+import { findUserByUid } from '../Firebase/firebaseHelper';
+import { useEffect, useContext } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { UserContext } from '../context/UserProvider';
 
-export default function ProfileScreenHeader({ navigation }) {
+export default function ProfileScreenHeader() {
+  const { userProfile } = useContext(UserContext);
+  const navigation = useNavigation();
+  
+  async function signOutUser() {
+    try {
+      await signOut(auth);
+      navigation.navigate("Login");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function handleSignOut() {
+    try {
+      Alert.alert("Sign Out", "Are you sure you want to sign out?", [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => signOutUser() }
+      ]);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   function handleOpenEditProfile() {
     navigation.navigate("EditProfile");
@@ -19,13 +52,23 @@ export default function ProfileScreenHeader({ navigation }) {
 
   return (
     <SafeAreaView style={styles.view}>
-      <View style={styles.alarmContainer}>
+      <View style={styles.topBtnContainer}>
+      <View style={styles.logoutContainer}>
         <PressableButton
-          pressedFunction={handleOpenReminder}
-        >
-          <Ionicons name="alarm-outline" size={SIZE.pressableIcon} color={COLORS.background} />
+            pressedFunction={handleSignOut}
+          >
+          <MaterialIcons name="logout" size={24} color="white" />
         </PressableButton>
       </View>
+        <View style={styles.alarmContainer}>
+          <PressableButton
+            pressedFunction={handleOpenReminder}
+          >
+            <Ionicons name="alarm-outline" size={SIZE.pressableIcon} color={COLORS.background} />
+          </PressableButton>
+        </View>
+      </View>
+
       <View style={styles.profileContainer}>
         <Avatar
           size={SIZE.avatar}
@@ -33,8 +76,8 @@ export default function ProfileScreenHeader({ navigation }) {
           source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
         />
         <View style={styles.profileInfo}>
-          <Text style={styles.username}>User Name</Text>
-          <Text style={styles.bio}>The user bio.</Text>
+          <Text style={styles.username}>{userProfile?.username || 'User Name'}</Text>
+          <Text style={styles.bio}>{userProfile?.bio || 'User Bio'}</Text>
         </View>
       </View>
 
@@ -61,11 +104,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.default,
     paddingVertical: SPACING.xsmall,
   },
+  topBtnContainer: {
+    flexDirection: 'row',
+    marginBottom: SPACING.default,
+  },
+  logoutContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginLeft: SPACING.default,
+  },
   alarmContainer: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    marginTop: SPACING.default,
   },
   profileContainer: {
     flexDirection: 'row',

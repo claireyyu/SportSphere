@@ -6,6 +6,7 @@ export const COLORS = {
   'border': '#C7C7CC',
   'secondaryText': '#808080',
   'delete': '#FF3B30',
+  'edit': '#007AFF',
 };
 
 export const FONTSIZE = {

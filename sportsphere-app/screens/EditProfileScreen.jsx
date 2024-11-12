@@ -4,8 +4,12 @@ import { Avatar } from '@rneui/themed';
 import { COLORS, FONTSIZE, SIZE, SPACING } from '../global';
 import PressableButton from '../components/PressableButton';
 import ProfileCard from '../components/ProfileCard';
+import { UserContext } from '../context/UserProvider';
+import { useContext } from 'react';
 
 export default function ProfileScreen() {
+  const { userProfile } = useContext(UserContext);
+
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
@@ -21,7 +25,7 @@ export default function ProfileScreen() {
         </PressableButton>
       </View>
       <View style={styles.editProfileContainer}>
-        <ProfileCard name="lily_y" email="lily_y@gmail.com" bio="Nothing yet."/>
+        <ProfileCard name={userProfile.username} email={userProfile.email} bio={userProfile.bio}/>
       </View>
     </View>
   )

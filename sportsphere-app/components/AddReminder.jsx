@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Modal, StyleSheet, Button, TextInput, Text } from 'react-native'
+import { View, Modal, StyleSheet, Button, TextInput, Text, Alert } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { COLORS, ROUNDED, SPACING } from '../global'
@@ -69,14 +69,23 @@ export default function AddReminder({ modalVisible, handleModalVisible, route })
       >
         <SafeAreaView style={styles.modalContainer}>
           <View style={styles.pickerContainer}>
-            <DateTimePicker
+          <DateTimePicker
               value={time || new Date()}
               mode="time"
               display="spinner"
               onChange={(event, selectedTime) => {
                 console.log('Time picked:', selectedTime);
                 if (selectedTime) {
-                  setTime(selectedTime); // Update temporary time state
+                  const now = new Date();
+                  const selectedDateTime = new Date(date);
+                  selectedDateTime.setHours(selectedTime.getHours());
+                  selectedDateTime.setMinutes(selectedTime.getMinutes());
+                  if (selectedDateTime < now) {
+                    Alert.alert("Invalid Time", "Time cannot be earlier than the current time.");
+                    setTime(now);
+                  } else {
+                    setTime(selectedTime); // Update temporary time state
+                  }
                 }
               }}
             />
@@ -87,7 +96,13 @@ export default function AddReminder({ modalVisible, handleModalVisible, route })
               onChange={(event, selectedDate) => {
                 console.log('Date picked:', selectedDate);
                 if (selectedDate) {
-                  setDate(selectedDate); // Update temporary time state
+                  const now = new Date();
+                  if (selectedDate < now) {
+                    Alert.alert("Invalid Date", "Date cannot be earlier than today.");
+                    setDate(now);
+                  } else {
+                    setDate(selectedDate); // Update temporary date state
+                  }
                 }
               }}
             />

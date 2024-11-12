@@ -1,20 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, Switch, FlatList, Alert, Pressable } from 'react-native';
 import { COLORS, FONTSIZE, SPACING, ROUNDED, SHADOW } from '../global';
-import { db } from "../Firebase/firebaseSetup";
-import { onSnapshot, collection, doc, query, where } from "firebase/firestore";
 import { useEffect } from 'react';
-<<<<<<< HEAD
-import { readAllFiles, updateDB } from '../Firebase/firebaseHelper';
+import { readAllFiles, updateDB, deleteDB } from '../Firebase/firebaseHelper';
 import { parse, format } from 'date-fns';
 import PressableButton from './PressableButton';
 import EditReminderModal from './EditReminderModal';
-=======
-import { readAllFiles, updateDB, deleteDB } from '../Firebase/firebaseHelper';
-import { parse, format, set } from 'date-fns';
 
-
->>>>>>> main
 
 export default function ReminderItemList() {
   const [reminderItems, setReminderItems] = React.useState([]);
@@ -91,7 +83,8 @@ function ReminderItem({ title, time, date, id, reminderItemHandler }) {
   return (
     <View>
     <PressableButton
-      pressedFunction={handleModalVisible}
+        pressedFunction={handleModalVisible}
+        onLongPress={handleDelete}
       childrenDirection={{ flexDirection: 'row', justifyContent: 'space-between' }}> 
     <View style={styles.card}>
       <View>

@@ -2,7 +2,7 @@ import { View, Pressable, StyleSheet, Platform } from 'react-native';
 import React from 'react';
 import { COLORS } from '../global';
 
-export default function PressableButton({ children, pressedFunction, componentStyle, pressedStyle, childrenDirection }) {
+export default function PressableButton({ children, pressedFunction, componentStyle, pressedStyle, childrenDirection, isDisabled, onLongPress }) {
   return (
     <Pressable
       onPress={pressedFunction}
@@ -18,6 +18,8 @@ export default function PressableButton({ children, pressedFunction, componentSt
         return [styles.defaultStyle, componentStyle];
       }}
       android_ripple={Platform.OS === 'android' ? { color: 'grey', radius: 10 } : null}
+      onLongPress={onLongPress}
+      disabled={isDisabled}
     >
       <View style={[styles.defaultDirection, childrenDirection]}>{children}</View>
     </Pressable>
