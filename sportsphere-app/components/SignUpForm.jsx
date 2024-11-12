@@ -73,20 +73,26 @@ export default function SignUpForm({ navigation }) {
         />
         <Text style={styles.required}>*</Text>
         </View>
+        <View style={styles.requiredContainer}>
         <TextInput
           value={password}
           onChangeText={setPassword}
           secureTextEntry
           placeholder="Password"
-          style={styles.input}
+          style={styles.inputRequired}
         />
+        <Text style={styles.required}>*</Text>
+        </View>
+        <View style={styles.requiredContainer}>
         <TextInput
           value={confirmPassword}
           onChangeText={setConfirmPassword}
           secureTextEntry
           placeholder="Confirm Password"
-          style={styles.input}
+          style={styles.inputRequired}
         />
+        <Text style={styles.required}>*</Text>
+        </View>
         <TextInput
           value={bio}
           onChangeText={setBio}
@@ -184,7 +190,7 @@ const styles = StyleSheet.create({
     marginVertical: SPACING.small,
   },
   required: {
-    color: COLORS.delete,
+    color: COLORS.required,
     fontSize: 20,
     marginLeft: 3,
   },
