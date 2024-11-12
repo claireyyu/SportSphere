@@ -68,7 +68,7 @@ export default function ActivityDetailCard({ route }) {
     try {
       if (hasJoined) {
         if (hasJoined && userProfile.uid == owner) {
-          Alert.alert("You are the owner of this event!");
+          Alert.alert("You are the organizer of this event!");
           return;
         }
         setHasJoined(false);
