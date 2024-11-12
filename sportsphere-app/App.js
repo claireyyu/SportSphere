@@ -113,7 +113,7 @@ const AppStack = (
         },
         headerBackTitleVisible: false,
         headerTintColor: COLORS.background,
-        headerRight: () => <ConfirmEditProfileButton />,
+        // headerRight: () => <ConfirmEditProfileButton />,
       }}
       />
       <Stack.Screen
