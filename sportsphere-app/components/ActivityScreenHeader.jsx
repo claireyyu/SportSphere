@@ -8,6 +8,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { QueryContext } from '../context/QueryProvider';
 import { useNavigation } from '@react-navigation/native';
 import FilterModal from './FilterModal';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 export default function ActivityScreenHeader() {
   const { searchQuery, setSearchQuery } = useContext(QueryContext);
@@ -35,7 +36,7 @@ export default function ActivityScreenHeader() {
             <Ionicons name="add-circle-outline" size={SIZE.pressableIcon} color={COLORS.background} />
           </PressableButton>
           <PressableButton pressedFunction={modalHandler}>
-            <Ionicons name="filter" size={SIZE.pressableIcon} color={COLORS.background} />
+            <MaterialCommunityIcons name="sort" size={SIZE.pressableIcon} color={COLORS.background} />
           </PressableButton>
         </View>
         <FilterModal modalVisible={modalVisible} modalHandler={modalHandler}/>
