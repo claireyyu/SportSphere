@@ -102,7 +102,10 @@ export default function AddReminder({ modalVisible, handleModalVisible, route })
                     console.log('Date picked:', selectedDate);
                     if (selectedDate) {
                       const now = new Date();
-                      if (selectedDate < now) {
+                      const selectedDateTime = new Date(date);
+                      selectedDateTime.setHours(23);
+                      selectedDateTime.setMinutes(59);
+                      if (selectedDateTime < now) {
                         Alert.alert("Invalid Date", "Date cannot be earlier than today.");
                         setDate(now);
                       } else {
@@ -148,7 +151,7 @@ export default function AddReminder({ modalVisible, handleModalVisible, route })
                   />
                 )}
                 <PressableButton
-                  pressedFunction={() => setShowTimePicker(true)}
+                  pressedFunction={() => setShowTimePicker(!showTimePicker)}
                   componentStyle={styles.inputButton}
                 >
                   <TextInput

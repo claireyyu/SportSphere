@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { View, TextInput, StyleSheet } from 'react-native'
+import { View, TextInput, StyleSheet, Alert } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from 'date-fns';
 import { COLORS, ROUNDED, FONTSIZE, SPACING } from '../global'
@@ -31,9 +31,16 @@ export default function CalendarInput({date, setDate, datePicker, datePickerHand
               console.log('Date picked:', selectedDate); 
               datePickerHandler(false);
               if (selectedDate) {
-                setDate(selectedDate);
-              } else {
-                setDate(new Date());
+                const now = new Date();
+                const selectedDateTime = new Date(date);
+                selectedDateTime.setHours(23);
+                selectedDateTime.setMinutes(59);
+                if (selectedDateTime < now) {
+                  Alert.alert("Invalid Date", "Date cannot be earlier than today.");
+                  setDate(now);
+                } else {
+                  setDate(selectedDate); // Update temporary date state
+                }
               }
             }}
           />
