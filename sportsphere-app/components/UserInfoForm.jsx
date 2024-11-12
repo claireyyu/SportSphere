@@ -10,7 +10,7 @@ import { doc } from 'firebase/firestore';
  
 
 export default function UserInfoForm({ route, navigation }) {
-  const { userProfile } = route?.params || {userName: "", bio: "", uid: ""};
+  const userProfile = route?.params.userProfile || {username: "", bio: "", uid: ""};
   console.log("User profile: ", userProfile);
   const [userName, setUserName] = useState("");
   const [bio, setBio] = useState("");
@@ -26,7 +26,7 @@ export default function UserInfoForm({ route, navigation }) {
 
   function handleUpdateInfo() {
 
-    userProfile.userName = userName;
+    userProfile.username = userName;
     userProfile.bio = bio;
     const userDoc = findUserByUid(userProfile.uid);
     console.log("User doc: ", userDoc);

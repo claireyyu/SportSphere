@@ -38,7 +38,7 @@ export default function SignUpForm({ navigation }) {
       await writeToDB(userProfile, 'users');
       
       //Alert.alert('User registered successfully');
-      navigation.navigate('UserInfoForm', { userProfile: userProfile });
+      navigation.navigate('UserInfoForm', { userProfile});
     } catch (error) {
       if (error.code === 'auth/weak-password') {
         Alert.alert('Your password should be at least 6 characters');
