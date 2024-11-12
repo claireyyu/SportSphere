@@ -47,7 +47,7 @@ export default function ProfileCard({ name, email, bio }) {
       </View>
       <View style={styles.profileCardRow}>
         <Text style={styles.title}>Email</Text>
-        <Text style={styles.infoText}></Text>
+        <Text style={styles.infoText}>{email}</Text>
       </View>
       <View style={styles.profileCardRow}>
         <Text style={styles.title}>Bio</Text>

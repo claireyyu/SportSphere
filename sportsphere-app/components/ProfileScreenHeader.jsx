@@ -64,7 +64,7 @@ export default function ProfileScreenHeader() {
           <PressableButton
             pressedFunction={handleOpenReminder}
           >
-            <Ionicons name="alarm-outline" size={SIZE.pressableIcon} color={COLORS.background} />
+            <Ionicons name="notifications-outline" size={SIZE.pressableIcon} color={COLORS.background} />
           </PressableButton>
         </View>
       </View>
