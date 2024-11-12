@@ -5,9 +5,10 @@ import { COLORS, FONTSIZE, ROUNDED, SHADOW, SIZE, SPACING } from '../global'
 import { ProgressBar } from './ProgressBar'
 import PressableButton from './PressableButton'
 import { useNavigation } from '@react-navigation/native';
-import { deleteDB, addUserToActivity } from '../Firebase/firebaseHelper'
+import { deleteDB, addUserToActivity, removeUserFromActivity } from '../Firebase/firebaseHelper'
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../context/UserProvider';
+import { set } from 'date-fns';
 
 export default function ActivityDetailCard({ route }) {
   const { userProfile } = useContext(UserContext);
@@ -64,6 +65,12 @@ export default function ActivityDetailCard({ route }) {
 
   async function handleJoinActivity() {
     try {
+      if (hasJoined) {
+        setHasJoined(false);
+        await removeUserFromActivity(id, userProfile.uid);
+        Alert.alert("You left the event!");
+        return;
+      }
       await addUserToActivity(id, userProfile.uid);
       setHasJoined(true);
       Alert.alert("You joined the event!");
@@ -86,7 +93,6 @@ export default function ActivityDetailCard({ route }) {
       <PressableButton 
         componentStyle={[styles.button, hasJoined && { backgroundColor: COLORS.border }]}
           pressedFunction={handleJoinActivity}
-          isDisabled={hasJoined}
         >
           <Text style={styles.buttonText}>{hasJoined ? 'Joined' : 'Join Now'}</Text>
       </PressableButton>

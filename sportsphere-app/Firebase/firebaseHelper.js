@@ -1,5 +1,5 @@
 import { db } from './firebaseSetup';
-import { collection, getDoc, getDocs, addDoc, onSnapshot, updateDoc, doc, deleteDoc, query, where, arrayUnion } from 'firebase/firestore';
+import { collection, getDoc, getDocs, addDoc, onSnapshot, updateDoc, doc, deleteDoc, query, where, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { manageReminder } from '../utils/readDBHelper';
 import { manageActivity } from '../utils/readDBHelper';
 
@@ -71,6 +71,8 @@ export async function findUserByUid(uid) {
 
     // Execute the query
     const querySnapshot = await getDocs(q);
+    console.log("Query snapshot:", querySnapshot);
+    console.log("Query snapshot.doc[0]:", querySnapshot.docs[0]);
 
     if (!querySnapshot.empty) {
       // Return the first matching document's data (assuming uid is unique)
@@ -94,5 +96,17 @@ export async function addUserToActivity(activityId, userId) {
     console.log(`User ${userId} added to activity ${activityId}`);
   } catch (error) {
     console.error("Error adding user to activity: ", error);
+  }
+}
+
+export async function removeUserFromActivity(activityId, userId) {
+  try {
+    const activityRef = doc(db, 'activities', activityId);
+    await updateDoc(activityRef, {
+      peopleGoing: arrayRemove(userId)
+    });
+    console.log(`User ${userId} removed from activity ${activityId}`);
+  } catch (error) {
+    console.error("Error removing user from activity: ", error);
   }
 }
