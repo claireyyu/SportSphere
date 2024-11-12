@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { COLORS, ROUNDED, FONTSIZE, SPACING } from '../global';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function TimeInput({ time, setTime, timePicker, timePickerHandler }) {
+export default function TimeInput({ selectedDate, time, setTime, timePicker, timePickerHandler }) {
   const [tempTime, setTempTime] = useState(time || new Date());
 
   const displayTime = time ? format(time, 'HH:mm') : '';
@@ -13,7 +13,7 @@ export default function TimeInput({ time, setTime, timePicker, timePickerHandler
   const handleTimeChange = (event, selectedTime) => {
     const now = new Date();
     const chosenTime = selectedTime || tempTime;
-    const selectedDateTime = new Date();
+    const selectedDateTime = new Date(selectedDate);
     selectedDateTime.setHours(chosenTime.getHours());
     selectedDateTime.setMinutes(chosenTime.getMinutes());
 

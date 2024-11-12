@@ -163,7 +163,7 @@ export default function AddActivityCard({ route }) {
       <Text style={styles.textInfo}>Date</Text>
       <CalendarInput date={date} setDate={handleDate} datePicker={showDatePicker} datePickerHandler={handleDatePicker}/>
       <Text style={styles.textInfo}>Time</Text>
-      <TimeInput time={time} setTime={handleTime} timePicker={showTimePicker} timePickerHandler={handleTimePicker}/>
+      <TimeInput selectedDate={date} time={time} setTime={handleTime} timePicker={showTimePicker} timePickerHandler={handleTimePicker}/>
       <Text style={styles.textInfo}>Total Members</Text>
       <TextInput 
           style={styles.input}
