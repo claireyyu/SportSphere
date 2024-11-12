@@ -161,9 +161,12 @@ export default function AddActivityCard({ route }) {
           placeholder="123 Main Street, Burnaby"
       />
       <View style={styles.datePicker}>
-      <Text style={styles.textInfo}>Date</Text>
+        <Text style={styles.dateLabel}>Date</Text>
+        <View style={styles.CalendarInput}>
+          <CalendarInput date={date} setDate={handleDate} datePicker={showDatePicker} datePickerHandler={handleDatePicker} />
+        </View>
       <View style={styles.calendar}>
-      <CalendarInput date={date} setDate={handleDate} datePicker={showDatePicker} datePickerHandler={handleDatePicker}/>
+      {/* <CalendarInput date={date} setDate={handleDate} datePicker={showDatePicker} datePickerHandler={handleDatePicker}/> */}
       </View>
       </View>
       <Text style={styles.textInfo}>Time</Text>
@@ -240,6 +243,18 @@ export const styles = StyleSheet.create({
         fontSize: FONTSIZE.body,
         fontWeight: 'bold',
         color: COLORS.foreground,
+      },
+      dateLabel: {
+        flexDirection: 'row',
+        justifyContent: 'stretch',
+        fontSize: FONTSIZE.body,
+        fontWeight: 'bold',
+        color: COLORS.foreground,
+      },
+      CalendarInput: {
+        flexDirection: 'row',
+        flex: 1,  
+        justifyContent: 'center',
       },
       buttonText: {
         color: COLORS.background,
