@@ -18,11 +18,11 @@ export default function AddActivityCard({ route }) {
   const [error, setError] = useState('');
   const [activityName, setActivityName] = useState('');
   const [venue, setVenue] = useState('');
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(null);
   const [totalMembers, setTotalMembers] = useState(0);
   const [description, setDescription] = useState('');
-  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(true);
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -160,8 +160,12 @@ export default function AddActivityCard({ route }) {
           value={venue}
           placeholder="123 Main Street, Burnaby"
       />
+      <View style={styles.datePicker}>
       <Text style={styles.textInfo}>Date</Text>
+      <View style={styles.calendar}>
       <CalendarInput date={date} setDate={handleDate} datePicker={showDatePicker} datePickerHandler={handleDatePicker}/>
+      </View>
+      </View>
       <Text style={styles.textInfo}>Time</Text>
       <TimeInput time={time} setTime={handleTime} timePicker={showTimePicker} timePickerHandler={handleTimePicker}/>
       <Text style={styles.textInfo}>Total Members</Text>
@@ -255,5 +259,14 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: SPACING.small,
     textAlign: 'center',
+  },
+  datePicker: {
+    marginBottom: SPACING.medium,
+    marginTop: SPACING.xsmall,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  calendar: {
+    marginLeft: SPACING.medium,
   },
   });
