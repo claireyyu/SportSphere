@@ -80,6 +80,15 @@ export default function AddActivityCard({ route }) {
       setError("Venue should be no more than twenty words!");
       return;
     }
+
+    const selectedDateTime = new Date(date);
+    selectedDateTime.setHours(time.getHours());
+    selectedDateTime.setMinutes(time.getMinutes());
+    const now = new Date();
+    if (selectedDateTime < now) {
+      setError("Date and time cannot be earlier than the current date and time!");
+      return;
+    }
     
     const newActivity = {
       activityName: activityName,

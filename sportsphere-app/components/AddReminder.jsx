@@ -43,6 +43,17 @@ export default function AddReminder({ modalVisible, handleModalVisible, route })
 
   function handleNewReminder() {
     try {
+      const selectedDateTime = new Date(date);
+      selectedDateTime.setHours(time.getHours());
+      selectedDateTime.setMinutes(time.getMinutes());
+      const now = new Date();
+      if (selectedDateTime < now) {
+        Alert.alert("Invalid Date and Time", "Date and Time cannot be earlier than the current date and time.");
+        setDate(now);
+        setTime(now);
+        return;
+      }
+
       const newReminder = {
         title: title || 'Untitled',
         date: date || new Date(),
@@ -83,8 +94,8 @@ export default function AddReminder({ modalVisible, handleModalVisible, route })
                     if (selectedTime) {
                       const now = new Date();
                       const selectedDateTime = new Date(date);
-                      selectedDateTime.setHours(23);
-                      selectedDateTime.setMinutes(59);
+                      selectedDateTime.setHours(time.getHours());
+                      selectedDateTime.setMinutes(time.getMinutes());
                       if (selectedDateTime < now) {
                         Alert.alert("Invalid Time", "Time cannot be earlier than the current time.");
                         setTime(now);
