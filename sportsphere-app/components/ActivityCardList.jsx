@@ -47,6 +47,7 @@ export default function ActivityCardList({modalVisible, modalHandler}) {
           totalMembers={item.totalMembers}
           description={item.description}
           id={item.id}
+          owner={item.owner}
         />
       )}
       contentContainerStyle={styles.listContainer}

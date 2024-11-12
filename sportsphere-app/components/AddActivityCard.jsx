@@ -36,6 +36,18 @@ export default function AddActivityCard({ route }) {
     }
   }, [activityName, venue]);
 
+  useEffect(() => {
+    if (date) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Set time to midnight to compare only the date part
+      if (date < today) {
+        setDate(today);
+      } else {
+        setError('');
+      }
+    }
+  }, [date]);
+
   function handleDate(date) {
     setDate(date);
   }
@@ -94,15 +106,15 @@ export default function AddActivityCard({ route }) {
 
     console.log("PeopleGoing: ", newActivity.peopleGoing);
     navigation.navigate('ActivityDetails', {
-        id,
-        activityName,
-        venue,
-        date,
-        time,
-        peopleGoing,
-        totalMembers,
+      id,
+      activityName,
+      venue,
+      date,
+      time,
+      peopleGoing: newActivity.peopleGoing,
+      totalMembers,
       description,
-      owner,
+      owner: newActivity.owner,
     });
 } else {
     writeToDB(newActivity, "activities");

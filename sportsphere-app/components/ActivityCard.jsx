@@ -6,7 +6,7 @@ import { ProgressBar } from './ProgressBar';
 import PressableButton from './PressableButton';
 import { useNavigation } from '@react-navigation/native';
   
-export default function ActivityCard({ activityName, venue, date, time, peopleGoing, totalMembers, description, id}) {
+export default function ActivityCard({ activityName, venue, date, time, peopleGoing, totalMembers, description, id, owner}) {
   const navigation = useNavigation();
   
   function handleToActivityDetail() {
@@ -20,6 +20,7 @@ export default function ActivityCard({ activityName, venue, date, time, peopleGo
       peopleGoing,
       totalMembers,
       description,
+      owner,
     });
   }
 
@@ -70,9 +71,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
+    flex: 1,
+    flexWrap: 'wrap',
     fontSize: FONTSIZE.h3,
     fontWeight: 'bold',
     color: COLORS.text,
+    marginRight: SPACING.xsmall,
   },
   infoContainer: {
     marginVertical: SPACING.small,

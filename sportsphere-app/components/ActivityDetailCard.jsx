@@ -12,14 +12,23 @@ import { UserContext } from '../context/UserProvider';
 export default function ActivityDetailCard({ route }) {
   const { userProfile } = useContext(UserContext);
   const [hasJoined, setHasJoined] = useState(false);
+  const [isOwner, setIsOwner] = useState(false);
 
   useEffect(() => {
+    console.log("isOwner: ", isOwner);  
     if (route.params.peopleGoing.includes(userProfile.uid)) {
       setHasJoined(true);
     }
+    if (route.params.owner == userProfile.uid) {
+      setIsOwner(true);
+      console.log("Owner: ", userProfile.uid);
+    }
+    console.log("route.params.owner: ", route.params.owner);
+    console.log("userProfile.uid: ", userProfile.uid);
+    console.log("isOwner End: ", isOwner);  
   }, []);
 
-  const { id, activityName, venue, date, time, peopleGoing, totalMembers, description } = route.params;
+  const { id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner } = route.params;
   console.log("Route Params ActivityDetailCard: ", route.params);
   const navigation = useNavigation();
   
@@ -33,6 +42,7 @@ export default function ActivityDetailCard({ route }) {
       peopleGoing,
       totalMembers,
       description,
+      owner,
     });
   }
 
@@ -96,26 +106,18 @@ export default function ActivityDetailCard({ route }) {
         <Text style={styles.peopleCount}>{totalMembers} ppl</Text>
       </View>
       <Text style={styles.goingText}>{peopleGoing.length} ppl going</Text>
-      <View style={styles.btnContainer}>
-        <PressableButton 
-          componentStyle={[styles.button, {backgroundColor: COLORS.edit}]}
+      {isOwner && <View style={styles.btnContainer}>
+        <PressableButton
+          componentStyle={[styles.button, { backgroundColor: COLORS.edit }]}
           pressedFunction={handleEditActivity}>
           <Text style={styles.buttonText}>Edit</Text>
         </PressableButton>
-        <PressableButton 
-        componentStyle={[styles.button, {backgroundColor: COLORS.delete}]}
-        pressedFunction={handleDeleteActivity}>
+        <PressableButton
+          componentStyle={[styles.button, { backgroundColor: COLORS.delete }]}
+          pressedFunction={handleDeleteActivity}>
           <Text style={styles.buttonText}>Delete</Text>
         </PressableButton>
-      </View>
-      {/* <View style={styles.btnContainer}>
-      <PressableButton 
-        componentStyle={styles.button}
-        pressedFunction={handleJoinActivity}>
-          <Text style={styles.buttonText}>Join</Text>
-        </PressableButton>
-      </View> */}
-
+      </View>}
     </View>
   );
 }
@@ -140,9 +142,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
+    flex: 1,
+    flexWrap: 'wrap',
     fontSize: FONTSIZE.h1,
     fontWeight: 'bold',
     color: COLORS.text,
+    marginRight: SPACING.xsmall, 
   },
   infoContainer: {
     marginVertical: SPACING.small,
@@ -180,6 +185,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
+    marginTop: SPACING.small,
   },
   btnContainer: {
     flexDirection: 'row',
