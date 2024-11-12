@@ -5,9 +5,20 @@ import { COLORS, FONTSIZE, ROUNDED, SHADOW, SIZE, SPACING } from '../global'
 import { ProgressBar } from './ProgressBar'
 import PressableButton from './PressableButton'
 import { useNavigation } from '@react-navigation/native';
-import { deleteDB } from '../Firebase/firebaseHelper'
+import { deleteDB, addUserToActivity } from '../Firebase/firebaseHelper'
+import { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../context/UserProvider';
 
 export default function ActivityDetailCard({ route }) {
+  const { userProfile } = useContext(UserContext);
+  const [hasJoined, setHasJoined] = useState(false);
+
+  useEffect(() => {
+    if (route.params.peopleGoing.includes(userProfile.uid)) {
+      setHasJoined(true);
+    }
+  }, []);
+
   const { id, activityName, venue, date, time, peopleGoing, totalMembers, description } = route.params;
   console.log("Route Params ActivityDetailCard: ", route.params);
   const navigation = useNavigation();
@@ -41,8 +52,14 @@ export default function ActivityDetailCard({ route }) {
     ]);
   }
 
-  function handleJoinActivity() {
-    Alert.alert("You joined the event!")
+  async function handleJoinActivity() {
+    try {
+      await addUserToActivity(id, userProfile.uid);
+      setHasJoined(true);
+      Alert.alert("You joined the event!");
+    } catch (error) {
+      console.error("Error joining activity: ", error);
+    }
   }
 
   return (
@@ -57,13 +74,14 @@ export default function ActivityDetailCard({ route }) {
       </View>
       <View style={styles.joinBtnContainer}>
       <PressableButton 
-        componentStyle={styles.button}
-        pressedFunction={handleJoinActivity}>
-          <Text style={styles.buttonText}>Join</Text>
-        </PressableButton>
+        componentStyle={[styles.button, hasJoined && { backgroundColor: COLORS.border }]}
+          pressedFunction={handleJoinActivity}
+          isDisabled={hasJoined}
+        >
+          <Text style={styles.buttonText}>{hasJoined ? 'Joined' : 'Join Now'}</Text>
+      </PressableButton>
       </View>
 
-      
       <View style={styles.infoContainer}>
         <Text style={styles.labelText}>Location</Text>
         <Text style={styles.infoText}>{venue}{`\n`}</Text>
