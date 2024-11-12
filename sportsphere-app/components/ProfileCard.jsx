@@ -45,10 +45,10 @@ export default function ProfileCard({ name, email, bio }) {
         <Text style={styles.title}>Name</Text>
         <TextInput ref={nameInputRef} style={styles.infoText} value={nameInput} onChangeText={setNameInput} placeholder={name} ></TextInput>
       </View>
-      <View style={styles.profileCardRow}>
+      {/* <View style={styles.profileCardRow}>
         <Text style={styles.title}>Email</Text>
         <Text style={styles.infoText}>{email}</Text>
-      </View>
+      </View> */}
       <View style={styles.profileCardRow}>
         <Text style={styles.title}>Bio</Text>
         <TextInput style={styles.infoText} value={bioInput} onChangeText={setBioInput} placeholder={bio}></TextInput>

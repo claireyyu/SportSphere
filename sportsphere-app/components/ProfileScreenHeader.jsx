@@ -77,6 +77,7 @@ export default function ProfileScreenHeader() {
         />
         <View style={styles.profileInfo}>
           <Text style={styles.username}>{userProfile?.username || 'User Name'}</Text>
+          <Text style={styles.email}>{userProfile?.email || 'User Email'}</Text>
           <Text style={styles.bio}>{userProfile?.bio || 'User Bio'}</Text>
         </View>
       </View>
@@ -131,13 +132,18 @@ const styles = StyleSheet.create({
   },
   username: {
     color: COLORS.background,
-    fontSize: FONTSIZE.h2,
+    fontSize: FONTSIZE.h1,
     fontWeight: 'bold',
+  },
+  email: {
+    color: COLORS.defaultBackground,
+    fontSize: FONTSIZE.tiny,
+    fontStyle: 'italic',
   },
   bio: {
     color: COLORS.background,
     fontSize: FONTSIZE.body,
-    marginTop: SPACING.xsmall,
+    marginTop: SPACING.default,
   },
   buttonContainer: {
     width: '100%',
