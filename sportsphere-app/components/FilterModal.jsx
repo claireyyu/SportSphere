@@ -27,6 +27,7 @@ export default function FilterModal({modalVisible, modalHandler}) {
                     value={isDistanceSelected}
                     onValueChange={setDistanceSelection}
                     style={styles.checkbox}
+                    color={COLORS.primary}
                 />
                 <Text style={styles.selectionText}>Distance</Text>
                 </View>
