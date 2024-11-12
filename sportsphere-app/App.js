@@ -10,7 +10,6 @@ import ActivityDetailScreen from './screens/ActivityDetailScreen';
 import AddActivityScreen from './screens/AddActivityScreen';
 import TitleScreenHeader from './components/TitleScreenHeader';
 import EditProfileScreen from './screens/EditProfileScreen';
-import ConfirmEditProfileButton from './components/ConfirmEditProfileButton';
 import ReminderScreen from './screens/ReminderScreen';
 import AddReminderButton from './components/AddReminderButton';
 import ChatDetailScreen from './screens/ChatDetailScreen';
@@ -113,7 +112,6 @@ const AppStack = (
         },
         headerBackTitleVisible: false,
         headerTintColor: COLORS.background,
-        // headerRight: () => <ConfirmEditProfileButton />,
       }}
       />
       <Stack.Screen
