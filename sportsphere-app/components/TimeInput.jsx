@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, Modal, Button, Alert } from 'react-native';
+import { View, TextInput, StyleSheet, Modal, Button, Alert, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from 'date-fns';
 import { COLORS, ROUNDED, FONTSIZE, SPACING } from '../global';
@@ -10,24 +10,45 @@ export default function TimeInput({ time, setTime, timePicker, timePickerHandler
 
   const displayTime = time ? format(time, 'HH:mm') : '';
 
+  const handleTimeChange = (event, selectedTime) => {
+    const now = new Date();
+    const chosenTime = selectedTime || tempTime;
+    const selectedDateTime = new Date();
+    selectedDateTime.setHours(chosenTime.getHours());
+    selectedDateTime.setMinutes(chosenTime.getMinutes());
+
+    if (selectedDateTime < now) {
+      Alert.alert("Invalid Time", "Time cannot be earlier than the current time.");
+      setTempTime(now);
+      if (Platform.OS === 'android') timePickerHandler(false); // Close picker on invalid time on Android
+      return;
+    }
+
+    if (Platform.OS === 'android') {
+      // Set time and close picker immediately on Android
+      setTime(chosenTime);
+      timePickerHandler(false);
+    } else {
+      // Update tempTime on iOS, user will confirm via button
+      setTempTime(chosenTime);
+    }
+  };
+
   return (
     <SafeAreaView>
       <TextInput
         style={styles.input}
         value={displayTime}
-        onFocus={() => {
-          console.log('onFocus');
-          timePickerHandler(true);
-        }}
+        onFocus={() => timePickerHandler(true)}
       />
-      <SafeAreaView style={styles.modalContainer}>
+
+      {Platform.OS === 'ios' ? (
+        // iOS Modal with Confirm Button
         <Modal
           transparent={true}
           animationType="slide"
           visible={timePicker}
-          onRequestClose={() => {
-            timePickerHandler(false);
-          }}
+          onRequestClose={() => timePickerHandler(false)}
         >
           <SafeAreaView style={styles.modalContainer}>
             <View style={styles.pickerContainer}>
@@ -35,21 +56,7 @@ export default function TimeInput({ time, setTime, timePicker, timePickerHandler
                 value={tempTime}
                 mode="time"
                 display="spinner"
-                onChange={(event, selectedTime) => {
-                  console.log('Time picked:', selectedTime);
-                  if (selectedTime) {
-                    const now = new Date();
-                    const selectedDateTime = new Date();
-                    selectedDateTime.setHours(selectedTime.getHours());
-                    selectedDateTime.setMinutes(selectedTime.getMinutes());
-                    if (selectedDateTime < now) {
-                      Alert.alert("Invalid Time", "Time cannot be earlier than the current time.");
-                      setTempTime(now);
-                    } else {
-                      setTempTime(selectedTime); // Update temporary time state
-                    }
-                  }
-                }}
+                onChange={handleTimeChange}
               />
               <Button
                 title="Confirm"
@@ -61,7 +68,17 @@ export default function TimeInput({ time, setTime, timePicker, timePickerHandler
             </View>
           </SafeAreaView>
         </Modal>
-      </SafeAreaView>
+      ) : (
+        // Android DateTimePicker without Modal
+        timePicker && (
+          <DateTimePicker
+            value={tempTime}
+            mode="time"
+            display="default"
+            onChange={handleTimeChange}
+          />
+        )
+      )}
     </SafeAreaView>
   );
 }
