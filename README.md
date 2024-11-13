@@ -4,6 +4,11 @@
 
 Sportsphere is a mobile application designed to help users manage their sports activities, reminders, and chats. The app integrates with Firebase for authentication and database functionalities, allowing users to create, read, update, and delete activities and reminders.
 
+## Collections
+**activities**
+**users**
+**reminders** : subcollection of users
+
 ## Features
 
 - **Activity Management**: Users can create, view, edit, and delete sports activities.
