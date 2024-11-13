@@ -13,28 +13,18 @@ export default function CalendarInput({date, setDate, datePicker, datePickerHand
   // Return the JSX to display the input field and the date picker
   return (
     <View>
-      <TextInput
-        style={styles.input}
-        value={displayDate}
-        onFocus={() => {
-          console.log('onFocus'); // Correct place for console.log
-          datePickerHandler(true);
-        }}
-        />
         {datePicker && (
           <DateTimePicker
             testID="dateTimePicker"
             value={date || new Date()} 
             mode="date"
-            display="inline"
+            display="calendar"
             onChange={(event, selectedDate) => {
               console.log('Date picked:', selectedDate); 
-              datePickerHandler(false);
               if (selectedDate) {
                 setDate(selectedDate);
-              } else {
-                setDate(new Date());
               }
+              console.log('Date:', date);
             }}
           />
         )}

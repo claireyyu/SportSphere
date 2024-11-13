@@ -1,5 +1,5 @@
 import { db } from './firebaseSetup';
-import { collection, getDoc, getDocs, addDoc, onSnapshot, updateDoc, doc, deleteDoc, query, where, arrayUnion } from 'firebase/firestore';
+import { collection, getDoc, getDocs, addDoc, onSnapshot, updateDoc, doc, deleteDoc, query, where, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { manageReminder } from '../utils/readDBHelper';
 import { manageActivity } from '../utils/readDBHelper';
 
@@ -71,6 +71,8 @@ export async function findUserByUid(uid) {
 
     // Execute the query
     const querySnapshot = await getDocs(q);
+    console.log("Query snapshot:", querySnapshot);
+    console.log("Query snapshot.doc[0]:", querySnapshot.docs[0]);
 
     if (!querySnapshot.empty) {
       // Return the first matching document's data (assuming uid is unique)
@@ -85,6 +87,37 @@ export async function findUserByUid(uid) {
   }
 }
 
+export async function updateUserProfile(uid, updatedProfile) {
+  try {
+    // Create a reference to the users collection
+    const usersRef = collection(db, "users");
+
+    // Create a query against the collection where uid matches
+    const q = query(usersRef, where("uid", "==", uid));
+
+    // Execute the query
+    const querySnapshot = await getDocs(q);
+    console.log("Query snapshot:", querySnapshot);
+    console.log("Query snapshot.doc[0] from update:", querySnapshot.docs[0]);
+
+    if (!querySnapshot.empty) {
+      // Get the document ID of the first matching document
+      const userDocId = querySnapshot.docs[0].id;
+
+      // Create a reference to the user document
+      const userRef = doc(db, 'users', userDocId);
+
+      // Update the user document with the new profile information
+      await updateDoc(userRef, updatedProfile);
+      console.log(`User profile updated for UID: ${uid}`);
+    } else {
+      console.log("No matching user found!");
+    }
+  } catch (error) {
+    console.error("Error updating user profile: ", error);
+  }
+}
+
 export async function addUserToActivity(activityId, userId) {
   try {
     const activityRef = doc(db, 'activities', activityId);
@@ -94,5 +127,17 @@ export async function addUserToActivity(activityId, userId) {
     console.log(`User ${userId} added to activity ${activityId}`);
   } catch (error) {
     console.error("Error adding user to activity: ", error);
+  }
+}
+
+export async function removeUserFromActivity(activityId, userId) {
+  try {
+    const activityRef = doc(db, 'activities', activityId);
+    await updateDoc(activityRef, {
+      peopleGoing: arrayRemove(userId)
+    });
+    console.log(`User ${userId} removed from activity ${activityId}`);
+  } catch (error) {
+    console.error("Error removing user from activity: ", error);
   }
 }

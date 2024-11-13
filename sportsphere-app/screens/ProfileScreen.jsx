@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import ActivityCardList from '../components/ActivityCardList'
+import ProfileActivityCardList from '../components/ProfileActivityCardList'
 import { COLORS, SPACING } from '../global'
 
 export default function ProfileScreen() {
   return (
     <View style={styles.container}>
-      <ActivityCardList />
+      <ProfileActivityCardList />
     </View>
   )
 }

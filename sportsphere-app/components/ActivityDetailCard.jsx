@@ -5,9 +5,10 @@ import { COLORS, FONTSIZE, ROUNDED, SHADOW, SIZE, SPACING } from '../global'
 import { ProgressBar } from './ProgressBar'
 import PressableButton from './PressableButton'
 import { useNavigation } from '@react-navigation/native';
-import { deleteDB, addUserToActivity } from '../Firebase/firebaseHelper'
+import { deleteDB, addUserToActivity, removeUserFromActivity } from '../Firebase/firebaseHelper'
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../context/UserProvider';
+import { set } from 'date-fns';
 
 export default function ActivityDetailCard({ route }) {
   const { userProfile } = useContext(UserContext);
@@ -31,6 +32,7 @@ export default function ActivityDetailCard({ route }) {
   const { id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner } = route.params;
   console.log("Route Params ActivityDetailCard: ", route.params);
   const navigation = useNavigation();
+  const [pplGoingNumber, setPplGoingNumber] = useState(peopleGoing.length);
   
   function handleEditActivity() {
     navigation.navigate('EditActivity', {
@@ -64,8 +66,20 @@ export default function ActivityDetailCard({ route }) {
 
   async function handleJoinActivity() {
     try {
+      if (hasJoined) {
+        if (hasJoined && userProfile.uid == owner) {
+          Alert.alert("You are the organizer of this event!");
+          return;
+        }
+        setHasJoined(false);
+        await removeUserFromActivity(id, userProfile.uid);
+        setPplGoingNumber(pplGoingNumber - 1);
+        Alert.alert("You left the event!");
+        return;
+      }
       await addUserToActivity(id, userProfile.uid);
       setHasJoined(true);
+      setPplGoingNumber(pplGoingNumber + 1);
       Alert.alert("You joined the event!");
     } catch (error) {
       console.error("Error joining activity: ", error);
@@ -86,7 +100,6 @@ export default function ActivityDetailCard({ route }) {
       <PressableButton 
         componentStyle={[styles.button, hasJoined && { backgroundColor: COLORS.border }]}
           pressedFunction={handleJoinActivity}
-          isDisabled={hasJoined}
         >
           <Text style={styles.buttonText}>{hasJoined ? 'Joined' : 'Join Now'}</Text>
       </PressableButton>
@@ -102,10 +115,10 @@ export default function ActivityDetailCard({ route }) {
         <Text style={styles.goingText}>Pictures</Text>
       </View>
       <View style={styles.progressContainer}>
-        <ProgressBar value={peopleGoing.length} total={totalMembers} />
+        <ProgressBar value={pplGoingNumber} total={totalMembers} />
         <Text style={styles.peopleCount}>{totalMembers} ppl</Text>
       </View>
-      <Text style={styles.goingText}>{peopleGoing.length} ppl going</Text>
+      <Text style={styles.goingText}>{pplGoingNumber} ppl going</Text>
       {isOwner && <View style={styles.btnContainer}>
         <PressableButton
           componentStyle={[styles.button, { backgroundColor: COLORS.edit }]}

@@ -29,7 +29,7 @@ const TabNavigator = () => {
         tabBarIcon: ({ focused }) => {
           let iconName;
           if (route.name === 'Activity') {
-            iconName = 'basketball-outline';
+            iconName = 'home-outline';
           } else if (route.name === 'Chat') {
             iconName = 'chatbubble-outline';
           } else if (route.name === 'Map') {

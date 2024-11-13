@@ -85,7 +85,7 @@ function ReminderItem({ title, time, date, id, reminderItemHandler }) {
     <PressableButton
         pressedFunction={handleModalVisible}
         onLongPress={handleDelete}
-      childrenDirection={{ flexDirection: 'row', justifyContent: 'space-between' }}> 
+        childrenStyle={{ flexDirection: 'row', justifyContent: 'space-between' }}> 
     <View style={styles.card}>
       <View>
         <Text style={styles.title}>{title}</Text>

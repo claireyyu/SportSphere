@@ -12,7 +12,7 @@ export default function FilterModal({modalVisible, modalHandler}) {
     <Modal animationType='none' transparent={true} visible={modalVisible}>
         <View style={styles.card}>
             <View style={styles.modal}>
-                <Text style={styles.modalText}>Sort by:</Text>
+                <Text style={styles.modalText}>Sort by</Text>
                 <View style={styles.checkboxContainer}>
                 <Checkbox
                     value={isDateSelected}
@@ -27,6 +27,7 @@ export default function FilterModal({modalVisible, modalHandler}) {
                     value={isDistanceSelected}
                     onValueChange={setDistanceSelection}
                     style={styles.checkbox}
+                    color={COLORS.primary}
                 />
                 <Text style={styles.selectionText}>Distance</Text>
                 </View>
@@ -54,7 +55,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     modalText: {
-        fontSize: FONTSIZE.h2,
+        fontSize: FONTSIZE.h3,
         marginBottom: 15,
         fontWeight: 'bold',
     },

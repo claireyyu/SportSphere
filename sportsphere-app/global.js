@@ -5,8 +5,8 @@ export const COLORS = {
   'defaultBackground': '#F2F2F2',
   'border': '#C7C7CC',
   'secondaryText': '#808080',
-  'delete': '#FF3B30',
-  'edit': '#007AFF',
+  'delete': '#cd5c5c',
+  'edit': '#1e90ff',
 };
 
 export const FONTSIZE = {
@@ -16,6 +16,7 @@ export const FONTSIZE = {
   'h3': 18,
   'body': 16,
   'small': 14,
+  'tiny': 12,
 };
 
 export const ROUNDED = {
