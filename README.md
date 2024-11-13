@@ -25,7 +25,7 @@ Sportsphere is a mobile application designed to help users manage their sports a
 
    ```sh
    git clone https://github.com/claireyyu/SportSphere.git
-   cd sportsphere-app
+   cd SportSphere/sportsphere-app
    ```
 
 2. **Install dependencies**:
