@@ -28,7 +28,7 @@ export default function ActivityDetailCard({ route }) {
     console.log("userProfile.uid: ", userProfile.uid);
     console.log("isOwner End: ", isOwner);  
   }, []);
-
+  
   const { id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner } = route.params;
   console.log("Route Params ActivityDetailCard: ", route.params);
   const navigation = useNavigation();
@@ -67,14 +67,18 @@ export default function ActivityDetailCard({ route }) {
   async function handleJoinActivity() {
     try {
       if (hasJoined) {
-        if (hasJoined && userProfile.uid == owner) {
-          Alert.alert("You are the organizer of this event!");
+        if (peopleGoing.length == totalMembers) {
+          Alert.alert("The event is full!");
           return;
         }
         setHasJoined(false);
         await removeUserFromActivity(id, userProfile.uid);
         setPplGoingNumber(pplGoingNumber - 1);
         Alert.alert("You left the event!");
+        return;
+      }
+      if (peopleGoing.length == totalMembers) {
+        Alert.alert("The event is full!");
         return;
       }
       await addUserToActivity(id, userProfile.uid);
@@ -98,10 +102,10 @@ export default function ActivityDetailCard({ route }) {
       </View>
       <View style={styles.joinBtnContainer}>
       <PressableButton 
-        componentStyle={[styles.button, hasJoined && { backgroundColor: COLORS.border }]}
+        componentStyle={[styles.button, (hasJoined || peopleGoing.length >= totalMembers) && { backgroundColor: COLORS.border }]}
           pressedFunction={handleJoinActivity}
         >
-          <Text style={styles.buttonText}>{hasJoined ? 'Joined' : 'Join Now'}</Text>
+          <Text style={styles.buttonText}>{hasJoined ? 'Joined' : (peopleGoing.length >= totalMembers?'Full': 'Join Now')}</Text>
       </PressableButton>
       </View>
 

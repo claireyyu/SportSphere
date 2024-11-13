@@ -7,6 +7,32 @@ Sportsphere is a mobile application designed to help users manage their sports a
 ## Collections
 **activities**
 **users**
+
+## Data Model:
+- **activities**: 
+activity Name (string)
+date (timestamp)
+description (string)
+owner (string)
+peopleGoing (array[string])
+time (timestamp)
+totalMembers (string)
+venue (string)
+
+- **users**:
+bio (string)
+email (string)
+uid (string)
+username (string)
+reminders (subcollection)
+
+- **reminers**:
+date (timestamp)
+owner (string)
+time (timestamp)
+title (string)
+turnedOn (boolean)
+
 **reminders** : subcollection of users
 
 ## Features
