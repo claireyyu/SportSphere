@@ -81,6 +81,7 @@ export default function AddActivityCard({ route }) {
         ...newActivity,
         date: strNewDate,
         time: strNewTime,
+        id: id,
       };
 
       if (isEditMode) {
