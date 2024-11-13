@@ -2,12 +2,14 @@ import React, { useEffect, useState, useContext } from 'react';
 import { View, Modal, StyleSheet, TextInput, Text, Alert, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, ROUNDED, SPACING, FONTSIZE } from '../global';
-import { updateDB, writeToDB } from '../Firebase/firebaseHelper';
+import { updateDB, writeToDB, writeToSubcollection, updateByCollectionRef } from '../Firebase/firebaseHelper';
 import PressableButton from './PressableButton';
 import { parse, format } from 'date-fns';
 import DateInputer from './DateInputer';
 import TimeInputer from './TimeInputer';
 import { UserContext } from '../context/UserProvider';
+import { db } from '../Firebase/firebaseSetup';
+import { collection, doc, addDoc, updateDoc } from 'firebase/firestore';
 
 export default function AddReminder({ modalVisible, handleModalVisible, route }) {
   const { userProfile } = useContext(UserContext);
@@ -64,11 +66,19 @@ export default function AddReminder({ modalVisible, handleModalVisible, route })
         time: time || new Date(),
         turnedOn: true,
       };
+
+      console.log("new reminder: ", newReminder);
+
+      const parentPath = `users/${userProfile.userDocId}`;
+      const subcollectionName = "reminders";
+      const subcollectionRef = collection(doc(db, parentPath), subcollectionName);
+
       if (isEditMode) {
-        updateDB(route.params.id, newReminder, "reminders");
+        updateByCollectionRef(route.params.id, newReminder, subcollectionRef);
+        // updateDBByRef(route.params.id, newReminder, remindersRef);
         setIsEditMode(false);
       } else {
-        writeToDB(newReminder, "reminders");
+        writeToSubcollection(parentPath, subcollectionName, newReminder)
       }
       handleToggleDatePicker();
     } catch (error) {

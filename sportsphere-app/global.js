@@ -5,8 +5,8 @@ export const COLORS = {
   'defaultBackground': '#F2F2F2',
   'border': '#C7C7CC',
   'secondaryText': '#808080',
-  'delete': '#cd5c5c',
-  'edit': '#1e90ff',
+  'delete': '#dc143c',
+  'edit': '#4169e1',
   'required': '#ff0000',
 };
 

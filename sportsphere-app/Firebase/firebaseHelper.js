@@ -1,5 +1,5 @@
 import { db } from './firebaseSetup';
-import { collection, getDoc, getDocs, addDoc, onSnapshot, updateDoc, doc, deleteDoc, query, where, arrayUnion, arrayRemove } from 'firebase/firestore';
+import { collection, getDoc, getDocs, addDoc, onSnapshot, updateDoc, doc, deleteDoc, query, where, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { manageReminder } from '../utils/readDBHelper';
 import { manageActivity } from '../utils/readDBHelper';
 
@@ -13,14 +13,39 @@ export async function writeToDB(data, collectionName) {
   }
 }
 
-export function readAllFiles(collectionName, callback, errorCallback) {
-  const unsubscribe = onSnapshot(collection(db, collectionName), (querySnapshot) => {
+export const writeToSubcollection = async (parentPath, subcollectionName, data) => {
+  try {
+    const subcollectionRef = collection(doc(db, parentPath), subcollectionName);
+
+    const docRef = await addDoc(subcollectionRef, data);
+      return docRef; // Returns the reference to the newly created document
+  } catch (error) {
+    console.error("Error writing to subcollection:", error);
+    throw error;
+  }
+};
+
+
+export function readAllFiles(collectionName, userDocId = null, callback, errorCallback) {
+  let collectionRef;
+
+  if (userDocId) {
+    // If userDocId is provided, read from the subcollection within the user's document
+    const userDocRef = doc(db, "users", userDocId);
+    collectionRef = collection(userDocRef, collectionName);
+    console.log("Reading from subcollection:", collectionRef.path);
+  } else {
+    // Otherwise, read from the top-level collection
+    collectionRef = collection(db, collectionName);
+  }
+
+  const unsubscribe = onSnapshot(collectionRef, (querySnapshot) => {
     const items = [];
     querySnapshot.forEach((doc) => {
-      if (collectionName === "activities") {
+      if (collectionName === 'reminders') {
+        manageReminder(doc, items);
+      } else if (collectionName === 'activities') {
         manageActivity(doc, items);
-      } else if (collectionName === "reminders") {
-      manageReminder(doc, items);
       }
     });
     items.sort((a, b) => a.dtCombined - b.dtCombined);
@@ -31,7 +56,7 @@ export function readAllFiles(collectionName, callback, errorCallback) {
   });
 
   return unsubscribe;
-};
+}
 
 export async function updateDB(id, updatedItem, collectionName) {
     try {
@@ -40,6 +65,15 @@ export async function updateDB(id, updatedItem, collectionName) {
     } catch (err) {
         console.error(err);
     }
+}
+
+export async function updateByCollectionRef(id, updatedItem, collectionRef) {
+  try {
+    const docRef = doc(collectionRef, id);
+    await updateDoc(docRef, updatedItem);
+  } catch (error) {
+    console.error("Error updating document by collection reference:", error);
+  }
 }
 
 export async function deleteDB(id, collectionName) {

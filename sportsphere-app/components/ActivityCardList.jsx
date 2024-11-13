@@ -16,7 +16,7 @@ export default function ActivityCardList({modalVisible, modalHandler}) {
   }
 
   useEffect(() => {
-    readAllFiles(collectionName, handleActivityItems, (error) => {
+    readAllFiles(collectionName, null, handleActivityItems, (error) => {
       console.log("Error fetching activities", error.message);
     });
   }, []);

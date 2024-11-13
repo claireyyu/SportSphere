@@ -7,6 +7,8 @@ import { parse, format } from 'date-fns';
 import PressableButton from './PressableButton';
 import EditReminderModal from './EditReminderModal';
 import { UserContext } from '../context/UserProvider';
+import { db } from '../Firebase/firebaseSetup';
+import { collection, doc } from 'firebase/firestore';
 
 export default function ReminderItemList() {
   const { userProfile } = React.useContext(UserContext);
@@ -19,10 +21,14 @@ export default function ReminderItemList() {
   }
 
   useEffect(() => {
-    readAllFiles(collectionName, setReminderItems, (error) => {
-      Alert.alert("Error fetching reminders", error.message);
-    });
-  }, []);
+    if (userProfile.userDocId) {
+      const unsubscribe = readAllFiles(collectionName, userProfile.userDocId, setReminderItems, (error) => {
+        console.error("Error fetching reminders:", error);
+      });
+
+      return () => unsubscribe();
+    }
+  }, [userProfile.userDocId]);
 
   const filteredReminderItems = reminderItems.filter(item => item.owner === userProfile.uid);
 
