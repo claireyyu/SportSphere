@@ -54,6 +54,21 @@ export default function AddActivityCard({ route }) {
 
   function handleNewActivity() {
     try {
+      if (!activityName || !venue || !date || !time || !totalMembers || !description) {
+        setError("Please fill in all fields!");
+        return;
+      }
+      
+      if (activityName.split(" ").length > 5) {
+        setError("Activity name should be no more than five words!");
+        return;
+      }
+  
+      if (venue.split(" ").length > 20) {
+        setError("Venue should be no more than twenty words!");
+        return;
+      }
+      
       const selectedDateTime = new Date(date);
       selectedDateTime.setHours(time.getHours());
       selectedDateTime.setMinutes(time.getMinutes());
