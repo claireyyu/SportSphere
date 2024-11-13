@@ -1,19 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, Modal, StyleSheet, TextInput, Text, Alert, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { COLORS, ROUNDED, SPACING, FONTSIZE } from '../global';
-import { updateDB, writeToDB } from '../Firebase/firebaseHelper';
+import { findUserIDByUid, updateDB, writeReminderToUserDB, writeToDB } from '../Firebase/firebaseHelper';
 import PressableButton from './PressableButton';
 import { parse, format } from 'date-fns';
+import { UserContext } from '../context/UserProvider';
 
 export default function AddReminder({ modalVisible, handleModalVisible, route }) {
+
+  const { userProfile } = useContext(UserContext)
+  console.log("User Profile: ", userProfile);
+  const userID = findUserIDByUid(userProfile.uid);
+  console.log("User ID: ", userID);
   const [title, setTitle] = useState('');
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+
 
   function handleClearDate() { 
     setDate(new Date());
@@ -53,7 +60,8 @@ export default function AddReminder({ modalVisible, handleModalVisible, route })
         updateDB(route.params.id, newReminder, "reminders");
         setIsEditMode(false);
       } else {
-        writeToDB(newReminder, "reminders");
+        //writeToDB(newReminder, "reminders");
+        writeReminderToUserDB(newReminder, "reminders", userID);
       }
     } catch (error) {
       console.error("Error adding document: ", error);

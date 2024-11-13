@@ -10,7 +10,6 @@ export default function ActivityCard({ activityName, venue, date, time, peopleGo
   const navigation = useNavigation();
   
   function handleToActivityDetail() {
-    
     navigation.navigate('ActivityDetails', {
       id,
       activityName,

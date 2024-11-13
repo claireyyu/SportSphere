@@ -47,3 +47,14 @@ export function manageActivity(doc, items) {
       console.log("Missing date or time for Activity:", doc.id);
     }
 }
+export function manageUser(doc, items) {
+    const data = doc.data();
+    if (data.email && data.username) {
+      items.push({
+        ...data,
+        id: doc.id,
+      });
+    } else {
+      console.log("Missing email, displayName, or photoURL for user:", doc.id);
+    }
+}

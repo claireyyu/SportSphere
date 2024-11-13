@@ -1,7 +1,7 @@
 import { db } from './firebaseSetup';
 import { collection, getDoc, getDocs, addDoc, onSnapshot, updateDoc, doc, deleteDoc, query, where, arrayUnion, arrayRemove } from 'firebase/firestore';
-import { manageReminder } from '../utils/readDBHelper';
-import { manageActivity } from '../utils/readDBHelper';
+import { manageReminder, manageActivity, manageUser } from '../utils/readDBHelper';
+
 
 export async function writeToDB(data, collectionName) {
   try {
@@ -13,6 +13,17 @@ export async function writeToDB(data, collectionName) {
   }
 }
 
+export async function writeReminderToUserDB(data, collectionName, userID) {
+  try {
+    const userRef = doc(db, "users", userID);
+    const docRef = await addDoc(collection(userRef, collectionName), data);
+    console.log("Reminder written with ID: ", docRef.id);
+  } catch (error) {
+    console.error("Error adding reminder to user document: ", error);
+  }
+}
+
+
 export function readAllFiles(collectionName, callback, errorCallback) {
   const unsubscribe = onSnapshot(collection(db, collectionName), (querySnapshot) => {
     const items = [];
@@ -21,6 +32,8 @@ export function readAllFiles(collectionName, callback, errorCallback) {
         manageActivity(doc, items);
       } else if (collectionName === "reminders") {
       manageReminder(doc, items);
+      } else {
+        manageUser(doc, items);
       }
     });
     items.sort((a, b) => a.dtCombined - b.dtCombined);
@@ -83,6 +96,32 @@ export async function findUserByUid(uid) {
     }
   } catch (error) {
     console.error("Error finding user by uid:", error);
+    throw error; // Optionally throw error to handle it in the calling function
+  }
+}
+
+export async function findUserIDByUid(uid) {
+  try {
+    // Create a reference to the users collection
+    const usersRef = collection(db, "users");
+
+    // Create a query against the collection where uid matches
+    const q = query(usersRef, where("uid", "==", uid));
+
+    // Execute the query
+    const querySnapshot = await getDocs(q);
+    console.log("Query snapshot:", querySnapshot);
+    console.log("Query snapshot.doc[0]:", querySnapshot.docs[0]);
+
+    if (!querySnapshot.empty) {
+      // Return the first matching document's data (assuming uid is unique)
+      return querySnapshot.docs[0].id;
+    } else {
+      console.log("No matching user found!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error finding userID by uid:", error);
     throw error; // Optionally throw error to handle it in the calling function
   }
 }
