@@ -1,46 +1,34 @@
-import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, Modal, Button, Alert, Platform } from 'react-native';
+import React from 'react';
+import { View, TextInput, StyleSheet, Modal, Button, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from 'date-fns';
 import { COLORS, ROUNDED, FONTSIZE, SPACING } from '../global';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import PressableButton from './PressableButton';
 
 export default function TimeInput({ time, setTime, timePicker, timePickerHandler }) {
-  const [tempTime, setTempTime] = useState(time || new Date());
-
   const displayTime = time ? format(time, 'HH:mm') : '';
 
   const handleTimeChange = (event, selectedTime) => {
-    const now = new Date();
-    const chosenTime = selectedTime || tempTime;
-    const selectedDateTime = new Date();
-    selectedDateTime.setHours(chosenTime.getHours());
-    selectedDateTime.setMinutes(chosenTime.getMinutes());
-
-    if (selectedDateTime < now) {
-      Alert.alert("Invalid Time", "Time cannot be earlier than the current time.");
-      setTempTime(now);
-      if (Platform.OS === 'android') timePickerHandler(false); // Close picker on invalid time on Android
-      return;
-    }
-
-    if (Platform.OS === 'android') {
-      // Set time and close picker immediately on Android
-      setTime(chosenTime);
-      timePickerHandler(false);
+    if (selectedTime) {
+      setTime(selectedTime); // Update time state directly
+      if (Platform.OS === 'android') {
+        timePickerHandler(false); // Close picker on Android
+      }
     } else {
-      // Update tempTime on iOS, user will confirm via button
-      setTempTime(chosenTime);
+      if (Platform.OS === 'android') {
+        timePickerHandler(false); // Close picker on Android
+      }
     }
   };
 
   return (
     <SafeAreaView>
-      <TextInput
-        style={styles.input}
-        value={displayTime}
-        onFocus={() => timePickerHandler(true)}
-      />
+        <TextInput
+          style={styles.input}
+          value={displayTime}
+          onFocus={() => timePickerHandler(true)}
+        />
 
       {Platform.OS === 'ios' ? (
         // iOS Modal with Confirm Button
@@ -53,7 +41,7 @@ export default function TimeInput({ time, setTime, timePicker, timePickerHandler
           <SafeAreaView style={styles.modalContainer}>
             <View style={styles.pickerContainer}>
               <DateTimePicker
-                value={tempTime}
+                value={time || new Date()}
                 mode="time"
                 display="spinner"
                 onChange={handleTimeChange}
@@ -61,7 +49,6 @@ export default function TimeInput({ time, setTime, timePicker, timePickerHandler
               <Button
                 title="Confirm"
                 onPress={() => {
-                  setTime(tempTime);
                   timePickerHandler(false);
                 }}
               />
@@ -72,7 +59,7 @@ export default function TimeInput({ time, setTime, timePicker, timePickerHandler
         // Android DateTimePicker without Modal
         timePicker && (
           <DateTimePicker
-            value={tempTime}
+            value={time || new Date()}
             mode="time"
             display="default"
             onChange={handleTimeChange}
@@ -84,7 +71,12 @@ export default function TimeInput({ time, setTime, timePicker, timePickerHandler
 }
 
 const styles = StyleSheet.create({
+  inputButton: {
+    width: '100%',
+    alignItems: 'center',
+  },
   input: {
+    flex: 1,
     height: 35,
     marginTop: SPACING.xsmall,
     marginBottom: SPACING.medium,
