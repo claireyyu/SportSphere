@@ -353,8 +353,8 @@ export default function AddReminder({ modalVisible, handleModalVisible, route })
       >
         <SafeAreaView style={styles.modalContainer}>
           <View style={styles.pickerContainer}>
-            <DateInputer date={date} setDate={setDate} />
-            <TimeInputer time={time} setTime={setTime} />
+            <DateInputer date={date} setDate={setDate} inputerStyle={styles.reminderInput} />
+            <TimeInputer time={time} setTime={setTime}inputerStyle={styles.reminderInput} />
             <TextInput 
               placeholder="Badminton with friends"
               value={title}
@@ -413,6 +413,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  reminderInput: {
+    textAlign: 'center',
+    borderColor: COLORS.border,
+    marginHorizontal: SPACING.small,
+    marginTop: SPACING.medium,
   },
   titleInput: {
     borderBottomWidth: 1,

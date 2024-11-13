@@ -186,12 +186,12 @@ const styles = StyleSheet.create({
   },
   requiredContainer: {
     flexDirection: 'row',
-    //alignItems: 'center',
+    alignItems: 'center',
     marginVertical: SPACING.small,
   },
   required: {
     color: COLORS.required,
-    fontSize: 20,
-    marginLeft: 3,
+    fontSize: FONTSIZE.h2,
+    marginLeft: SPACING.xsmall,
   },
 });
