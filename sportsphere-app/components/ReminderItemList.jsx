@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Switch, FlatList, Alert, Pressable } from 'react-native';
 import { COLORS, FONTSIZE, SPACING, ROUNDED, SHADOW } from '../global';
 import { useEffect } from 'react';
-import { readAllFiles, updateDB, deleteDB } from '../Firebase/firebaseHelper';
+import { readAllFiles, updateDB, deleteDB, updateByCollectionRef } from '../Firebase/firebaseHelper';
 import { parse, format } from 'date-fns';
 import PressableButton from './PressableButton';
 import EditReminderModal from './EditReminderModal';
@@ -47,6 +47,7 @@ export default function ReminderItemList() {
 function ReminderItem({ title, time, date, id, reminderItemHandler }) {
   const [isEnabled, setIsEnabled] = React.useState(true);
   const [modalVisible, setModalVisible] = React.useState(false);
+  const { userProfile } = React.useContext(UserContext);
 
   function handleModalVisible() {
     setModalVisible(!modalVisible);
@@ -64,7 +65,10 @@ function ReminderItem({ title, time, date, id, reminderItemHandler }) {
       date: dateObj,
       turnedOn: !isEnabled,
     };
-    updateDB(id, newReminder, "reminders");
+    const parentPath = `users/${userProfile.userDocId}`;
+    const subcollectionName = "reminders";
+    const subcollectionRef = collection(doc(db, parentPath), subcollectionName);
+    updateByCollectionRef(id, newReminder, subcollectionRef);
     setIsEnabled(previousState => !previousState);
   }
 
