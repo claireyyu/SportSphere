@@ -75,14 +75,23 @@ export default function AddActivityCard({ route }) {
         owner: userProfile.uid,
         peopleGoing: [userProfile.uid],
       };
+      const strNewDate = format(newActivity.date, 'MMM dd, yyyy');
+      const strNewTime = format(newActivity.time, 'HH:mm');
+      const passToDetail = {
+        ...newActivity,
+        date: strNewDate,
+        time: strNewTime,
+      };
 
       if (isEditMode) {
         updateDB(id, newActivity, "activities");
         setIsEditMode(false);
+        navigation.navigate('ActivityDetails', passToDetail);
       } else {
         writeToDB(newActivity, "activities");
+        navigation.goBack();
       }
-      navigation.goBack();
+      
     } catch (error) {
       console.error("Error adding document: ", error);
     }
