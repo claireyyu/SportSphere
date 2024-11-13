@@ -5,7 +5,7 @@ import PressableButton from './PressableButton';
 import { format } from 'date-fns';
 import { COLORS, SPACING, ROUNDED, FONTSIZE } from '../global';
 
-export default function DateInputer({ date, setDate }) {
+export default function DateInputer({ date, setDate, inputerStyle }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   return (
@@ -28,7 +28,7 @@ export default function DateInputer({ date, setDate }) {
             componentStyle={styles.inputButton}
           >
             <TextInput
-              style={styles.input}
+              style={[styles.input, inputerStyle]}
               value={format(date, 'MMM dd, yyyy')}
               editable={false}
             />
@@ -54,14 +54,12 @@ export default function DateInputer({ date, setDate }) {
 
 const styles = StyleSheet.create({
   input: {
-    textAlign: 'center',
     flex: 1,
     height: 35,
     marginTop: SPACING.xsmall,
     marginBottom: SPACING.medium,
-    marginHorizontal: SPACING.medium,
     borderBottomWidth: 1,
-    borderColor: COLORS.border,
+    borderColor: COLORS.secondaryText,
     padding: SPACING.xsmall,
     borderRadius: ROUNDED.small,
     fontSize: FONTSIZE.body,

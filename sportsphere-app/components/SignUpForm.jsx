@@ -5,11 +5,14 @@ import { auth } from '../Firebase/firebaseSetup';
 import { writeToDB } from '../Firebase/firebaseHelper';
 import { COLORS, FONTSIZE, SPACING, ROUNDED } from '../global';
 import PressableButton from './PressableButton';
+import { set } from 'date-fns';
 
 export default function SignUpForm({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [bio, setBio] = useState('');
 
   function handleToLogin() {
     navigation.replace('Login');
@@ -31,9 +34,9 @@ export default function SignUpForm({ navigation }) {
       // Add user profile to Firestore
       const userProfile = {
         uid: userCred.user.uid,
-        username: email,
+        username: username? username : email,
         email: email,
-        bio: 'Nothing yet',
+        bio: bio ? bio : 'Nothing yet',
       };
       await writeToDB(userProfile, 'users');
 
@@ -52,25 +55,48 @@ export default function SignUpForm({ navigation }) {
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <TextInput
+          value={username}
+          onChangeText={setUsername}
+          autoCapitalize="none"
+          keyboardType=""
+          placeholder="Username" 
+          style={styles.input}
+        />
+        <View style={styles.requiredContainer}>
+        <TextInput
           value={email}
           onChangeText={setEmail}
           autoCapitalize="none"
           keyboardType="email-address"
           placeholder="Email"
-          style={styles.input}
+          style={styles.inputRequired}
         />
+        <Text style={styles.required}>*</Text>
+        </View>
+        <View style={styles.requiredContainer}>
         <TextInput
           value={password}
           onChangeText={setPassword}
           secureTextEntry
           placeholder="Password"
-          style={styles.input}
+          style={styles.inputRequired}
         />
+        <Text style={styles.required}>*</Text>
+        </View>
+        <View style={styles.requiredContainer}>
         <TextInput
           value={confirmPassword}
           onChangeText={setConfirmPassword}
           secureTextEntry
           placeholder="Confirm Password"
+          style={styles.inputRequired}
+        />
+        <Text style={styles.required}>*</Text>
+        </View>
+        <TextInput
+          value={bio}
+          onChangeText={setBio}
+          placeholder="Bio"
           style={styles.input}
         />
       </View>
@@ -109,7 +135,17 @@ const styles = StyleSheet.create({
   input: {
     width: '100%',
     padding: SPACING.small,
-    marginVertical: SPACING.default,
+    marginVertical: SPACING.small,
+    borderWidth: 2,
+    borderColor: COLORS.secondaryText,
+    borderRadius: ROUNDED.small,
+    backgroundColor: COLORS.background,
+    color: COLORS.foreground,
+  },
+  inputRequired: {
+    width: '100%',
+    padding: SPACING.small,
+    //marginVertical: SPACING.small,
     borderWidth: 2,
     borderColor: COLORS.secondaryText,
     borderRadius: ROUNDED.small,
@@ -147,5 +183,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: COLORS.background,
     fontWeight: 'bold',
+  },
+  requiredContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: SPACING.small,
+  },
+  required: {
+    color: COLORS.required,
+    fontSize: FONTSIZE.h2,
+    marginLeft: SPACING.xsmall,
   },
 });

@@ -7,6 +7,7 @@ export const COLORS = {
   'secondaryText': '#808080',
   'delete': '#cd5c5c',
   'edit': '#1e90ff',
+  'required': '#ff0000',
 };
 
 export const FONTSIZE = {
