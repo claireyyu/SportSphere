@@ -14,7 +14,7 @@ export const UserProvider = ({ children }) => {
       if (user) {
         try {
           const {userInfo, userDocId} = await findUserByUid(user.uid);
-          setUserProfile({userInfo, userDocId});
+          setUserProfile({...userInfo, userDocId});
         } catch (error) {
           console.log('Error fetching user profile:', error);
         }

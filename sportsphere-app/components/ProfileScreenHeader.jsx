@@ -78,7 +78,7 @@ export default function ProfileScreenHeader() {
           <Text style={styles.username}>{userProfile?.username || 'User Name'}</Text>
           <Text style={styles.email}>{userProfile?.email || 'User Email'}</Text>
           <Text style={styles.bio}>{userProfile?.bio || 'User Bio'}</Text>
-          <Text style={styles.bio}>{userProfile?.userDocId || 'User userDocId'}</Text>
+          {/* <Text style={styles.bio}>{userProfile?.userDocId || 'User userDocId'}</Text> */}
         </View>
       </View>
 
