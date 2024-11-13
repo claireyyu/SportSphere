@@ -399,8 +399,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   pickerContainer: {
+    marginHorizontal: SPACING.large,
     backgroundColor: COLORS.background,
-    // width: 250,
     padding: SPACING.small,
     paddingVertical: SPACING.medium,
     borderRadius: ROUNDED.small,

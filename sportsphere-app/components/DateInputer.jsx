@@ -54,12 +54,14 @@ export default function DateInputer({ date, setDate }) {
 
 const styles = StyleSheet.create({
   input: {
+    textAlign: 'center',
     flex: 1,
     height: 35,
     marginTop: SPACING.xsmall,
     marginBottom: SPACING.medium,
+    marginHorizontal: SPACING.medium,
     borderBottomWidth: 1,
-    borderColor: COLORS.secondaryText,
+    borderColor: COLORS.border,
     padding: SPACING.xsmall,
     borderRadius: ROUNDED.small,
     fontSize: FONTSIZE.body,

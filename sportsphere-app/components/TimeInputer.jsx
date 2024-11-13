@@ -54,12 +54,14 @@ export default function TimeInputer({ time, setTime }) {
 
 const styles = StyleSheet.create({
   input: {
+    textAlign: 'center',
     flex: 1,
     height: 35,
     marginTop: SPACING.xsmall,
-    marginBottom: SPACING.medium,
+    marginBottom: SPACING.xsmall,
+    marginHorizontal: SPACING.medium,
     borderBottomWidth: 1,
-    borderColor: COLORS.secondaryText,
+    borderColor: COLORS.border,
     padding: SPACING.xsmall,
     borderRadius: ROUNDED.small,
     fontSize: FONTSIZE.body,
