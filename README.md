@@ -16,7 +16,19 @@ Sportsphere is a mobile application designed to help users manage their sports a
 
 ## Screenshots
 
-\
+![Log In](https://github.com/user-attachments/assets/f4030bfb-3247-459d-8077-8dc5cb71cc63)
+![Sign Up](https://github.com/user-attachments/assets/0d380243-a19a-4b7f-8994-b12b1357e5cd)
+![Main Page](https://github.com/user-attachments/assets/24f794fe-92ed-445c-a521-c118da8e8db7)
+![Activity Details of the One User Created](https://github.com/user-attachments/assets/9d450fab-06dd-4011-adf4-fe2ef5720fa1)
+![Activity Details of the One Others Created](https://github.com/user-attachments/assets/716a6f41-d012-43aa-b82d-5cb427a36e6d)
+![Add New Activity](https://github.com/user-attachments/assets/bbb9b7e0-f142-4d02-8d83-b4d4d6c0ed42)
+![Select Date for New Activity](https://github.com/user-attachments/assets/bda989c2-a310-4ddb-b4df-d55a66779fec)
+![Sort Activities](https://github.com/user-attachments/assets/2d544a98-4802-43d1-9303-4e6e4b49db4d)
+![Chat Screen](https://github.com/user-attachments/assets/1882ca25-8f57-418b-82c3-49d3bb5a54e0)
+![Profile Page With Created Activities](https://github.com/user-attachments/assets/a40d9c21-bcd6-435a-a0ac-68c9aa0c7608)
+![Edit Profile](https://github.com/user-attachments/assets/24d3821c-3bb9-44bf-81ab-c6c7378c30fd)
+![Workout Notifications Page](https://github.com/user-attachments/assets/d1f681c0-066a-4911-bb12-e75bde19e0fd)
+![Add New Notification](https://github.com/user-attachments/assets/e65b2645-1999-473d-b7cb-7a1017bd1972)
 
 
 ## Installation
