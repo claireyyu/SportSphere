@@ -9,7 +9,6 @@ import { Avatar } from '@rneui/themed';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { signOut } from 'firebase/auth';
 import { auth } from '../Firebase/firebaseSetup';
-import { findUserByUid } from '../Firebase/firebaseHelper';
 import { useEffect, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/UserProvider';
@@ -79,6 +78,7 @@ export default function ProfileScreenHeader() {
           <Text style={styles.username}>{userProfile?.username || 'User Name'}</Text>
           <Text style={styles.email}>{userProfile?.email || 'User Email'}</Text>
           <Text style={styles.bio}>{userProfile?.bio || 'User Bio'}</Text>
+          {/* <Text style={styles.bio}>{userProfile?.userDocId || 'User userDocId'}</Text> */}
         </View>
       </View>
 

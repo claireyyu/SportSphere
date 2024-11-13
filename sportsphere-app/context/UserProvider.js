@@ -13,8 +13,8 @@ export const UserProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         try {
-          const userProfile = await findUserByUid(user.uid);
-          setUserProfile(userProfile);
+          const {userInfo, userDocId} = await findUserByUid(user.uid);
+          setUserProfile({...userInfo, userDocId});
         } catch (error) {
           console.log('Error fetching user profile:', error);
         }

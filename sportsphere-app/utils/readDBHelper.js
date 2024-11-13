@@ -1,9 +1,9 @@
 // This file contains utility functions for interacting with the Firestore database.
 
 export function manageReminder(doc, items) {
-    const data = doc.data();
-    if (data.time && data.date) {
-      try {
+  const data = doc.data();
+  if (data.time && data.date) {
+    try {
       const dtDate = new Date(data.date.seconds * 1000);
       const date = dtDate.toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" });
       const dtTime = new Date(data.time.seconds * 1000);
@@ -15,13 +15,14 @@ export function manageReminder(doc, items) {
         date,
         dtCombined: new Date(`${dtDate.toISOString().split('T')[0]}T${time}:00`)
       });
-      } catch (error) {
-        console.error("Error processing date/time for document", doc.id, error);
-      }
-    } else {
-      console.log("Missing date or time for reminder:", doc.id);
+    } catch (error) {
+      console.error("Error processing date/time for document", doc.id, error);
     }
+  } else {
+    console.log("Missing date or time for reminder:", doc.id);
   }
+}
+
 
 export function manageActivity(doc, items) {
     const data = doc.data();

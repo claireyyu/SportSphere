@@ -6,9 +6,12 @@ import { readAllFiles, updateDB, deleteDB } from '../Firebase/firebaseHelper';
 import { parse, format } from 'date-fns';
 import PressableButton from './PressableButton';
 import EditReminderModal from './EditReminderModal';
-
+import { UserContext } from '../context/UserProvider';
+import { db } from '../Firebase/firebaseSetup';
+import { collection, doc } from 'firebase/firestore';
 
 export default function ReminderItemList() {
+  const { userProfile } = React.useContext(UserContext);
   const [reminderItems, setReminderItems] = React.useState([]);
 
   const collectionName = "reminders";
@@ -16,16 +19,22 @@ export default function ReminderItemList() {
   function handleReminderItems(reminderItems) {
     setReminderItems(reminderItems);
   }
-  useEffect(() => {
-    readAllFiles(collectionName, setReminderItems, (error) => {
-      Alert.alert("Error fetching reminders", error.message);
-    });
-  }, []);
 
+  useEffect(() => {
+    if (userProfile.userDocId) {
+      const unsubscribe = readAllFiles(collectionName, userProfile.userDocId, setReminderItems, (error) => {
+        console.error("Error fetching reminders:", error);
+      });
+
+      return () => unsubscribe();
+    }
+  }, [userProfile.userDocId]);
+
+  const filteredReminderItems = reminderItems.filter(item => item.owner === userProfile.uid);
 
   return (
     <FlatList
-      data={reminderItems}
+      data={filteredReminderItems}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
         <ReminderItem title={item.title} time={item.time} date={item.date} id={item.id} reminderItemHandler = {handleReminderItems} />)}
