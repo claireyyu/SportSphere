@@ -67,8 +67,8 @@ export default function ActivityDetailCard({ route }) {
   async function handleJoinActivity() {
     try {
       if (hasJoined) {
-        if (peopleGoing.length == totalMembers) {
-          Alert.alert("The event is full!");
+        if (hasJoined && userProfile.uid == owner) {
+          Alert.alert("You are the organizer of this event!");
           return;
         }
         setHasJoined(false);
