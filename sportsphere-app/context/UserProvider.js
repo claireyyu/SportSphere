@@ -21,9 +21,16 @@ export const UserProvider = ({ children }) => {
     }
 
   useEffect(() => {
-    readAllFiles("users", handleUserItems, (error) => {
+    const fetchUsers = async () => {
+      try {
+        await readAllFiles("users", handleUserItems, (error) => {
       console.log("Error fetching users", error.message);
     });
+      } catch (error) {
+        console.log("Error fetching users: ", error);
+      }
+    }
+    console.log("User Items: ", userItems);
   }, []);
 
   useEffect(() => {

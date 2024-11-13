@@ -24,7 +24,7 @@ export async function writeReminderToUserDB(data, collectionName, userID) {
 }
 
 
-export function readAllFiles(collectionName, callback, errorCallback) {
+export async function readAllFiles(collectionName, callback, errorCallback) {
   const unsubscribe = onSnapshot(collection(db, collectionName), (querySnapshot) => {
     const items = [];
     querySnapshot.forEach((doc) => {
