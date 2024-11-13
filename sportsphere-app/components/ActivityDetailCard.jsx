@@ -102,7 +102,7 @@ export default function ActivityDetailCard({ route }) {
       </View>
       <View style={styles.joinBtnContainer}>
       <PressableButton 
-        componentStyle={[styles.button, (hasJoined && peopleGoing.length >= totalMembers) && { backgroundColor: COLORS.border }]}
+        componentStyle={[styles.button, (hasJoined || peopleGoing.length >= totalMembers) && { backgroundColor: COLORS.border }]}
           pressedFunction={handleJoinActivity}
         >
           <Text style={styles.buttonText}>{hasJoined ? 'Joined' : (peopleGoing.length >= totalMembers?'Full': 'Join Now')}</Text>
