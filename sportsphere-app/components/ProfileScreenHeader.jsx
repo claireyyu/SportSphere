@@ -20,7 +20,6 @@ export default function ProfileScreenHeader() {
   async function signOutUser() {
     try {
       await signOut(auth);
-      navigation.navigate("Login");
     } catch (error) {
       console.log(error);
     }

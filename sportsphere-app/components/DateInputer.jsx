@@ -14,7 +14,7 @@ export default function DateInputer({ date, setDate, inputerStyle }) {
         <DateTimePicker
           value={date || new Date()}
           mode="date"
-          display="calendar"
+          display="default"
           onChange={(event, selectedDate) => {
             if (selectedDate) {
               setDate(selectedDate);
