@@ -30,12 +30,16 @@ export default function OrganizerProfileScreenHeader({uid}) {
     fetchUserInfo();
   }, [uid]);
 
+  function handleToMessage() {
+    navigation.navigate('Message', { uid: uid });
+  }
+
   return (
     <SafeAreaView style={styles.view}>
       <View style={styles.topBtnContainer}>
         <PressableButton
           pressedFunction={() => navigation.goBack()}>
-        <Ionicons name="chevron-back-sharp" size={24} color="white" />
+        <Ionicons name="chevron-back-sharp" size={SIZE.pressableIcon} color="white" />
         </PressableButton>
       </View>
 
@@ -55,8 +59,7 @@ export default function OrganizerProfileScreenHeader({uid}) {
       <View style={styles.buttonContainer}>
         <PressableButton
           componentStyle={styles.messageButton}
-          pressedFunction={() => console.log('Message pressed')}
-        >
+          pressedFunction={handleToMessage}>
           <Text style={styles.buttonStyle}>Message</Text>
         </PressableButton>
       </View>
