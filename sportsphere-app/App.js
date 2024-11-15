@@ -22,6 +22,7 @@ import { auth } from './Firebase/firebaseSetup';
 import { useEffect, useState } from 'react';
 import AuthScreenHeader from './components/AuthScreenHeader';
 import { UserProvider } from './context/UserProvider';
+import OrganizerProfileScreen from './screens/OrganizerProfileScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -147,7 +148,14 @@ const AppStack = (
           headerBackTitleVisible: false,
           headerTintColor: COLORS.background,
         }}
-        />
+    />
+    <Stack.Screen
+      name="OrganizerProfile"
+      component={OrganizerProfileScreen}
+      options={{
+        headerShown: false,
+      }}
+    />
       </>
     )
 

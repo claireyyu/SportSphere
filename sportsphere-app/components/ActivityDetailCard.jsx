@@ -90,15 +90,27 @@ export default function ActivityDetailCard({ route }) {
     }
   }
 
+  function handleViewProfile() {
+    if (owner == userProfile.uid) {
+      navigation.navigate('Profile');
+      return;
+    }
+    navigation.navigate('OrganizerProfile', { uid: owner });
+    console.log("View Profile");
+  }
+
   return (
     <View style={styles.cardContainer}>
       <View style={styles.headerContainer}>
         <Text style={styles.title}>{activityName}</Text>
+        <PressableButton
+          pressedFunction={handleViewProfile}>
         <Avatar
           size={SIZE.mediumAvatar}
-          rounded
-          source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
+            rounded
+            source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
         />
+        </PressableButton>
       </View>
       <View style={styles.joinBtnContainer}>
       <PressableButton 

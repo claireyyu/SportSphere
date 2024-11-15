@@ -12,6 +12,8 @@ import TitleScreenHeader from './TitleScreenHeader';
 import ProfileScreenHeader from './ProfileScreenHeader';
 import ActivityStack from './ActivityStack';
 import { useState } from 'react';
+import OrganizerProfileScreenHeader from './OrganizerProfileScreenHeader';
+import OrganizerProfileScreen from '../screens/OrganizerProfileScreen';
 
 const Tab = createBottomTabNavigator();
 

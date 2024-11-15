@@ -4,9 +4,24 @@ import React from 'react'
 import { useEffect, useState, useContext } from 'react';
 import { QueryContext } from "../context/QueryProvider";
 import { readAllFiles } from '../Firebase/firebaseHelper';
-import { UserContext} from '../context/UserProvider';
+import { UserContext } from '../context/UserProvider';
+import { findUserByUid } from '../Firebase/firebaseHelper';
 
-export default function ProfileActivityCardList({modalVisible, modalHandler}) {
+export default function ProfileActivityCardList({uid}) {
+  const [viewingUserInfo, setViewingUserInfo] = useState({});
+
+  useEffect(() => {
+    async function fetchUserInfo() {
+      if (uid) {
+        const { userInfo } = await findUserByUid(uid);
+        setViewingUserInfo(userInfo);
+        console.log("Viewing User Info: ", viewingUserInfo);
+      }
+    }
+
+    fetchUserInfo();
+  }, [uid]);
+
   const { userProfile } = useContext(UserContext);
 
   const collectionName = "activities";
@@ -26,29 +41,33 @@ export default function ProfileActivityCardList({modalVisible, modalHandler}) {
     return item.peopleGoing.includes(userProfile?.uid);
   });
 
+  const organizerFilteredActivityItems = activityItems.filter(item => {
+    return item.peopleGoing.includes(viewingUserInfo?.uid);  });
+
   return (
     <View>
-    <View>
-    <FlatList
-      data={filteredActivityItems}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => (
-        <ActivityCard
-          activityName={item.activityName}
-          venue={item.venue}
-          date={item.date}
-          time={item.time}
-          peopleGoing={item.peopleGoing}
-          totalMembers={item.totalMembers}
-          description={item.description}
-          id={item.id}
-          owner={item.owner}
+      <View>
+        <FlatList
+          data={uid ? organizerFilteredActivityItems : filteredActivityItems}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <ActivityCard
+              activityName={item.activityName}
+              venue={item.venue}
+              date={item.date}
+              time={item.time}
+              peopleGoing={item.peopleGoing}
+              totalMembers={item.totalMembers}
+              description={item.description}
+              id={item.id}
+              owner={item.owner}
+            />
+          )}
+          contentContainerStyle={styles.listContainer}
+          showsVerticalScrollIndicator={false}
         />
-      )}
-      contentContainerStyle={styles.listContainer}
-      showsVerticalScrollIndicator={false}
-    />
-    </View>
+      </View>
+
     </View>
   )
 }
