@@ -28,6 +28,11 @@ export default function SignUpForm({ navigation }) {
         Alert.alert('Please fill out all fields');
         return;
       }
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+      if (!passwordRegex.test(password)) {
+        Alert.alert('Password should be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one number');
+        return;
+      }
       const userCred = await createUserWithEmailAndPassword(auth, email, password);
       console.log(userCred.user);
 
