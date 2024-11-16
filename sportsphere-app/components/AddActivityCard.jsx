@@ -15,6 +15,8 @@ import 'react-native-get-random-values';
 export default function AddActivityCard({ route, currentLocation }) {
   const { userProfile } = useContext(UserContext);
   //const currentLocation = currentLocation;
+  console.log('currentLocation in add activity:', currentLocation);
+  const myLocation = currentLocation;
 
   const [id, setId] = useState(null);
   const navigation = useNavigation();
@@ -158,10 +160,9 @@ export default function AddActivityCard({ route, currentLocation }) {
           query={{
             key: process.env.EXPO_PUBLIC_mapApiKey,
             language: 'en',
+            location: `${myLocation.latitude},${myLocation.longitude}`, // current location
             components: 'country:ca',
-            radius: 50000,
-            location: `${currentLocation.latitude},${currentLocation.longitude}`,
-            
+            //radius: 5000,
           }}
           styles={{
             textInput: styles.input,
