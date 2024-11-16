@@ -12,18 +12,25 @@ import TitleScreenHeader from './TitleScreenHeader';
 import ProfileScreenHeader from './ProfileScreenHeader';
 import ActivityStack from './ActivityStack';
 import { useState } from 'react';
+import LocationManager from './LocationManager';
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [currentLocation, setCurrentLocation] = useState({
+    latitude: 49.2827,
+    longitude: 123.1207,
+  });
 
   function handleModalVisible() {
     setModalVisible(!modalVisible);
   }
 
   return (
+    <>
+    <LocationManager currentLocation={currentLocation} handleCurrentLocation={setCurrentLocation}/>
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
@@ -41,6 +48,7 @@ const TabNavigator = () => {
           // Conditional styling for focused (active) tab
           return (
             <View style={focused ? styles.activeIconContainer : styles.iconContainer}>
+              
               <Ionicons
                 name={iconName}
                 size={SIZE.tabIcon}
@@ -57,7 +65,7 @@ const TabNavigator = () => {
         name="Activity"
         // component={ActivityScreen}
         options={{
-          header: () => <ActivityScreenHeader modalHandler={handleModalVisible} />,
+          header: () => <ActivityScreenHeader modalHandler={handleModalVisible} currentLocation={currentLocation} />,
         }}
       >
         {() => (
@@ -86,6 +94,7 @@ const TabNavigator = () => {
         }}
       />
     </Tab.Navigator>
+    </>
   );
 };
 

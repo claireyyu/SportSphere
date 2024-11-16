@@ -4,13 +4,14 @@ import AddActivityCard from '../components/AddActivityCard'
 import { SPACING } from '../global'
 
 
-export default function AddActivityScreen() {
+export default function AddActivityScreen({route}) {
+  const { currentLocation } = route.params;
   const data = [{}]
   return (
     <View style={styles.container}>
       <FlatList
         data={data}
-        renderItem={() => <AddActivityCard />}
+        renderItem={() => <AddActivityCard currentLocation={currentLocation}/>}
         keyExtractor={(item, index) => index.toString()}
       />
     </View>

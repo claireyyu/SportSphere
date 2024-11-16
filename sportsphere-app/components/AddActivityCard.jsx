@@ -12,8 +12,9 @@ import TimeInputer from './TimeInputer';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import 'react-native-get-random-values';
 
-export default function AddActivityCard({ route }) {
+export default function AddActivityCard({ route, currentLocation }) {
   const { userProfile } = useContext(UserContext);
+  //const currentLocation = currentLocation;
 
   const [id, setId] = useState(null);
   const navigation = useNavigation();
@@ -159,6 +160,7 @@ export default function AddActivityCard({ route }) {
             language: 'en',
             components: 'country:ca',
             radius: 50000,
+            location: `${currentLocation.latitude},${currentLocation.longitude}`,
             
           }}
           styles={{
