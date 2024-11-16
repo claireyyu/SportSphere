@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import TabNavigator from './components/TabNavigator'
 import { COLORS, FONTSIZE, SIZE } from './global';
-import CustomStatusBar from './components/StatusBar';
+import CustomStatusBar from './components/CustomStatusBar';
 import db from './Firebase/firebaseSetup';
 import ActivityDetailScreen from './screens/ActivityDetailScreen';
 import AddActivityScreen from './screens/AddActivityScreen';
@@ -198,12 +198,14 @@ export default function App() {
     }
   };
 
+
   return (
     <View style={styles.container}>
       <CustomStatusBar
         statusBgColor={COLORS.primary}
         barStyle="light-content"
-        backgroundColor={getBackgroundColor(isUserLoggedIn ? 'AppStack' : 'AuthStack')}
+        backgroundColor={COLORS.primary}
+        // backgroundColor={getBackgroundColor(isUserLoggedIn ? 'AppStack' : 'AuthStack')}
       >
         <UserProvider>
           <QueryProvider>

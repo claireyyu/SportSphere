@@ -3,7 +3,9 @@ import React, { useEffect, useState } from 'react';
 import MessageScreenHeader from '../components/MessageScreenHeader';
 import { collection, addDoc, query, where, onSnapshot, orderBy } from 'firebase/firestore';
 import { db, auth } from '../Firebase/firebaseSetup';
-import { COLORS, FONTSIZE, ROUNDED, SPACING } from '../global';
+import { COLORS, FONTSIZE, ROUNDED, SIZE, SPACING } from '../global';
+import PressableButton from '../components/PressableButton';
+import { Ionicons } from '@expo/vector-icons'; // Icon for the send button
 
 export default function MessageScreen({ route }) {
   const [uid, setUid] = useState(route.params.uid); // Chatting user's UID
@@ -85,9 +87,13 @@ export default function MessageScreen({ route }) {
           style={styles.input}
           value={text}
           onChangeText={setText}
-          placeholder="Type a message"
+          placeholder="Send a message"
         />
-        <Button title="Send" onPress={sendMessage} />
+        <PressableButton
+          pressedFunction={sendMessage}
+        >
+          <Ionicons name="send" size={20} color={COLORS.primary} />
+        </PressableButton>
       </View>
     </View>
   );
@@ -125,10 +131,13 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: COLORS.defaultBackground,
     backgroundColor: COLORS.background,
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   input: {
     flex: 1,
     borderWidth: 1,
+    minHeight: SIZE.smallAvatar,
     borderColor: COLORS.defaultBackground,
     borderRadius: ROUNDED.small,
     paddingHorizontal: SPACING.small,
@@ -138,5 +147,9 @@ const styles = StyleSheet.create({
     color: 'red',
     textAlign: 'center',
     marginVertical: SPACING.small,
+  },
+  btnText: {
+    color: COLORS.background,
+    fontSize: FONTSIZE.body,
   },
 });
