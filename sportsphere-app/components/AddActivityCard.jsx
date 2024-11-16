@@ -9,6 +9,7 @@ import { parse, format } from 'date-fns';
 import { UserContext } from '../context/UserProvider';
 import DateInputer from './DateInputer';
 import TimeInputer from './TimeInputer';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 export default function AddActivityCard({ route }) {
   const { userProfile } = useContext(UserContext);
@@ -18,6 +19,7 @@ export default function AddActivityCard({ route }) {
   const [error, setError] = useState('');
   const [activityName, setActivityName] = useState('');
   const [venue, setVenue] = useState('');
+  const [venuePosition, setVenuePosition] = useState(null);
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
   const [totalMembers, setTotalMembers] = useState(0);
@@ -111,6 +113,13 @@ export default function AddActivityCard({ route }) {
     } catch (error) {
       console.error("Error adding document: ", error);
     }
+  }
+  
+  function handlePlaceSelected(data, details) {
+    setVenuePosition({
+      lat: details.geometry.location.lat,
+      lng: details.geometry.location.lng,
+    });
   }
 
   return (
