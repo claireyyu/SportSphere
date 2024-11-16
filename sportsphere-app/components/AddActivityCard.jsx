@@ -10,6 +10,7 @@ import { UserContext } from '../context/UserProvider';
 import DateInputer from './DateInputer';
 import TimeInputer from './TimeInputer';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import 'react-native-get-random-values';
 
 export default function AddActivityCard({ route }) {
   const { userProfile } = useContext(UserContext);
@@ -116,6 +117,7 @@ export default function AddActivityCard({ route }) {
   }
   
   function handlePlaceSelected(data, details) {
+    setVenue(data.description);
     setVenuePosition({
       lat: details.geometry.location.lat,
       lng: details.geometry.location.lng,
@@ -134,11 +136,23 @@ export default function AddActivityCard({ route }) {
         />
 
         <Text style={styles.textInfo}>Venue</Text>
-        <TextInput
+        {/* <TextInput
           style={styles.input}
           onChangeText={setVenue}
           value={venue}
           placeholder="123 Main Street, Burnaby"
+        /> */}
+        <GooglePlacesAutocomplete
+          placeholder="123 Main Street, Burnaby"
+          onPress={handlePlaceSelected}
+          fetchDetails={true}
+          query={{
+            key: process.env.EXO_PUBLIC_mapApiKey,
+            language: 'en',
+          }}
+          styles={{
+            textInput: styles.input,
+          }}
         />
 
         <Text style={styles.textInfo}>Date</Text>
