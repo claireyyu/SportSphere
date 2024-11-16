@@ -117,11 +117,13 @@ export default function AddActivityCard({ route }) {
   }
   
   function handlePlaceSelected(data, details) {
+    console.log('details:', details);
     setVenue(data.description);
     setVenuePosition({
       lat: details.geometry.location.lat,
       lng: details.geometry.location.lng,
     });
+    
   }
 
   return (
@@ -146,9 +148,18 @@ export default function AddActivityCard({ route }) {
           placeholder="123 Main Street, Burnaby"
           onPress={handlePlaceSelected}
           fetchDetails={true}
+          GooglePlacesSearchQuery={
+            {
+              rankby: 'distance',
+              type: 'establishment',
+            }
+          }
           query={{
-            key: process.env.EXO_PUBLIC_mapApiKey,
+            key: process.env.EXPO_PUBLIC_mapApiKey,
             language: 'en',
+            components: 'country:ca',
+            radius: 50000,
+            
           }}
           styles={{
             textInput: styles.input,
