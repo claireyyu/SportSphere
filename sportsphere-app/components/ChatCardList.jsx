@@ -100,7 +100,7 @@ export default function ChatCardList() {
 const styles = StyleSheet.create({
   listContainer: {
     width: '100%',
-    paddingVertical: SPACING.small,
-    gap: SPACING.xsmall,
+    // paddingVertical: SPACING.small,
+    // gap: SPACING.xsmall,
   },
 });
