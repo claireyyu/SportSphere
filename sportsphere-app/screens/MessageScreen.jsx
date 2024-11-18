@@ -6,6 +6,7 @@ import { db, auth } from '../Firebase/firebaseSetup';
 import { COLORS, FONTSIZE, ROUNDED, SIZE, SPACING } from '../global';
 import PressableButton from '../components/PressableButton';
 import { Ionicons } from '@expo/vector-icons'; // Icon for the send button
+import { format } from 'date-fns'; // Import date-fns for formatting
 
 export default function MessageScreen({ route }) {
   const [uid, setUid] = useState(route.params.uid); // Chatting user's UID
@@ -21,7 +22,8 @@ export default function MessageScreen({ route }) {
     try {
       const q = query(
         collection(db, 'messages'),
-        where('participants', 'array-contains', currentUserUid)
+        where('participants', 'array-contains', currentUserUid),
+        orderBy('timestamp', 'asc') // Order messages by timestamp in ascending order
       );
 
       const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -73,11 +75,16 @@ export default function MessageScreen({ route }) {
       <FlatList
         data={messages}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={item.sender === currentUserUid ? styles.sentMessage : styles.receivedMessage}>
-            <Text style={styles.messageText}>{item.text}</Text>
-          </View>
-        )}
+        renderItem={({ item }) => {
+          const messageTime = format(item.timestamp.toDate(), 'HH:mm'); // Format the timestamp
+
+          return (
+            <View style={item.sender === currentUserUid ? styles.sentMessage : styles.receivedMessage}>
+              <Text style={styles.messageText}>{item.text}</Text>
+              <Text style={[styles.messageTime]}>{messageTime}</Text>
+            </View>
+          )
+        }}
         style={styles.messageList}
       />
 
@@ -124,6 +131,12 @@ const styles = StyleSheet.create({
   },
   messageText: {
     fontSize: FONTSIZE.body,
+  },
+  messageTime: {
+    fontSize: FONTSIZE.tiny,
+    color: COLORS.secondaryText,
+    textAlign: 'right',
+    marginTop: SPACING.xsmall,
   },
   inputContainer: {
     flexDirection: 'row',
