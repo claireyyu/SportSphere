@@ -4,6 +4,9 @@ import MapView, { Callout } from 'react-native-maps'
 import LocationManager from './LocationManager'
 import { readAllFiles } from '../Firebase/firebaseHelper'
 import { Marker } from 'react-native-maps';
+import { COLORS, SPACING, ROUNDED, SHADOW, FONTSIZE } from '../global';
+import { ProgressBar } from './ProgressBar';
+import PressableButton from './PressableButton'
 
 export default function Map({currentLocation}) {
   const [activityItems, setActivityItems] = useState([]);
@@ -20,8 +23,9 @@ export default function Map({currentLocation}) {
       id: '1',
       activityName: 'Football',
       venue: 'Park',
-      date: '2022-09-09',
+      date: 'Nov 12, 2024',
       time: '12:00',
+      peopleGoing: ['1', '2', '3'],
       totalMembers: 10,
       uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png',
       venuePosition: {
@@ -33,9 +37,10 @@ export default function Map({currentLocation}) {
       id: '2',
       activityName: 'Basketball',
       venue: 'Gym',
-      date: '2022-09-09',
+      date: 'Nov 9, 2024',
       time: '12:00',
-      totalMembers: 10,
+      peopleGoing: ['1', '2'],
+      totalMembers: 5,
       uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png',
       venuePosition: {
         latitude: 49.2334,
@@ -46,8 +51,9 @@ export default function Map({currentLocation}) {
       id: '3',
       activityName: 'Volleyball',
       venue: 'Beach',
-      date: '2022-09-09',
+      date: 'Nov 14, 2024',
       time: '12:00',
+      peopleGoing: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
       totalMembers: 10,
       uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png',
       venuePosition: {
@@ -78,12 +84,18 @@ export default function Map({currentLocation}) {
                 >
                   <Image source={{ uri: item.uri }} style={{width: 50, height: 50}} />
                   <Callout>
-                    <View>
-                      <Text>{item.activityName}</Text>
-                      <Text>{item.venue}</Text>
-                      <Text>{item.date}</Text>
-                      <Text>{item.time}</Text>
-                      <Text>{item.totalMembers}</Text>
+                    <View style={styles.customCallout}>
+                      <Text style={styles.calloutTitle}>{item.activityName}</Text>
+                      <Text style={styles.infoText}>{item.venue}</Text>
+                      <Text style={styles.infoText}>{item.date}</Text>
+                      <Text style={styles.infoText}>{item.time}</Text>
+                      <View style={styles.progressContainer}>
+                        <ProgressBar value={item.peopleGoing.length} total={item.totalMembers} />
+                        <Text style={styles.peopleCount}>{item.totalMembers} ppl</Text>
+                      </View>
+                      <PressableButton componentStyle={styles.button} pressedFunction={() => console.log("Go to detail page.")}>
+                        <Text style={styles.buttonText}>Learn More</Text>
+                      </PressableButton>
                     </View>
                   </Callout>
                 </Marker>
@@ -102,5 +114,46 @@ export const styles = StyleSheet.create({
         height: '100%',
         flex: 1,
     },
-    });
+    customCallout: {
+      width: 150,
+      height: 150,
+      backgroundColor: COLORS.background,
+      borderRadius: ROUNDED.default,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    calloutTitle: {
+      fontSize: FONTSIZE.small,
+      fontWeight: 'bold',
+      color: COLORS.foreground,
+    },
+    infoText: {
+      fontSize: FONTSIZE.small,
+      color: COLORS.secondaryText,
+      marginBottom: SPACING.xsmall,
+    },
+    progressContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: SPACING.small,
+    },
+    peopleCount: {
+      fontSize: FONTSIZE.small,
+      color: COLORS.foreground,
+      marginLeft: SPACING.small,
+      fontWeight: 'bold',
+    },
+    button: {
+      backgroundColor: COLORS.primary,
+      paddingVertical: SPACING.xsmall,
+      paddingHorizontal: SPACING.small,
+      borderRadius: ROUNDED.default,
+      alignSelf: 'center',
+    },
+    buttonText: {
+      color: COLORS.background,
+      fontSize: FONTSIZE.xsmall,
+      fontWeight: 'bold',
+    },
+  });
 
