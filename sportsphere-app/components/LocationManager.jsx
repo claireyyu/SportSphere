@@ -34,16 +34,15 @@ export default function LocationManager({currentLocation, handleCurrentLocation}
   }
   
 
-  // useEffect(() => {
-  //   console.log("Permission: ", response);
-  //   locateUserHandler();
+  useEffect(() => {
+    console.log("Permission: ", response);
+    locateUserHandler();
     
-  // }
-  //   , [response]);
+  }
+    , [response]);
 
   return (
     <View>
-      <Button title="Locate me" onPress={locateUserHandler}/>
     </View>
   )
 }

@@ -5,7 +5,7 @@ import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
 import PressableButton from './PressableButton';
 import { writeToDB, updateDB } from '../Firebase/firebaseHelper';
 import { useNavigation } from '@react-navigation/native';
-import { parse, format } from 'date-fns';
+import { parse, format, set } from 'date-fns';
 import { UserContext } from '../context/UserProvider';
 import DateInputer from './DateInputer';
 import TimeInputer from './TimeInputer';
@@ -42,13 +42,14 @@ export default function AddActivityCard({ route, currentLocation }) {
 
   useEffect(() => {
     if (route?.params) {
-      const { id, activityName, venue, date, time, totalMembers, description } = route.params;
+      const { id, activityName, venue, date, time, totalMembers, description, venuePosition } = route.params;
       const dateObj = parse(date, 'MMM dd, yyyy', new Date());
       const formattedDate = format(dateObj, 'yyyy-MM-dd');
       const dateTimeString = `${formattedDate}T${time}:00`;
       const timeObj = new Date(dateTimeString);
       setActivityName(activityName);
       setVenue(venue);
+      setVenuePosition(venuePosition);
       setDate(dateObj);
       setTime(timeObj);
       setTotalMembers(totalMembers);
@@ -60,7 +61,7 @@ export default function AddActivityCard({ route, currentLocation }) {
 
   function handleNewActivity() {
     try {
-      if (!activityName || !venue || !date || !time || !totalMembers || !description) {
+      if (!activityName || !venue || !venuePosition || !date || !time || !totalMembers || !description) {
         setError("Please fill in all fields!");
         return;
       }
@@ -95,6 +96,7 @@ export default function AddActivityCard({ route, currentLocation }) {
         description: description,
         owner: userProfile.uid,
         peopleGoing: [userProfile.uid],
+        venuePosition: venuePosition,
       };
       const strNewDate = format(newActivity.date, 'MMM dd, yyyy');
       const strNewTime = format(newActivity.time, 'HH:mm');
