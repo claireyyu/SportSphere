@@ -14,13 +14,19 @@ export default function ActivityScreenHeader({ currentLocation }) {
   const { searchQuery, setSearchQuery } = useContext(QueryContext);
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
+  const [sort, setSort] = useState('date');
 
   const updateSearch = (text) => {
     setSearchQuery(text);
   };
 
-  const modalHandler = () => {
+  const modalHandler = (isDateSelected, isDistanceSelected) => {
     setModalVisible(!modalVisible);
+    if (isDateSelected) {
+      setSort('date');
+    } else if (isDistanceSelected) {
+      setSort('distance');
+    }
   };
 
   return (

@@ -49,7 +49,7 @@ export function readAllFiles(collectionName, userDocId = null, callback, errorCa
         manageActivity(doc, items);
       }
     });
-    if (sort === 'time') {
+    if (sort === 'date') {
       items.sort((a, b) => a.dtCombined - b.dtCombined);
     } else if (sort === 'distance') {
       items.forEach(item => {

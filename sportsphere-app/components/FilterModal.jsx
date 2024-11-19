@@ -31,7 +31,7 @@ export default function FilterModal({modalVisible, modalHandler}) {
                 />
                 <Text style={styles.selectionText}>Distance</Text>
                 </View>
-                <Pressable style={styles.button} onPress={modalHandler}>
+                <Pressable style={styles.button} onPress={()=> modalHandler(isDateSelected, isDistanceSelected)}>
                 <Text style={styles.buttonText}>Confirm</Text>
                 </Pressable>
             </View>
