@@ -19,10 +19,7 @@ const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [currentLocation, setCurrentLocation] = useState({
-    latitude: 49.2827,
-    longitude: 123.1207,
-  });
+  const [currentLocation, setCurrentLocation] = useState(null);
 
   function handleModalVisible() {
     setModalVisible(!modalVisible);
@@ -81,7 +78,8 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name="Map"
-        component={MapScreen}
+        // component={MapScreen}
+        children ={() => <MapScreen currentLocation={currentLocation} />}
         options={{
           header: () => <TitleScreenHeader title="Map" />,
         }}
