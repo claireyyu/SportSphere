@@ -2,41 +2,48 @@ import React, { useEffect, useState } from 'react';
 import * as Location from 'expo-location';
 import { Alert, Button, View, Text } from 'react-native';
 
-export default function LocationManager({ handleCurrentLocation }) {
-  const [permissionStatus, setPermissionStatus] = useState(null);
-
-  useEffect(() => {
-    const checkAndRequestPermission = async () => {
+export default function LocationManager({currentLocation, handleCurrentLocation}) {
+  const [response, requestPermission] = Location.useForegroundPermissions();
+  async function verifyPermission(){
       try {
-        const { status } = await Location.requestForegroundPermissionsAsync();
-        setPermissionStatus(status);
-        if (status !== 'granted') {
-          Alert.alert(
-            'Permission denied',
-            'You need to grant location permission to use this feature.',
-            [{ text: 'OK' }]
-          );
-          return;
+          if (response && response.granted) {
+              return true;
+          }
+          const result = await requestPermission();
+          console.log("Permission request result: ", result);
+          return result.granted;
+      } catch (error) {
+          console.log("Error when verifying permission: ", error);
+      }
+    }
+
+  async function locateUserHandler() {
+    try {
+        const hasPermission = await verifyPermission();
+        console.log("Permission status: ", hasPermission);
+        if (!hasPermission) {
+            Alert.alert("Permission denied", "You need to grant permission to access location.", [{text: "OK"}]);
+            return;
         }
         const location = await Location.getCurrentPositionAsync();
-        console.log('Current location fetched: ', location);
-        handleCurrentLocation({
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-        });
-      } catch (error) {
-        console.log('Error when requesting location permission: ', error);
-      }
-    };
+        console.log("Current location fetched: ", location);
+        handleCurrentLocation({latitude: location.coords.latitude, longitude: location.coords.longitude});
+    } catch (error) {
+        console.log("Error when getting current location: ", error);
+    }
+  }
+  
 
-    checkAndRequestPermission();
-  }, []); // Only runs once on mount
+  // useEffect(() => {
+  //   console.log("Permission: ", response);
+  //   locateUserHandler();
+    
+  // }
+  //   , [response]);
 
   return (
     <View>
-      {permissionStatus != 'granted' ? (
-        <Text>Waiting for location permission...</Text>
-      ) : <View />}
+      <Button title="Locate me" onPress={locateUserHandler}/>
     </View>
-  );
+  )
 }
