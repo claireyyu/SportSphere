@@ -63,40 +63,39 @@ export default function SignUpForm({ navigation }) {
           value={username}
           onChangeText={setUsername}
           autoCapitalize="none"
-          keyboardType=""
           placeholder="Username" 
           style={styles.input}
         />
         <View style={styles.requiredContainer}>
-        <TextInput
-          value={email}
-          onChangeText={setEmail}
-          autoCapitalize="none"
-          keyboardType="email-address"
-          placeholder="Email"
-          style={styles.inputRequired}
-        />
-        <Text style={styles.required}>*</Text>
+          <TextInput
+            value={email}
+            onChangeText={setEmail}
+            autoCapitalize="none"
+            keyboardType="email-address"
+            placeholder="Email"
+            style={styles.inputRequired}
+          />
+          <Text style={styles.required}>*</Text>
         </View>
         <View style={styles.requiredContainer}>
-        <TextInput
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-          placeholder="Password"
-          style={styles.inputRequired}
-        />
-        <Text style={styles.required}>*</Text>
+          <TextInput
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            placeholder="Password"
+            style={styles.inputRequired}
+          />
+          <Text style={styles.required}>*</Text>
         </View>
         <View style={styles.requiredContainer}>
-        <TextInput
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          secureTextEntry
-          placeholder="Confirm Password"
-          style={styles.inputRequired}
-        />
-        <Text style={styles.required}>*</Text>
+          <TextInput
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            secureTextEntry
+            placeholder="Confirm Password"
+            style={styles.inputRequired}
+          />
+          <Text style={styles.required}>*</Text>
         </View>
         <TextInput
           value={bio}
