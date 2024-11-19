@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, Image, Text } from 'react-native'
+import { View, StyleSheet, Image, Text, Button } from 'react-native'
 import MapView, { Callout } from 'react-native-maps'
 import LocationManager from './LocationManager'
 import { readAllFiles } from '../Firebase/firebaseHelper'
@@ -7,6 +7,7 @@ import { Marker } from 'react-native-maps';
 import { COLORS, SPACING, ROUNDED, SHADOW, FONTSIZE } from '../global';
 import { ProgressBar } from './ProgressBar';
 import PressableButton from './PressableButton'
+
 
 export default function Map({currentLocation}) {
   const [activityItems, setActivityItems] = useState([]);
@@ -93,7 +94,7 @@ export default function Map({currentLocation}) {
                         <ProgressBar value={item.peopleGoing.length} total={item.totalMembers} />
                         <Text style={styles.peopleCount}>{item.totalMembers} ppl</Text>
                       </View>
-                      <PressableButton componentStyle={styles.button} pressedFunction={() => console.log("Go to detail page.")}>
+                      <PressableButton componentStyle={styles.button} pressedFunction={()=>console.log("Go to detail page.")}>
                         <Text style={styles.buttonText}>Learn More</Text>
                       </PressableButton>
                     </View>
@@ -152,7 +153,7 @@ export const styles = StyleSheet.create({
     },
     buttonText: {
       color: COLORS.background,
-      fontSize: FONTSIZE.xsmall,
+      fontSize: FONTSIZE.tiny,
       fontWeight: 'bold',
     },
   });
