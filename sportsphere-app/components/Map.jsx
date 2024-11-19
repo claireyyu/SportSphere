@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
 import MapView from 'react-native-maps'
 import LocationManager from './LocationManager'
+import { readAllFiles } from '../Firebase/firebaseHelper'
 
 export default function Map({currentLocation}) {
+  const [activityItems, setActivityItems] = useState([]);
+  const collectionName = "activities";
+  useEffect(() => {
+    readAllFiles(collectionName, null, setActivityItems, (error) => {
+      console.log("Error fetching activities in map", error.message);
+    });
+    console.log("Activity items in map: ", activityItems);
+  }, []);
 
   return (
     // <View style={styles.container}>
