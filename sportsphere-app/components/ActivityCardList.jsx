@@ -5,8 +5,8 @@ import { useEffect, useState, useContext } from 'react';
 import { QueryContext } from "../context/QueryProvider";
 import { readAllFiles } from '../Firebase/firebaseHelper';
 
-export default function ActivityCardList({modalVisible, modalHandler}) {
-  const {searchQuery} = useContext(QueryContext);
+export default function ActivityCardList({modalVisible, modalHandler, currentLocation}) {
+  const {searchQuery, sortPreference} = useContext(QueryContext);
 
   const collectionName = "activities";
   const [activityItems, setActivityItems] = useState([]);
@@ -16,7 +16,7 @@ export default function ActivityCardList({modalVisible, modalHandler}) {
   }
 
   useEffect(() => {
-    readAllFiles(collectionName, null, handleActivityItems, (error) => {
+    readAllFiles(collectionName, null, sortPreference, currentLocation, handleActivityItems, (error) => {
       console.log("Error fetching activities", error.message);
     });
   }, []);

@@ -66,7 +66,7 @@ const TabNavigator = () => {
         }}
       >
         {() => (
-          <ActivityScreen modalVisible={modalVisible} modalHandler={handleModalVisible} />
+          <ActivityScreen modalVisible={modalVisible} modalHandler={handleModalVisible} currentLocation={currentLocation} />
         )}
       </Tab.Screen>
       <Tab.Screen

@@ -27,7 +27,7 @@ export const writeToSubcollection = async (parentPath, subcollectionName, data) 
 };
 
 
-export function readAllFiles(collectionName, userDocId = null, callback, errorCallback, sort = 'time', currentLocation = null) {
+export function readAllFiles(collectionName, userDocId = null, sort = 'date', currentLocation = null, callback, errorCallback, ) {
   let collectionRef;
 
   if (userDocId) {

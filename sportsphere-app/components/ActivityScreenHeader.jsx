@@ -11,10 +11,10 @@ import FilterModal from './FilterModal';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 export default function ActivityScreenHeader({ currentLocation }) {
-  const { searchQuery, setSearchQuery } = useContext(QueryContext);
+  const { searchQuery, setSearchQuery, setSortPreference } = useContext(QueryContext);
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
-  const [sort, setSort] = useState('date');
+
 
   const updateSearch = (text) => {
     setSearchQuery(text);
@@ -23,9 +23,9 @@ export default function ActivityScreenHeader({ currentLocation }) {
   const modalHandler = (isDateSelected, isDistanceSelected) => {
     setModalVisible(!modalVisible);
     if (isDateSelected) {
-      setSort('date');
+      setSortPreference('date');
     } else if (isDistanceSelected) {
-      setSort('distance');
+      setSortPreference('distance');
     }
   };
 
