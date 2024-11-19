@@ -2,6 +2,7 @@ import { db } from './firebaseSetup';
 import { collection, getDoc, getDocs, addDoc, onSnapshot, updateDoc, doc, deleteDoc, query, where, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { manageReminder } from '../utils/readDBHelper';
 import { manageActivity } from '../utils/readDBHelper';
+import geolib from 'geolib';
 
 export async function writeToDB(data, collectionName) {
   try {
@@ -26,7 +27,7 @@ export const writeToSubcollection = async (parentPath, subcollectionName, data) 
 };
 
 
-export function readAllFiles(collectionName, userDocId = null, callback, errorCallback) {
+export function readAllFiles(collectionName, userDocId = null, callback, errorCallback, sort = 'time', currentLocation = null) {
   let collectionRef;
 
   if (userDocId) {
@@ -48,7 +49,17 @@ export function readAllFiles(collectionName, userDocId = null, callback, errorCa
         manageActivity(doc, items);
       }
     });
-    items.sort((a, b) => a.dtCombined - b.dtCombined);
+    if (sort === 'time') {
+      items.sort((a, b) => a.dtCombined - b.dtCombined);
+    } else if (sort === 'distance') {
+      items.forEach(item => {
+        item.distance = geolib.getDistance(
+          { latitude: currentLocation.latitude, longitude: currentLocation.longitude },
+          { latitude: item.venuePosition.latitude, longitude: item.venuePosition.longitude }
+        );
+    });
+    items.sort((a, b) => a.distance - b.distance);
+    }
     callback(items);
   }, (error) => {
     console.error("Failed to fetch data:", error);
