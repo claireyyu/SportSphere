@@ -54,10 +54,15 @@ export function readAllFiles(collectionName, userDocId = null, sort = 'date', cu
       items.sort((a, b) => a.dtCombined - b.dtCombined);
     } else if (sort === 'distance') {
       items.forEach(item => {
+        console.log("venue position:", item.venuePosition);
+        if (item.venuePosition && item.venuePosition.latitude && item.venuePosition.longitude){
         item.distance = geolib.getDistance(
           { latitude: currentLocation.latitude, longitude: currentLocation.longitude },
           { latitude: item.venuePosition.latitude, longitude: item.venuePosition.longitude }
-        );
+        );} else {
+          item.distance = 0;
+          console.log("No venue position found for item:", item.id);
+        }
     });
     items.sort((a, b) => a.distance - b.distance);
     }
