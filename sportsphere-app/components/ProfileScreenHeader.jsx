@@ -204,8 +204,7 @@ export default function ProfileScreenHeader() {
 
   async function fetchWeather(lat, lon) {
     try {
-      // const APIkey = process.env.EXPO_PUBLIC_weatherApiKey;
-      const APIkey = "J2NKBPU16GeykqzL";
+      const APIkey = process.env.EXPO_PUBLIC_weatherApiKey;
       const response = await fetch(
         `https://my.meteoblue.com/packages/current?apikey=${APIkey}&lat=${lat}&lon=${lon}&asl=49&format=json`
       );
