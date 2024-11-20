@@ -15,15 +15,14 @@ import 'react-native-get-random-values';
 export default function AddActivityCard({ route, currentLocation }) {
   const { userProfile } = useContext(UserContext);
   //const currentLocation = currentLocation;
-  console.log('currentLocation in add activity:', currentLocation);
-  const myLocation = currentLocation;
+  const myLocation = currentLocation || { latitude: 0, longitude: 0 }; // Default to (0, 0)
 
   const [id, setId] = useState(null);
   const navigation = useNavigation();
   const [error, setError] = useState('');
   const [activityName, setActivityName] = useState('');
   const [venue, setVenue] = useState('');
-  const [venuePosition, setVenuePosition] = useState(null);
+  const [venuePosition, setVenuePosition] = useState([]);
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
   const [totalMembers, setTotalMembers] = useState(0);
@@ -61,7 +60,7 @@ export default function AddActivityCard({ route, currentLocation }) {
 
   function handleNewActivity() {
     try {
-      if (!activityName || !venue || !venuePosition || !date || !time || !totalMembers || !description) {
+      if (!activityName || !venue || !date || !time || !totalMembers || !description) {
         setError("Please fill in all fields!");
         return;
       }
@@ -162,7 +161,7 @@ export default function AddActivityCard({ route, currentLocation }) {
           query={{
             key: process.env.EXPO_PUBLIC_mapApiKey,
             language: 'en',
-            location: `${myLocation.latitude},${myLocation.longitude}`, // current location
+            location: myLocation ? `${myLocation.latitude},${myLocation.longitude}`: undefined, // current location
             components: 'country:ca',
             //radius: 5000,
           }}

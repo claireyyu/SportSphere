@@ -38,7 +38,9 @@ export default function ActivityScreenHeader({ currentLocation }) {
           onChangeText={updateSearch}
         />
         <View style={styles.buttons}>
-          <PressableButton pressedFunction={()=>navigation.navigate("AddActivity", {currentLocation})}>
+          <PressableButton pressedFunction={()=>{
+            navigation.navigate("AddActivity", {currentLocation})
+            }}>
             <Ionicons name="add-circle-outline" size={SIZE.pressableIcon} color={COLORS.background} />
           </PressableButton>
           <PressableButton pressedFunction={modalHandler}>
