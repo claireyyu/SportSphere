@@ -1,12 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Modal, View, StyleSheet, Text } from 'react-native'
 import { Pressable } from 'react-native'
 import { COLORS, FONTSIZE, ROUNDED, SPACING } from '../global'
 import Checkbox from 'expo-checkbox';
+import { QueryContext } from '../context/QueryProvider';
 
 export default function FilterModal({modalVisible, modalHandler}) {
     const [isDateSelected, setDateSelection] = React.useState(true);
     const [isDistanceSelected, setDistanceSelection] = React.useState(false);
+    const { setSortPreference } = useContext(QueryContext);
+
+    function handleDateSelection() {
+        setDateSelection(!isDateSelected);
+    }
+    function handleDistanceSelection() {
+        setDistanceSelection(!isDistanceSelected);
+    }
     
   return (
     <Modal animationType='none' transparent={true} visible={modalVisible}>
@@ -16,7 +25,10 @@ export default function FilterModal({modalVisible, modalHandler}) {
                 <View style={styles.checkboxContainer}>
                 <Checkbox
                     value={isDateSelected}
-                    onValueChange={setDateSelection}
+                    onValueChange={()=> {
+                        handleDateSelection();
+                        handleDistanceSelection();
+                    }}
                     style={styles.checkbox}
                     color={COLORS.primary}
                 />
@@ -25,13 +37,19 @@ export default function FilterModal({modalVisible, modalHandler}) {
                 <View style={styles.checkboxContainer}>
                 <Checkbox
                     value={isDistanceSelected}
-                    onValueChange={setDistanceSelection}
+                    onValueChange={()=> {
+                        handleDistanceSelection();
+                        handleDateSelection();
+                    }}
                     style={styles.checkbox}
                     color={COLORS.primary}
                 />
                 <Text style={styles.selectionText}>Distance</Text>
                 </View>
-                <Pressable style={styles.button} onPress={modalHandler}>
+                <Pressable style={styles.button} onPress={()=> {
+                    setSortPreference(isDateSelected ? 'date' : 'distance');
+                    modalHandler()
+                }}>
                 <Text style={styles.buttonText}>Confirm</Text>
                 </Pressable>
             </View>
