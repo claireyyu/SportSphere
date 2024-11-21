@@ -2,6 +2,7 @@ import { db } from './firebaseSetup';
 import { collection, getDoc, getDocs, addDoc, onSnapshot, updateDoc, doc, deleteDoc, query, where, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { manageReminder } from '../utils/readDBHelper';
 import { manageActivity } from '../utils/readDBHelper';
+import * as geolib from 'geolib';
 
 export async function writeToDB(data, collectionName) {
   try {
@@ -26,7 +27,8 @@ export const writeToSubcollection = async (parentPath, subcollectionName, data) 
 };
 
 
-export function readAllFiles(collectionName, userDocId = null, callback, errorCallback) {
+export function readAllFiles(collectionName, userDocId = null, sort = 'date', currentLocation = null, callback, errorCallback, ) {
+  console.log("parameters passed: ", collectionName, userDocId, sort, currentLocation, callback, errorCallback);
   let collectionRef;
 
   if (userDocId) {
@@ -48,7 +50,22 @@ export function readAllFiles(collectionName, userDocId = null, callback, errorCa
         manageActivity(doc, items);
       }
     });
-    items.sort((a, b) => a.dtCombined - b.dtCombined);
+    if (sort === 'date') {
+      items.sort((a, b) => a.dtCombined - b.dtCombined);
+    } else if (sort === 'distance') {
+      items.forEach(item => {
+        console.log("venue position:", item.venuePosition);
+        if (item.venuePosition && item.venuePosition.latitude && item.venuePosition.longitude){
+        item.distance = geolib.getDistance(
+          { latitude: currentLocation.latitude, longitude: currentLocation.longitude },
+          { latitude: item.venuePosition.latitude, longitude: item.venuePosition.longitude }
+        );} else {
+          item.distance = 0;
+          console.log("No venue position found for item:", item.id);
+        }
+    });
+    items.sort((a, b) => a.distance - b.distance);
+    }
     callback(items);
   }, (error) => {
     console.error("Failed to fetch data:", error);

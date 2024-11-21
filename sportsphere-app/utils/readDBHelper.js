@@ -31,6 +31,7 @@ export function manageActivity(doc, items) {
       const date = dtDate.toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" });
       const dtTime = new Date(data.time.seconds * 1000);
       const time = dtTime.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false });
+
       const activityName = data.activityName;
       const venue = data.venue;
       const totalMembers = data.totalMembers;
