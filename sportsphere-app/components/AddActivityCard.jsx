@@ -43,14 +43,11 @@ export default function AddActivityCard({ route, currentLocation }) {
   useEffect(() => {
     if (route?.params) {
       const { id, activityName, venue, date, time, totalMembers, description, venuePosition } = route.params;
-      // const dateObj = parse(date, 'MMM dd, yyyy', new Date());
-      // const formattedDate = format(dateObj, 'yyyy-MM-dd');
-      // const dateTimeString = `${formattedDate}T${time}:00`;
-      // const timeObj = new Date(dateTimeString);
+      const dateObj = parse(date, 'MMM dd, yyyy', new Date());
+      const formattedDate = format(dateObj, 'yyyy-MM-dd');
+      const dateTimeString = `${formattedDate}T${time}:00`;
+      const timeObj = new Date(dateTimeString);
 
-      // Convert Firestore Timestamps to JavaScript Dates
-      const dateObj = date.toDate(); // Assuming 'date' is a Firestore Timestamp
-      const timeObj = time.toDate(); // Assuming 'time' is a Firestore Timestamp
       setActivityName(activityName);
       setVenue(venue);
       setVenuePosition(venuePosition);
@@ -94,20 +91,16 @@ export default function AddActivityCard({ route, currentLocation }) {
       const newActivity = {
         activityName: activityName,
         venue: venue,
-        // date: date || new Date(),
-        // time: time || new Date(),
-        date: Timestamp.fromDate(date || new Date()),
-        time: Timestamp.fromDate(time || new Date()),
+        date: date || new Date(),
+        time: time || new Date(),
         totalMembers: totalMembers,
         description: description,
         owner: userProfile.uid,
         peopleGoing: [userProfile.uid],
         venuePosition: venuePosition,
       };
-      // const strNewDate = format(newActivity.date, 'MMM dd, yyyy');
-      // const strNewTime = format(newActivity.time, 'HH:mm');
-      const strNewDate = format(date, 'MMM dd, yyyy');
-      const strNewTime = format(time, 'HH:mm');
+      const strNewDate = format(newActivity.date, 'MMM dd, yyyy');
+      const strNewTime = format(newActivity.time, 'HH:mm');
       const passToDetail = {
         ...newActivity,
         date: strNewDate,
@@ -151,12 +144,6 @@ export default function AddActivityCard({ route, currentLocation }) {
         />
 
         <Text style={styles.textInfo}>Venue</Text>
-        {/* <TextInput
-          style={styles.input}
-          onChangeText={setVenue}
-          value={venue}
-          placeholder="123 Main Street, Burnaby"
-        /> */}
         <GooglePlacesAutocomplete
           placeholder="123 Main Street, Burnaby"
           onPress={handlePlaceSelected}

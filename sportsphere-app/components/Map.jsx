@@ -12,58 +12,12 @@ import PressableButton from './PressableButton'
 export default function Map({currentLocation}) {
   const [activityItems, setActivityItems] = useState([]);
   const collectionName = "activities";
-  // useEffect(() => {
-  //   readAllFiles(collectionName, null, setActivityItems, (error) => {
-  //     console.log("Error fetching activities in map", error.message);
-  //   });
-  //   console.log("Activity items in map: ", activityItems);
-  // }, []);
   useEffect(() => {
-  setActivityItems([
-    {
-      id: '1',
-      activityName: 'Football',
-      venue: 'Park',
-      date: 'Nov 12, 2024',
-      time: '12:00',
-      peopleGoing: ['1', '2', '3'],
-      totalMembers: 10,
-      uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png',
-      venuePosition: {
-        latitude: 49.2323,
-        longitude: -123.0004,
-      },
-    },
-    {
-      id: '2',
-      activityName: 'Basketball',
-      venue: 'Gym',
-      date: 'Nov 9, 2024',
-      time: '12:00',
-      peopleGoing: ['1', '2'],
-      totalMembers: 5,
-      uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png',
-      venuePosition: {
-        latitude: 49.2334,
-        longitude: -123.0001,
-      },
-    },
-    {
-      id: '3',
-      activityName: 'Volleyball',
-      venue: 'Beach',
-      date: 'Nov 14, 2024',
-      time: '12:00',
-      peopleGoing: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
-      totalMembers: 10,
-      uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png',
-      venuePosition: {
-        latitude: 49.2357,
-        longitude: -123.0009,
-      },
-    },
-  ])
-}, []);
+    readAllFiles(collectionName, null, 'date', currentLocation, setActivityItems, (error) => {
+      console.log("Error fetching activities in map", error.message);
+    });
+    console.log("Activity items in map: ", activityItems);
+  }, []);
 
   return (
     <>
@@ -83,11 +37,11 @@ export default function Map({currentLocation}) {
                         longitude: item.venuePosition.longitude,
                     }}
                 >
-                  <Image source={{ uri: item.uri }} style={{width: 50, height: 50}} />
+                  <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }} style={{width: 50, height: 50}} />
                   <Callout>
                     <View style={styles.customCallout}>
                       <Text style={styles.calloutTitle}>{item.activityName}</Text>
-                      <Text style={styles.infoText}>{item.venue}</Text>
+                      <Text style={styles.infoText}>{item.venue.split(',')[0]}</Text>
                       <Text style={styles.infoText}>{item.date}</Text>
                       <Text style={styles.infoText}>{item.time}</Text>
                       <View style={styles.progressContainer}>
@@ -116,7 +70,7 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
     customCallout: {
-      width: 150,
+      width: 200,
       height: 150,
       backgroundColor: COLORS.background,
       borderRadius: ROUNDED.default,
@@ -127,9 +81,10 @@ export const styles = StyleSheet.create({
       fontSize: FONTSIZE.small,
       fontWeight: 'bold',
       color: COLORS.foreground,
+      marginBottom: SPACING.xsmall,
     },
     infoText: {
-      fontSize: FONTSIZE.small,
+      fontSize: FONTSIZE.tiny,
       color: COLORS.secondaryText,
       marginBottom: SPACING.xsmall,
     },

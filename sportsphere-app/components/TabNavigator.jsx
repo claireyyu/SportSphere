@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ActivityScreen from '../screens/ActivityScreen';
@@ -13,6 +13,9 @@ import ProfileScreenHeader from './ProfileScreenHeader';
 import ActivityStack from './ActivityStack';
 import { useState } from 'react';
 import LocationManager from './LocationManager';
+import { UserContext } from '../context/UserProvider';
+import { QueryContext } from '../context/QueryProvider';
+
 
 const Tab = createBottomTabNavigator();
 
