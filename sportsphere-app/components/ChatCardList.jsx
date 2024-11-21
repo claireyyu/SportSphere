@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import ChatCard from './ChatCard.jsx';
 import { SPACING } from '../global.js';
@@ -6,11 +6,13 @@ import { collection, query, where, onSnapshot, orderBy } from 'firebase/firestor
 import { db, auth } from '../Firebase/firebaseSetup'; // Ensure you have Firebase setup
 import { findUserByUid } from '../Firebase/firebaseHelper.js'; // Helper to find username by UID
 import { format } from 'date-fns'; // Import for timestamp formatting
+import { UserContext } from '../context/UserProvider';
 
 export default function ChatCardList() {
   const [conversations, setConversations] = useState([]); // State to hold grouped conversations
   const [usernamesCache, setUsernamesCache] = useState({}); // Cache to store usernames
-  const currentUserUid = auth.currentUser.uid; // Current user's UID
+  const { userProfile } = useContext(UserContext);
+  const currentUserUid = userProfile.uid; // Current user's UID
 
   useEffect(() => {
     // Query Firestore for messages involving the current user, ordered by timestamp

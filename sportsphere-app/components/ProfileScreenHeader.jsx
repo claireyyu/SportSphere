@@ -107,6 +107,10 @@ export default function ProfileScreenHeader() {
     navigation.navigate("EditProfile");
   }
 
+  function handleOpenReminder() {
+    navigation.navigate("Reminder");
+  }
+
   return (
     <SafeAreaView style={styles.view}>
       <View style={styles.topBtnContainer}>
@@ -116,7 +120,11 @@ export default function ProfileScreenHeader() {
           </PressableButton>
         </View>
         <View style={styles.alarmContainer}>
-          <Ionicons name="notifications-outline" size={SIZE.pressableIcon} color={COLORS.background} />
+          <PressableButton
+            pressedFunction={handleOpenReminder}
+          >
+            <Ionicons name="notifications-outline" size={SIZE.pressableIcon} color={COLORS.background} />
+          </PressableButton>
         </View>
       </View>
 
@@ -180,6 +188,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
+    marginRight: SPACING.default,
   },
   profileContainer: {
     flexDirection: 'row',
