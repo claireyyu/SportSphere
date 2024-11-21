@@ -8,6 +8,7 @@ export const COLORS = {
   'delete': '#dc143c',
   'edit': '#4169e1',
   'required': '#ff0000',
+  'message': '#d1f7c4',
 };
 
 export const FONTSIZE = {

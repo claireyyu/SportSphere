@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import TabNavigator from './components/TabNavigator'
 import { COLORS, FONTSIZE, SIZE } from './global';
-import CustomStatusBar from './components/StatusBar';
+import CustomStatusBar from './components/CustomStatusBar';
 import db from './Firebase/firebaseSetup';
 import ActivityDetailScreen from './screens/ActivityDetailScreen';
 import AddActivityScreen from './screens/AddActivityScreen';
@@ -22,6 +22,8 @@ import { auth } from './Firebase/firebaseSetup';
 import { useEffect, useState } from 'react';
 import AuthScreenHeader from './components/AuthScreenHeader';
 import { UserProvider } from './context/UserProvider';
+import OrganizerProfileScreen from './screens/OrganizerProfileScreen';
+import MessageScreen from './screens/MessageScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -147,8 +149,27 @@ const AppStack = (
           headerBackTitleVisible: false,
           headerTintColor: COLORS.background,
         }}
-        />
-      </>
+      />
+      <Stack.Screen
+        name="OrganizerProfile"
+        component={OrganizerProfileScreen}
+        options={{
+          headerShown: false,
+        }}
+    />
+      <Stack.Screen
+        name="Message"
+        component={MessageScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.primary,
+          },
+          headerShown: false,
+          headerBackTitleVisible: false,
+          headerTintColor: COLORS.background,
+        }}
+      />
+    </>
     )
 
 export default function App() {
@@ -177,12 +198,14 @@ export default function App() {
     }
   };
 
+
   return (
     <View style={styles.container}>
       <CustomStatusBar
         statusBgColor={COLORS.primary}
         barStyle="light-content"
-        backgroundColor={getBackgroundColor(isUserLoggedIn ? 'AppStack' : 'AuthStack')}
+        backgroundColor={COLORS.primary}
+        // backgroundColor={getBackgroundColor(isUserLoggedIn ? 'AppStack' : 'AuthStack')}
       >
         <UserProvider>
           <QueryProvider>

@@ -2,12 +2,15 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import ProfileActivityCardList from '../components/ProfileActivityCardList'
 import { COLORS, SPACING } from '../global'
+import OrganizerProfileScreenHeader from '../components/OrganizerProfileScreenHeader'
 
-export default function ProfileScreen() {
+export default function OrganizerProfileScreen({ route }) {
+  const [uid, setUid] = useState(route.params.uid);
 
   return (
     <View style={styles.container}>
-      <ProfileActivityCardList />
+      <OrganizerProfileScreenHeader uid={uid} />
+      <ProfileActivityCardList uid={uid} />
     </View>
   )
 }
@@ -15,6 +18,5 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: SPACING.medium,
   },
 })
