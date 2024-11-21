@@ -10,17 +10,23 @@ import { useNavigation } from '@react-navigation/native';
 import FilterModal from './FilterModal';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
-export default function ActivityScreenHeader() {
-  const { searchQuery, setSearchQuery } = useContext(QueryContext);
+export default function ActivityScreenHeader({ currentLocation }) {
+  const { searchQuery, setSearchQuery, setSortPreference } = useContext(QueryContext);
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
+
 
   const updateSearch = (text) => {
     setSearchQuery(text);
   };
 
-  const modalHandler = () => {
+  const modalHandler = (isDateSelected, isDistanceSelected) => {
     setModalVisible(!modalVisible);
+    if (isDateSelected) {
+      setSortPreference('date');
+    } else if (isDistanceSelected) {
+      setSortPreference('distance');
+    }
   };
 
   return (
@@ -32,7 +38,9 @@ export default function ActivityScreenHeader() {
           onChangeText={updateSearch}
         />
         <View style={styles.buttons}>
-          <PressableButton pressedFunction={()=>navigation.navigate("AddActivity")}>
+          <PressableButton pressedFunction={()=>{
+            navigation.navigate("AddActivity", {currentLocation})
+            }}>
             <Ionicons name="add-circle-outline" size={SIZE.pressableIcon} color={COLORS.background} />
           </PressableButton>
           <PressableButton pressedFunction={modalHandler}>

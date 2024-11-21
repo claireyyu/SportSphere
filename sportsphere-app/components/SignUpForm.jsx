@@ -63,7 +63,7 @@ export default function SignUpForm({ navigation }) {
           value={username}
           onChangeText={setUsername}
           autoCapitalize="none"
-          keyboardType=""
+          //keyboardType=""
           placeholder="Username" 
           style={styles.input}
         />

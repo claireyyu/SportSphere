@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ActivityScreen from '../screens/ActivityScreen';
@@ -12,18 +12,25 @@ import TitleScreenHeader from './TitleScreenHeader';
 import ProfileScreenHeader from './ProfileScreenHeader';
 import ActivityStack from './ActivityStack';
 import { useState } from 'react';
+import LocationManager from './LocationManager';
+import { UserContext } from '../context/UserProvider';
+import { QueryContext } from '../context/QueryProvider';
+
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [currentLocation, setCurrentLocation] = useState(null);
 
   function handleModalVisible() {
     setModalVisible(!modalVisible);
   }
 
   return (
+    <>
+    <LocationManager currentLocation={currentLocation} handleCurrentLocation={setCurrentLocation}/>
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
@@ -41,6 +48,7 @@ const TabNavigator = () => {
           // Conditional styling for focused (active) tab
           return (
             <View style={focused ? styles.activeIconContainer : styles.iconContainer}>
+              
               <Ionicons
                 name={iconName}
                 size={SIZE.tabIcon}
@@ -57,11 +65,11 @@ const TabNavigator = () => {
         name="Activity"
         // component={ActivityScreen}
         options={{
-          header: () => <ActivityScreenHeader modalHandler={handleModalVisible} />,
+          header: () => <ActivityScreenHeader modalHandler={handleModalVisible} currentLocation={currentLocation} />,
         }}
       >
         {() => (
-          <ActivityScreen modalVisible={modalVisible} modalHandler={handleModalVisible} />
+          <ActivityScreen modalVisible={modalVisible} modalHandler={handleModalVisible} currentLocation={currentLocation} />
         )}
       </Tab.Screen>
       <Tab.Screen
@@ -73,7 +81,8 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name="Map"
-        component={MapScreen}
+        // component={MapScreen}
+        children ={() => <MapScreen currentLocation={currentLocation} />}
         options={{
           header: () => <TitleScreenHeader title="Map" />,
         }}
@@ -86,6 +95,7 @@ const TabNavigator = () => {
         }}
       />
     </Tab.Navigator>
+    </>
   );
 };
 

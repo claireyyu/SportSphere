@@ -1,14 +1,19 @@
 import React from 'react'
-import { View, Text, ScrollView, StyleSheet } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, FlatList } from 'react-native'
 import AddActivityCard from '../components/AddActivityCard'
 import { SPACING } from '../global'
 
-export default function AddActivityScreen() {
+
+export default function AddActivityScreen({route}) {
+  const { currentLocation } = route.params;
+  const data = [{}]
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <AddActivityCard />
-      </ScrollView>
+      <FlatList
+        data={data}
+        renderItem={() => <AddActivityCard currentLocation={currentLocation}/>}
+        keyExtractor={(item, index) => index.toString()}
+      />
     </View>
   )
 }
