@@ -19,7 +19,7 @@ export default function ActivityCardList({modalVisible, modalHandler, currentLoc
     readAllFiles(collectionName, null, sortPreference, currentLocation, handleActivityItems, (error) => {
       console.log("Error fetching activities", error.message);
     });
-  }, []);
+  }, [sortPreference]);
 
   const filteredActivityItems = activityItems.filter(item => {
     const terms = searchQuery.toLowerCase().split(' ');

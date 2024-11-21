@@ -2,7 +2,7 @@ import { db } from './firebaseSetup';
 import { collection, getDoc, getDocs, addDoc, onSnapshot, updateDoc, doc, deleteDoc, query, where, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { manageReminder } from '../utils/readDBHelper';
 import { manageActivity } from '../utils/readDBHelper';
-import geolib from 'geolib';
+import * as geolib from 'geolib';
 
 export async function writeToDB(data, collectionName) {
   try {
