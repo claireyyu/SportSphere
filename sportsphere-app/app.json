@@ -30,14 +30,14 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font",
-      "expo-image-picker",
-      [
-        "expo-camera",
-        {
-          "cameraPermission": "The app needs access to your camera."
-        }
-      ]
+    "expo-font",
+    "expo-image-picker",
+    [
+      "expo-camera",
+      {
+        "cameraPermission": "The app needs access to your camera."
+      }
     ]
+  ]
   }
 }
