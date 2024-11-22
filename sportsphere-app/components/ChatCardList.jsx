@@ -70,7 +70,7 @@ export default function ChatCardList() {
           username: usernamesCache[otherUserUid], // Use cached username
           message: trimmedMessage,
           timestamp: formattedTimestamp,
-          isRead: latestMessage.isRead, // Pass the isRead status
+          isUnread: latestMessage.isUnread, // Pass the isRead status
           messageId: latestMessage.id, // Pass the message ID
         });
       }
@@ -93,7 +93,7 @@ export default function ChatCardList() {
           username={item.username}
           message={item.message}
           timestamp={item.timestamp}
-          isRead={item.isRead} // Pass the isRead status
+          isUnread={item.isUnread} // Pass the isRead status
           messageId={item.messageId} // Pass the message ID
         />
       )}

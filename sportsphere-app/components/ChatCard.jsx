@@ -7,15 +7,14 @@ import { useNavigation } from '@react-navigation/native';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../Firebase/firebaseSetup';
 
-export default function ChatCard({ username, message, timestamp, uid, isRead, messageId }) {
+export default function ChatCard({ username, message, timestamp, uid, isUnread, messageId }) {
   const navigation = useNavigation();
 
   async function handleToChatDetail() {
     // Update the isRead field to true
-    const messageDocRef = doc(db, 'messages', messageId);
-    await updateDoc(messageDocRef, { isRead: true });
-
     navigation.navigate('Message', { uid });
+    const messageDocRef = doc(db, 'messages', messageId);
+    await updateDoc(messageDocRef, { isUnread: false });
   }
 
   return (
@@ -35,7 +34,7 @@ export default function ChatCard({ username, message, timestamp, uid, isRead, me
         </View>
         <View style={styles.messageContainer}>
           <Text style={styles.message}>{message}</Text>
-          {!isRead && <View style={styles.unreadBadge} />}
+          {isUnread && <View style={styles.unreadBadge} />}
         </View>
       </View>
     </PressableButton>
