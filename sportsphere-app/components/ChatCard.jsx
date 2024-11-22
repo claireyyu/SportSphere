@@ -8,14 +8,18 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../Firebase/firebaseSetup';
 import { query, collection, where, getDocs, deleteDoc } from 'firebase/firestore';
 
-export default function ChatCard({ username, message, timestamp, uid, isUnread, messageId, currentUserUid }) {
+export default function ChatCard({ username, message, timestamp, uid, isUnread, messageId, currentUserUid, recipientId }) {
   const navigation = useNavigation();
 
   async function handleToChatDetail() {
     // Update the isRead field to true
     navigation.navigate('Message', { uid });
-    const messageDocRef = doc(db, 'messages', messageId);
-    await updateDoc(messageDocRef, { isUnread: false });
+    console.log('recipientId', recipientId);
+    console.log('currentUserUid', currentUserUid);
+    if (recipientId === currentUserUid) {
+      const messageDocRef = doc(db, 'messages', messageId);
+      await updateDoc(messageDocRef, { isUnread: false });
+    }
   }
 
   async function handleDeleteChat() {
@@ -28,7 +32,7 @@ export default function ChatCard({ username, message, timestamp, uid, isUnread, 
 
       const deletePromises = querySnapshot.docs.map(async (docSnapshot) => {
         const data = docSnapshot.data();
-        if (data.participants.includes(uid)) {
+        if (data.participants.includes(otherUid)) {
           await deleteDoc(docSnapshot.ref);
         }
       });
@@ -112,7 +116,8 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.xsmall,
   },
   timestamp: {
-    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     fontSize: FONTSIZE.small,
     color: COLORS.secondaryText,
     marginLeft: SPACING.small,
