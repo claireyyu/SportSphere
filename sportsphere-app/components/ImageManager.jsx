@@ -96,7 +96,7 @@ export default function ImageManager() {
             <AntDesign name="picture" size={24} color="black" />
         </PressableButton>
     </View>
-    <ScrollView horizontal={true}>
+    <ScrollView horizontal={true} style={{marginTop: SPACING.small}}>
         {images && images.map((image, index) => (
             <Image key = {index} source={{ uri: image }} style={styles.image} />
         ))}
@@ -110,8 +110,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    margin: 10,
-    marginLeft: 0,
+    margin: SPACING.small,
+    marginLeft: SPACING.None,
   },
   textInfo: {
     fontSize: 16,

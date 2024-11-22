@@ -28,6 +28,7 @@ export const ROUNDED = {
 };
 
 export const SPACING = {
+  'None': 0,
   'xsmall': 5,
   'small': 10,
   'default': 15,

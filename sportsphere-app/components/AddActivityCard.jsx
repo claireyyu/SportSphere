@@ -261,6 +261,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.small,
     borderRadius: ROUNDED.default,
     alignSelf: 'flex-end',
+    marginTop: SPACING.medium,
   },
   erroText: {
     color: COLORS.delete,
