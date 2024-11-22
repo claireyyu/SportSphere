@@ -53,4 +53,5 @@ export const SIZE = {
   'tabBar': 80,
   'avatar': 90,
   'profileHeader': 220,
+  'image': 130,
 }

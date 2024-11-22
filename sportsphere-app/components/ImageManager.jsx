@@ -2,11 +2,12 @@ import React from 'react'
 import Feather from '@expo/vector-icons/Feather';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import PressableButton from './PressableButton';
-import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
+import { View, Text, Image, StyleSheet, Pressable, ScrollView } from 'react-native'
 import * as ImagePicker from 'expo-image-picker';
+import { SIZE, SPACING } from '../global';
 
 export default function ImageManager() {
-  const [image, setImage] = React.useState(null);
+  const [images, setImages] = React.useState([]);
   const [imageResponse, requestImagePermission] = ImagePicker.useMediaLibraryPermissions();
   const [cameraResponse, requestCameraPermission] = ImagePicker.useCameraPermissions();
 
@@ -52,7 +53,8 @@ export default function ImageManager() {
         console.log(result);
 
         if (!result.canceled) {
-        setImage(result.assets[0].uri);
+        console.log("Image uri", result.assets[0].uri);
+        setImages((prevImages) => [...prevImages, result.assets[0].uri]);
         }
     } catch (error) {
         console.log("Error picking image", error);
@@ -76,7 +78,7 @@ export default function ImageManager() {
         console.log(result);
 
         if (!result.canceled) {
-        setImage(result.uri);
+          setImages((prevImages) => [...prevImages, result.assets[0].uri]);
         }
 
     } catch (error) {
@@ -94,9 +96,11 @@ export default function ImageManager() {
             <AntDesign name="picture" size={24} color="black" />
         </PressableButton>
     </View>
-    <View>
-        {image && <Image source={{ uri: image }} style={styles.image} />}
-    </View>
+    <ScrollView horizontal={true}>
+        {images && images.map((image, index) => (
+            <Image key = {index} source={{ uri: image }} style={styles.image} />
+        ))}
+    </ScrollView>
     </>
   )
 }
@@ -114,9 +118,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   image: {
-    width: 130,
-    height: 130,
-    margin: 10,
+    width: SIZE.image,
+    height: SIZE.image,
+    margin: SPACING.xsmall,
     opacity: 0.9,
   },
 })
