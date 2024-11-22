@@ -12,6 +12,7 @@ import TimeInputer from './TimeInputer';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import 'react-native-get-random-values';
 import { Timestamp } from 'firebase/firestore';
+import ImageManager from './ImageManager';
 
 export default function AddActivityCard({ route, currentLocation }) {
   const { userProfile } = useContext(UserContext);
@@ -191,7 +192,7 @@ export default function AddActivityCard({ route, currentLocation }) {
           multiline={true}
           numberOfLines={4}
         />
-
+        <ImageManager />
         <PressableButton
           componentStyle={styles.button}
           pressedFunction={handleNewActivity}
