@@ -11,7 +11,7 @@ import { auth } from '../Firebase/firebaseSetup';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/UserProvider';
 import * as Location from 'expo-location';
-
+import NotificationManager from './NotificationManager';
 
 export default function ProfileScreenHeader() {
   const { userProfile } = useContext(UserContext);
@@ -156,6 +156,7 @@ export default function ProfileScreenHeader() {
         >
           <Text style={styles.buttonStyle}>Edit Profile</Text>
         </PressableButton>
+        <NotificationManager />
       </View>
     </SafeAreaView>
   );
