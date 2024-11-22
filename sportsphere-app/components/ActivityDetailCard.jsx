@@ -15,6 +15,8 @@ export default function ActivityDetailCard({ route }) {
   const [hasJoined, setHasJoined] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
 
+  
+
   useEffect(() => {
     console.log("isOwner: ", isOwner);  
     if (route.params.peopleGoing.includes(userProfile.uid)) {
