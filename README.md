@@ -4,6 +4,11 @@
 
 Sportsphere is a mobile application designed to help users manage their sports activities, reminders, and chats. The app integrates with Firebase for authentication and database functionalities, allowing users to create, read, update, and delete activities and reminders.
 
+# Third-party API Key
+Please add this line to the .env file:
+
+**EXPO_PUBLIC_weatherApiKey= "J2NKBPU16GeykqzL"**
+
 ## Collections
 **activities**
 **users**
