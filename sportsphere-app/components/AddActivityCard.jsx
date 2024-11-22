@@ -5,19 +5,25 @@ import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
 import PressableButton from './PressableButton';
 import { writeToDB, updateDB } from '../Firebase/firebaseHelper';
 import { useNavigation } from '@react-navigation/native';
-import { parse, format } from 'date-fns';
+import { parse, format, set } from 'date-fns';
 import { UserContext } from '../context/UserProvider';
 import DateInputer from './DateInputer';
 import TimeInputer from './TimeInputer';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import 'react-native-get-random-values';
+import { Timestamp } from 'firebase/firestore';
 
-export default function AddActivityCard({ route }) {
+export default function AddActivityCard({ route, currentLocation }) {
   const { userProfile } = useContext(UserContext);
+  //const currentLocation = currentLocation;
+  const myLocation = currentLocation || { latitude: 0, longitude: 0 }; // Default to (0, 0)
 
   const [id, setId] = useState(null);
   const navigation = useNavigation();
   const [error, setError] = useState('');
   const [activityName, setActivityName] = useState('');
   const [venue, setVenue] = useState('');
+  const [venuePosition, setVenuePosition] = useState([]);
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
   const [totalMembers, setTotalMembers] = useState(0);
@@ -36,13 +42,15 @@ export default function AddActivityCard({ route }) {
 
   useEffect(() => {
     if (route?.params) {
-      const { id, activityName, venue, date, time, totalMembers, description } = route.params;
+      const { id, activityName, venue, date, time, totalMembers, description, venuePosition } = route.params;
       const dateObj = parse(date, 'MMM dd, yyyy', new Date());
       const formattedDate = format(dateObj, 'yyyy-MM-dd');
       const dateTimeString = `${formattedDate}T${time}:00`;
       const timeObj = new Date(dateTimeString);
+
       setActivityName(activityName);
       setVenue(venue);
+      setVenuePosition(venuePosition);
       setDate(dateObj);
       setTime(timeObj);
       setTotalMembers(totalMembers);
@@ -89,6 +97,7 @@ export default function AddActivityCard({ route }) {
         description: description,
         owner: userProfile.uid,
         peopleGoing: [userProfile.uid],
+        venuePosition: venuePosition,
       };
       const strNewDate = format(newActivity.date, 'MMM dd, yyyy');
       const strNewTime = format(newActivity.time, 'HH:mm');
@@ -112,6 +121,16 @@ export default function AddActivityCard({ route }) {
       console.error("Error adding document: ", error);
     }
   }
+  
+  function handlePlaceSelected(data, details) {
+    console.log('details:', details);
+    setVenue(data.description);
+    setVenuePosition({
+      latitude: details.geometry.location.lat,
+      longitude: details.geometry.location.lng,
+    });
+    
+  }
 
   return (
     <SafeAreaView>
@@ -125,11 +144,26 @@ export default function AddActivityCard({ route }) {
         />
 
         <Text style={styles.textInfo}>Venue</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={setVenue}
-          value={venue}
+        <GooglePlacesAutocomplete
           placeholder="123 Main Street, Burnaby"
+          onPress={handlePlaceSelected}
+          fetchDetails={true}
+          GooglePlacesSearchQuery={
+            {
+              rankby: 'distance',
+              type: 'establishment',
+            }
+          }
+          query={{
+            key: process.env.EXPO_PUBLIC_mapApiKey,
+            language: 'en',
+            location: myLocation ? `${myLocation.latitude},${myLocation.longitude}`: undefined, // current location
+            components: 'country:ca',
+            //radius: 5000,
+          }}
+          styles={{
+            textInput: styles.input,
+          }}
         />
 
         <Text style={styles.textInfo}>Date</Text>

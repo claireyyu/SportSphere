@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/UserProvider';
 import * as Location from 'expo-location';
 
+
 export default function ProfileScreenHeader() {
   const { userProfile } = useContext(UserContext);
   const navigation = useNavigation();
@@ -46,8 +47,7 @@ export default function ProfileScreenHeader() {
 
   async function fetchWeather(lat, lon) {
     try {
-      // const APIkey = process.env.EXPO_PUBLIC_weatherApiKey;
-      const APIkey = "J2NKBPU16GeykqzL";
+      const APIkey = process.env.EXPO_PUBLIC_weatherApiKey;
       const response = await fetch(
         `https://my.meteoblue.com/packages/current?apikey=${APIkey}&lat=${lat}&lon=${lon}&asl=49&format=json`
       );
@@ -64,16 +64,13 @@ export default function ProfileScreenHeader() {
 
   function matchWeatherCode(code) {
     if (code === 1) {
-      return "Clear sky";
-    }
-    if (code === 2) {
-      return "Mostly clear";
-    }
-    if (code === 3) {
-      return "Partly cloudy";
-    }
-    if (code === 4) {
-      return "Cloudy";
+      return <Ionicons name="sunny-outline" size={14} color={COLORS.primary} />;
+    } else if (code === 2 || code === 3) {
+      return <Ionicons name="partly-sunny-outline" size={14} color={COLORS.primary}  />;
+    } else if (code === 4 || code == 5) {
+      return <Ionicons name="cloudy-outline" size={14} color={COLORS.primary}  />;
+    } else {
+      return <Ionicons name="rainy-outline" size={14} color={COLORS.primary}  />;
     }
   }
 
@@ -110,6 +107,10 @@ export default function ProfileScreenHeader() {
     navigation.navigate("EditProfile");
   }
 
+  function handleOpenReminder() {
+    navigation.navigate("Reminder");
+  }
+
   return (
     <SafeAreaView style={styles.view}>
       <View style={styles.topBtnContainer}>
@@ -119,7 +120,11 @@ export default function ProfileScreenHeader() {
           </PressableButton>
         </View>
         <View style={styles.alarmContainer}>
-          <Ionicons name="notifications-outline" size={SIZE.pressableIcon} color={COLORS.background} />
+          <PressableButton
+            pressedFunction={handleOpenReminder}
+          >
+            <Ionicons name="notifications-outline" size={SIZE.pressableIcon} color={COLORS.background} />
+          </PressableButton>
         </View>
       </View>
 
@@ -134,8 +139,9 @@ export default function ProfileScreenHeader() {
             <Text style={styles.username}>{userProfile?.username || 'User Name'}</Text>
             <View style={styles.weather}>
               <Text style={styles.weatherText}>
-                {weather ? `${weather.temp}°C, ${weather.description}` : "Loading weather..."}
+                {weather ? `${weather.temp}°C ` : "Loading weather..."}
               </Text>
+              {weather && weather.description}
             </View>
           </View>
           <Text style={styles.email}>{userProfile?.email || 'User Email'}</Text>
@@ -182,6 +188,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
+    marginRight: SPACING.default,
   },
   profileContainer: {
     flexDirection: 'row',
@@ -202,6 +209,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   weather: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     backgroundColor: COLORS.background,
     borderRadius: ROUNDED.small,
     padding: SPACING.xsmall,

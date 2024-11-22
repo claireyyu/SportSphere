@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { COLORS } from '../global'
+import Map from '../components/Map'
 
-export default function MapScreen() {
+export default function MapScreen({ currentLocation }) {
   return (
     <View style={styles.container}>
-      <Text>MapScreen</Text>
+      <Map currentLocation={currentLocation}/>
     </View>
   )
 }

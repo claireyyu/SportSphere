@@ -42,7 +42,6 @@ export default function AddReminder({ modalVisible, handleModalVisible, route })
       setDate(dateObj);
       setTime(timeObj);
       setIsEditMode(true);
-      console.log("Passed id: ", id);
     }
   }, [route?.params]);
 

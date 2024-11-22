@@ -22,7 +22,7 @@ export default function ReminderItemList() {
 
   useEffect(() => {
     if (userProfile.userDocId) {
-      const unsubscribe = readAllFiles(collectionName, userProfile.userDocId, setReminderItems, (error) => {
+      const unsubscribe = readAllFiles(collectionName, userProfile.userDocId,'date', null, setReminderItems, (error) => {
         console.error("Error fetching reminders:", error);
       });
 
