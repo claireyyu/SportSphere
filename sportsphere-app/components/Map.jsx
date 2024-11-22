@@ -54,9 +54,6 @@ export default function Map({currentLocation}) {
                         <ProgressBar value={item.peopleGoing.length} total={item.totalMembers} />
                         <Text style={styles.peopleCount}>{item.totalMembers} ppl</Text>
                       </View>
-                      {/* <PressableButton componentStyle={styles.button} pressedFunction={()=>console.log("Go to detail page.")}>
-                        <Text style={styles.buttonText}>Learn More</Text>
-                      </PressableButton> */}
                     </View>
                   </Callout>
                 </Marker>
