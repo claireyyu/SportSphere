@@ -7,17 +7,23 @@ import { Marker } from 'react-native-maps';
 import { COLORS, SPACING, ROUNDED, SHADOW, FONTSIZE } from '../global';
 import { ProgressBar } from './ProgressBar';
 import PressableButton from './PressableButton'
+import { useNavigation } from '@react-navigation/native'
 
 
 export default function Map({currentLocation}) {
   const [activityItems, setActivityItems] = useState([]);
   const collectionName = "activities";
+  const navigation = useNavigation();
   useEffect(() => {
     readAllFiles(collectionName, null, 'date', currentLocation, setActivityItems, (error) => {
       console.log("Error fetching activities in map", error.message);
     });
-    console.log("Activity items in map: ", activityItems);
   }, []);
+
+  function handleNavigateToDetails(id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner) {
+    console.log("Go to details page.", id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner);
+    navigation.navigate('ActivityDetails', {id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner});
+  }
 
   return (
     <>
@@ -38,7 +44,7 @@ export default function Map({currentLocation}) {
                     }}
                 >
                   <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }} style={{width: 50, height: 50}} />
-                  <Callout>
+                  <Callout onPress={()=>handleNavigateToDetails(item.id, item.activityName, item.venue, item.date, item.time, item.peopleGoing, item.totalMembers, item.description, item.owner)}>
                     <View style={styles.customCallout}>
                       <Text style={styles.calloutTitle}>{item.activityName}</Text>
                       <Text style={styles.infoText}>{item.venue.split(',')[0]}</Text>
@@ -48,9 +54,9 @@ export default function Map({currentLocation}) {
                         <ProgressBar value={item.peopleGoing.length} total={item.totalMembers} />
                         <Text style={styles.peopleCount}>{item.totalMembers} ppl</Text>
                       </View>
-                      <PressableButton componentStyle={styles.button} pressedFunction={()=>console.log("Go to detail page.")}>
+                      {/* <PressableButton componentStyle={styles.button} pressedFunction={()=>console.log("Go to detail page.")}>
                         <Text style={styles.buttonText}>Learn More</Text>
-                      </PressableButton>
+                      </PressableButton> */}
                     </View>
                   </Callout>
                 </Marker>
@@ -70,8 +76,8 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
     customCallout: {
-      width: 200,
-      height: 150,
+      width: 150,
+      height: 130,
       backgroundColor: COLORS.background,
       borderRadius: ROUNDED.default,
       alignItems: 'center',
