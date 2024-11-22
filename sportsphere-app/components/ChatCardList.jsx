@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import ChatCard from './ChatCard.jsx';
 import { SPACING } from '../global.js';
-import { collection, query, where, onSnapshot } from 'firebase/firestore';
+import { collection, query, where, onSnapshot, orderBy } from 'firebase/firestore';
 import { db } from '../Firebase/firebaseSetup'; // Ensure you have Firebase setup
 import { findUserByUid } from '../Firebase/firebaseHelper.js'; // Helper to find username by UID
 import { format } from 'date-fns'; // Import for timestamp formatting
@@ -19,6 +19,7 @@ export default function ChatCardList() {
     const q = query(
       collection(db, 'messages'),
       where('participants', 'array-contains', currentUserUid),
+      orderBy('timestamp', 'asc') // Order messages by timestamp in descending order
     );
 
     const unsubscribe = onSnapshot(q, async (snapshot) => {
@@ -46,7 +47,7 @@ export default function ChatCardList() {
         const conversationMessages = groupedConversations[otherUserUid];
 
         // Find the latest message in the conversation
-        const latestMessage = conversationMessages[0]; // Messages are already sorted by timestamp descending
+        const latestMessage = conversationMessages[conversationMessages.length - 1]; // Messages are already sorted by timestamp descending
 
         // Trim the message text to 10 words
         const trimmedMessage = latestMessage.text.split(' ').slice(0, 10).join(' ') + '...';
