@@ -1,13 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, Alert } from 'react-native';
 import { COLORS, FONTSIZE, SPACING, SIZE, ROUNDED } from '../global';
 import { Avatar } from '@rneui/themed';
 import PressableButton from './PressableButton';
 import { useNavigation } from '@react-navigation/native';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../Firebase/firebaseSetup';
+import { query, collection, where, getDocs, deleteDoc } from 'firebase/firestore';
 
-export default function ChatCard({ username, message, timestamp, uid, isUnread, messageId }) {
+export default function ChatCard({ username, message, timestamp, uid, isUnread, messageId, currentUserUid }) {
   const navigation = useNavigation();
 
   async function handleToChatDetail() {
@@ -17,10 +18,48 @@ export default function ChatCard({ username, message, timestamp, uid, isUnread, 
     await updateDoc(messageDocRef, { isUnread: false });
   }
 
+  async function handleDeleteChat() {
+    try {
+      const q = query(
+        collection(db, 'messages'),
+        where('participants', 'array-contains', currentUserUid)
+      );
+      const querySnapshot = await getDocs(q);
+
+      const deletePromises = querySnapshot.docs.map(async (docSnapshot) => {
+        const data = docSnapshot.data();
+        if (data.participants.includes(uid)) {
+          await deleteDoc(docSnapshot.ref);
+        }
+      });
+
+      await Promise.all(deletePromises);
+      Alert.alert('Chat deleted successfully');
+    } catch (error) {
+      console.error('Error deleting chat: ', error);
+      Alert.alert('Error deleting chat');
+    }
+  }
+
+
+  function confirmDeleteChat() {
+    Alert.alert(
+      'Delete Chat',
+      'Are you sure you want to delete this chat?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Yes', onPress: handleDeleteChat },
+      ],
+      { cancelable: true }
+    );
+  }
+
+
   return (
     <PressableButton
       componentStyle={styles.cardContainer}
       pressedFunction={handleToChatDetail}
+      onLongPress={confirmDeleteChat}
     >
       <Avatar
         size={SIZE.smallAvatar}

@@ -90,6 +90,7 @@ export default function ChatCardList() {
       renderItem={({ item }) => (
         <ChatCard
           uid={item.uid}
+          currentUserUid={currentUserUid}
           username={item.username}
           message={item.message}
           timestamp={item.timestamp}
