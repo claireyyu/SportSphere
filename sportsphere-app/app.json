@@ -16,11 +16,13 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "This app needs access to your location to show your current location on the map."
+        "NSLocationWhenInUseUsageDescription": "This app needs access to your location to show your current location on the map.",
+        "UIBackgroundModes": ["remote-notification"]
       }
     },
     "android": {
-      "permissions": ["ACCESS_FINE_LOCATION"],
+      // "permissions": ["ACCESS_FINE_LOCATION"],
+      "permissions": ["RECEIVE_BOOT_COMPLETED"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
