@@ -31,7 +31,7 @@ export default function ActivityDetailCard({ route }) {
     console.log("isOwner End: ", isOwner);  
   }, []);
   
-  const { id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner } = route.params;
+  const { id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition } = route.params;
   console.log("Route Params ActivityDetailCard: ", route.params);
   const navigation = useNavigation();
   const [pplGoingNumber, setPplGoingNumber] = useState(peopleGoing.length);
@@ -47,6 +47,7 @@ export default function ActivityDetailCard({ route }) {
       totalMembers,
       description,
       owner,
+      venuePosition
     });
   }
 

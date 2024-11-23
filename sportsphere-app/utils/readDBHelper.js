@@ -37,6 +37,7 @@ export function manageActivity(doc, items) {
       const totalMembers = data.totalMembers;
       const description = data.description;
       const peopleGoing = data.peopleGoing;
+      const venuePosition = data.venuePosition;
 
       items.push({
         ...data,
