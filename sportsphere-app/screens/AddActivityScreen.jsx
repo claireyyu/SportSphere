@@ -13,7 +13,7 @@ export default function AddActivityScreen({route}) {
         data={data}
         renderItem={() => <AddActivityCard currentLocation={currentLocation}/>}
         keyExtractor={(item, index) => index.toString()}
-        keyboardShouldPersistTaps='always'
+        keyboardShouldPersistTaps='handled'
       />
     </View>
   )

@@ -52,7 +52,8 @@ export default function ActivityCardList({modalVisible, modalHandler, currentLoc
         />
       )}
       contentContainerStyle={styles.listContainer}
-      showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          
     />
     </View>
     </View>
