@@ -6,7 +6,7 @@ import { ProgressBar } from './ProgressBar';
 import PressableButton from './PressableButton';
 import { useNavigation } from '@react-navigation/native';
   
-export default function ActivityCard({ activityName, venue, date, time, peopleGoing, totalMembers, description, id, owner, venuePosition}) {
+export default function ActivityCard({ activityName, venue, date, time, peopleGoing, totalMembers, description, id, owner, venuePosition, images}) {
   const navigation = useNavigation();
   
   function handleToActivityDetail() {
@@ -21,7 +21,8 @@ export default function ActivityCard({ activityName, venue, date, time, peopleGo
       totalMembers,
       description,
       owner,
-      venuePosition
+      venuePosition,
+      images
     });
   }
 

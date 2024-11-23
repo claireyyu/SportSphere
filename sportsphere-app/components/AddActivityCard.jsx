@@ -31,6 +31,8 @@ export default function AddActivityCard({ route, currentLocation }) {
   const [description, setDescription] = useState('');
   const [isEditMode, setIsEditMode] = useState(false);
   const [images, setImages] = useState(null);
+  const [downloadURLs, setDownloadURLs] = useState(null);
+  //const [imageUrls, setImageUrls] = useState([]);
 
   function handleImages(image) {
     setImages(image);
@@ -48,7 +50,7 @@ export default function AddActivityCard({ route, currentLocation }) {
 
   useEffect(() => {
     if (route?.params) {
-      const { id, activityName, venue, date, time, totalMembers, description, venuePosition } = route.params;
+      const { id, activityName, venue, date, time, totalMembers, description, venuePosition, images, downloadURLs } = route.params;
       console.log('route.params to edit activity:', route.params);
       const dateObj = parse(date, 'MMM dd, yyyy', new Date());
       const formattedDate = format(dateObj, 'yyyy-MM-dd');
@@ -64,6 +66,8 @@ export default function AddActivityCard({ route, currentLocation }) {
       setDescription(description);
       setIsEditMode(true);
       setId(id);
+      setImages(images);
+      setDownloadURLs(downloadURLs);
     }
   }, [route?.params]);
 
@@ -121,10 +125,11 @@ export default function AddActivityCard({ route, currentLocation }) {
         setTime(now);
         return;
       }
-      let imageUrls = "";
+      
+      let imageUploadUrls = [];
       if (images) {
-        imageUrls = await handleMultipleImageData(images);
-        console.log("Image URLs: ", imageUrls);
+        imageUploadUrls = await handleMultipleImageData(images);
+        console.log("Image URLs: ", imageUploadUrls);
       }
 
       const newActivity = {
@@ -137,7 +142,7 @@ export default function AddActivityCard({ route, currentLocation }) {
         owner: userProfile.uid,
         peopleGoing: [userProfile.uid],
         venuePosition: venuePosition,
-        images: imageUrls || null,
+        images: imageUploadUrls || null,
       };
       const strNewDate = format(newActivity.date, 'MMM dd, yyyy');
       const strNewTime = format(newActivity.time, 'HH:mm');
@@ -233,7 +238,7 @@ export default function AddActivityCard({ route, currentLocation }) {
           multiline={true}
           numberOfLines={4}
         />
-        <ImageManager images={images} imagesHandler={handleImages}/>
+        <ImageManager images={images} imagesHandler={handleImages} downloadURLs={downloadURLs}/>
         <PressableButton
           componentStyle={styles.button}
           pressedFunction={handleNewActivity}

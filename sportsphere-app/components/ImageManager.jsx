@@ -6,7 +6,7 @@ import { View, Text, Image, StyleSheet, Pressable, ScrollView } from 'react-nati
 import * as ImagePicker from 'expo-image-picker';
 import { SIZE, SPACING } from '../global';
 
-export default function ImageManager({images, imagesHandler}) {
+export default function ImageManager({images, imagesHandler, downloadURLs=null}) {
   //const [images, setImages] = React.useState([]);
   const [imageResponse, requestImagePermission] = ImagePicker.useMediaLibraryPermissions();
   const [cameraResponse, requestCameraPermission] = ImagePicker.useCameraPermissions();
@@ -96,11 +96,17 @@ export default function ImageManager({images, imagesHandler}) {
             <AntDesign name="picture" size={24} color="black" />
         </PressableButton>
     </View>
-    <ScrollView horizontal={true} style={{marginTop: SPACING.small}}>
+    {downloadURLs ? 
+      <ScrollView horizontal={true} style={{marginTop: SPACING.small}}>
+          {downloadURLs.map((url, index) => (
+            <Image key={index} source={{ uri: url }} style={styles.image} />
+          ))}
+      </ScrollView>:
+      <ScrollView horizontal={true} style={{marginTop: SPACING.small}}>
         {images && images.map((image, index) => (
             <Image key = {index} source={{ uri: image }} style={styles.image} />
         ))}
-    </ScrollView>
+      </ScrollView>}
     </>
   )
 }
