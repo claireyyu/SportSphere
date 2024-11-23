@@ -49,6 +49,7 @@ export default function AddActivityCard({ route, currentLocation }) {
   useEffect(() => {
     if (route?.params) {
       const { id, activityName, venue, date, time, totalMembers, description, venuePosition } = route.params;
+      console.log('route.params to edit activity:', route.params);
       const dateObj = parse(date, 'MMM dd, yyyy', new Date());
       const formattedDate = format(dateObj, 'yyyy-MM-dd');
       const dateTimeString = `${formattedDate}T${time}:00`;
@@ -184,9 +185,11 @@ export default function AddActivityCard({ route, currentLocation }) {
 
         <Text style={styles.textInfo}>Venue</Text>
         <GooglePlacesAutocomplete
-          placeholder="123 Main Street, Burnaby"
+          placeholder={venue ? venue : "123 Main Street, Burnaby"}
+          defaultValue={venue ? venue : ""}
           onPress={handlePlaceSelected}
           fetchDetails={true}
+          disableScroll={true} // Prevent nested scrolling issues
           GooglePlacesSearchQuery={
             {
               rankby: 'distance',
@@ -196,7 +199,7 @@ export default function AddActivityCard({ route, currentLocation }) {
           query={{
             key: process.env.EXPO_PUBLIC_mapApiKey,
             language: 'en',
-            location: myLocation ? `${myLocation.latitude},${myLocation.longitude}`: undefined, // current location
+            location: myLocation ? `${myLocation.latitude},${myLocation.longitude}`: null, // current location
             components: 'country:ca',
             //radius: 5000,
           }}

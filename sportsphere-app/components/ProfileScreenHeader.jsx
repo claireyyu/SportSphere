@@ -12,7 +12,6 @@ import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/UserProvider';
 import * as Location from 'expo-location';
 
-
 export default function ProfileScreenHeader() {
   const { userProfile } = useContext(UserContext);
   const navigation = useNavigation();

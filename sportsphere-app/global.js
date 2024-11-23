@@ -45,6 +45,7 @@ export const SHADOW = {
 };
 
 export const SIZE = {
+  'badge': 10,
   'progressBar': 26,
   'pressableIcon': 26,
   'tabIcon': 28,
