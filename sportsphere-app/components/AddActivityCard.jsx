@@ -60,6 +60,7 @@ export default function AddActivityCard({ route, currentLocation }) {
     }
   }, [route?.params]);
 
+
   function handleNewActivity() {
     try {
       if (!activityName || !venue || !date || !time || !totalMembers || !description) {
@@ -148,6 +149,7 @@ export default function AddActivityCard({ route, currentLocation }) {
           placeholder="123 Main Street, Burnaby"
           onPress={handlePlaceSelected}
           fetchDetails={true}
+          disableScroll={true} // Prevent nested scrolling issues
           GooglePlacesSearchQuery={
             {
               rankby: 'distance',
@@ -157,7 +159,7 @@ export default function AddActivityCard({ route, currentLocation }) {
           query={{
             key: process.env.EXPO_PUBLIC_mapApiKey,
             language: 'en',
-            location: myLocation ? `${myLocation.latitude},${myLocation.longitude}`: undefined, // current location
+            location: myLocation ? `${myLocation.latitude},${myLocation.longitude}`: null, // current location
             components: 'country:ca',
             //radius: 5000,
           }}
