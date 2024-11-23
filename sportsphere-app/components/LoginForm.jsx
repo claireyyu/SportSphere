@@ -25,7 +25,6 @@ export default function LoginForm({ navigation }) {
       if (error.code === "auth/wrong-password") {
         Alert.alert('Incorrect password');
       } else if (error.code === "auth/user-not-found") {
-        Alert.alert('No user found with this email');
       } else {
         Alert.alert('Error', error.message);
       }

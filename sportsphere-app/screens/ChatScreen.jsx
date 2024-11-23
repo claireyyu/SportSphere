@@ -4,10 +4,10 @@ import ChatCard from '../components/ChatCard'
 import { COLORS } from '../global'
 import ChatCardList from '../components/ChatCardList'
 
-export default function ChatScreen({ navigation }) {
+export default function ChatScreen() {
   return (
     <View style={styles.container}>
-      <ChatCardList navigation={navigation} />
+      <ChatCardList/>
     </View>
   )
 }
