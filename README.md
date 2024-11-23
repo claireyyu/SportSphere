@@ -5,9 +5,54 @@
 Sportsphere is a mobile application designed to help users manage their sports activities, reminders, and chats. The app integrates with Firebase for authentication and database functionalities, allowing users to create, read, update, and delete activities and reminders.
 
 # Third-party API Key
-Please add this line to the .env file:
+Please add these lines of code to the .env file:
 
-**EXPO_PUBLIC_weatherApiKey= "J2NKBPU16GeykqzL"**
+```
+EXPO_PUBLIC_weatherApiKey= "J2NKBPU16GeykqzL"
+EXPO_PUBLIC_mapApiKey= "AIzaSyA_0463EzbY9HcbMhb0OaZveUkFKvyqArc"
+```
+
+# Firebase Database Rule
+Please use the following as the firebase database rule:
+```
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Rules for the 'users' collection
+    match /users/{user} {
+   		allow create: if request.auth != null;
+      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.uid;
+
+     // Rules for the 'reminders' subcollection
+      match /reminders/{reminder} {
+    	allow create: if request.auth != null;
+      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.owner;
+      }
+    }
+
+    match /activities/{activity} {
+    	allow create: if request.auth != null;
+      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.owner;
+    }
+
+    // Rules for the 'messages' collection
+    match /messages/{messageId} {
+      allow read, write: if request.auth != null && (
+        request.auth.uid == resource.data.sender || 
+        request.auth.uid == resource.data.recipient
+      );
+    }
+
+    // Rules for all other access
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+
+```
 
 ## Collections
 **activities**
