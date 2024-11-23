@@ -54,6 +54,7 @@ export default function MessageScreen({ route }) {
         recipient: uid,
         timestamp: new Date(),
         participants: [currentUserUid, uid], // Store both participants
+        isUnread: true, // Mark as unread
       });
       setText(''); // Clear the input after sending
     } catch (err) {

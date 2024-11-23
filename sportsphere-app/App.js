@@ -24,6 +24,9 @@ import AuthScreenHeader from './components/AuthScreenHeader';
 import { UserProvider } from './context/UserProvider';
 import OrganizerProfileScreen from './screens/OrganizerProfileScreen';
 import MessageScreen from './screens/MessageScreen';
+import * as Notifications from 'expo-notifications';
+import { NotificationProvider } from './context/NotificationProvider';
+Notifications.setNotificationHandler({ handleNotification: async () => ({ shouldShowAlert: true }) });
 
 const Stack = createNativeStackNavigator();
 
@@ -208,13 +211,15 @@ export default function App() {
         // backgroundColor={getBackgroundColor(isUserLoggedIn ? 'AppStack' : 'AuthStack')}
       >
         <UserProvider>
-          <QueryProvider>
-            <NavigationContainer>
-              <Stack.Navigator>
-                {isUserLoggedIn ? AppStack : AuthStack}
-              </Stack.Navigator>
-            </NavigationContainer>
-          </QueryProvider>
+          <NotificationProvider>
+            <QueryProvider>
+              <NavigationContainer>
+                <Stack.Navigator>
+                  {isUserLoggedIn ? AppStack : AuthStack}
+                </Stack.Navigator>
+              </NavigationContainer>
+            </QueryProvider>
+          </NotificationProvider>
         </UserProvider>
       </CustomStatusBar>
     </View>

@@ -1,20 +1,69 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
-import { COLORS, FONTSIZE, SPACING, SIZE } from '../global';
+import { StyleSheet, Text, View, Image, Alert } from 'react-native';
+import { COLORS, FONTSIZE, SPACING, SIZE, ROUNDED } from '../global';
 import { Avatar } from '@rneui/themed';
 import PressableButton from './PressableButton';
 import { useNavigation } from '@react-navigation/native';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../Firebase/firebaseSetup';
+import { query, collection, where, getDocs, deleteDoc } from 'firebase/firestore';
 
-export default function ChatCard({ username, message, timestamp, uid }) {
+export default function ChatCard({ username, message, timestamp, uid, isUnread, messageId, currentUserUid, recipientId }) {
   const navigation = useNavigation();
-  function handleToChatDetail() {
+
+  async function handleToChatDetail() {
+    // Update the isRead field to true
     navigation.navigate('Message', { uid });
+    console.log('recipientId', recipientId);
+    console.log('currentUserUid', currentUserUid);
+    if (recipientId === currentUserUid) {
+      const messageDocRef = doc(db, 'messages', messageId);
+      await updateDoc(messageDocRef, { isUnread: false });
+    }
   }
+
+  async function handleDeleteChat() {
+    try {
+      const q = query(
+        collection(db, 'messages'),
+        where('participants', 'array-contains', currentUserUid)
+      );
+      const querySnapshot = await getDocs(q);
+
+      const deletePromises = querySnapshot.docs.map(async (docSnapshot) => {
+        const data = docSnapshot.data();
+        if (data.participants.includes(otherUid)) {
+          await deleteDoc(docSnapshot.ref);
+        }
+      });
+
+      await Promise.all(deletePromises);
+      Alert.alert('Chat deleted successfully');
+    } catch (error) {
+      console.error('Error deleting chat: ', error);
+      Alert.alert('Error deleting chat');
+    }
+  }
+
+
+  function confirmDeleteChat() {
+    Alert.alert(
+      'Delete Chat',
+      'Are you sure you want to delete this chat?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Yes', onPress: handleDeleteChat },
+      ],
+      { cancelable: true }
+    );
+  }
+
 
   return (
     <PressableButton
       componentStyle={styles.cardContainer}
       pressedFunction={handleToChatDetail}
+      onLongPress={confirmDeleteChat}
     >
       <Avatar
         size={SIZE.smallAvatar}
@@ -26,7 +75,10 @@ export default function ChatCard({ username, message, timestamp, uid }) {
           <Text style={styles.username}>{username}</Text>
           <Text style={styles.timestamp}>{timestamp}</Text>
         </View>
-        <Text style={styles.message}>{message}</Text>
+        <View style={styles.messageContainer}>
+          <Text style={styles.message}>{message}</Text>
+          {isUnread && <View style={styles.unreadBadge} />}
+        </View>
       </View>
     </PressableButton>
   );
@@ -34,7 +86,7 @@ export default function ChatCard({ username, message, timestamp, uid }) {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    height: SIZE.tabBar,
+    minHeight: SIZE.tabBar,
     backgroundColor: COLORS.background,
     flexDirection: 'row',
     alignItems: 'center',
@@ -51,6 +103,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginLeft: SPACING.medium,
   },
+  messageContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   username: {
     flex: 1,
     fontSize: FONTSIZE.body,
@@ -59,14 +116,24 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.xsmall,
   },
   timestamp: {
-    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     fontSize: FONTSIZE.small,
     color: COLORS.secondaryText,
     marginLeft: SPACING.small,
   },
   message: {
+    flex: 1,
     fontSize: FONTSIZE.small,
     color: COLORS.secondaryText,
     marginLeft: SPACING.medium,
+  },
+  unreadBadge: {
+    width: SIZE.badge,
+    height: SIZE.badge,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    borderRadius: ROUNDED.small,
+    backgroundColor: COLORS.primary,
   },
 });
