@@ -101,6 +101,9 @@ export default function ImageManager({images, imagesHandler, downloadURLs=null})
           {downloadURLs.map((url, index) => (
             <Image key={index} source={{ uri: url }} style={styles.image} />
           ))}
+            {images && images.map((image, index) => (
+              <Image key = {index} source={{ uri: image }} style={styles.image} />
+          ))}
       </ScrollView>:
       <ScrollView horizontal={true} style={{marginTop: SPACING.small}}>
         {images && images.map((image, index) => (
