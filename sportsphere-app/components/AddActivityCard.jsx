@@ -30,6 +30,11 @@ export default function AddActivityCard({ route, currentLocation }) {
   const [totalMembers, setTotalMembers] = useState(0);
   const [description, setDescription] = useState('');
   const [isEditMode, setIsEditMode] = useState(false);
+  const [images, setImages] = useState(null);
+
+  function handleImages(image) {
+    setImages(image);
+  }
 
   useEffect(() => {
     if (activityName.split(" ").length > 5) {
@@ -99,6 +104,7 @@ export default function AddActivityCard({ route, currentLocation }) {
         owner: userProfile.uid,
         peopleGoing: [userProfile.uid],
         venuePosition: venuePosition,
+        image: image || null,
       };
       const strNewDate = format(newActivity.date, 'MMM dd, yyyy');
       const strNewTime = format(newActivity.time, 'HH:mm');
@@ -192,7 +198,7 @@ export default function AddActivityCard({ route, currentLocation }) {
           multiline={true}
           numberOfLines={4}
         />
-        <ImageManager />
+        <ImageManager images={image} imagesHandler={handleImages}/>
         <PressableButton
           componentStyle={styles.button}
           pressedFunction={handleNewActivity}

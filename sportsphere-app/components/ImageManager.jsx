@@ -6,8 +6,8 @@ import { View, Text, Image, StyleSheet, Pressable, ScrollView } from 'react-nati
 import * as ImagePicker from 'expo-image-picker';
 import { SIZE, SPACING } from '../global';
 
-export default function ImageManager() {
-  const [images, setImages] = React.useState([]);
+export default function ImageManager({images, imagesHandler}) {
+  //const [images, setImages] = React.useState([]);
   const [imageResponse, requestImagePermission] = ImagePicker.useMediaLibraryPermissions();
   const [cameraResponse, requestCameraPermission] = ImagePicker.useCameraPermissions();
 
@@ -54,7 +54,7 @@ export default function ImageManager() {
 
         if (!result.canceled) {
         console.log("Image uri", result.assets[0].uri);
-        setImages((prevImages) => [...prevImages, result.assets[0].uri]);
+        imagesHandler((prevImages) => [...prevImages, result.assets[0].uri]);
         }
     } catch (error) {
         console.log("Error picking image", error);
@@ -78,7 +78,7 @@ export default function ImageManager() {
         console.log(result);
 
         if (!result.canceled) {
-          setImages((prevImages) => [...prevImages, result.assets[0].uri]);
+          imagesHandler((prevImages) => [...prevImages, result.assets[0].uri]);
         }
 
     } catch (error) {
