@@ -173,6 +173,8 @@ service cloud.firestore {
 
 - Built and integrated full CRUD functionality for activities and reminders.
 - Implemented secure user authentication using Firebase.
+- Implemented Map features to show interactive map according to user's current location, also show activities on the map and allow user to click on activities to navigate to details page
+- Implemented Sort by distance features, which display activities in Home page based on their distances to user's current location
 
 ## Usage
 
