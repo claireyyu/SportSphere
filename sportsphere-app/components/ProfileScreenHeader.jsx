@@ -119,6 +119,12 @@ export default function ProfileScreenHeader() {
           </PressableButton>
         </View>
         <View style={styles.alarmContainer}>
+          <View style={styles.weather}>
+              <Text style={styles.weatherText}>
+                {weather ? `${weather.temp}°C ` : "Loading weather..."}
+              </Text>
+              {weather && weather.description}
+            </View>
           <PressableButton
             pressedFunction={handleOpenReminder}
           >
@@ -136,12 +142,6 @@ export default function ProfileScreenHeader() {
         <View style={styles.profileInfo}>
           <View style={styles.firstLineContainer}>
             <Text style={styles.username}>{userProfile?.username || 'User Name'}</Text>
-            <View style={styles.weather}>
-              <Text style={styles.weatherText}>
-                {weather ? `${weather.temp}°C ` : "Loading weather..."}
-              </Text>
-              {weather && weather.description}
-            </View>
           </View>
           <Text style={styles.email}>{userProfile?.email || 'User Email'}</Text>
           <Text style={styles.bio}>{userProfile?.bio || 'User Bio'}</Text>
@@ -208,13 +208,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   weather: {
+    alignSelf: 'flex-start',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
     backgroundColor: COLORS.background,
     borderRadius: ROUNDED.small,
     padding: SPACING.xsmall,
-    marginLeft: SPACING.default,
+    marginRight: SPACING.xsmall,
   },
   weatherText: {
     color: COLORS.primary,
