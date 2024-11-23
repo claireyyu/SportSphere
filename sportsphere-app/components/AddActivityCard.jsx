@@ -152,6 +152,7 @@ export default function AddActivityCard({ route, currentLocation }) {
           onPress={handlePlaceSelected}
           fetchDetails={true}
           disableScroll={true} // Prevent nested scrolling issues
+          listViewDisplayed={false}
           GooglePlacesSearchQuery={
             {
               rankby: 'distance',
