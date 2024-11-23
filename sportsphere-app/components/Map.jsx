@@ -20,9 +20,9 @@ export default function Map({currentLocation}) {
     });
   }, []);
 
-  function handleNavigateToDetails(id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner) {
-    console.log("Go to details page.", id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner);
-    navigation.navigate('ActivityDetails', {id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner});
+  function handleNavigateToDetails(id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition) {
+    console.log("Go to details page.", id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition);
+    navigation.navigate('ActivityDetails', {id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition});
   }
 
   return (
@@ -44,7 +44,7 @@ export default function Map({currentLocation}) {
                     }}
                 >
                   <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }} style={{width: 50, height: 50}} />
-                  <Callout onPress={()=>handleNavigateToDetails(item.id, item.activityName, item.venue, item.date, item.time, item.peopleGoing, item.totalMembers, item.description, item.owner)}>
+                  <Callout onPress={()=>handleNavigateToDetails(item.id, item.activityName, item.venue, item.date, item.time, item.peopleGoing, item.totalMembers, item.description, item.owner, item.venuePosition)}>
                     <View style={styles.customCallout}>
                       <Text style={styles.calloutTitle}>{item.activityName}</Text>
                       <Text style={styles.infoText}>{item.venue.split(',')[0]}</Text>
