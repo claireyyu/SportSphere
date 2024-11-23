@@ -66,7 +66,34 @@ export default function AddActivityCard({ route, currentLocation }) {
     }
   }, [route?.params]);
 
-  function handleNewActivity() {
+  async function handleMultipleImageData(uriList) {
+    try {
+      const uploadUrls = await Promise.all(
+        uriList.map(async (uri) => {
+          // Fetch the image data
+          const response = await fetch(uri);
+          if (!response.ok) {
+            throw new Error(`Fetch error with status ${response.status} for URI: ${uri}`);
+          }
+          const blob = await response.blob();
+  
+          // Generate a unique image name to prevent overwriting
+          const imageName = `${Date.now()}_${uri.substring(uri.lastIndexOf("/") + 1)}`;
+          const imageRef = ref(storage, `images/${imageName}`);
+  
+          // Upload the image blob
+          const uploadResult = await uploadBytesResumable(imageRef, blob);
+          const uploadUrl = uploadResult.metadata.fullPath;
+          return uploadUrl;
+        })
+      );
+      return uploadUrls;
+    } catch (err) {
+      console.error("Error in handleMultipleImageData:", err);
+      throw err; // Re-throw the error to be handled by the caller
+    }
+  }
+  async function handleNewActivity() {
     try {
       if (!activityName || !venue || !date || !time || !totalMembers || !description) {
         setError("Please fill in all fields!");
@@ -93,6 +120,11 @@ export default function AddActivityCard({ route, currentLocation }) {
         setTime(now);
         return;
       }
+      let imageUrls = "";
+      if (images) {
+        imageUrls = await handleMultipleImageData(images);
+        console.log("Image URLs: ", imageUrls);
+      }
 
       const newActivity = {
         activityName: activityName,
@@ -104,7 +136,7 @@ export default function AddActivityCard({ route, currentLocation }) {
         owner: userProfile.uid,
         peopleGoing: [userProfile.uid],
         venuePosition: venuePosition,
-        images: images || null,
+        images: imageUrls || null,
       };
       const strNewDate = format(newActivity.date, 'MMM dd, yyyy');
       const strNewTime = format(newActivity.time, 'HH:mm');
@@ -198,7 +230,7 @@ export default function AddActivityCard({ route, currentLocation }) {
           multiline={true}
           numberOfLines={4}
         />
-        <ImageManager images={image} imagesHandler={handleImages}/>
+        <ImageManager images={images} imagesHandler={handleImages}/>
         <PressableButton
           componentStyle={styles.button}
           pressedFunction={handleNewActivity}
