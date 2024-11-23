@@ -125,7 +125,7 @@ export default function AddActivityCard({ route, currentLocation }) {
   }
   
   function handlePlaceSelected(data, details) {
-    console.log('details:', details);
+    //console.log('details:', details);
     setVenue(data.description);
     setVenuePosition({
       latitude: details.geometry.location.lat,
@@ -184,7 +184,7 @@ export default function AddActivityCard({ route, currentLocation }) {
           style={styles.input}
           onChangeText={setTotalMembers}
           value={totalMembers}
-          keyboardType="numeric"
+          //keyboardType="numeric"
         />
 
         <Text style={styles.textInfo}>Description</Text>
@@ -193,7 +193,7 @@ export default function AddActivityCard({ route, currentLocation }) {
           onChangeText={setDescription}
           value={description}
           placeholder="Please bring your own racket..."
-          multiline={true}
+          //multiline={true}
           numberOfLines={4}
         />
 
