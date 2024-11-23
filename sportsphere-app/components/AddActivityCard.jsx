@@ -99,7 +99,7 @@ export default function AddActivityCard({ route, currentLocation }) {
         description: description,
         owner: userProfile.uid,
         peopleGoing: [userProfile.uid],
-        venuePosition: venuePosition,
+        venuePosition: venuePosition || null,
       };
       const strNewDate = format(newActivity.date, 'MMM dd, yyyy');
       const strNewTime = format(newActivity.time, 'HH:mm');
