@@ -196,9 +196,18 @@ service cloud.firestore {
 - Click on a chat to view details and send messages.
 - Long press on a chat to delete the chat.
 
+### Map Management
+- Click on icons of different activities on the map for information
+- Click on the information callout to navigate to activity details page
+- Edit/delete/join/leave activities from the details page
+
 ### Profile Management
 
 - Navigate to the **Profile** screen to view and edit your profile.
+
+### Current Weather
+
+- Navigate to the **Profile** screen to view current temperature and weather condition.
 
 ### Reminder Management
 
@@ -206,6 +215,4 @@ service cloud.firestore {
 - Use the add button to create a new reminder.
 - Edit (press) or delete (long press) existing reminders.
 
-### Current Weather
 
-- Navigate to the **Profile** screen to view current temperature and weather condition.
