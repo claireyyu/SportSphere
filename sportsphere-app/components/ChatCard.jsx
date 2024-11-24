@@ -32,7 +32,7 @@ export default function ChatCard({ username, message, timestamp, uid, isUnread, 
 
       const deletePromises = querySnapshot.docs.map(async (docSnapshot) => {
         const data = docSnapshot.data();
-        if (data.participants.includes(otherUid)) {
+        if (data.participants.includes(uid)) {
           await deleteDoc(docSnapshot.ref);
         }
       });
