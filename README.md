@@ -209,3 +209,9 @@ service cloud.firestore {
 - Navigate to the **Reminder** screen to view all reminders.
 - Use the add button to create a new reminder.
 - Edit (press) or delete (long press) existing reminders.
+
+### Map Management
+
+- Click on icons of different activities on the map for information
+- Click on the information callout to navigate to activity details page
+- Edit/delete/join/leave activities from the details page
