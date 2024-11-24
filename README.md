@@ -31,14 +31,16 @@ service cloud.firestore {
 
      // Rules for the 'reminders' subcollection
       match /reminders/{reminder} {
+      allow read: if true;
     	allow create: if request.auth != null;
-      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.owner;
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.owner;
       }
     }
 
     match /activities/{activity} {
+      allow read: if true;
     	allow create: if request.auth != null;
-      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.owner;
+    	allow update, delete: if request.auth != null && request.auth.uid == resource.data.owner;
     }
 
     // Rules for the 'messages' collection
