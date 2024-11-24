@@ -100,7 +100,7 @@ export default function AddReminder({ modalVisible, handleModalVisible, route })
             <DateInputer date={date} setDate={setDate} inputerStyle={styles.reminderInput} />
             <TimeInputer time={time} setTime={setTime}inputerStyle={styles.reminderInput} />
             <TextInput 
-              placeholder="Badminton with friends"
+              // placeholder="Badminton with friends"
               value={title}
               onChangeText={setTitle}
               style={styles.titleInput}
@@ -172,6 +172,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     marginHorizontal: SPACING.medium,
     textAlign: 'center',
+    color: COLORS.foreground,
   },
   button: {
     marginHorizontal: SPACING.small,
