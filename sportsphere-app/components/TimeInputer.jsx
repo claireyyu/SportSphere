@@ -15,6 +15,7 @@ export default function TimeInputer({ time, setTime, inputerStyle }) {
           value={time || new Date()}
           mode="time"
           display="spinner"
+          themeVariant="light"
           onChange={(event, selectedTime) => {
             if (selectedTime) {
               setTime(selectedTime);
