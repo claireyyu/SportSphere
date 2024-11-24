@@ -15,6 +15,7 @@ export default function DateInputer({ date, setDate, inputerStyle }) {
           value={date || new Date()}
           mode="date"
           display="default"
+          themeVariant="light"
           onChange={(event, selectedDate) => {
             if (selectedDate) {
               setDate(selectedDate);
