@@ -5,6 +5,7 @@ import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
 import { ProgressBar } from './ProgressBar';
 import PressableButton from './PressableButton';
 import { useNavigation } from '@react-navigation/native';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
   
 export default function ActivityCard({ activityName, venue, date, time, peopleGoing, totalMembers, description, id, owner, venuePosition}) {
   const navigation = useNavigation();
@@ -28,7 +29,9 @@ export default function ActivityCard({ activityName, venue, date, time, peopleGo
   return (
     <View style={styles.cardContainer}>
       <View style={styles.headerContainer}>
+        <FontAwesome5 name="dot-circle" size={SIZE.badge} color={peopleGoing.length == totalMembers ? COLORS.delete : COLORS.primary} />
         <Text style={styles.title}>{activityName}</Text>
+
         <Avatar
           size={SIZE.smallAvatar}
           rounded
@@ -64,7 +67,6 @@ const styles = StyleSheet.create({
     shadowOpacity: SHADOW.opacity,
     shadowRadius: SHADOW.radius,
     elevation: SHADOW.elevation,
-
   },
   headerContainer: {
     flexDirection: 'row',
@@ -77,7 +79,7 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.h3,
     fontWeight: 'bold',
     color: COLORS.text,
-    marginRight: SPACING.xsmall,
+    marginHorizontal: SPACING.xsmall,
   },
   infoContainer: {
     marginVertical: SPACING.small,

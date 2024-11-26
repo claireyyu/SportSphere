@@ -6,7 +6,6 @@ import { QueryContext } from "../context/QueryProvider";
 import { readAllFiles } from '../Firebase/firebaseHelper';
 import { parse } from 'date-fns';
 
-
 export default function ActivityCardList({modalVisible, modalHandler, currentLocation}) {
   const {searchQuery, sortPreference} = useContext(QueryContext);
 
@@ -24,18 +23,13 @@ export default function ActivityCardList({modalVisible, modalHandler, currentLoc
   }, [sortPreference]);
 
   const filteredActivityItems = activityItems.filter(item => {
-    console.log("item: ", item);
-    console.log("item.date: ", item.date);
-    console.log("item.time: ", item.time);
     const now = new Date(); // Current date and time
     const itemDate = parse(item.date, 'MMM dd, yyyy', new Date());
     const itemTime = parse(item.time, 'HH:mm', new Date());
     itemDate.setHours(itemTime.getHours(), itemTime.getMinutes(), 0);
-    console.log("itemDate: ", itemDate);
 
     // Check if the item's date is after now
     if (itemDate <= now) return false;
-    console.log("This one is valid");
     const terms = searchQuery.toLowerCase().split(' ');
   
     // Check if any term matches activityName, venue, description, or date
