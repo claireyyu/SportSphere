@@ -38,7 +38,7 @@ export default function SignUpForm({ navigation }) {
       // Add user profile to Firestore
       const userProfile = {
         uid: userCred.user.uid,
-        username: username? username : email,
+        username: username? username : 'Anonymous',
         email: email,
         bio: bio ? bio : 'Nothing yet',
       };
