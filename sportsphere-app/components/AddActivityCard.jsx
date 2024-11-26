@@ -244,8 +244,7 @@ export default function AddActivityCard({ route, currentLocation }) {
           onChangeText={setDescription}
           value={description}
           placeholder="Please bring your own racket..."
-          //multiline={true}
-          numberOfLines={4}
+          multiline={true}
         />
 
         <PressableButton
