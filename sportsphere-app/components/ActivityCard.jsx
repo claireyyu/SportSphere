@@ -1,14 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Avatar } from '@rneui/themed';
 import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
 import { ProgressBar } from './ProgressBar';
 import PressableButton from './PressableButton';
 import { useNavigation } from '@react-navigation/native';
-  
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import { useState, useContext } from 'react';
+import { UserContext } from '../context/UserProvider';  
+
 export default function ActivityCard({ activityName, venue, date, time, peopleGoing, totalMembers, description, id, owner, venuePosition, images}) {
   const navigation = useNavigation();
-  
+  const [hasJoined, setHasJoined] = useState(false);
+  const [isFull, setIsFull] = useState(false);
+  const { userProfile } = useContext(UserContext);
+  const currentUser = userProfile.uid;
+
+  useEffect(() => {
+    if (peopleGoing.includes(currentUser)) {
+      setHasJoined(true);
+    }
+
+    if (peopleGoing.length == totalMembers) {
+      setIsFull(true);
+    }
+  }, []);
+
   function handleToActivityDetail() {
     
     navigation.navigate('ActivityDetails', {
@@ -29,12 +46,14 @@ export default function ActivityCard({ activityName, venue, date, time, peopleGo
   return (
     <View style={styles.cardContainer}>
       <View style={styles.headerContainer}>
+        <FontAwesome5 name="dot-circle" size={SIZE.badge} color={peopleGoing.length == totalMembers ? COLORS.delete : COLORS.primary} />
         <Text style={styles.title}>{activityName}</Text>
-        <Avatar
+
+        {isFull ? <Text style={[styles.joinedText, {borderColor: COLORS.delete, color: COLORS.delete}]}>Full</Text> : hasJoined ? <Text style={styles.joinedText}>Joined</Text> : <Avatar
           size={SIZE.smallAvatar}
           rounded
           source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
-        />
+        />}
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.infoText}>Location: {venue}</Text>
@@ -65,7 +84,6 @@ const styles = StyleSheet.create({
     shadowOpacity: SHADOW.opacity,
     shadowRadius: SHADOW.radius,
     elevation: SHADOW.elevation,
-
   },
   headerContainer: {
     flexDirection: 'row',
@@ -78,10 +96,18 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.h3,
     fontWeight: 'bold',
     color: COLORS.text,
-    marginRight: SPACING.xsmall,
+    marginHorizontal: SPACING.xsmall,
   },
   infoContainer: {
     marginVertical: SPACING.small,
+  },
+  joinedText: {
+    borderColor: COLORS.primary,
+    borderWidth: 1,
+    fontSize: FONTSIZE.small,
+    color: COLORS.primary,
+    padding: SPACING.xsmall,
+    borderRadius: ROUNDED.small,
   },
   infoText: {
     fontSize: FONTSIZE.body,

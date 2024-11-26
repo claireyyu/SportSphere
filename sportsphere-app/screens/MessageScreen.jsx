@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, FlatList, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, FlatList, Button, KeyboardAvoidingView, Platform } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import MessageScreenHeader from '../components/MessageScreenHeader';
 import { collection, addDoc, query, where, onSnapshot, orderBy } from 'firebase/firestore';
@@ -43,6 +43,14 @@ export default function MessageScreen({ route }) {
     }
   }, [currentUserUid, uid]);
 
+  // useEffect(() => {
+  //   // Scroll to the bottom when messages are updated
+  //   if (flatListRef.current && messages.length > 0) {
+  //     flatListRef.current.scrollToEnd({ animated: true });
+  //   }
+  // }, [messages]);
+
+
   // Function to send a message
   const sendMessage = async () => {
     if (text.trim() === '') return; // Ignore empty messages
@@ -64,7 +72,7 @@ export default function MessageScreen({ route }) {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : undefined} keyboardVerticalOffset={60}>
       {/* Header */}
       <MessageScreenHeader uid={uid} />
 
@@ -87,6 +95,8 @@ export default function MessageScreen({ route }) {
           )
         }}
         style={styles.messageList}
+        inverted
+        contentContainerStyle={{ flexDirection: 'column-reverse' }}
       />
 
       {/* Input and Send Button */}
@@ -103,7 +113,7 @@ export default function MessageScreen({ route }) {
           <Ionicons name="send" size={20} color={COLORS.primary} />
         </PressableButton>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { View, Text, StyleSheet, TextInput, Alert, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
@@ -16,6 +16,7 @@ import ImageManager from './ImageManager';
 
 export default function AddActivityCard({ route, currentLocation }) {
   const { userProfile } = useContext(UserContext);
+  const googlePlacesRef = useRef(null); 
   //const currentLocation = currentLocation;
   const myLocation = currentLocation || { latitude: 0, longitude: 0 }; // Default to (0, 0)
 
@@ -71,6 +72,23 @@ export default function AddActivityCard({ route, currentLocation }) {
     }
   }, [route?.params]);
 
+  function submitActivity() {
+    if (isEditMode) {
+      handleNewActivity();
+      return;
+    }
+    Alert.alert("Submit Activity", "Submit this activity? The venue cannot be changed later.", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel"
+      },
+      {
+        text: "Submit",
+        onPress: () => handleNewActivity(),
+      }
+    ]);
+  }
   async function handleMultipleImageData(uriList) {
     try {
       const uploadUrls = await Promise.all(
@@ -99,6 +117,7 @@ export default function AddActivityCard({ route, currentLocation }) {
     }
   }
   async function handleNewActivity() {
+
     try {
       if (!activityName || !venue || !date || !time || !totalMembers || !description) {
         setError("Please fill in all fields!");
@@ -167,15 +186,15 @@ export default function AddActivityCard({ route, currentLocation }) {
     }
   }
   
-  function handlePlaceSelected(data, details) {
-    console.log('details:', details);
-    setVenue(data.description);
-    setVenuePosition({
-      latitude: details.geometry.location.lat,
-      longitude: details.geometry.location.lng,
-    });
-    
-  }
+  // function handlePlaceSelected(data, details) {
+  //   console.log('data:', data);
+  //   console.log('details:', details);
+  //   setVenue(data.description);
+  //   setVenuePosition({
+  //     latitude: details.geometry.location.lat,
+  //     longitude: details.geometry.location.lng,
+  //   });
+  // }
 
   return (
     <SafeAreaView>
@@ -189,12 +208,45 @@ export default function AddActivityCard({ route, currentLocation }) {
         />
 
         <Text style={styles.textInfo}>Venue</Text>
-        <GooglePlacesAutocomplete
+        {isEditMode ?
+          <Text style={styles.venueText}>{venue}</Text> :
+          <GooglePlacesAutocomplete
+            ref={googlePlacesRef}
+            placeholder={isEditMode ? venue : "410 W Georgia St"} // Add 和 Edit 模式的 placeholder
+            fetchDetails={true}
+            disableScroll={true} // Prevent nested scrolling issues
+            onPress={(data, details = null) => {
+              console.log('Selected Data:', data, details);
+              setVenue(data.description); // 更新选中地址到 venue
+              setVenuePosition({
+                latitude: details.geometry.location.lat,
+                longitude: details.geometry.location.lng,
+              });
+            }}
+            textInputProps={{
+              value: venue, // 始终绑定到 venue
+              onChangeText: (text) => {
+                setVenue(text); // 用户输入时更新 venue
+                googlePlacesRef.current?.setAddressText(text); // 同步 GooglePlacesAutocomplete 的值
+              },
+            }}
+            query={{
+              key: process.env.EXPO_PUBLIC_mapApiKey,
+              language: 'en',
+              location: myLocation ? `${myLocation.latitude},${myLocation.longitude}` : null, // current location
+              components: 'country:ca',
+            }}
+            styles={{
+              textInput: styles.input,
+            }}
+          />}
+        {/* <GooglePlacesAutocomplete
           placeholder={venue ? venue : "123 Main Street, Burnaby"}
-          defaultValue={venue ? venue : ""}
-          onPress={handlePlaceSelected}
+          // defaultValue={venue ? venue : ""}
+          onPress={(data, details) => handlePlaceSelected(data, details)}
           fetchDetails={true}
           disableScroll={true} // Prevent nested scrolling issues
+          // listViewDisplayed={false}
           GooglePlacesSearchQuery={
             {
               rankby: 'distance',
@@ -211,7 +263,7 @@ export default function AddActivityCard({ route, currentLocation }) {
           styles={{
             textInput: styles.input,
           }}
-        />
+        /> */}
 
         <Text style={styles.textInfo}>Date</Text>
         <View style={Platform.OS == 'ios' && styles.iosDatePicker}>
@@ -236,12 +288,11 @@ export default function AddActivityCard({ route, currentLocation }) {
           value={description}
           placeholder="Please bring your own racket..."
           multiline={true}
-          numberOfLines={4}
         />
         <ImageManager images={images} imagesHandler={handleImages} downloadURLs={downloadURLs}/>
         <PressableButton
           componentStyle={styles.button}
-          pressedFunction={handleNewActivity}
+          pressedFunction={submitActivity}
         >
           <Text style={styles.buttonText}>Submit</Text>
         </PressableButton>
@@ -274,6 +325,17 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.medium,
     borderBottomWidth: 1,
     borderColor: COLORS.secondaryText,
+    padding: SPACING.xsmall,
+    backgroundColor: COLORS.inputArea,
+    borderRadius: ROUNDED.small,
+    fontSize: FONTSIZE.body,
+    color: COLORS.foreground,
+  },
+  venueText: {
+    flex: 1,
+    minHeight: 35,
+    marginTop: SPACING.xsmall,
+    marginBottom: SPACING.medium,
     padding: SPACING.xsmall,
     backgroundColor: COLORS.inputArea,
     borderRadius: ROUNDED.small,

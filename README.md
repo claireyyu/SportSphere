@@ -4,11 +4,11 @@
 
 Sportsphere is a mobile application designed to help users manage their sports activities, reminders, and chats. The app integrates with Firebase for authentication and database functionalities, allowing users to create, read, update, and delete activities and reminders.
 
-# Important Note
-The **Reset Password** and **Camera use** feature is not implemented yet.
+## Important Note
+The **Camera use** feature and **Reset Password** feature are not implemented yet.
 They will be implemented in Iteration 3.
 
-# Third-party API Key
+## Third-party API Key
 Please add these lines of code to the .env file:
 
 ```
@@ -16,7 +16,7 @@ EXPO_PUBLIC_weatherApiKey= "J2NKBPU16GeykqzL"
 EXPO_PUBLIC_mapApiKey= "AIzaSyA_0463EzbY9HcbMhb0OaZveUkFKvyqArc"
 ```
 
-# Firebase Database Rule
+## Firebase Database Rule
 Please use the following as the firebase database rule:
 ```
 rules_version = '2';
@@ -31,14 +31,16 @@ service cloud.firestore {
 
      // Rules for the 'reminders' subcollection
       match /reminders/{reminder} {
+      allow read: if true;
     	allow create: if request.auth != null;
-      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.owner;
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.owner;
       }
     }
 
     match /activities/{activity} {
+      allow read: if true;
     	allow create: if request.auth != null;
-      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.owner;
+    	allow update, delete: if request.auth != null && request.auth.uid == resource.data.owner;
     }
 
     // Rules for the 'messages' collection
@@ -152,9 +154,9 @@ service cloud.firestore {
 
    - Create a Firebase project.
    - Copy the `.env.example` file, rename it to `.env`.
-   - Add your Firebase configuration to `.env`.
-   - Add third party API keys to `.env`.
-   - Modify firebase database's security rule.
+   - Add the Firebase configuration to `.env`.
+   - Add third party API keys to `.env`. (mentioned above)
+   - Modify firebase database's security rule. (mentioned above)
 
 4. **Run the app**:
 
@@ -168,6 +170,9 @@ service cloud.firestore {
 
 - Designed and implemented the UI for the main screens, including frontend placeholders to ensure data integration.
 - Developed and configured navigation workflows using a combination of Tab Navigator and Stack Navigator for an intuitive user experience.
+- Implemented the instant messaging feature, allowing participants to send messages to organizers.
+- Implemented the notification feature for user's workout reminder.
+- Integrated the third-party weather API for better user experience.
 
 ### Xinxin (Amelia) Li
 
@@ -193,17 +198,23 @@ service cloud.firestore {
 - Click on a chat to view details and send messages.
 - Long press on a chat to delete the chat.
 
-### Chat Functionality
-
-- Navigate to the **Chat** tab to view all chats.
-- Click on a chat to view details and send messages.
+### Map Management
+- Click on icons of different activities on the map for information
+- Click on the information callout to navigate to activity details page
+- Edit/delete/join/leave activities from the details page
 
 ### Profile Management
 
-- Navigate to the **Profile** tab to view and edit your profile.
+- Navigate to the **Profile** screen to view and edit your profile.
+
+### Current Weather
+
+- Navigate to the **Profile** screen to view current temperature and weather condition.
 
 ### Reminder Management
 
 - Navigate to the **Reminder** screen to view all reminders.
 - Use the add button to create a new reminder.
 - Edit (press) or delete (long press) existing reminders.
+
+

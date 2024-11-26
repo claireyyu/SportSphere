@@ -49,13 +49,28 @@ export const NotificationProvider = ({ children }) => {
         console.log("Notification scheduled with id: ", id);
 
         // Delete reminder only after the notification is triggered
-        Notifications.addNotificationReceivedListener(async (notification) => {
+        const notificationListener = Notifications.addNotificationReceivedListener(async (notification) => {
           if (notification.request.identifier === id) {
             console.log("Notification triggered for id: ", id);
             await deleteDoc(doc(db, 'users', userProfile.userDocId, 'reminders', reminderId));
             console.log("Reminder deleted after triggering:", reminderId);
           }
         });
+
+        // Handle notification response (when the app is in the background or closed)
+        const responseListener = Notifications.addNotificationResponseReceivedListener(async (response) => {
+          if (response.notification.request.identifier === id) {
+            console.log("Notification response received for id: ", id);
+            await deleteDoc(doc(db, 'users', userProfile.userDocId, 'reminders', reminderId));
+            console.log("Reminder deleted after response:", reminderId);
+          }
+        });
+
+        // Clean up listeners when the component unmounts
+        return () => {
+          Notifications.removeNotificationSubscription(notificationListener);
+          Notifications.removeNotificationSubscription(responseListener);
+        };
       } catch (e) {
         console.error("Error scheduling notification: ", e);
       }
