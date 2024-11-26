@@ -4,6 +4,7 @@ import React from 'react'
 import { useEffect, useState, useContext } from 'react';
 import { QueryContext } from "../context/QueryProvider";
 import { readAllFiles } from '../Firebase/firebaseHelper';
+import { parse } from 'date-fns';
 
 export default function ActivityCardList({modalVisible, modalHandler, currentLocation}) {
   const {searchQuery, sortPreference} = useContext(QueryContext);
@@ -22,7 +23,16 @@ export default function ActivityCardList({modalVisible, modalHandler, currentLoc
   }, [sortPreference]);
 
   const filteredActivityItems = activityItems.filter(item => {
+    const now = new Date(); // Current date and time
+    const itemDate = parse(item.date, 'MMM dd, yyyy', new Date());
+    const itemTime = parse(item.time, 'HH:mm', new Date());
+    itemDate.setHours(itemTime.getHours(), itemTime.getMinutes(), 0);
+
+    // Check if the item's date is after now
+    if (itemDate <= now) return false;
     const terms = searchQuery.toLowerCase().split(' ');
+  
+    // Check if any term matches activityName, venue, description, or date
     return terms.some(term =>
       item.activityName.toLowerCase().includes(term) ||
       item.venue.toLowerCase().includes(term) ||

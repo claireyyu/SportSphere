@@ -9,6 +9,7 @@ import { deleteDB, addUserToActivity, removeUserFromActivity } from '../Firebase
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../context/UserProvider';
 import { set } from 'date-fns';
+import { parse } from 'date-fns';
 
 export default function ActivityDetailCard({ route }) {
   const { userProfile } = useContext(UserContext);
@@ -69,6 +70,15 @@ export default function ActivityDetailCard({ route }) {
 
   async function handleJoinActivity() {
     try {
+      const now = new Date(); // Current date and time
+      const activityDate = parse(date, 'MMM dd, yyyy', new Date());
+      const activityTime = parse(time, 'HH:mm', new Date());
+      activityDate.setHours(activityTime.getHours(), activityTime.getMinutes(), 0);
+      if (activityDate <= now) {
+        Alert.alert("The event has already passed!");
+        return;
+      }
+      
       if (hasJoined) {
         if (hasJoined && userProfile.uid == owner) {
           Alert.alert("You are the organizer of this event!");

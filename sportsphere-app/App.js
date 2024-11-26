@@ -17,6 +17,7 @@ import { QueryProvider } from './context/QueryProvider';
 import EditActivityScreen from './screens/EditActivityScreen';
 import SignUpForm from './components/SignUpForm';
 import LoginForm from './components/LoginForm';
+import ResetPasswordForm from './components/ResetPasswordForm';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from './Firebase/firebaseSetup';
 import { useEffect, useState } from 'react';
@@ -33,6 +34,11 @@ const Stack = createNativeStackNavigator();
 const AuthStack = (
   <>
     <Stack.Screen name="Login" component={LoginForm}
+      options={{
+        header: AuthScreenHeader,
+      }}
+    />
+    <Stack.Screen name="ResetPassword" component={ResetPasswordForm}
       options={{
         header: AuthScreenHeader,
       }}

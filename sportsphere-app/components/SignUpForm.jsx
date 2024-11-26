@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../Firebase/firebaseSetup';
@@ -28,9 +28,8 @@ export default function SignUpForm({ navigation }) {
         Alert.alert('Please fill out all fields');
         return;
       }
-      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
-      if (!passwordRegex.test(password)) {
-        Alert.alert('Password should be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one number');
+      if (password.length < 15) {
+        Alert.alert('Password should be at least 15 characters long!');
         return;
       }
       const userCred = await createUserWithEmailAndPassword(auth, email, password);
@@ -39,7 +38,7 @@ export default function SignUpForm({ navigation }) {
       // Add user profile to Firestore
       const userProfile = {
         uid: userCred.user.uid,
-        username: username? username : email,
+        username: username? username : 'Anonymous',
         email: email,
         bio: bio ? bio : 'Nothing yet',
       };
@@ -57,7 +56,7 @@ export default function SignUpForm({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : undefined} keyboardVerticalOffset={260}>
       <View style={styles.inputContainer}>
         <TextInput
           value={username}
@@ -82,7 +81,7 @@ export default function SignUpForm({ navigation }) {
             value={password}
             onChangeText={setPassword}
             secureTextEntry
-            placeholder="Password"
+            placeholder="Password (at least 15 characters)"
             style={styles.inputRequired}
           />
           <Text style={styles.required}>*</Text>
@@ -119,7 +118,7 @@ export default function SignUpForm({ navigation }) {
           <Text style={styles.btnLoginText}>Already Registered? Login</Text>
         </PressableButton>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -197,5 +196,10 @@ const styles = StyleSheet.create({
     color: COLORS.required,
     fontSize: FONTSIZE.h2,
     marginLeft: SPACING.xsmall,
+  },
+  prompt: {
+    color: COLORS.secondaryText,
+    fontSize: FONTSIZE.tiny,
+    textAlign: 'center',
   },
 });

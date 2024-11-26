@@ -2,10 +2,11 @@ import { View, Text, TextInput, Button, StyleSheet, Alert, KeyboardAvoidingView,
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../Firebase/firebaseSetup';
+import { sendPasswordResetEmail } from 'firebase/auth';
 import { COLORS, FONTSIZE, SPACING, ROUNDED } from '../global';
 import PressableButton from './PressableButton';
 
-export default function LoginForm({ navigation }) {
+export default function ResetPasswordForm({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -13,26 +14,19 @@ export default function LoginForm({ navigation }) {
     navigation.replace('SignUp');
   }
 
-  function handleToResetPassword() {
-    navigation.replace('ResetPassword');
-  }
+  const resetHandler = async () => {
+    if (!email) {
+      Alert.alert('Error', 'Please enter your email address.');
+      return;
+    }
 
-  const loginHandler = async () => {
     try {
-      if (email.length === 0 || password.length === 0) {
-        Alert.alert('Please fill out all fields');
-        return;
-      }
-      const userCred = await signInWithEmailAndPassword(auth, email, password);
-      console.log(userCred.user);
+      await sendPasswordResetEmail(auth, email);
+      Alert.alert('Success', 'Password reset email sent!');
+      navigation.replace('Login');
     } catch (error) {
-      if (error.code === "auth/wrong-password") {
-        Alert.alert('Incorrect password');
-      } else if (error.code === "auth/user-not-found") {
-      } else {
-        Alert.alert('Error', error.message);
-      }
-      console.log(error);
+      console.error('Error sending password reset email:', error);
+      Alert.alert('Error', error.message);
     }
   }
 
@@ -47,27 +41,14 @@ export default function LoginForm({ navigation }) {
           placeholder='Email'
           style={styles.input}
         />
-        <TextInput 
-          value={password} 
-          onChangeText={setPassword} 
-          secureTextEntry
-          placeholder='Password'
-          style={styles.input}
-        />
       </View>
 
       <View style={styles.buttonContainer}>
         <PressableButton
-          pressedFunction={loginHandler}
+          pressedFunction={resetHandler}
           componentStyle={styles.loginButton}
         >
-          <Text style={styles.btnLoginText}>Log in</Text>
-        </PressableButton>
-        <PressableButton
-          pressedFunction={handleToResetPassword}
-          componentStyle={styles.registerButton}
-        >
-          <Text style={[styles.btnRegisterText, {color: COLORS.primary}]}>Forgot your password?</Text>
+          <Text style={styles.btnLoginText}>Confirm</Text>
         </PressableButton>
         <PressableButton
           pressedFunction={handleToSignup}
