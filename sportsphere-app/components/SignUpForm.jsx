@@ -198,4 +198,9 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.h2,
     marginLeft: SPACING.xsmall,
   },
+  prompt: {
+    color: COLORS.secondaryText,
+    fontSize: FONTSIZE.tiny,
+    textAlign: 'center',
+  },
 });
