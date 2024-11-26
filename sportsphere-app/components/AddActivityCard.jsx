@@ -235,7 +235,7 @@ export default function AddActivityCard({ route, currentLocation }) {
           style={styles.input}
           onChangeText={setTotalMembers}
           value={totalMembers}
-          //keyboardType="numeric"
+          keyboardType="numeric"
         />
 
         <Text style={styles.textInfo}>Description</Text>
@@ -244,8 +244,7 @@ export default function AddActivityCard({ route, currentLocation }) {
           onChangeText={setDescription}
           value={description}
           placeholder="Please bring your own racket..."
-          //multiline={true}
-          numberOfLines={4}
+          multiline={true}
         />
 
         <PressableButton
