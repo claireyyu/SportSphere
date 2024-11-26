@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../Firebase/firebaseSetup';
@@ -56,7 +56,7 @@ export default function SignUpForm({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : undefined} keyboardVerticalOffset={260}>
       <View style={styles.inputContainer}>
         <TextInput
           value={username}
@@ -118,7 +118,7 @@ export default function SignUpForm({ navigation }) {
           <Text style={styles.btnLoginText}>Already Registered? Login</Text>
         </PressableButton>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
