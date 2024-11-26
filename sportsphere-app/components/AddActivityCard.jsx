@@ -235,7 +235,7 @@ export default function AddActivityCard({ route, currentLocation }) {
           style={styles.input}
           onChangeText={setTotalMembers}
           value={totalMembers}
-          //keyboardType="numeric"
+          keyboardType="numeric"
         />
 
         <Text style={styles.textInfo}>Description</Text>
