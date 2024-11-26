@@ -28,9 +28,8 @@ export default function SignUpForm({ navigation }) {
         Alert.alert('Please fill out all fields');
         return;
       }
-      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
-      if (!passwordRegex.test(password)) {
-        Alert.alert('Password should be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one number');
+      if (password.length < 15) {
+        Alert.alert('Password should be at least 15 characters long!');
         return;
       }
       const userCred = await createUserWithEmailAndPassword(auth, email, password);
@@ -82,7 +81,7 @@ export default function SignUpForm({ navigation }) {
             value={password}
             onChangeText={setPassword}
             secureTextEntry
-            placeholder="Password"
+            placeholder="Password (at least 15 characters)"
             style={styles.inputRequired}
           />
           <Text style={styles.required}>*</Text>
