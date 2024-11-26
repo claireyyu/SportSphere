@@ -34,7 +34,14 @@ export default function Map({currentLocation}) {
                 longitude: currentLocation.longitude,
                 latitudeDelta: 0.0122,
                 longitudeDelta: 0.0121,
-            }}>
+        }}>
+            <Marker
+              coordinate={{
+                latitude: currentLocation.latitude,
+                longitude: currentLocation.longitude,
+              }}
+              title="You're Here!" />
+
             {activityItems.map((item) => (
                 <Marker
                     key={item.id}
