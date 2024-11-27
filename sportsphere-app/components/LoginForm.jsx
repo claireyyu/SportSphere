@@ -4,7 +4,6 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../Firebase/firebaseSetup';
 import { COLORS, FONTSIZE, SPACING, ROUNDED } from '../global';
 import PressableButton from './PressableButton';
-import { useFonts, Rubik_400Regular, Rubik_500Medium, Rubik_700Bold } from '@expo-google-fonts/rubik'
 import Logo from './Logo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -126,7 +125,6 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.xs,
   },
   registerButton: {
-    backgroundColor: COLORS.background,
     padding: SPACING.s,
     borderRadius: ROUNDED.xs,
     justifyContent: 'center',
@@ -141,7 +139,7 @@ const styles = StyleSheet.create({
   btnRegisterText: {
     fontSize: FONTSIZE.small,
     textAlign: 'center',
-    color: COLORS.foreground,
+    color: COLORS.theme,
     fontFamily: 'Rubik_500Medium',
   },
 });

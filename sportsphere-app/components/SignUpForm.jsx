@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button, StyleSheet, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native';
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../Firebase/firebaseSetup';
@@ -6,6 +6,7 @@ import { writeToDB } from '../Firebase/firebaseHelper';
 import { COLORS, FONTSIZE, SPACING, ROUNDED } from '../global';
 import PressableButton from './PressableButton';
 import { set } from 'date-fns';
+import Logo from './Logo';
 
 export default function SignUpForm({ navigation }) {
   const [email, setEmail] = useState('');
@@ -57,6 +58,9 @@ export default function SignUpForm({ navigation }) {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : undefined} keyboardVerticalOffset={260}>
+      <SafeAreaView>
+      <Logo />
+      <Text style={styles.title}>SIGN UP</Text>
       <View style={styles.inputContainer}>
         <TextInput
           value={username}
@@ -107,17 +111,19 @@ export default function SignUpForm({ navigation }) {
       <View style={styles.buttonContainer}>
         <PressableButton
           pressedFunction={signupHandler}
-          componentStyle={styles.registerButton}
-        >
-          <Text style={styles.btnRegisterText}>Register</Text>
-        </PressableButton>
-        <PressableButton
-          pressedFunction={handleToLogin}
           componentStyle={styles.loginButton}
         >
-          <Text style={styles.btnLoginText}>Already Registered? Login</Text>
+          <Text style={styles.btnRegisterText}>CREATE ACOOUNT</Text>
         </PressableButton>
-      </View>
+        <PressableButton
+            pressedFunction={handleToLogin}
+            componentStyle={styles.registerButton}
+          >
+            <Text style={styles.btnRegisterText}>DON'T HAVE AN ACCOUNT?</Text>
+            <Text style={[styles.btnRegisterText, {marginLeft: SPACING.xs, color: COLORS.secondary}]}>SIGN UP</Text>
+          </PressableButton>
+        </View>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 }
@@ -125,67 +131,61 @@ export default function SignUpForm({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: SPACING.medium,
-    backgroundColor: COLORS.background,
+    padding: SPACING.m,
+    paddingTop: SPACING.xxl,
+    backgroundColor: COLORS.themeLight,
+    fontFamily: 'Rubik_400Regular',
+  },
+  title: {
+    fontSize: FONTSIZE.h2,
+    fontFamily: 'Rubik_500Medium',
+    marginTop: SPACING.l,
   },
   inputContainer: {
-    width: '80%',
-    justifyContent: 'center',
+    marginTop: SPACING.xxl,
     alignItems: 'stretch',
   },
   input: {
-    width: '100%',
-    padding: SPACING.small,
-    marginVertical: SPACING.small,
-    borderWidth: 2,
-    borderColor: COLORS.secondaryText,
-    borderRadius: ROUNDED.small,
-    backgroundColor: COLORS.background,
-    color: COLORS.foreground,
+    padding: SPACING.m,
+    marginVertical: SPACING.m,
+    marginHorizontal: SPACING.xs,
+    borderRadius: ROUNDED.xs,
+    backgroundColor: COLORS.inputBg,
+    color: COLORS.theme,
+    fontSize: FONTSIZE.body,
   },
   inputRequired: {
-    width: '100%',
-    padding: SPACING.small,
-    //marginVertical: SPACING.small,
-    borderWidth: 2,
-    borderColor: COLORS.secondaryText,
-    borderRadius: ROUNDED.small,
-    backgroundColor: COLORS.background,
-    color: COLORS.foreground,
+    flex: 1,
+    padding: SPACING.m,
+    borderRadius: ROUNDED.xs,
+    backgroundColor: COLORS.inputBg,
+    color: COLORS.theme,
+    marginLeft: SPACING.xs,
   },
   buttonContainer: {
     marginTop: SPACING.medium,
     justifyContent: 'space-between',
   },
   loginButton: {
-    backgroundColor: COLORS.background,
-    padding: SPACING.small,
-    borderRadius: ROUNDED.small,
+    backgroundColor: COLORS.secondary,
+    padding: SPACING.s,
+    borderRadius: ROUNDED.xs,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: SPACING.xsmall,
+    marginTop: SPACING.l,
+    marginBottom: SPACING.xs,
   },
   registerButton: {
-    backgroundColor: COLORS.primary,
-    padding: SPACING.small,
-    borderRadius: ROUNDED.small,
+    padding: SPACING.s,
+    borderRadius: ROUNDED.xs,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  btnLoginText: {
-    fontSize: FONTSIZE.body,
-    textAlign: 'center',
-    color: COLORS.foreground,
-    fontStyle: 'italic',
-    textDecorationLine: 'underline',
-  },
   btnRegisterText: {
-    fontSize: FONTSIZE.body,
+    fontSize: FONTSIZE.small,
     textAlign: 'center',
-    color: COLORS.background,
-    fontWeight: 'bold',
+    color: COLORS.theme,
+    fontFamily: 'Rubik_500Medium',
   },
   requiredContainer: {
     flexDirection: 'row',
@@ -196,10 +196,5 @@ const styles = StyleSheet.create({
     color: COLORS.required,
     fontSize: FONTSIZE.h2,
     marginLeft: SPACING.xsmall,
-  },
-  prompt: {
-    color: COLORS.secondaryText,
-    fontSize: FONTSIZE.tiny,
-    textAlign: 'center',
   },
 });

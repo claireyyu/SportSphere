@@ -7,7 +7,6 @@ import { COLORS, FONTSIZE, SPACING, ROUNDED } from '../global';
 import PressableButton from './PressableButton';
 import Logo from './Logo';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useFonts, Rubik_400Regular, Rubik_500Medium, Rubik_700Bold } from '@expo-google-fonts/rubik'
 
 export default function ResetPasswordForm({ navigation }) {
   const [email, setEmail] = useState('');
@@ -73,7 +72,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: SPACING.m,
-    backgroundColor: COLORS.background,
+    paddingTop: SPACING.xxl,
+    backgroundColor: COLORS.themeLight,
+    fontFamily: 'Rubik_400Regular',
   },
   title: {
     fontSize: FONTSIZE.h2,
@@ -99,15 +100,14 @@ const styles = StyleSheet.create({
   loginButton: {
     backgroundColor: COLORS.secondary,
     padding: SPACING.s,
-    borderRadius: ROUNDED.small,
+    borderRadius: ROUNDED.xs,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: SPACING.xs,
+    marginBottom: SPACING.xl,
   },
   registerButton: {
-    backgroundColor: COLORS.background,
     padding: SPACING.s,
-    borderRadius: ROUNDED.small,
+    borderRadius: ROUNDED.xs,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   btnRegisterText: {
     fontSize: FONTSIZE.small,
     textAlign: 'center',
-    color: COLORS.foreground,
+    color: COLORS.theme,
     fontFamily: 'Rubik_500Medium',
   },
 });
