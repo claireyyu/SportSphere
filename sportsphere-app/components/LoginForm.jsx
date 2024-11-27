@@ -80,7 +80,7 @@ export default function LoginForm({ navigation }) {
             componentStyle={styles.registerButton}
           >
             <Text style={styles.btnRegisterText}>DON'T HAVE AN ACCOUNT?</Text>
-            <Text style={[styles.btnRegisterText, {marginLeft: SPACING.xs}]}>SIGN UP</Text>
+            <Text style={[styles.btnRegisterText, {marginLeft: SPACING.xs, color: COLORS.secondary}]}>SIGN UP</Text>
           </PressableButton>
         </View>
       </SafeAreaView>
