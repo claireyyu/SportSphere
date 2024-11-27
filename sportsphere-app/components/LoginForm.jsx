@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button, StyleSheet, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, Alert, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../Firebase/firebaseSetup';
@@ -31,12 +31,13 @@ export default function LoginForm({ navigation }) {
       if (error.code === "auth/wrong-password") {
         Alert.alert('Incorrect password');
       } else if (error.code === "auth/user-not-found") {
+        Alert.alert('User not found');
       } else {
         Alert.alert('Error', error.message);
       }
       console.log(error);
     }
-  }
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : undefined} keyboardVerticalOffset={60}>
@@ -70,21 +71,21 @@ export default function LoginForm({ navigation }) {
           </PressableButton>
           <PressableButton
             pressedFunction={handleToResetPassword}
-            componentStyle={[styles.registerButton, {marginTop: SPACING.xxl}]}
+            componentStyle={[styles.btn, {marginTop: SPACING.xxl}]}
           >
-            <Text style={styles.btnRegisterText}>FORGOT YOUR PASSWORD?</Text>
+            <Text style={styles.btnText}>FORGOT YOUR PASSWORD?</Text>
           </PressableButton>
           <PressableButton
             pressedFunction={handleToSignup}
-            componentStyle={styles.registerButton}
+            componentStyle={styles.btn}
           >
-            <Text style={styles.btnRegisterText}>DON'T HAVE AN ACCOUNT?</Text>
-            <Text style={[styles.btnRegisterText, {marginLeft: SPACING.xs, color: COLORS.secondary}]}>SIGN UP</Text>
+            <Text style={styles.btnText}>DON'T HAVE AN ACCOUNT?</Text>
+            <Text style={[styles.btnText, {marginLeft: SPACING.xs, color: COLORS.secondary}]}>SIGN UP</Text>
           </PressableButton>
         </View>
       </SafeAreaView>
     </KeyboardAvoidingView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -124,19 +125,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: SPACING.xs,
   },
-  registerButton: {
-    padding: SPACING.s,
-    borderRadius: ROUNDED.xs,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   btnLoginText: {
     fontSize: FONTSIZE.body,
     textAlign: 'center',
     color: COLORS.theme,
     fontFamily: 'Rubik_500Medium',
   },
-  btnRegisterText: {
+  btn: {
+    padding: SPACING.s,
+    borderRadius: ROUNDED.xs,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  btnText: {
     fontSize: FONTSIZE.small,
     textAlign: 'center',
     color: COLORS.theme,
