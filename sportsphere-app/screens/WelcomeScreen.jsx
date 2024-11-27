@@ -26,7 +26,7 @@ export default function WelcomeScreen() {
     <View style={styles.container}>
       <View style={styles.top} />
       <View style={styles.logo}>
-        <MaterialCommunityIcons name="badminton" size={SIZE.logo} color={COLORS.theme} />
+        <MaterialCommunityIcons name="badminton" size={SIZE.welcomeLogo} color={COLORS.theme} />
       </View>
       <View style={styles.bottom}>
         <View style={styles.titleContainer}>
@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
   bottom: {
     flex: 1.7,
     justifyContent: 'center',
-    // alignItems: 'center',
   },
   titleContainer: {
     flex: 1,

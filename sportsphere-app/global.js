@@ -12,6 +12,7 @@ export const COLORS = {
   'theme': '#101010',
   'themeLight': '#ffffff',
   'secondary': '#34E0A1',
+  'inputBg': '#F2F2F2',
 };
 
 export const FONTSIZE = {
@@ -76,4 +77,5 @@ export const SIZE = {
   'image': 130,
 
   'logo': 36,
+  'welcomeLogo': 60,
 }

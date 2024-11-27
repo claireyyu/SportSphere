@@ -41,17 +41,17 @@ const AuthStack = (
     />
     <Stack.Screen name="Login" component={LoginForm}
       options={{
-        header: AuthScreenHeader,
+        headerShown: false,
       }}
     />
     <Stack.Screen name="ResetPassword" component={ResetPasswordForm}
       options={{
-        header: AuthScreenHeader,
+        headerShown: false,
       }}
     />
     <Stack.Screen name="SignUp" component={SignUpForm}
       options={{
-        header: AuthScreenHeader,
+        headerShown: false,
       }}
     />
   </>
