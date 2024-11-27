@@ -59,6 +59,7 @@ export default function ActivityCardList({modalVisible, modalHandler, currentLoc
           id={item.id}
           owner={item.owner}
           venuePosition={item.venuePosition}
+          images={item.images}
         />
       )}
       contentContainerStyle={styles.listContainer}

@@ -12,6 +12,11 @@ import TimeInputer from './TimeInputer';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import 'react-native-get-random-values';
 import { Timestamp } from 'firebase/firestore';
+import ImageManager from './ImageManager';
+import { ref, uploadBytesResumable, deleteObject } from 'firebase/storage';
+import { storage } from '../Firebase/firebaseSetup';
+
+
 
 export default function AddActivityCard({ route, currentLocation }) {
   const { userProfile } = useContext(UserContext);
@@ -30,6 +35,23 @@ export default function AddActivityCard({ route, currentLocation }) {
   const [totalMembers, setTotalMembers] = useState(0);
   const [description, setDescription] = useState('');
   const [isEditMode, setIsEditMode] = useState(false);
+  const [images, setImages] = useState([]);
+  const [newImages, setNewImages] = useState([]);
+  const [existingImages, setExistingImages] = useState([]);
+  const [deletedImages, setDeletedImages] = useState([]);
+  const [downloadURLs, setDownloadURLs] = useState(null);
+  //const [imageUrls, setImageUrls] = useState([]);
+
+
+  function handleExistingImages(urls) {
+    setExistingImages(urls);
+  }
+
+  function handleImagesChange({ newImages, deletedImages }) {
+    setNewImages(newImages);
+    setDeletedImages(deletedImages);
+    
+  }
 
   useEffect(() => {
     if (activityName.split(" ").length > 5) {
@@ -43,7 +65,7 @@ export default function AddActivityCard({ route, currentLocation }) {
 
   useEffect(() => {
     if (route?.params) {
-      const { id, activityName, venue, date, time, totalMembers, description, venuePosition } = route.params;
+      const { id, activityName, venue, date, time, totalMembers, description, venuePosition, images, downloadURLs } = route.params;
       console.log('route.params to edit activity:', route.params);
       const dateObj = parse(date, 'MMM dd, yyyy', new Date());
       const formattedDate = format(dateObj, 'yyyy-MM-dd');
@@ -59,9 +81,29 @@ export default function AddActivityCard({ route, currentLocation }) {
       setDescription(description);
       setIsEditMode(true);
       setId(id);
+      setImages(images);
+      setDownloadURLs(downloadURLs);
+
+      const combinedImages = images.map((storagePath, index) => ({
+        storagePath,
+        downloadURL: downloadURLs[index],
+      }));
+      setExistingImages(combinedImages); // Set existingImages with both storage paths and download URLs
     }
   }, [route?.params]);
 
+  async function deleteImagesFromStorage(imageStoragePaths) {
+    try {
+      await Promise.all(
+        imageStoragePaths.map(async (path) => {
+          const imageRef = ref(storage, path);
+          await deleteObject(imageRef);
+        })
+      );
+    } catch (err) {
+      console.error("Error deleting images from storage:", err);
+    }
+  }
   function submitActivity() {
     if (isEditMode) {
       handleNewActivity();
@@ -79,8 +121,34 @@ export default function AddActivityCard({ route, currentLocation }) {
       }
     ]);
   }
-
-  function handleNewActivity() {
+  async function handleMultipleImageData(uriList) {
+    try {
+      const uploadUrls = await Promise.all(
+        uriList.map(async (uri) => {
+          // Fetch the image data
+          const response = await fetch(uri);
+          if (!response.ok) {
+            throw new Error(`Fetch error with status ${response.status} for URI: ${uri}`);
+          }
+          const blob = await response.blob();
+  
+          // Generate a unique image name to prevent overwriting
+          const imageName = `${Date.now()}_${uri.substring(uri.lastIndexOf("/") + 1)}`;
+          const imageRef = ref(storage, `images/${imageName}`);
+  
+          // Upload the image blob
+          const uploadResult = await uploadBytesResumable(imageRef, blob);
+          const uploadUrl = uploadResult.metadata.fullPath;
+          return uploadUrl;
+        })
+      );
+      return uploadUrls;
+    } catch (err) {
+      console.error("Error in handleMultipleImageData:", err);
+      throw err; // Re-throw the error to be handled by the caller
+    }
+  }
+  async function handleNewActivity() {
 
     try {
       if (!activityName || !venue || !date || !time || !totalMembers || !description) {
@@ -109,6 +177,23 @@ export default function AddActivityCard({ route, currentLocation }) {
         return;
       }
 
+      if (deletedImages.length > 0) {
+        await deleteImagesFromStorage(deletedImages);
+      }
+      
+      let imageUploadUrls = [];
+      if (newImages.length > 0) {
+        imageUploadUrls = await handleMultipleImageData(newImages);
+        console.log("Image URLs for newly added images: ", imageUploadUrls);
+      }
+      
+      const updatedImages = [
+        ...existingImages.filter((image) => !deletedImages.includes(image.storagePath)).map((image) => image.storagePath),// convert existingImages to storage paths
+        ...imageUploadUrls,
+      ];
+      //const updatedImages = [...existingImages.filter((url)=> !deletedImages.includes(url)), ...imageUploadUrls];
+      console.log("Updated images: ", updatedImages);
+
       const newActivity = {
         activityName: activityName,
         venue: venue,
@@ -118,7 +203,9 @@ export default function AddActivityCard({ route, currentLocation }) {
         description: description,
         owner: userProfile.uid,
         peopleGoing: [userProfile.uid],
-        venuePosition: venuePosition || null,
+        venuePosition: venuePosition,
+        images: updatedImages || null,
+
       };
       const strNewDate = format(newActivity.date, 'MMM dd, yyyy');
       const strNewTime = format(newActivity.time, 'HH:mm');
@@ -246,7 +333,9 @@ export default function AddActivityCard({ route, currentLocation }) {
           placeholder="Please bring your own racket..."
           multiline={true}
         />
-
+        {/* <ImageManager images={images} imagesHandler={handleImages} downloadURLs={downloadURLs}
+                      newImages={newImages} newImagesHandler={setNewImages}/> */}
+        <ImageManager existingImages={existingImages} onImagesChange={handleImagesChange} />
         <PressableButton
           componentStyle={styles.button}
           pressedFunction={submitActivity}
@@ -326,6 +415,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.small,
     borderRadius: ROUNDED.default,
     alignSelf: 'flex-end',
+    marginTop: SPACING.medium,
   },
   erroText: {
     color: COLORS.delete,

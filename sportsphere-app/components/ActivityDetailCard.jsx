@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Alert } from 'react-native'
+import { View, Text, StyleSheet, Alert, ScrollView, Image } from 'react-native'
 import { Avatar } from '@rneui/themed';
 import { COLORS, FONTSIZE, ROUNDED, SHADOW, SIZE, SPACING } from '../global'
 import { ProgressBar } from './ProgressBar'
@@ -9,12 +9,15 @@ import { deleteDB, addUserToActivity, removeUserFromActivity } from '../Firebase
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../context/UserProvider';
 import { set } from 'date-fns';
+import { ref, getDownloadURL } from 'firebase/storage';
+import { storage } from '../Firebase/firebaseSetup';
 import { parse } from 'date-fns';
 
 export default function ActivityDetailCard({ route }) {
   const { userProfile } = useContext(UserContext);
   const [hasJoined, setHasJoined] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
+  const [downloadURLs, setDownloadURLs] = useState([]);
 
   
 
@@ -31,8 +34,35 @@ export default function ActivityDetailCard({ route }) {
     console.log("userProfile.uid: ", userProfile.uid);
     console.log("isOwner End: ", isOwner);  
   }, []);
+
+  useEffect(() => {
+    async function getImageDownloadURL() {
+      try {
+        if (route.params && route.params.images && route.params.images.length > 0) {
+          // const imageDownloadUrls = [];
+          // for (let i = 0; i < images.length; i++) {
+          //   const imageRef = ref(storage, images[i]);
+          //   const url = await getDownloadURL(imageRef);
+          //   imageDownloadUrls.push(url);
+          // }
+          const imageDownloadUrls = await Promise.all(
+            images.map(async (imagePath) => {
+              const imageRef = ref(storage, imagePath);
+              const url = await getDownloadURL(imageRef);
+              return url;
+            })
+          );
+          setDownloadURLs(imageDownloadUrls);
+          console.log("Download URLs: ", downloadURLs);
+        }
+      } catch (error) {
+      console.error("Error getting image download URL: ", error);
+      }
+    }
+    getImageDownloadURL();
+  }, [route.params]);
   
-  const { id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition } = route.params;
+  const { id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition, images } = route.params;
   console.log("Route Params ActivityDetailCard: ", route.params);
   const navigation = useNavigation();
   const [pplGoingNumber, setPplGoingNumber] = useState(peopleGoing.length);
@@ -48,7 +78,9 @@ export default function ActivityDetailCard({ route }) {
       totalMembers,
       description,
       owner,
-      venuePosition
+      venuePosition,
+      images,
+      downloadURLs
     });
   }
 
@@ -56,6 +88,9 @@ export default function ActivityDetailCard({ route }) {
     deleteDB(id, "activities");
     navigation.navigate('TabNavigator');
   }
+
+  
+    
 
   function handleDeleteActivity() {
     Alert.alert("Delete Activity", "Are you sure you want to delete this activity?", [
@@ -141,7 +176,12 @@ export default function ActivityDetailCard({ route }) {
         <Text style={styles.infoText}>{`${date} - ${time}\n`}</Text>
         <Text style={styles.labelText}>Description</Text>
         <Text style={styles.infoText}>{description}{`\n`}</Text>
-        <Text style={styles.goingText}>Pictures</Text>
+        <Text style={styles.labelText}>Pictures</Text>
+        <ScrollView horizontal={true} style={{marginTop: SPACING.small}}>
+          {downloadURLs.map((url, index) => (
+            <Image key={index} source={{ uri: url }} style={styles.image} />
+          ))}
+        </ScrollView>
       </View>
       <View style={styles.progressContainer}>
         <ProgressBar value={pplGoingNumber} total={totalMembers} />
@@ -247,5 +287,12 @@ const styles = StyleSheet.create({
     color: COLORS.background,
     fontSize: FONTSIZE.small,
     fontWeight: 'bold',
+  },
+  image: {
+    width: SIZE.image,
+    height: SIZE.image,
+    margin: SPACING.xsmall,
+    opacity: 0.9,
+    marginLeft: SPACING.None,
   },
 });

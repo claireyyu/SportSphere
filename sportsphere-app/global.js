@@ -28,6 +28,7 @@ export const ROUNDED = {
 };
 
 export const SPACING = {
+  'None': 0,
   'xsmall': 5,
   'small': 10,
   'default': 15,
@@ -54,4 +55,5 @@ export const SIZE = {
   'tabBar': 80,
   'avatar': 90,
   'profileHeader': 220,
+  'image': 130,
 }

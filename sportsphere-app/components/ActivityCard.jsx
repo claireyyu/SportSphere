@@ -9,7 +9,7 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useState, useContext } from 'react';
 import { UserContext } from '../context/UserProvider';  
 
-export default function ActivityCard({ activityName, venue, date, time, peopleGoing, totalMembers, description, id, owner, venuePosition}) {
+export default function ActivityCard({ activityName, venue, date, time, peopleGoing, totalMembers, description, id, owner, venuePosition, images}) {
   const navigation = useNavigation();
   const [hasJoined, setHasJoined] = useState(false);
   const [isFull, setIsFull] = useState(false);
@@ -38,7 +38,8 @@ export default function ActivityCard({ activityName, venue, date, time, peopleGo
       totalMembers,
       description,
       owner,
-      venuePosition
+      venuePosition,
+      images
     });
   }
 
