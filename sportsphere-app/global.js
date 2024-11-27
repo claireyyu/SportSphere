@@ -9,9 +9,13 @@ export const COLORS = {
   'edit': '#4169e1',
   'required': '#ff0000',
   'message': '#d1f7c4',
+  'theme': '#101010',
+  'themeLight': '#ffffff',
+  'secondary': '#34E0A1',
 };
 
 export const FONTSIZE = {
+  'huge': 48,
   'h0': 36,
   'h1': 24,
   'h2': 20,
@@ -24,16 +28,30 @@ export const FONTSIZE = {
 export const ROUNDED = {
   'small': 5,
   'default': 15,
+  'medium': 30,
   'large': 50,
+
+  'xs': 5,
+  's': 16,
+  'm': 20,
+  'l': 30,
+  'xl': 50,
 };
 
 export const SPACING = {
   'None': 0,
   'xsmall': 5,
   'small': 10,
-  'default': 15,
+  'default': 16,
   'medium': 20,
   'large': 30,
+
+  'xs': 5,
+  's': 10,
+  'm': 16,
+  'l': 20,
+  'xl': 30,
+  'xxl': 40,
 };
 
 export const SHADOW = {
@@ -56,4 +74,6 @@ export const SIZE = {
   'avatar': 90,
   'profileHeader': 220,
   'image': 130,
+
+  'logo': 36,
 }

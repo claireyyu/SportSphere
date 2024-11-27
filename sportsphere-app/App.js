@@ -25,6 +25,7 @@ import AuthScreenHeader from './components/AuthScreenHeader';
 import { UserProvider } from './context/UserProvider';
 import OrganizerProfileScreen from './screens/OrganizerProfileScreen';
 import MessageScreen from './screens/MessageScreen';
+import WelcomeScreen from './screens/WelcomeScreen';
 import * as Notifications from 'expo-notifications';
 import { NotificationProvider } from './context/NotificationProvider';
 Notifications.setNotificationHandler({ handleNotification: async () => ({ shouldShowAlert: true }) });
@@ -33,6 +34,11 @@ const Stack = createNativeStackNavigator();
 
 const AuthStack = (
   <>
+    <Stack.Screen name="Welcome" component={WelcomeScreen}
+      options={{
+        headerShown: false,
+      }}
+    />
     <Stack.Screen name="Login" component={LoginForm}
       options={{
         header: AuthScreenHeader,
@@ -210,12 +216,12 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <CustomStatusBar
+      {/* <CustomStatusBar
         statusBgColor={COLORS.primary}
         barStyle="light-content"
         backgroundColor={COLORS.primary}
         // backgroundColor={getBackgroundColor(isUserLoggedIn ? 'AppStack' : 'AuthStack')}
-      >
+      > */}
         <UserProvider>
           <NotificationProvider>
             <QueryProvider>
@@ -227,7 +233,7 @@ export default function App() {
             </QueryProvider>
           </NotificationProvider>
         </UserProvider>
-      </CustomStatusBar>
+      {/* </CustomStatusBar> */}
     </View>
   );
 }
