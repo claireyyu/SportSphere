@@ -13,6 +13,10 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import 'react-native-get-random-values';
 import { Timestamp } from 'firebase/firestore';
 import ImageManager from './ImageManager';
+import { ref, uploadBytesResumable, deleteObject } from 'firebase/storage';
+import { storage } from '../Firebase/firebaseSetup';
+
+
 
 export default function AddActivityCard({ route, currentLocation }) {
   const { userProfile } = useContext(UserContext);
@@ -31,12 +35,22 @@ export default function AddActivityCard({ route, currentLocation }) {
   const [totalMembers, setTotalMembers] = useState(0);
   const [description, setDescription] = useState('');
   const [isEditMode, setIsEditMode] = useState(false);
-  const [images, setImages] = useState(null);
+  const [images, setImages] = useState([]);
+  const [newImages, setNewImages] = useState([]);
+  const [existingImages, setExistingImages] = useState([]);
+  const [deletedImages, setDeletedImages] = useState([]);
   const [downloadURLs, setDownloadURLs] = useState(null);
   //const [imageUrls, setImageUrls] = useState([]);
 
-  function handleImages(image) {
-    setImages(image);
+
+  function handleExistingImages(urls) {
+    setExistingImages(urls);
+  }
+
+  function handleImagesChange({ newImages, deletedImages }) {
+    setNewImages(newImages);
+    setDeletedImages(deletedImages);
+    
   }
 
   useEffect(() => {
@@ -69,9 +83,27 @@ export default function AddActivityCard({ route, currentLocation }) {
       setId(id);
       setImages(images);
       setDownloadURLs(downloadURLs);
+
+      const combinedImages = images.map((storagePath, index) => ({
+        storagePath,
+        downloadURL: downloadURLs[index],
+      }));
+      setExistingImages(combinedImages); // Set existingImages with both storage paths and download URLs
     }
   }, [route?.params]);
 
+  async function deleteImagesFromStorage(imageStoragePaths) {
+    try {
+      await Promise.all(
+        imageStoragePaths.map(async (path) => {
+          const imageRef = ref(storage, path);
+          await deleteObject(imageRef);
+        })
+      );
+    } catch (err) {
+      console.error("Error deleting images from storage:", err);
+    }
+  }
   function submitActivity() {
     if (isEditMode) {
       handleNewActivity();
@@ -144,12 +176,23 @@ export default function AddActivityCard({ route, currentLocation }) {
         setTime(now);
         return;
       }
+
+      if (deletedImages.length > 0) {
+        await deleteImagesFromStorage(deletedImages);
+      }
       
       let imageUploadUrls = [];
-      if (images) {
-        imageUploadUrls = await handleMultipleImageData(images);
-        console.log("Image URLs: ", imageUploadUrls);
+      if (newImages.length > 0) {
+        imageUploadUrls = await handleMultipleImageData(newImages);
+        console.log("Image URLs for newly added images: ", imageUploadUrls);
       }
+      
+      const updatedImages = [
+        ...existingImages.filter((image) => !deletedImages.includes(image.storagePath)).map((image) => image.storagePath),// convert existingImages to storage paths
+        ...imageUploadUrls,
+      ];
+      //const updatedImages = [...existingImages.filter((url)=> !deletedImages.includes(url)), ...imageUploadUrls];
+      console.log("Updated images: ", updatedImages);
 
       const newActivity = {
         activityName: activityName,
@@ -161,7 +204,8 @@ export default function AddActivityCard({ route, currentLocation }) {
         owner: userProfile.uid,
         peopleGoing: [userProfile.uid],
         venuePosition: venuePosition,
-        images: imageUploadUrls || null,
+        images: updatedImages || null,
+
       };
       const strNewDate = format(newActivity.date, 'MMM dd, yyyy');
       const strNewTime = format(newActivity.time, 'HH:mm');
@@ -289,7 +333,9 @@ export default function AddActivityCard({ route, currentLocation }) {
           placeholder="Please bring your own racket..."
           multiline={true}
         />
-        <ImageManager images={images} imagesHandler={handleImages} downloadURLs={downloadURLs}/>
+        {/* <ImageManager images={images} imagesHandler={handleImages} downloadURLs={downloadURLs}
+                      newImages={newImages} newImagesHandler={setNewImages}/> */}
+        <ImageManager existingImages={existingImages} onImagesChange={handleImagesChange} />
         <PressableButton
           componentStyle={styles.button}
           pressedFunction={submitActivity}

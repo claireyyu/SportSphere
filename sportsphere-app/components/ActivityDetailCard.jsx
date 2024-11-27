@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Alert, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, Alert, ScrollView, Image } from 'react-native'
 import { Avatar } from '@rneui/themed';
 import { COLORS, FONTSIZE, ROUNDED, SHADOW, SIZE, SPACING } from '../global'
 import { ProgressBar } from './ProgressBar'
@@ -38,13 +38,20 @@ export default function ActivityDetailCard({ route }) {
   useEffect(() => {
     async function getImageDownloadURL() {
       try {
-        if (route.params && route.params.images) {
-          const imageDownloadUrls = [];
-          for (let i = 0; i < images.length; i++) {
-            const imageRef = ref(storage, images[i]);
-            const url = await getDownloadURL(imageRef);
-            imageDownloadUrls.push(url);
-          }
+        if (route.params && route.params.images && route.params.images.length > 0) {
+          // const imageDownloadUrls = [];
+          // for (let i = 0; i < images.length; i++) {
+          //   const imageRef = ref(storage, images[i]);
+          //   const url = await getDownloadURL(imageRef);
+          //   imageDownloadUrls.push(url);
+          // }
+          const imageDownloadUrls = await Promise.all(
+            images.map(async (imagePath) => {
+              const imageRef = ref(storage, imagePath);
+              const url = await getDownloadURL(imageRef);
+              return url;
+            })
+          );
           setDownloadURLs(imageDownloadUrls);
           console.log("Download URLs: ", downloadURLs);
         }
@@ -53,7 +60,7 @@ export default function ActivityDetailCard({ route }) {
       }
     }
     getImageDownloadURL();
-  }, []);
+  }, [route.params]);
   
   const { id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition, images } = route.params;
   console.log("Route Params ActivityDetailCard: ", route.params);
@@ -170,9 +177,9 @@ export default function ActivityDetailCard({ route }) {
         <Text style={styles.labelText}>Description</Text>
         <Text style={styles.infoText}>{description}{`\n`}</Text>
         <Text style={styles.labelText}>Pictures</Text>
-        <ScrollView horizontal={true}>
+        <ScrollView horizontal={true} style={{marginTop: SPACING.small}}>
           {downloadURLs.map((url, index) => (
-            <Image key={index} source={{ uri: url }} style={{ width: 100, height: 100 }} />
+            <Image key={index} source={{ uri: url }} style={styles.image} />
           ))}
         </ScrollView>
       </View>
@@ -280,5 +287,12 @@ const styles = StyleSheet.create({
     color: COLORS.background,
     fontSize: FONTSIZE.small,
     fontWeight: 'bold',
+  },
+  image: {
+    width: SIZE.image,
+    height: SIZE.image,
+    margin: SPACING.xsmall,
+    opacity: 0.9,
+    marginLeft: SPACING.None,
   },
 });
