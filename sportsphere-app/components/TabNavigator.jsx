@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import React, { useContext } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -17,6 +17,8 @@ import OrganizerProfileScreen from '../screens/OrganizerProfileScreen';
 import LocationManager from './LocationManager';
 import { UserContext } from '../context/UserProvider';
 import { QueryContext } from '../context/QueryProvider';
+import Entypo from '@expo/vector-icons/Entypo';
+import AddActivityScreen from '../screens/AddActivityScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -43,6 +45,8 @@ const TabNavigator = () => {
             iconName = 'chatbubble-outline';
           } else if (route.name === 'Map') {
             iconName = 'map-outline';
+          } else if (route.name === 'AddActivity') {
+            iconName = 'add-circle';
           } else if (route.name === 'Profile') {
             iconName = 'person-outline';
           }
@@ -51,11 +55,14 @@ const TabNavigator = () => {
           return (
             <View style={focused ? styles.activeIconContainer : styles.iconContainer}>
               
-              <Ionicons
-                name={iconName}
-                size={SIZE.tabIcon}
-                color={focused ? COLORS.background : COLORS.foreground}
-              />
+              <View style={iconName == "add-circle" ? {position: 'relative', bottom: SPACING.m} : {}}>
+                <Ionicons
+                  name={iconName}
+                  size={iconName == "add-circle" ? SIZE.addIcon : SIZE.tabIcon}
+                  color={[focused ? COLORS.theme : COLORS.unfocused, iconName == "add-circle" && COLORS.theme]}
+                />
+              </View>
+              {focused && <Entypo name="dot-single" size={SIZE.tabDot} color={SIZE.theme} />}
             </View>
           );
         },
@@ -64,12 +71,9 @@ const TabNavigator = () => {
       })}
     >
       <Tab.Screen
-        name="Activity"
-        // component={ActivityScreen}
-        options={{
-          header: () => <ActivityScreenHeader modalHandler={handleModalVisible} currentLocation={currentLocation} />,
-        }}
-      >
+          name="Activity"
+          options={{ headerShown: false }}
+          >
         {() => (
           <ActivityScreen modalVisible={modalVisible} modalHandler={handleModalVisible} currentLocation={currentLocation} />
         )}
@@ -80,7 +84,13 @@ const TabNavigator = () => {
         options={{
           header: () => <TitleScreenHeader title="Chat" />,
         }}
-      />
+        />
+      <Tab.Screen
+        name="AddActivity"
+          options={{ headerShown: false }}
+          component={AddActivityScreen}
+        >
+      </Tab.Screen>
       <Tab.Screen
         name="Map"
         // component={MapScreen}
@@ -106,17 +116,20 @@ export default TabNavigator;
 const styles = StyleSheet.create({
   tabBarStyle: {
     minHeight: SIZE.tabBar,
-    borderRadius: ROUNDED.default,
-    marginBottom: SPACING.medium,
-    marginHorizontal: SPACING.medium,
-    backgroundColor: COLORS.background,
+    // borderRadius: ROUNDED.default,
+    // marginBottom: SPACING.medium,
+    // marginHorizontal: SPACING.medium,
+    // backgroundColor: COLORS.themeLight,
 
     // Shadow properties
-    shadowColor: SHADOW.color,
-    shadowOffset: SHADOW.offset,
-    shadowOpacity: SHADOW.opacity,
-    shadowRadius: SHADOW.radius,
-    elevation: SHADOW.elevation,
+    // shadowColor: SHADOW.color,
+    // shadowOffset: SHADOW.offset,
+    // shadowOpacity: SHADOW.opacity,
+    // shadowRadius: SHADOW.radius,
+    // elevation: SHADOW.elevation,
+    borderTopColor: COLORS.themeLight,
+    paddingVertical: SPACING.small,
+    justifyContent: 'center',
   },
   iconContainer: {
     flex: 1,
@@ -127,8 +140,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
-    backgroundColor: COLORS.primary,
-    borderRadius: ROUNDED.default,
+    // width: '100%',
+    // backgroundColor: COLORS.primary,
+    // borderRadius: ROUNDED.default,
   },
 });

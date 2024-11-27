@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     color: COLORS.theme,
   },
   buttonContainer: {
-    marginTop: SPACING.medium,
+    marginTop: SPACING.s,
     justifyContent: 'space-between',
   },
   btn: {

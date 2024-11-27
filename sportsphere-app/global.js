@@ -9,10 +9,12 @@ export const COLORS = {
   'edit': '#4169e1',
   'required': '#ff0000',
   'message': '#d1f7c4',
+
   'theme': '#101010',
   'themeLight': '#ffffff',
   'secondary': '#34E0A1',
   'inputBg': '#F2F2F2',
+  'unfocused': '#848282',
 };
 
 export const FONTSIZE = {
@@ -71,11 +73,14 @@ export const SIZE = {
   'smallAvatar': 45,
   'mediumAvatar': 70,
   'headerBar': 75,
-  'tabBar': 80,
   'avatar': 90,
   'profileHeader': 220,
   'image': 130,
 
+  'tabDot': 24,
   'logo': 36,
   'welcomeLogo': 60,
+  'addIcon': 64,
+  'tabBar': 100,
+  'searchBox': 60,
 }
