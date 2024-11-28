@@ -46,18 +46,18 @@ export default function ActivityCard({ activityName, venue, date, time, peopleGo
   return (
     <View style={styles.cardContainer}>
       <View style={styles.headerContainer}>
-        <FontAwesome5 name="dot-circle" size={SIZE.badge} color={peopleGoing.length == totalMembers ? COLORS.delete : COLORS.primary} />
+        <FontAwesome5 name="dot-circle" size={SIZE.badge} color={peopleGoing.includes(currentUser) ? COLORS.primary : (peopleGoing.length == totalMembers ? COLORS.delete : COLORS.theme)} />
         <Text style={styles.title}>{activityName}</Text>
 
-        {isFull ? <Text style={[styles.joinedText, {borderColor: COLORS.delete, color: COLORS.delete}]}>Full</Text> : hasJoined ? <Text style={styles.joinedText}>Joined</Text> : <Avatar
+        <Avatar
           size={SIZE.smallAvatar}
           rounded
           source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
-        />}
+        />
       </View>
       <View style={styles.infoContainer}>
-        <Text style={styles.infoText}>Location: {venue}</Text>
-        <Text style={styles.infoText}>Time: {`${date} - ${time}`}</Text>
+        <Text style={styles.infoText}>{venue}</Text>
+        <Text style={styles.infoText}>{`${time} | ${date}`}</Text>
       </View>
       <View style={styles.progressContainer}>
         <ProgressBar value={peopleGoing.length} total={totalMembers} />
@@ -74,10 +74,12 @@ export default function ActivityCard({ activityName, venue, date, time, peopleGo
 const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: COLORS.background,
-    borderRadius: ROUNDED.default,
+    borderTopLeftRadius: ROUNDED.l,
+    borderTopRightRadius: ROUNDED.l,
     paddingVertical: SPACING.small,
     paddingHorizontal: SPACING.medium,
     margin: SPACING.medium,
+    marginHorizontal: SPACING.xs,
     // Shadow properties
     shadowColor: SHADOW.color,
     shadowOffset: SHADOW.offset,
@@ -132,7 +134,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   button: {
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.theme,
     paddingVertical: SPACING.small,
     paddingHorizontal: SPACING.small,
     borderRadius: ROUNDED.default,

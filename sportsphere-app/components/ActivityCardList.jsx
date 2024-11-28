@@ -43,30 +43,28 @@ export default function ActivityCardList({modalVisible, modalHandler, currentLoc
 
   return (
     <View>
-    <View>
-    <FlatList
-      data={filteredActivityItems}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => (
-        <ActivityCard
-          activityName={item.activityName}
-          venue={item.venue}
-          date={item.date}
-          time={item.time}
-          peopleGoing={item.peopleGoing}
-          totalMembers={item.totalMembers}
-          description={item.description}
-          id={item.id}
-          owner={item.owner}
-          venuePosition={item.venuePosition}
-          images={item.images}
-        />
-      )}
-      contentContainerStyle={styles.listContainer}
-          showsVerticalScrollIndicator={false}
-          
-    />
-    </View>
+      <FlatList
+        data={filteredActivityItems}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <ActivityCard
+            activityName={item.activityName}
+            venue={item.venue}
+            date={item.date}
+            time={item.time}
+            peopleGoing={item.peopleGoing}
+            totalMembers={item.totalMembers}
+            description={item.description}
+            id={item.id}
+            owner={item.owner}
+            venuePosition={item.venuePosition}
+            images={item.images}
+          />
+        )}
+        contentContainerStyle={styles.listContainer}
+        showsVerticalScrollIndicator={false}
+            
+      />
     </View>
   )
 }

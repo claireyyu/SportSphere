@@ -15,6 +15,7 @@ export const COLORS = {
   'secondary': '#34E0A1',
   'inputBg': '#F2F2F2',
   'unfocused': '#848282',
+  'unfocusedBg': '#FBFBFB',
 };
 
 export const FONTSIZE = {
@@ -59,7 +60,7 @@ export const SPACING = {
 
 export const SHADOW = {
   color: COLORS.foreground,
-  offset: { width: 0, height: 4 },
+  offset: { width: 0, height: 1 },
   opacity: 0.3,
   radius: 5,
   elevation: 10, // For Android shadow

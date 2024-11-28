@@ -7,14 +7,15 @@ import SearchBar from '../components/SearchBar';
 import { QueryContext } from '../context/QueryProvider';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useFonts, Montserrat_400Regular, Montserrat_600SemiBold, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
-import { Poppins_400Regular } from '@expo-google-fonts/poppins';
+import { Poppins_600SemiBold } from '@expo-google-fonts/poppins';
+import PressableButton from '../components/PressableButton'
 
 export default function ActivityScreen({ modalVisible, modalHandler, currentLocation }) {
   const [fontsLoaded] = useFonts({
     Montserrat_400Regular,
     Montserrat_600SemiBold,
     Montserrat_700Bold,
-    Poppins_400Regular,
+    Poppins_600SemiBold,
   });
 
   if (!fontsLoaded) {
@@ -43,7 +44,20 @@ export default function ActivityScreen({ modalVisible, modalHandler, currentLoca
           {/* <ActivityCardList modalVisible={modalVisible} modalHandler={modalHandler} currentLocation={currentLocation}/> */}
       </View>
       <View style={styles.bottom}>
-      
+        <Text style={styles.title}>Popular Activities</Text>
+        <View style={styles.btnContainer}>
+          <PressableButton
+            componentStyle={styles.btn}
+          >
+            <Text style={styles.btnText}>Latest</Text>
+          </PressableButton>
+          <PressableButton
+            componentStyle={[styles.btn, {marginLeft: SPACING.s, backgroundColor: COLORS.unfocusedBg}]}
+          >
+            <Text style={[styles.btnText, {color: COLORS.border}]}>Nearby</Text>
+          </PressableButton>
+        </View>
+        <ActivityCardList modalVisible={modalVisible} modalHandler={modalHandler} currentLocation={currentLocation}/>
       </View>
       
     </SafeAreaView>
@@ -76,5 +90,24 @@ const styles = StyleSheet.create({
     color: COLORS.unfocused,
     fontSize: FONTSIZE.small,
     fontFamily: 'Poppins_400Regular',
+  },
+  title: {
+    fontFamily: 'Poppins_600SemiBold',
+    fontSize: FONTSIZE.h1,
+    marginTop: SPACING.xxl,
+  },
+  btnContainer: {
+    flexDirection: 'row',
+    marginTop: SPACING.xl,
+  },
+  btn: {
+    backgroundColor: COLORS.theme,
+    padding: SPACING.m,
+    paddingHorizontal: SPACING.xl,
+    borderRadius: SPACING.m,
+  },
+  btnText: {
+    color: COLORS.themeLight,
+    fontSize: FONTSIZE.body,
   },
 })
