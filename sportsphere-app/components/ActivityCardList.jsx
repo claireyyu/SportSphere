@@ -71,6 +71,6 @@ export default function ActivityCardList({modalVisible, modalHandler, currentLoc
 
 const styles = StyleSheet.create({
   listContainer: {
-    width: '100%',
+    // width: '100%',
   },
 })
