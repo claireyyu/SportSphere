@@ -113,14 +113,14 @@ function ReminderItem({ title, time, date, id, reminderItemHandler }) {
       />
     </View>
     </PressableButton>
-    <EditReminderModal modalVisible={modalVisible} handleModalVisible={handleModalVisible} route={{params: {title, time, date, id}}} />
+    {/* <EditReminderModal modalVisible={modalVisible} handleModalVisible={handleModalVisible} route={{params: {title, time, date, id}}} /> */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   listContainer: {
-    padding: SPACING.m,
+    padding: SPACING.s,
   },
   card: {
     flex: 1,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
     borderRadius: ROUNDED.default,
     padding: SPACING.medium,
-    marginBottom: SPACING.medium,
+    marginBottom: SPACING.l,
     shadowColor: SHADOW.color,
     shadowOffset: SHADOW.offset,
     shadowOpacity: SHADOW.opacity,

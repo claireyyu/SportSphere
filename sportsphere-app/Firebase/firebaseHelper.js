@@ -96,7 +96,7 @@ export async function updateByCollectionRef(id, updatedItem, collectionRef) {
 export async function deleteDB(id, collectionName) {
     try {
         await deleteDoc(doc(db, collectionName, id));
-        console.log("Document with ID: ", id, " deleted");
+        console.log("Document deleted with ID: ", id, " deleted");
     } catch (err) {
         console.error(err);
     }

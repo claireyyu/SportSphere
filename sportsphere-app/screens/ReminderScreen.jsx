@@ -36,13 +36,17 @@ export default function ReminderScreen({ navigation }) {
       <View>
         <View style={styles.headerContainer}>
           <Text style={styles.title}>Reminders</Text>
+          <PressableButton
+            pressedFunction={handleModalVisible}
+          >
           <View style={{marginTop: SPACING.m}}>
             <Ionicons
               name='add-circle'
               size={SIZE.logo}
               color={COLORS.theme}
               />
-          </View>
+            </View>
+          </PressableButton>
         </View>
         <Text style={styles.subtitle}>Schedule your workout today!</Text>
       </View>
