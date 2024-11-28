@@ -34,7 +34,16 @@ export default function ReminderScreen({ navigation }) {
         <Ionicons name="chevron-back-sharp" size={SIZE.pressableIcon} color={COLORS.theme} />
       </PressableButton>
       <View>
-        <Text style={styles.title}>Reminders</Text>
+        <View style={styles.headerContainer}>
+          <Text style={styles.title}>Reminders</Text>
+          <View style={{marginTop: SPACING.m}}>
+            <Ionicons
+              name='add-circle'
+              size={SIZE.logo}
+              color={COLORS.theme}
+              />
+          </View>
+        </View>
         <Text style={styles.subtitle}>Schedule your workout today!</Text>
       </View>
         <ReminderItemList />
@@ -61,5 +70,10 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.body,
     color: COLORS.secondaryText,
     marginBottom: SPACING.l,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 })
