@@ -16,8 +16,6 @@ import ImageManager from './ImageManager';
 import { ref, uploadBytesResumable, deleteObject } from 'firebase/storage';
 import { storage } from '../Firebase/firebaseSetup';
 
-
-
 export default function AddActivityCard({ route, currentLocation }) {
   const { userProfile } = useContext(UserContext);
   const googlePlacesRef = useRef(null); 
@@ -84,11 +82,14 @@ export default function AddActivityCard({ route, currentLocation }) {
       setImages(images);
       setDownloadURLs(downloadURLs);
 
-      const combinedImages = images.map((storagePath, index) => ({
-        storagePath,
-        downloadURL: downloadURLs[index],
-      }));
-      setExistingImages(combinedImages); // Set existingImages with both storage paths and download URLs
+      if (images) {
+        const combinedImages = images.map((storagePath, index) => ({
+          storagePath,
+          downloadURL: downloadURLs[index],
+        }));
+        setExistingImages(combinedImages); // Set existingImages with both storage paths and download URLs
+      }
+
     }
   }, [route?.params]);
 

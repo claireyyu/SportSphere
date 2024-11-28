@@ -8,7 +8,7 @@ export default function AddActivityScreen({currentLocation}) {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : undefined} keyboardVerticalOffset={60}>
-      <View style={styles}>
+      <View>
         <Text style={styles.title}>New Activity</Text>
       </View>
       <AddActivityCard currentLocation={currentLocation}/>

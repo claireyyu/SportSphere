@@ -89,9 +89,6 @@ export default function ActivityDetailCard({ route }) {
     navigation.navigate('TabNavigator');
   }
 
-  
-    
-
   function handleDeleteActivity() {
     Alert.alert("Delete Activity", "Are you sure you want to delete this activity?", [
       {
@@ -190,12 +187,12 @@ export default function ActivityDetailCard({ route }) {
       <Text style={styles.goingText}>{pplGoingNumber} ppl going</Text>
       {isOwner && <View style={styles.btnContainer}>
         <PressableButton
-          componentStyle={[styles.button, { backgroundColor: COLORS.edit }]}
+          componentStyle={[styles.button, { backgroundColor: COLORS.sentMessage }]}
           pressedFunction={handleEditActivity}>
           <Text style={styles.buttonText}>Edit</Text>
         </PressableButton>
         <PressableButton
-          componentStyle={[styles.button, { backgroundColor: COLORS.delete }]}
+          componentStyle={[styles.button, { backgroundColor: COLORS.theme }]}
           pressedFunction={handleDeleteActivity}>
           <Text style={styles.buttonText}>Delete</Text>
         </PressableButton>
@@ -211,6 +208,7 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING.small,
     paddingHorizontal: SPACING.medium,
     margin: SPACING.medium,
+    marginHorizontal: SPACING.s,
     // Shadow properties
     shadowColor: SHADOW.color,
     shadowOffset: SHADOW.offset,
@@ -275,7 +273,7 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.theme,
     paddingVertical: SPACING.xsmall,
     paddingHorizontal: SPACING.small,
     borderRadius: ROUNDED.small,

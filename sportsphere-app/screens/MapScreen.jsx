@@ -1,11 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { COLORS } from '../global'
+import { COLORS, SPACING, FONTSIZE } from '../global'
 import Map from '../components/Map'
 
 export default function MapScreen({ currentLocation }) {
   return (
     <View style={styles.container}>
+      <View>
+        <Text style={styles.title}>Map</Text>
+      </View>
       <Map currentLocation={currentLocation}/>
     </View>
   )
@@ -14,7 +17,14 @@ export default function MapScreen({ currentLocation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    // marginHorizontal: SPACING.medium,
+    backgroundColor: COLORS.themeLight,
   },
+  title: {
+    fontFamily: 'Montserrat_700Bold',
+    fontSize: FONTSIZE.h0,
+    marginTop: SPACING.xxl,
+    padding: SPACING.l,
+
+  }
 })

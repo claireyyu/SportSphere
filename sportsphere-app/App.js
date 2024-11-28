@@ -67,20 +67,9 @@ const AppStack = (
     <Stack.Screen
       name="ActivityDetails"
       component={ActivityDetailScreen}
-      options={{title: "Activity Details", 
-        headerStyle: {
-          backgroundColor: COLORS.primary,
-        },
-        headerTitleStyle: {
-          fontSize: FONTSIZE.h3,
-          color: COLORS.background,
-          fontWeight: 'bold',
-        },
-        headerBackTitleVisible: false,
-        headerTintColor: COLORS.background,
-      }}
+      options={{ headerShown: false }}
     />
-    <Stack.Screen
+    {/* <Stack.Screen
       name="AddActivity"
       component={AddActivityScreen}
       options={{
@@ -96,23 +85,12 @@ const AppStack = (
         headerBackTitleVisible: false,
         headerTintColor: COLORS.background,
       }}
-    />
+    /> */}
     <Stack.Screen
       name="EditActivity"
       component={EditActivityScreen}
-      options={{
-        title: "Edit Activity",
-        headerStyle: {
-          backgroundColor: COLORS.primary,
-        },
-        headerTitleStyle: {
-          fontSize: FONTSIZE.h3,
-          color: COLORS.background,
-          fontWeight: 'bold',
-        },
-        headerBackTitleVisible: false,
-        headerTintColor: COLORS.background,
-      }}
+      options={{ headerShown: false }}
+
     />
     <Stack.Screen
       name="EditProfile"
