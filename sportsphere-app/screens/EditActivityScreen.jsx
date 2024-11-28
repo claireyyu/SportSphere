@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     },
     title: {
       fontFamily: 'Montserrat_700Bold',
-      fontSize: FONTSIZE.h0,
+      fontSize: FONTSIZE.header,
       marginTop: SPACING.xxl,
     }
 })

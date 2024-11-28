@@ -135,7 +135,7 @@ export default function ActivityDetailCard({ route }) {
     }
   }
 
-  function handleViewProfile() {
+  function handleToMessage() {
     if (owner == userProfile.uid) {
       navigation.navigate('Profile');
       return;
@@ -145,10 +145,13 @@ export default function ActivityDetailCard({ route }) {
 
   return (
     <View style={styles.cardContainer}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+      >
       <View style={styles.headerContainer}>
         <Text style={styles.title}>{activityName}</Text>
         <PressableButton
-          pressedFunction={handleViewProfile}>
+          pressedFunction={handleToMessage}>
         <Avatar
           size={SIZE.mediumAvatar}
             rounded
@@ -195,7 +198,8 @@ export default function ActivityDetailCard({ route }) {
           pressedFunction={handleDeleteActivity}>
           <Text style={styles.buttonText}>Delete</Text>
         </PressableButton>
-      </View>}
+        </View>}
+        </ScrollView>
     </View>
   );
 }

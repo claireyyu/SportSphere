@@ -5,6 +5,7 @@ import { useEffect, useState, useContext } from 'react';
 import { QueryContext } from "../context/QueryProvider";
 import { readAllFiles } from '../Firebase/firebaseHelper';
 import { parse } from 'date-fns';
+import { SIZE } from '../global';
 
 export default function ActivityCardList({modalVisible, modalHandler, currentLocation}) {
   const {searchQuery, sortPreference} = useContext(QueryContext);
@@ -62,8 +63,7 @@ export default function ActivityCardList({modalVisible, modalHandler, currentLoc
           />
         )}
         contentContainerStyle={styles.listContainer}
-        showsVerticalScrollIndicator={false}
-            
+        showsVerticalScrollIndicator={false} 
       />
     </View>
   )
@@ -72,5 +72,6 @@ export default function ActivityCardList({modalVisible, modalHandler, currentLoc
 const styles = StyleSheet.create({
   listContainer: {
     // width: '100%',
+    paddingBottom: SIZE.tabBar,
   },
 })

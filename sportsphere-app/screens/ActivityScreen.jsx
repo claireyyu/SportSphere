@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, {useContext} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import ActivityCard from '../components/ActivityCard'
-import { COLORS, FONTSIZE, SPACING } from '../global'
+import { COLORS, FONTSIZE, SPACING, ROUNDED, SIZE } from '../global'
 import ActivityCardList from '../components/ActivityCardList'
 import SearchBar from '../components/SearchBar';
 import { QueryContext } from '../context/QueryProvider';
@@ -9,8 +9,12 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useFonts, Montserrat_400Regular, Montserrat_600SemiBold, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import { Poppins_600SemiBold } from '@expo-google-fonts/poppins';
 import PressableButton from '../components/PressableButton'
+import { UserContext } from '../context/UserProvider'
+import * as Location from 'expo-location';
+import { Ionicons } from '@expo/vector-icons'
 
 export default function ActivityScreen({ modalVisible, modalHandler, currentLocation }) {
+  const { userProfile } = useContext(UserContext);
   const [fontsLoaded] = useFonts({
     Montserrat_400Regular,
     Montserrat_600SemiBold,
@@ -18,30 +22,111 @@ export default function ActivityScreen({ modalVisible, modalHandler, currentLoca
     Poppins_600SemiBold,
   });
 
-  if (!fontsLoaded) {
-    return null;
-  }
-
+  // Use all hooks unconditionally
   const { searchQuery, setSearchQuery, setSortPreference } = useContext(QueryContext);
 
   const updateSearch = (text) => {
     setSearchQuery(text);
   };
 
+  const [response, requestPermission] = Location.useForegroundPermissions();
+  const [location, setLocation] = useState(null);
+  const [weather, setWeather] = useState(null);
+
+  async function verifyPermission() {
+    if (!response?.granted) {
+      const granted = await requestPermission();
+      return granted.granted;
+    }
+    return true;
+  }
+
+  async function locateUserHandler() {
+    try {
+      const hadPermission = await verifyPermission();
+      if (!hadPermission) {
+        Alert.alert("You need to give location permissions to use this feature.");
+        return;
+      }
+      const result = await Location.getCurrentPositionAsync();
+      setLocation({
+        latitude: result.coords.latitude,
+        longitude: result.coords.longitude,
+      });
+    } catch (error) {
+      console.log("Error getting location:", error);
+    }
+  }
+
+  async function fetchWeather(lat, lon) {
+    try {
+      const APIkey = process.env.EXPO_PUBLIC_weatherApiKey;
+      const response = await fetch(
+        `https://my.meteoblue.com/packages/current?apikey=${APIkey}&lat=${lat}&lon=${lon}&asl=49&format=json`
+      );
+      const data = await response.json();
+      console.log("Weather data:", data);
+      setWeather({
+        temp: Math.floor(data.data_current.temperature),
+        description: matchWeatherCode(data.data_current.pictocode),
+      });
+    } catch (error) {
+      console.log("Error fetching weather:", error);
+    }
+  }
+
+  function matchWeatherCode(code) {
+    if (code === 1) {
+      return <Ionicons name="sunny-outline" size={14} color={COLORS.theme} />;
+    } else if (code === 2 || code === 3) {
+      return <Ionicons name="partly-sunny-outline" size={14} color={COLORS.theme}  />;
+    } else if (code === 4 || code == 5) {
+      return <Ionicons name="cloudy-outline" size={14} color={COLORS.theme}  />;
+    } else {
+      return <Ionicons name="rainy-outline" size={14} color={COLORS.theme}  />;
+    }
+  }
+
+  useEffect(() => {
+    // Fetch location and weather on mount
+    (async () => {
+      await locateUserHandler();
+    })();
+  }, []);
+
+  useEffect(() => {
+    // Fetch weather after location is updated
+    if (location) {
+      fetchWeather(location.latitude, location.longitude);
+    }
+  }, [location]);
+
+  // Conditional render logic
+  if (!fontsLoaded) {
+    return null; // Only return early AFTER all hooks have been called
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.top}>
-        <Text style={styles.welcome}>Hi, Merida</Text>
-        <View style={styles.locationContainer}>
-          <Text style={styles.location}>Vancouver</Text>
-          <Text style={[styles.location, {marginLeft: SPACING.s}]}>7°C</Text>
+        <Text style={styles.welcome}>Hi, {userProfile?.username || 'Welcome!'}</Text>
+        {/* <View style={styles.locationContainer}>
+          <Text style={styles.location}>{cityName}</Text> 
+          <Text style={[styles.location, { marginLeft: SPACING.s }]}>7°C</Text>
+        </View>*/}
+        <View style={styles.weather}>
+          <Text style={styles.weatherText}>
+            {weather && weather.description}
+          </Text>
+          <Text style={styles.weatherText}>
+            {weather ? `${weather.temp}°C ` : "Loading weather..."}
+          </Text>
         </View>
         <SearchBar
-            placeholder="Explore activities"
-            value={searchQuery}
-            onChangeText={updateSearch}
+          placeholder="Explore activities"
+          value={searchQuery}
+          onChangeText={updateSearch}
         />
-          {/* <ActivityCardList modalVisible={modalVisible} modalHandler={modalHandler} currentLocation={currentLocation}/> */}
       </View>
       <View style={styles.bottom}>
         <Text style={styles.title}>Popular Activities</Text>
@@ -52,16 +137,15 @@ export default function ActivityScreen({ modalVisible, modalHandler, currentLoca
             <Text style={styles.btnText}>Latest</Text>
           </PressableButton>
           <PressableButton
-            componentStyle={[styles.btn, {marginLeft: SPACING.s, backgroundColor: COLORS.unfocusedBg}]}
+            componentStyle={[styles.btn, { marginLeft: SPACING.s, backgroundColor: COLORS.unfocusedBg }]}
           >
-            <Text style={[styles.btnText, {color: COLORS.border}]}>Nearby</Text>
+            <Text style={[styles.btnText, { color: COLORS.border }]}>Nearby</Text>
           </PressableButton>
         </View>
-        <ActivityCardList modalVisible={modalVisible} modalHandler={modalHandler} currentLocation={currentLocation}/>
+        <ActivityCardList modalVisible={modalVisible} modalHandler={modalHandler} currentLocation={currentLocation} />
       </View>
-      
     </SafeAreaView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -110,4 +194,20 @@ const styles = StyleSheet.create({
     color: COLORS.themeLight,
     fontSize: FONTSIZE.body,
   },
+  weather: {
+    alignSelf: 'flex-start',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: COLORS.background,
+    borderRadius: ROUNDED.small,
+    padding: SPACING.xsmall,
+    marginRight: SPACING.xsmall,
+  },
+  weatherText: {
+    color: COLORS.theme,
+    fontWeight: 'bold',
+    fontSize: FONTSIZE.tiny,
+    marginRight: SPACING.xsmall,
+  },
 })
+

@@ -245,6 +245,7 @@ export default function AddActivityCard({ route, currentLocation }) {
     <SafeAreaView>
       <ScrollView
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={isEditMode && {paddingBottom: SIZE.tabBar}}
       >
       <View style={styles.cardContainer}>
         <Text style={styles.textInfo}>Activity Name</Text>
@@ -359,9 +360,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
     borderRadius: ROUNDED.default,
     padding: SPACING.medium,
-    margin: SPACING.medium,
-    marginTop: SPACING.xs,
-    marginHorizontal: SPACING.xs,
+    margin: SPACING.xs,
     shadowColor: SHADOW.color,
     shadowOffset: SHADOW.offset,
     shadowOpacity: SHADOW.opacity,

@@ -23,6 +23,7 @@ export const COLORS = {
 export const FONTSIZE = {
   'huge': 48,
   'h0': 36,
+  'header': 30,
   'h1': 24,
   'h2': 20,
   'h3': 18,
