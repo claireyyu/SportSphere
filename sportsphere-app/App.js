@@ -22,6 +22,7 @@ import { UserProvider } from './context/UserProvider';
 import MessageScreen from './screens/MessageScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import * as Notifications from 'expo-notifications';
+import JoinedActivitiesScreen from './screens/JoinedActivitiesScreen';
 import { NotificationProvider } from './context/NotificationProvider';
 Notifications.setNotificationHandler({ handleNotification: async () => ({ shouldShowAlert: true }) });
 
@@ -73,17 +74,22 @@ const AppStack = (
       name="EditProfile"
       component={EditProfileScreen}
       options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Reminder"
-        component={ReminderScreen}
-        options={{ headerShown: false }}
-        />
-      <Stack.Screen
-        name="Message"
-        component={MessageScreen}
-        options={{ headerShown: false }}
-      />
+    />
+    <Stack.Screen
+      name="Reminder"
+      component={ReminderScreen}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name="JoinedActivities"
+      component={JoinedActivitiesScreen}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name="Message"
+      component={MessageScreen}
+      options={{ headerShown: false }}
+    />
     </>
     )
 
