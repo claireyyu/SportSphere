@@ -17,6 +17,7 @@ export const COLORS = {
   'unfocused': '#848282',
   'unfocusedBg': '#FBFBFB',
   'sentMessage': '#218aff',
+  'profileBtn': '#f7f7f7',
 };
 
 export const FONTSIZE = {
@@ -85,4 +86,5 @@ export const SIZE = {
   'addIcon': 64,
   'tabBar': 100,
   'searchBox': 60,
+  'avatar': 120,
 }
