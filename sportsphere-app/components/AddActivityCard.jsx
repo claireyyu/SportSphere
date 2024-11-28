@@ -334,11 +334,10 @@ export default function AddActivityCard({ route, currentLocation }) {
 
         <Text style={styles.textInfo}>Description</Text>
         <TextInput
-          style={styles.inputDescription}
+          style={styles.input}
           onChangeText={setDescription}
           value={description}
-          placeholder="Please bring your own racket..."
-          multiline={true}
+          placeholder="Bring your own racket..."
         />
         {/* <ImageManager images={images} imagesHandler={handleImages} downloadURLs={downloadURLs}
                       newImages={newImages} newImagesHandler={setNewImages}/> */}
@@ -398,7 +397,7 @@ const styles = StyleSheet.create({
     color: COLORS.foreground,
   },
   inputDescription: {
-    height: 100,
+    // height: 100,
     marginTop: SPACING.small,
     marginBottom: SPACING.medium,
     borderWidth: 1,
