@@ -166,6 +166,7 @@ const styles = StyleSheet.create({
     borderRadius: ROUNDED.xs,
     backgroundColor: COLORS.inputBg,
     color: COLORS.theme,
+    fontSize: FONTSIZE.body,
   },
   buttonContainer: {
     marginTop: SPACING.s,
