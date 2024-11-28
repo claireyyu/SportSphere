@@ -245,7 +245,8 @@ export default function AddActivityCard({ route, currentLocation }) {
     <SafeAreaView>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={isEditMode && {paddingBottom: SIZE.tabBar}}
+        contentContainerStyle={isEditMode && { paddingBottom: SIZE.tabBar }}
+        keyboardShouldPersistTaps='always' 
       >
       <View style={styles.cardContainer}>
         <Text style={styles.textInfo}>Activity Name</Text>
@@ -262,7 +263,8 @@ export default function AddActivityCard({ route, currentLocation }) {
           <GooglePlacesAutocomplete
             ref={googlePlacesRef}
             placeholder={isEditMode ? venue : "410 W Georgia St"} // Add 和 Edit 模式的 placeholder
-            fetchDetails={true}
+              fetchDetails={true}
+              keepResultAfterBlur={true} // Keep the result after blur
             disableScroll={true} // Prevent nested scrolling issues
             onPress={(data, details = null) => {
               console.log('Selected Data:', data, details);
