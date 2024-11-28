@@ -74,8 +74,7 @@ export default function ActivityCard({ activityName, venue, date, time, peopleGo
 const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: COLORS.background,
-    borderTopLeftRadius: ROUNDED.l,
-    borderTopRightRadius: ROUNDED.l,
+    borderRadius: ROUNDED.l,
     paddingVertical: SPACING.small,
     paddingHorizontal: SPACING.medium,
     margin: SPACING.medium,
