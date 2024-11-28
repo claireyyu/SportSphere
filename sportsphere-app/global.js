@@ -16,6 +16,7 @@ export const COLORS = {
   'inputBg': '#F2F2F2',
   'unfocused': '#848282',
   'unfocusedBg': '#FBFBFB',
+  'sentMessage': '#218aff',
 };
 
 export const FONTSIZE = {

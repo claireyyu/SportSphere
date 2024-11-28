@@ -30,7 +30,7 @@ export default function MessageScreenHeader({uid}) {
       <View style={styles.topBtnContainer}>
         <PressableButton
           pressedFunction={() => navigation.goBack()}>
-          <Ionicons name="chevron-back-sharp" size={SIZE.pressableIcon} color="white" />
+          <Ionicons name="chevron-back-sharp" size={SIZE.pressableIcon} color={COLORS.theme} />
         </PressableButton>
 
         <View style={styles.profileContainer}>
@@ -50,7 +50,7 @@ export default function MessageScreenHeader({uid}) {
 
 const styles = StyleSheet.create({
   view: {
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.themeLight,
   },
   topBtnContainer: {
     flexDirection: 'row',
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     marginLeft: SPACING.default,
   },
   username: {
-    color: COLORS.background,
+    color: COLORS.theme,
     fontSize: FONTSIZE.h2,
     fontWeight: 'bold',
   },
