@@ -189,14 +189,14 @@ export default function ActivityDetailCard({ route }) {
       <Text style={styles.goingText}>{pplGoingNumber} ppl going</Text>
       {isOwner && <View style={styles.btnContainer}>
         <PressableButton
-          componentStyle={[styles.button, { backgroundColor: COLORS.sentMessage }]}
+          componentStyle={[styles.button]}
           pressedFunction={handleEditActivity}>
           <Text style={styles.buttonText}>Edit</Text>
         </PressableButton>
         <PressableButton
-          componentStyle={[styles.button, { backgroundColor: COLORS.theme }]}
+          componentStyle={[styles.button, { backgroundColor: COLORS.themeLight }]}
           pressedFunction={handleDeleteActivity}>
-          <Text style={styles.buttonText}>Delete</Text>
+          <Text style={[styles.buttonText, {color: COLORS.theme}]}>Delete</Text>
         </PressableButton>
         </View>}
         </ScrollView>

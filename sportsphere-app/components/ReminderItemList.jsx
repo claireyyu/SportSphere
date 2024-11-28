@@ -106,7 +106,7 @@ function ReminderItem({ title, time, date, id, reminderItemHandler }) {
         <Text style={styles.date}>{date}</Text>
       </View>
       <Switch
-        trackColor={{ false: COLORS.background, true: COLORS.primary }}
+        trackColor={{ false: COLORS.background, true: COLORS.theme }}
         thumbColor={isEnabled ? COLORS.background : COLORS.background}
         onValueChange={() => toggleSwitch(id)}
         value={isEnabled}
@@ -120,10 +120,10 @@ function ReminderItem({ title, time, date, id, reminderItemHandler }) {
 
 const styles = StyleSheet.create({
   listContainer: {
-    padding: SPACING.large,
+    padding: SPACING.m,
   },
   card: {
-    width: '100%',
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

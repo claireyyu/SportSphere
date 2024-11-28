@@ -108,9 +108,9 @@ export default function AddReminder({ modalVisible, handleModalVisible, route })
             <View style={styles.btnContainer}>
               <PressableButton
                 pressedFunction={handleToggleDatePicker}
-                componentStyle={styles.button}
+                componentStyle={[styles.button, {backgroundColor: COLORS.themeLight}]}
               >
-                <Text style={styles.btnText}>Cancel</Text>
+                <Text style={[styles.btnText, {backgroundColor: COLORS.themeLight, color: COLORS.theme}]}>Cancel</Text>
               </PressableButton>
               <PressableButton
                 pressedFunction={() => {
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     marginHorizontal: SPACING.small,
     padding: SPACING.small,
     borderRadius: ROUNDED.small,
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.theme,
   },
   btnText: {
     color: COLORS.background,
