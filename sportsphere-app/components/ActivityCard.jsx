@@ -14,7 +14,7 @@ export default function ActivityCard({ activityName, venue, date, time, peopleGo
   const [hasJoined, setHasJoined] = useState(false);
   const [isFull, setIsFull] = useState(false);
   const { userProfile } = useContext(UserContext);
-  const currentUser = userProfile.uid;
+  const currentUser = userProfile?.uid;
 
   useEffect(() => {
     if (peopleGoing.includes(currentUser)) {

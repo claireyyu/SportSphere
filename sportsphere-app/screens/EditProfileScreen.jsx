@@ -7,7 +7,7 @@ import ProfileCard from '../components/ProfileCard';
 import { UserContext } from '../context/UserProvider';
 import { useContext } from 'react';
 
-export default function ProfileScreen() {
+export default function EditProfileScreen() {
   const { userProfile } = useContext(UserContext);
 
   return (

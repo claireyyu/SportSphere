@@ -140,8 +140,7 @@ export default function ActivityDetailCard({ route }) {
       navigation.navigate('Profile');
       return;
     }
-    navigation.navigate('OrganizerProfile', { uid: owner });
-    console.log("View Profile");
+    navigation.navigate('Message', { uid: owner });
   }
 
   return (

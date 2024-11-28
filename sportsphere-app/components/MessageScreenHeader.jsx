@@ -40,7 +40,8 @@ export default function MessageScreenHeader({uid}) {
             source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
           />
           <View style={styles.profileInfo}>
-            <Text style={styles.username}>{viewingUserInfo?.username || 'User Name'}</Text>
+            <Text style={styles.username}>{viewingUserInfo?.username || 'Anonymous'}</Text>
+            <Text style={styles.bio}>{viewingUserInfo?.bio || ''}</Text>
           </View>
         </View>
       </View>
@@ -70,6 +71,11 @@ const styles = StyleSheet.create({
     color: COLORS.theme,
     fontSize: FONTSIZE.h2,
     fontWeight: 'bold',
+  },
+  bio: {
+    color: COLORS.secondaryText,
+    fontSize: FONTSIZE.tiny,
+    fontStyle: 'italic',
   },
   buttonContainer: {
     flexDirection: 'row',

@@ -32,6 +32,10 @@ export default function SignUpForm({ navigation }) {
         Alert.alert('Password should be at least 15 characters long!');
         return;
       }
+      if (bio.length > 20) {
+        Alert.alert('Bio should be less than 20 words');
+        return;
+      }
       const userCred = await createUserWithEmailAndPassword(auth, email, password);
       console.log(userCred.user);
 
@@ -40,7 +44,7 @@ export default function SignUpForm({ navigation }) {
         uid: userCred.user.uid,
         username: username ? username : 'Anonymous',
         email: email,
-        bio: bio ? bio : 'Nothing yet',
+        bio: bio ? bio : '',
       };
       await writeToDB(userProfile, 'users');
 
@@ -105,9 +109,8 @@ export default function SignUpForm({ navigation }) {
           <TextInput
             value={bio}
             onChangeText={setBio}
-            placeholder="Bio"
+            placeholder="Bio (less than 20 words)"
             style={styles.input}
-            multiline={true}  
           />
         </View>
 
