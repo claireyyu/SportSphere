@@ -81,23 +81,20 @@ const TabNavigator = () => {
       <Tab.Screen
         name="Chat"
         component={ChatScreen}
-        options={{
-          header: () => <TitleScreenHeader title="Chat" />,
-        }}
+        options={{ headerShown: false }}
         />
       <Tab.Screen
         name="AddActivity"
           options={{ headerShown: false }}
-          component={AddActivityScreen}
+          children={() => <AddActivityScreen currentLocation={currentLocation} />}
+          // component={AddActivityScreen}
         >
       </Tab.Screen>
       <Tab.Screen
         name="Map"
         // component={MapScreen}
         children ={() => <MapScreen currentLocation={currentLocation} />}
-        options={{
-          header: () => <TitleScreenHeader title="Map" />,
-        }}
+        options={{ headerShown: false }}
       />
       <Tab.Screen
         name="Profile"

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
-import { View, Text, StyleSheet, TextInput, Alert, Platform } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Alert, Platform, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
 import PressableButton from './PressableButton';
@@ -222,26 +222,29 @@ export default function AddActivityCard({ route, currentLocation }) {
         navigation.navigate('ActivityDetails', passToDetail);
       } else {
         writeToDB(newActivity, "activities");
-        navigation.goBack();
+        setActivityName('');
+        setVenue('');
+        setDate(new Date());
+        setTime(new Date());
+        setTotalMembers(0);
+        setDescription('');
+        setImages([]);
+        setNewImages([]);
+        setIsEditMode(false);
+
+        navigation.navigate('Activity');
       }
       
     } catch (error) {
       console.error("Error adding document: ", error);
     }
   }
-  
-  // function handlePlaceSelected(data, details) {
-  //   console.log('data:', data);
-  //   console.log('details:', details);
-  //   setVenue(data.description);
-  //   setVenuePosition({
-  //     latitude: details.geometry.location.lat,
-  //     longitude: details.geometry.location.lng,
-  //   });
-  // }
 
   return (
     <SafeAreaView>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+      >
       <View style={styles.cardContainer}>
         <Text style={styles.textInfo}>Activity Name</Text>
         <TextInput
@@ -343,7 +346,9 @@ export default function AddActivityCard({ route, currentLocation }) {
           <Text style={styles.buttonText}>Submit</Text>
         </PressableButton>
         <Text style={styles.erroText}>{error}</Text>
-      </View>
+        </View>
+        </ ScrollView>
+
     </SafeAreaView>
   );
 }
@@ -354,6 +359,8 @@ const styles = StyleSheet.create({
     borderRadius: ROUNDED.default,
     padding: SPACING.medium,
     margin: SPACING.medium,
+    marginTop: SPACING.xs,
+    marginHorizontal: SPACING.xs,
     shadowColor: SHADOW.color,
     shadowOffset: SHADOW.offset,
     shadowOpacity: SHADOW.opacity,
@@ -410,12 +417,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   button: {
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.theme,
     paddingVertical: SPACING.small,
     paddingHorizontal: SPACING.small,
     borderRadius: ROUNDED.default,
-    alignSelf: 'flex-end',
+    // alignSelf: 'flex-end',
     marginTop: SPACING.medium,
+    alignItems: 'center',
   },
   erroText: {
     color: COLORS.delete,
