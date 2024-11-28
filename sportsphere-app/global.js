@@ -85,6 +85,7 @@ export const SIZE = {
   'logo': 36,
   'welcomeLogo': 60,
   'addIcon': 64,
+  'chatCard': 80,
   'tabBar': 100,
   'searchBox': 60,
   'avatar': 120,

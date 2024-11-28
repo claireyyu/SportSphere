@@ -31,11 +31,15 @@ export default function ProfileScreen({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.title}>Profile</Text>
       <View style={styles.profileContainer}>
-        <Avatar
-          size={SIZE.avatar}
-          rounded
+        <PressableButton
+          pressedFunction={() => navigation.navigate('EditProfile')}
+        >
+          <Avatar
+            size={SIZE.avatar}
+            rounded
           source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
-        />
+            />
+        </PressableButton>
         <View style={styles.profileInfo}>
           <Text style={styles.username}>{userProfile?.username || 'User Name'}</Text>
           <Text style={styles.email}>{userProfile?.email || 'User Email'}</Text>
