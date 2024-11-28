@@ -32,6 +32,10 @@ export default function SignUpForm({ navigation }) {
         Alert.alert('Password should be at least 15 characters long!');
         return;
       }
+      if (username.length > 20) { 
+        Alert.alert('Username should be less than 20 characters');
+        return;
+      }
       if (bio.length > 20) {
         Alert.alert('Bio should be less than 20 words');
         return;
@@ -72,7 +76,7 @@ export default function SignUpForm({ navigation }) {
             value={username}
             onChangeText={setUsername}
             autoCapitalize="none"
-            placeholder="Username" 
+            placeholder="Username (less than 20 characters)" 
             style={styles.input}
           />
           <View style={styles.requiredContainer}>

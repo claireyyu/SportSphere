@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   profileInfo: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: SPACING.m,
+    marginTop: SPACING.xs,
   },
 
   username: {

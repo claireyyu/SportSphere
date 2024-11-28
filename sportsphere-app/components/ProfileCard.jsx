@@ -18,6 +18,14 @@ export default function ProfileCard({ name, email, bio }) {
   const nameInputRef = useRef(null);
 
   const handleUpdateProfile = async () => {
+    if (nameInput.length > 20) { 
+      Alert.alert('Username should be less than 20 characters');
+      return;
+    }
+    if (bioInput.length > 20) {
+      Alert.alert('Bio should be less than 20 words');
+      return;
+    }
     const uid = auth.currentUser.uid;
     const updatedProfile = {
       username: nameInput,
@@ -69,7 +77,7 @@ const styles = StyleSheet.create({
     borderRadius: ROUNDED.default,
     padding: SPACING.large,
     marginVertical: SPACING.medium,
-    marginHorizontal: SPACING.large,
+    marginHorizontal: SPACING.s,
     // Shadow properties
     shadowColor: SHADOW.color,
     shadowOffset: SHADOW.offset,
@@ -94,7 +102,7 @@ const styles = StyleSheet.create({
     width: '60%',
   },
   button: {
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.theme,
     borderRadius: ROUNDED.small,
     padding: SPACING.xsmall,
     alignItems: 'center',
