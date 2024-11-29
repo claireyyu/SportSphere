@@ -26,13 +26,15 @@ export default function ActivityScreen({ modalVisible, modalHandler, currentLoca
   const [isDateSelected, setDateSelection] = React.useState(true);
   const [isDistanceSelected, setDistanceSelection] = React.useState(false);
 
-  function handleDateSelection() {
-    setDateSelection(!isDateSelected);
-    setDistanceSelection(!isDistanceSelected);
+  function selectDate() {
+    setDateSelection(true);
+    setDistanceSelection(false);
+    setSortPreference('date');
   }
-  function handleDistanceSelection() {
-    setDistanceSelection(!isDistanceSelected);
-    setDateSelection(!isDateSelected);
+  function selectDistance() {
+    setDistanceSelection(true);
+    setDateSelection(false);
+    setSortPreference('distance');
   }
 
   // Use all hooks unconditionally
@@ -145,14 +147,16 @@ export default function ActivityScreen({ modalVisible, modalHandler, currentLoca
         <Text style={styles.title}>Popular Activities</Text>
         <View style={styles.btnContainer}>
           <PressableButton
-            componentStyle={styles.btn}
+            pressedFunction={selectDate}
+            componentStyle={[styles.btn, { backgroundColor: isDateSelected ? COLORS.theme : COLORS.unfocusedBg }]}
           >
-            <Text style={styles.btnText}>Latest</Text>
+            <Text style={[styles.btnText, { color: isDateSelected? COLORS.themeLight: COLORS.border }]}>Latest</Text>
           </PressableButton>
           <PressableButton
-            componentStyle={[styles.btn, { marginLeft: SPACING.s, backgroundColor: COLORS.unfocusedBg }]}
+            pressedFunction={selectDistance}
+            componentStyle={[styles.btn, { marginLeft: SPACING.s, backgroundColor: isDistanceSelected ? COLORS.theme : COLORS.unfocusedBg }]}
           >
-            <Text style={[styles.btnText, { color: COLORS.border }]}>Nearby</Text>
+            <Text style={[styles.btnText, { color: isDistanceSelected? COLORS.themeLight : COLORS.border }]}>Nearby</Text>
           </PressableButton>
         </View>
         <ActivityCardList modalVisible={modalVisible} modalHandler={modalHandler} currentLocation={currentLocation} />
