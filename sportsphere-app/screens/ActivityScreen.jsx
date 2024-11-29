@@ -12,6 +12,7 @@ import PressableButton from '../components/PressableButton'
 import { UserContext } from '../context/UserProvider'
 import * as Location from 'expo-location';
 import { Ionicons } from '@expo/vector-icons'
+import { set } from 'date-fns'
 
 export default function ActivityScreen({ modalVisible, modalHandler, currentLocation }) {
   const { userProfile } = useContext(UserContext);
@@ -21,6 +22,18 @@ export default function ActivityScreen({ modalVisible, modalHandler, currentLoca
     Montserrat_700Bold,
     Poppins_600SemiBold,
   });
+
+  const [isDateSelected, setDateSelection] = React.useState(true);
+  const [isDistanceSelected, setDistanceSelection] = React.useState(false);
+
+  function handleDateSelection() {
+    setDateSelection(!isDateSelected);
+    setDistanceSelection(!isDistanceSelected);
+  }
+  function handleDistanceSelection() {
+    setDistanceSelection(!isDistanceSelected);
+    setDateSelection(!isDateSelected);
+  }
 
   // Use all hooks unconditionally
   const { searchQuery, setSearchQuery, setSortPreference } = useContext(QueryContext);
