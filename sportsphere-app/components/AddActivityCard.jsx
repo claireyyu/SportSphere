@@ -225,6 +225,7 @@ export default function AddActivityCard({ route, currentLocation }) {
         writeToDB(newActivity, "activities");
         setActivityName('');
         setVenue('');
+        googlePlacesRef.current?.setAddressText(''); // Clear the GooglePlacesAutocomplete input
         setDate(new Date());
         setTime(new Date());
         setTotalMembers(0);
