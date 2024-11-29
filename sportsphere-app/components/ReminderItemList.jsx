@@ -8,7 +8,7 @@ import PressableButton from './PressableButton';
 import EditReminderModal from './EditReminderModal';
 import { UserContext } from '../context/UserProvider';
 import { db } from '../Firebase/firebaseSetup';
-import { collection, doc } from 'firebase/firestore';
+import { collection, doc, deleteDoc } from 'firebase/firestore';
 
 export default function ReminderItemList() {
   const { userProfile } = React.useContext(UserContext);
@@ -72,6 +72,12 @@ function ReminderItem({ title, time, date, id, reminderItemHandler }) {
     setIsEnabled(previousState => !previousState);
   }
 
+  const handleDeleteReminder = async () => {
+    await deleteDoc(doc(db, 'users', userProfile.userDocId, 'reminders', id));
+    reminderItemHandler(prevItems => prevItems.filter(item => item.id !== id));
+    console.log("Reminder deleted!");
+  }
+
   function handleDelete() {
     Alert.alert(
       "Delete Reminder",
@@ -82,10 +88,7 @@ function ReminderItem({ title, time, date, id, reminderItemHandler }) {
           style: "cancel"
         },
         { text: "Yes", 
-          onPress: () => {
-            deleteDB(id, "reminders")
-            reminderItemHandler(prevItems => prevItems.filter(item => item.id !== id));
-          },
+          onPress: handleDeleteReminder,
         }
       ]
     );
@@ -111,9 +114,10 @@ function ReminderItem({ title, time, date, id, reminderItemHandler }) {
         onValueChange={() => toggleSwitch(id)}
         value={isEnabled}
       />
-    </View>
+        </View>
+        <EditReminderModal modalVisible={modalVisible} handleModalVisible={handleModalVisible} route={{params: {title, time, date, id}}} />
+
     </PressableButton>
-    {/* <EditReminderModal modalVisible={modalVisible} handleModalVisible={handleModalVisible} route={{params: {title, time, date, id}}} /> */}
     </View>
   );
 }
