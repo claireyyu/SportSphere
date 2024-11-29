@@ -22,6 +22,8 @@ export default function ActivityScreen({ modalVisible, modalHandler, currentLoca
     Montserrat_700Bold,
     Poppins_600SemiBold,
   });
+  // Use all hooks unconditionally
+  const { searchQuery, setSearchQuery, setSortPreference } = useContext(QueryContext);
 
   const [isDateSelected, setDateSelection] = React.useState(true);
   const [isDistanceSelected, setDistanceSelection] = React.useState(false);
@@ -37,9 +39,7 @@ export default function ActivityScreen({ modalVisible, modalHandler, currentLoca
     setSortPreference('distance');
   }
 
-  // Use all hooks unconditionally
-  const { searchQuery, setSearchQuery, setSortPreference } = useContext(QueryContext);
-
+  
   const updateSearch = (text) => {
     setSearchQuery(text);
   };
@@ -147,19 +147,19 @@ export default function ActivityScreen({ modalVisible, modalHandler, currentLoca
         <Text style={styles.title}>Popular Activities</Text>
         <View style={styles.btnContainer}>
           <PressableButton
-            pressedFunction={selectDate}
+            pressedFunction={()=>selectDate()}
             componentStyle={[styles.btn, { backgroundColor: isDateSelected ? COLORS.theme : COLORS.unfocusedBg }]}
           >
             <Text style={[styles.btnText, { color: isDateSelected? COLORS.themeLight: COLORS.border }]}>Latest</Text>
           </PressableButton>
           <PressableButton
-            pressedFunction={selectDistance}
+            pressedFunction={()=>selectDistance()}
             componentStyle={[styles.btn, { marginLeft: SPACING.s, backgroundColor: isDistanceSelected ? COLORS.theme : COLORS.unfocusedBg }]}
           >
             <Text style={[styles.btnText, { color: isDistanceSelected? COLORS.themeLight : COLORS.border }]}>Nearby</Text>
           </PressableButton>
         </View>
-        <ActivityCardList modalVisible={modalVisible} modalHandler={modalHandler} currentLocation={currentLocation} />
+        <ActivityCardList modalVisible={modalVisible} modalHandler={modalHandler} currentLocation={currentLocation} isDateSelected={isDateSelected} isDistanceSelected={isDistanceSelected}/>
       </View>
     </SafeAreaView>
   );
