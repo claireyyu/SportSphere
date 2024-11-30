@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View, Alert, Image } from 'react-native'
 import React from 'react'
 import { Avatar } from '@rneui/themed';
 import { COLORS, FONTSIZE, SIZE, SPACING } from '../global';
@@ -9,17 +9,38 @@ import { useContext } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { QueryContext } from '../context/QueryProvider';
+import * as ImagePicker from 'expo-image-picker';
 
 
 export default function EditProfileScreen() {
   const { userProfile } = useContext(UserContext);
   const navigation = useNavigation();
   const { imagePermission, setImagePermission } = useContext(QueryContext);
+  const [profilePicture, setProfilePicture] = React.useState(null);
+ 
 
-  function changeProfilePicture() {
-    console.log("Permission to chagne profile picture: ", imagePermission);
-    console.log("Change Profile Picture");
+  async function changeProfilePicture() {
+    try {
+      if (!imagePermission) {
+        Alert.alert("Permission required", "You need to grant permission to access your library to pick an image.");
+            return;
+      }
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ['images'],
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 0.1,
+        });
+        console.log(result);
+        if (!result.canceled) {
+        console.log("Image uri", result.assets[0].uri);
+        setProfilePicture(result.assets[0].uri);
+        }
+    } catch (error) {
+        console.log("Error picking image", error);
+      } 
   }
+
   return (
     <View style={styles.container}>
       <PressableButton
@@ -33,20 +54,28 @@ export default function EditProfileScreen() {
       </View>
       <View style={styles.avatarContainer}>
         <PressableButton pressedFunction={changeProfilePicture}>
+        {profilePicture ? 
+        <Avatar
+          size={SIZE.avatar}
+          rounded
+          source={{
+            uri: profilePicture
+          }}
+        />: 
         <Avatar
           size={SIZE.avatar}
           rounded
           source={{
             uri: "https://avatar.iran.liara.run/public/girl"
           }}
-        />
+        />}
         </PressableButton>
         {/* <PressableButton>
           <Text style={styles.editProfile}>Change Profile Photo</Text>
         </PressableButton> */}
       </View>
       <View style={styles.editProfileContainer}>
-        <ProfileCard name={userProfile.username} email={userProfile.email} bio={userProfile.bio}/>
+        <ProfileCard name={userProfile.username} email={userProfile.email} bio={userProfile.bio} newProfilePicture={profilePicture}/>
       </View>
     </View>
   )

@@ -9,7 +9,7 @@ import { Alert } from 'react-native';
 import { UserContext } from '../context/UserProvider';
 import { useNavigation } from '@react-navigation/native';
   
-export default function ProfileCard({ name, email, bio }) {
+export default function ProfileCard({ name, email, bio, newProfilePicture }) {
   const { setUserProfile } = useContext(UserContext);
   const [nameInput, setNameInput] = useState(name);
   const [emailInput, setEmailInput] = useState(email);
@@ -30,6 +30,8 @@ export default function ProfileCard({ name, email, bio }) {
     const updatedProfile = {
       username: nameInput,
       bio: bioInput,
+      profilePicture: newProfilePicture,
+      
     };
     await updateUserProfile(uid, updatedProfile);
     setUserProfile((prevProfile) => ({
