@@ -25,7 +25,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     minHeight: SIZE.searchBox,
-    marginTop: SPACING.xl,
+    marginTop: SPACING.s,
+    paddingVertical: SPACING.xs,
+    width: '90%',
+    marginBottom: SPACING.None,
   },
   input: {
     flex: 1,

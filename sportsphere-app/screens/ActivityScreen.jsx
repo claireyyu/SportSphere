@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import React, {useContext, useEffect, useState} from 'react'
 import ActivityCard from '../components/ActivityCard'
 import { COLORS, FONTSIZE, SPACING, ROUNDED, SIZE } from '../global'
@@ -14,6 +14,7 @@ import * as Location from 'expo-location';
 import { Ionicons } from '@expo/vector-icons'
 import { set } from 'date-fns'
 import LottieView from 'lottie-react-native';
+
 
 export default function ActivityScreen({ modalVisible, modalHandler, currentLocation }) {
   const { userProfile } = useContext(UserContext);
@@ -182,14 +183,17 @@ const styles = StyleSheet.create({
   },
   top: {
     flex: 1,
+    marginTop: SPACING.None,
+    marginBottom: SPACING.None,
   },
   welcome: {
     fontFamily: 'Montserrat_700Bold',
     fontSize: FONTSIZE.h0,
-    marginTop: SPACING.m,
+    marginTop: SPACING.None,
   },
   bottom: {
-    flex: 3,
+    flex: 4,
+    marginTop: SPACING.None,
   },
   locationContainer: {
     flexDirection: 'row',
@@ -207,11 +211,11 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     flexDirection: 'row',
-    marginTop: SPACING.l,
+    marginTop: SPACING.s,
   },
   btn: {
     backgroundColor: COLORS.theme,
-    padding: SPACING.m,
+    padding: SPACING.s,
     paddingHorizontal: SPACING.xl,
     borderRadius: SPACING.m,
   },
@@ -227,6 +231,7 @@ const styles = StyleSheet.create({
     borderRadius: ROUNDED.small,
     padding: SPACING.xsmall,
     marginRight: SPACING.xsmall,
+    marginTop: SPACING.xs,
   },
   weatherText: {
     color: COLORS.theme,
@@ -243,7 +248,6 @@ const styles = StyleSheet.create({
   activitySortAnimationContainer: {
     marginLeft: SPACING.s,
     flexDirection: 'row',
-    //justifyContent: 'space-between',
   }
 })
 
