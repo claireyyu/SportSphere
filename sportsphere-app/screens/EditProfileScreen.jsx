@@ -7,10 +7,12 @@ import ProfileCard from '../components/ProfileCard';
 import { UserContext } from '../context/UserProvider';
 import { useContext } from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function EditProfileScreen() {
   const { userProfile } = useContext(UserContext);
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
