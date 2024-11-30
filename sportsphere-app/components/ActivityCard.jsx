@@ -63,10 +63,12 @@ export default function ActivityCard({ activityName, venue, date, time, peopleGo
         <ProgressBar value={peopleGoing.length} total={totalMembers} />
         <Text style={styles.peopleCount}>{totalMembers} ppl</Text>
       </View>
+      <View style={styles.goingTxBtn}>
       <Text style={styles.goingText}>{peopleGoing.length} ppl going</Text>
       <PressableButton componentStyle={styles.button} pressedFunction={handleToActivityDetail}>
         <Text style={styles.buttonText}>Learn More</Text>
       </PressableButton>
+      </View>
     </View>
   );
 }
@@ -75,7 +77,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: COLORS.background,
     borderRadius: ROUNDED.l,
-    paddingVertical: SPACING.small,
+    paddingVertical: SPACING.s,
     paddingHorizontal: SPACING.medium,
     margin: SPACING.medium,
     marginHorizontal: SPACING.xs,
@@ -100,7 +102,8 @@ const styles = StyleSheet.create({
     marginHorizontal: SPACING.xsmall,
   },
   infoContainer: {
-    marginVertical: SPACING.small,
+    marginTop: SPACING.None,
+    marginBottom: SPACING.small,
   },
   joinedText: {
     borderColor: COLORS.primary,
@@ -118,7 +121,8 @@ const styles = StyleSheet.create({
   progressContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: SPACING.small,
+    marginTop: SPACING.None,
+    marginBottom: SPACING.small,
   },
   peopleCount: {
     fontSize: FONTSIZE.body,
@@ -138,10 +142,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.small,
     borderRadius: ROUNDED.default,
     alignSelf: 'flex-end',
+    marginTop: SPACING.xs,
   },
   buttonText: {
     color: COLORS.background,
     fontSize: FONTSIZE.small,
     fontWeight: 'bold',
   },
+  goingTxBtn: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    //alignItems: 'center',
+  }
 });

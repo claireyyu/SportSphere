@@ -211,17 +211,20 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     flexDirection: 'row',
-    marginTop: SPACING.s,
+    //justifyContent: "space-between",
+    marginTop: SPACING.m,
+    marginLeft: SPACING.s,
   },
   btn: {
     backgroundColor: COLORS.theme,
     padding: SPACING.s,
-    paddingHorizontal: SPACING.xl,
+    paddingHorizontal: SPACING.l,
     borderRadius: SPACING.m,
   },
   btnText: {
     color: COLORS.themeLight,
     fontSize: FONTSIZE.body,
+    fontWeight: 'bold',
   },
   weather: {
     alignSelf: 'flex-start',
