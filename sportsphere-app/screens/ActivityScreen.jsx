@@ -13,6 +13,7 @@ import { UserContext } from '../context/UserProvider'
 import * as Location from 'expo-location';
 import { Ionicons } from '@expo/vector-icons'
 import { set } from 'date-fns'
+import LottieView from 'lottie-react-native';
 
 export default function ActivityScreen({ modalVisible, modalHandler, currentLocation }) {
   const { userProfile } = useContext(UserContext);
@@ -144,6 +145,8 @@ export default function ActivityScreen({ modalVisible, modalHandler, currentLoca
         />
       </View>
       <View style={styles.bottom}>
+        <View style={styles.activitySortAnimationContainer}>
+        <View style={styles.activitySortContainer}>
         <Text style={styles.title}>Popular Activities</Text>
         <View style={styles.btnContainer}>
           <PressableButton
@@ -158,6 +161,11 @@ export default function ActivityScreen({ modalVisible, modalHandler, currentLoca
           >
             <Text style={[styles.btnText, { color: isDistanceSelected? COLORS.themeLight : COLORS.border }]}>Nearby</Text>
           </PressableButton>
+        </View>
+        </View>
+        <View style={styles.animation}>
+            <LottieView source={require('../assets/kickSoccer.json')} autoPlay loop style={{width: 100, height: 100}} />
+          </View>
         </View>
         <ActivityCardList modalVisible={modalVisible} modalHandler={modalHandler} currentLocation={currentLocation} isDateSelected={isDateSelected} isDistanceSelected={isDistanceSelected}/>
       </View>
@@ -199,7 +207,7 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     flexDirection: 'row',
-    marginTop: SPACING.xl,
+    marginTop: SPACING.l,
   },
   btn: {
     backgroundColor: COLORS.theme,
@@ -226,5 +234,16 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.tiny,
     marginRight: SPACING.xsmall,
   },
+  animation: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: SPACING.l,
+  },
+
+  activitySortAnimationContainer: {
+    marginLeft: SPACING.s,
+    flexDirection: 'row',
+    //justifyContent: 'space-between',
+  }
 })
 
