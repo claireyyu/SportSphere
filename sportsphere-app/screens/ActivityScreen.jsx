@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     marginTop: SPACING.None,
   },
   bottom: {
-    flex: 4,
+    flex: 4.4,
     marginTop: SPACING.None,
   },
   locationContainer: {
