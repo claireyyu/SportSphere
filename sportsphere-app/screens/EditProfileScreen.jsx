@@ -8,12 +8,18 @@ import { UserContext } from '../context/UserProvider';
 import { useContext } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { QueryContext } from '../context/QueryProvider';
 
 
 export default function EditProfileScreen() {
   const { userProfile } = useContext(UserContext);
   const navigation = useNavigation();
+  const { imagePermission, setImagePermission } = useContext(QueryContext);
 
+  function changeProfilePicture() {
+    console.log("Permission to chagne profile picture: ", imagePermission);
+    console.log("Change Profile Picture");
+  }
   return (
     <View style={styles.container}>
       <PressableButton
@@ -26,6 +32,7 @@ export default function EditProfileScreen() {
         <Text style={styles.title}>Profile Detail</Text>
       </View>
       <View style={styles.avatarContainer}>
+        <PressableButton pressedFunction={changeProfilePicture}>
         <Avatar
           size={SIZE.avatar}
           rounded
@@ -33,6 +40,7 @@ export default function EditProfileScreen() {
             uri: "https://avatar.iran.liara.run/public/girl"
           }}
         />
+        </PressableButton>
         {/* <PressableButton>
           <Text style={styles.editProfile}>Change Profile Photo</Text>
         </PressableButton> */}
