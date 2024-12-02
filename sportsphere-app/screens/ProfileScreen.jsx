@@ -7,9 +7,13 @@ import PressableButton from '../components/PressableButton';
 import { Ionicons } from '@expo/vector-icons'; // Assuming you're using Expo and Ionicons
 import { signOut } from 'firebase/auth';
 import { auth } from '../Firebase/firebaseSetup';
+import { useEffect } from 'react';
+import { ref, getDownloadURL } from 'firebase/storage';
+import { storage } from '../Firebase/firebaseSetup';
 
-export default function ProfileScreen({ navigation }) {
+export default function ProfileScreen({ navigation, route }) {
   const { userProfile } = useContext(UserContext);
+  const [profileDownloadurl, setProfileDownloadurl] = React.useState(null);
 
   async function signOutUser() {
     try {
@@ -26,20 +30,63 @@ export default function ProfileScreen({ navigation }) {
     ]);
     
   }
+  // useEffect(() => {
+  //   async function getProfileDownloadURL() {
+  //     try {
+  //       if (route.params && route.params.profileUploadurl) {
+  //         const imageRef = ref(storage, route.params.profileUploadurl);
+  //         const downloadURL = await getDownloadURL(imageRef);
+  //         console.log(downloadURL);
+  //         setProfileDownloadURL(downloadURL);
+  //       }
+  //     } catch (err) {
+  //       console.log("get download image URL ", err);
+  //     }
+  //   }
+  //   getProfileDownloadURL();
+  // }, [route.params]);
 
+  useEffect(() => {
+    async function getProfileDownloadURL() {
+      try {
+        let storagePath = null;
+
+        if (route.params && route.params.profileUploadURL) {
+          storagePath = route.params.profileUploadurl;
+        } else if (userProfile.profilePicture) {
+          storagePath = userProfile.profilePicture;
+        }
+
+        if (storagePath) {
+          const imageRef = ref(storage, storagePath);
+          const downloadURL = await getDownloadURL(imageRef);
+          console.log("Profile picture URL:", downloadURL);
+          setProfileDownloadurl(downloadURL);
+        }
+      } catch (err) {
+        console.log("Error getting profile picture URL: ", err);
+      }
+    }
+    getProfileDownloadURL();
+  }, [route.params, userProfile.profilePicture]);
+
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile</Text>
       <View style={styles.profileContainer}>
-        <PressableButton
-          pressedFunction={() => navigation.navigate('EditProfile')}
-        >
+        {profileDownloadurl ? (
           <Avatar
             size={SIZE.avatar}
             rounded
+            source={{ uri: profileDownloadurl }}
+          />
+        ) : (
+          <Avatar
+          size={SIZE.avatar}
+          rounded
           source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
-            />
-        </PressableButton>
+        />)}
         <View style={styles.profileInfo}>
           <Text style={styles.username}>{userProfile?.username || 'User Name'}</Text>
           <Text style={styles.email}>{userProfile?.email || 'User Email'}</Text>
@@ -49,7 +96,7 @@ export default function ProfileScreen({ navigation }) {
       <View style={styles.buttonsContainer}>
         <PressableButton
           componentStyle={styles.button}
-          pressedFunction={() => navigation.navigate('EditProfile')}
+          pressedFunction={() => navigation.navigate('EditProfile', {profileDownloadurl})}
         >
           <View style={styles.buttonContent}>
           <View style={styles.leftContainer}>
