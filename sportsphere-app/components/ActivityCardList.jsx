@@ -10,6 +10,8 @@ import * as geolib from 'geolib';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../Firebase/firebaseSetup';
 import { findUserByUid } from '../Firebase/firebaseHelper';
+import { useFocusEffect } from "@react-navigation/native";
+
 
 
 export default function ActivityCardList({modalVisible, modalHandler, currentLocation, isDateSelected, isDistanceSelected}) {
@@ -22,7 +24,9 @@ export default function ActivityCardList({modalVisible, modalHandler, currentLoc
     setActivityItems(items);
   }
   
-  useEffect(() => {
+  // useEffect(() => {
+    useFocusEffect(
+      React.useCallback(() => {
 
     async function getProfileDownloadURL(profileUploadURL) {
       try {
@@ -60,13 +64,14 @@ export default function ActivityCardList({modalVisible, modalHandler, currentLoc
       }
     }
 
-
     readAllFiles(collectionName, null, sortPreference, currentLocation, (items)=> fetchProfileUrls(items), (error) => {
       console.log("Error fetching activities", error.message);
     });
     console.log("ActivityItems: ", activityItems);
     //console.log("Activity distance 1: ", activityItems[0]?.distance, "2: ", activityItems[1]?.distance, "3: ", activityItems[2]?.distance);
-  }, [sortPreference, isDateSelected, isDistanceSelected]);
+  }, [sortPreference, isDateSelected, isDistanceSelected])
+);
+
 
   const filteredActivityItems = activityItems.filter(item => {
     const now = new Date(); // Current date and time
