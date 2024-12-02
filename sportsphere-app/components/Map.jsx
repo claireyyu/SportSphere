@@ -2,13 +2,17 @@ import React, { useState, useEffect, useContext } from 'react'
 import { View, StyleSheet, Image, Text, Button } from 'react-native'
 import MapView, { Callout } from 'react-native-maps'
 import LocationManager from './LocationManager'
-import { readAllFiles, readProfile } from '../Firebase/firebaseHelper'
+import { findUserByUid, readAllFiles, readProfile } from '../Firebase/firebaseHelper'
 import { Marker } from 'react-native-maps';
 import { COLORS, SPACING, ROUNDED, SHADOW, FONTSIZE } from '../global';
 import { ProgressBar } from './ProgressBar';
 import PressableButton from './PressableButton'
 import { useNavigation } from '@react-navigation/native'
 import { UserContext } from '../context/UserProvider'
+import { ref, getDownloadURL } from 'firebase/storage';
+import { storage } from '../Firebase/firebaseSetup';
+import { set } from 'date-fns'
+
 
 
 export default function Map({currentLocation}) {
@@ -16,18 +20,67 @@ export default function Map({currentLocation}) {
   const collectionName = "activities";
   const navigation = useNavigation();
   const { userProfile } = useContext(UserContext);
-  const [profileDownloadurl, setProfileDownloadurl] = React.useState(null);
+  //const [profileDownloadurl, setProfileDownloadurl] = React.useState(null);
   useEffect(() => {
-    readAllFiles(collectionName, null, 'date', currentLocation, setActivityItems, (error) => {
-      console.log("Error fetching activities in map", error.message);
-    });
-    readProfile("users", userProfile.userDocId, setProfileDownloadurl);
+
+    async function getProfileDownloadURL(profileUploadURL) {
+      try {
+        if (profileUploadURL) {
+          const imageRef = ref(storage, profileUploadURL);
+          const downloadURL = await getDownloadURL(imageRef);
+          console.log("Profile picture URL:", downloadURL);
+          //setProfileDownloadurl(downloadURL);
+          return downloadURL;
+          //item.profileDownloadurl = downloadURL;
+        }
+      } catch (err) {
+        console.log("Error getting profile picture URL: ", err);
+        return null;
+      }
+    }
+
+    async function fetchProfileUrls(activityItems) {
+      try {
+        const updatedItems = await Promise.all(
+          activityItems.map(async (item) => {
+            const user = await findUserByUid(item.owner);
+            let profileDownloadURL = null;
+    
+            if (user && user.userInfo && user.userInfo.profilePicture) {
+              const profileUploadURL = user.userInfo.profilePicture;
+              profileDownloadURL = await getProfileDownloadURL(profileUploadURL);
+            }
+    
+            return { ...item, profileDownloadurl: profileDownloadURL };
+          })
+        );
+    
+        setActivityItems(updatedItems);
+      } catch (error) {
+        console.log("Error fetching profile URLs to display in map: ", error.message);
+      }
+    }
+
+    readAllFiles(
+      collectionName,
+      null,
+      'date',
+      currentLocation,
+      (items) => {
+        fetchProfileUrls(items);
+      },
+      (error) => {
+        console.log("Error fetching activities in map", error.message);
+      }
+    );
   }, []);
 
   function handleNavigateToDetails(id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition) {
     console.log("Go to details page.", id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition);
     navigation.navigate('ActivityDetails', {id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition});
   }
+
+  
 
   return (
     <>
@@ -54,8 +107,8 @@ export default function Map({currentLocation}) {
                         longitude: item.venuePosition.longitude,
                     }}
                 >
-                  {profileDownloadurl ? (
-                    <Image source={{ uri: profileDownloadurl }} style={{width: 50, height: 50}} />
+                  {item.profileDownloadurl ? (
+                    <Image source={{ uri: item.profileDownloadurl }} style={styles.marker} />
                   ) : (
                     <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }} style={{width: 50, height: 50}} />
                   )}
@@ -130,5 +183,10 @@ export const styles = StyleSheet.create({
       fontSize: FONTSIZE.tiny,
       fontWeight: 'bold',
     },
+    marker : {
+      cornerRadius: 50, 
+      width: 50,
+      height: 50
+    }
   });
 
