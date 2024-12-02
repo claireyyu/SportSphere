@@ -13,7 +13,7 @@ import { UserContext } from '../context/UserProvider'
 import * as Location from 'expo-location';
 import { Ionicons } from '@expo/vector-icons'
 import { set } from 'date-fns'
-import LottieView from 'lottie-react-native';
+// import LottieView from 'lottie-react-native';
 
 
 export default function ActivityScreen({ modalVisible, modalHandler, currentLocation }) {
