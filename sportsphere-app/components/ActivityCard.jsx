@@ -9,7 +9,7 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useState, useContext } from 'react';
 import { UserContext } from '../context/UserProvider';  
 
-export default function ActivityCard({ activityName, venue, date, time, peopleGoing, totalMembers, description, id, owner, venuePosition, images}) {
+export default function ActivityCard({ activityName, venue, date, time, peopleGoing, totalMembers, description, id, owner, venuePosition, images, profileDownloadurl }) {
   const navigation = useNavigation();
   const [hasJoined, setHasJoined] = useState(false);
   const [isFull, setIsFull] = useState(false);
@@ -39,7 +39,8 @@ export default function ActivityCard({ activityName, venue, date, time, peopleGo
       description,
       owner,
       venuePosition,
-      images
+      images,
+      profileDownloadurl,
     });
   }
 
@@ -48,12 +49,19 @@ export default function ActivityCard({ activityName, venue, date, time, peopleGo
       <View style={styles.headerContainer}>
         <FontAwesome5 name="dot-circle" size={SIZE.badge} color={peopleGoing.includes(currentUser) ? COLORS.primary : (peopleGoing.length == totalMembers ? COLORS.delete : COLORS.theme)} />
         <Text style={styles.title}>{activityName}</Text>
-
-        <Avatar
-          size={SIZE.smallAvatar}
-          rounded
-          source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
-        />
+        {profileDownloadurl ? (
+          <Avatar
+            size={SIZE.smallAvatar}
+            rounded
+            source={{ uri: profileDownloadurl }}
+          />
+        ) : (
+          <Avatar
+            size={SIZE.smallAvatar}
+            rounded
+            source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
+          />
+        )}
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.infoText}>{venue}</Text>
@@ -63,10 +71,12 @@ export default function ActivityCard({ activityName, venue, date, time, peopleGo
         <ProgressBar value={peopleGoing.length} total={totalMembers} />
         <Text style={styles.peopleCount}>{totalMembers} ppl</Text>
       </View>
+      <View style={styles.goingTxBtn}>
       <Text style={styles.goingText}>{peopleGoing.length} ppl going</Text>
       <PressableButton componentStyle={styles.button} pressedFunction={handleToActivityDetail}>
         <Text style={styles.buttonText}>Learn More</Text>
       </PressableButton>
+      </View>
     </View>
   );
 }
@@ -75,7 +85,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: COLORS.background,
     borderRadius: ROUNDED.l,
-    paddingVertical: SPACING.small,
+    paddingVertical: SPACING.s,
     paddingHorizontal: SPACING.medium,
     margin: SPACING.medium,
     marginHorizontal: SPACING.xs,
@@ -100,7 +110,8 @@ const styles = StyleSheet.create({
     marginHorizontal: SPACING.xsmall,
   },
   infoContainer: {
-    marginVertical: SPACING.small,
+    marginTop: SPACING.None,
+    marginBottom: SPACING.small,
   },
   joinedText: {
     borderColor: COLORS.primary,
@@ -118,7 +129,8 @@ const styles = StyleSheet.create({
   progressContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: SPACING.small,
+    marginTop: SPACING.None,
+    marginBottom: SPACING.small,
   },
   peopleCount: {
     fontSize: FONTSIZE.body,
@@ -138,10 +150,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.small,
     borderRadius: ROUNDED.default,
     alignSelf: 'flex-end',
+    marginTop: SPACING.xs,
   },
   buttonText: {
     color: COLORS.background,
     fontSize: FONTSIZE.small,
     fontWeight: 'bold',
   },
+  goingTxBtn: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    //alignItems: 'center',
+  }
 });

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useContext} from 'react'
 import Feather from '@expo/vector-icons/Feather';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import PressableButton from './PressableButton';
@@ -8,6 +8,8 @@ import { SIZE, SPACING } from '../global';
 import { set } from 'date-fns';
 import { ref, deleteObject } from 'firebase/storage';
 import { storage } from '../Firebase/firebaseSetup';
+import { Alert } from 'react-native';
+import { QueryContext } from '../context/QueryProvider';
 
 // export default function ImageManager({images, imagesHandler, downloadURLs=null}) {
   //const [images, setImages] = React.useState([]);
@@ -37,6 +39,9 @@ import { storage } from '../Firebase/firebaseSetup';
   const displayedImages = [...displayedExistingImages, ...displayedNewImages];
   console.log("displayedImages", displayedImages);
 
+  const { imagePermission, setImagePermission } = useContext(QueryContext);
+
+
   // useEffect(() => {
   //   setExistingImagesShown(existingImages);
   // }, [existingImages]);
@@ -62,6 +67,8 @@ import { storage } from '../Firebase/firebaseSetup';
         return false;
       }
     }
+
+  
   async function verifyCameraPermissions() {
     try {
         if (cameraResponse.granted) {
