@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import React, {useContext, useEffect, useState} from 'react'
 import ActivityCard from '../components/ActivityCard'
 import { COLORS, FONTSIZE, SPACING, ROUNDED, SIZE } from '../global'
@@ -13,8 +13,6 @@ import { UserContext } from '../context/UserProvider'
 import * as Location from 'expo-location';
 import { Ionicons } from '@expo/vector-icons'
 import { set } from 'date-fns'
-// import LottieView from 'lottie-react-native';
-
 
 export default function ActivityScreen({ modalVisible, modalHandler, currentLocation }) {
   const { userProfile } = useContext(UserContext);
@@ -146,8 +144,6 @@ export default function ActivityScreen({ modalVisible, modalHandler, currentLoca
         />
       </View>
       <View style={styles.bottom}>
-        <View style={styles.activitySortAnimationContainer}>
-        <View style={styles.activitySortContainer}>
         <Text style={styles.title}>Popular Activities</Text>
         <View style={styles.btnContainer}>
           <PressableButton
@@ -162,8 +158,6 @@ export default function ActivityScreen({ modalVisible, modalHandler, currentLoca
           >
             <Text style={[styles.btnText, { color: isDistanceSelected? COLORS.themeLight : COLORS.border }]}>Nearby</Text>
           </PressableButton>
-        </View>
-        </View>
         </View>
         <ActivityCardList modalVisible={modalVisible} modalHandler={modalHandler} currentLocation={currentLocation} isDateSelected={isDateSelected} isDistanceSelected={isDistanceSelected}/>
       </View>
@@ -180,17 +174,14 @@ const styles = StyleSheet.create({
   },
   top: {
     flex: 1,
-    marginTop: SPACING.None,
-    marginBottom: SPACING.None,
   },
   welcome: {
     fontFamily: 'Montserrat_700Bold',
     fontSize: FONTSIZE.h0,
-    marginTop: SPACING.None,
+    marginTop: SPACING.m,
   },
   bottom: {
-    flex: 3.5,
-    marginTop: SPACING.None,
+    flex: 3,
   },
   locationContainer: {
     flexDirection: 'row',
@@ -208,20 +199,17 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     flexDirection: 'row',
-    //justifyContent: "space-between",
-    marginTop: SPACING.m,
-    // marginLeft: SPACING.s,
+    marginTop: SPACING.xl,
   },
   btn: {
     backgroundColor: COLORS.theme,
-    padding: SPACING.s,
-    paddingHorizontal: SPACING.l,
+    padding: SPACING.m,
+    paddingHorizontal: SPACING.xl,
     borderRadius: SPACING.m,
   },
   btnText: {
     color: COLORS.themeLight,
     fontSize: FONTSIZE.body,
-    fontWeight: 'bold',
   },
   weather: {
     alignSelf: 'flex-start',
@@ -231,7 +219,6 @@ const styles = StyleSheet.create({
     borderRadius: ROUNDED.small,
     padding: SPACING.xsmall,
     marginRight: SPACING.xsmall,
-    marginTop: SPACING.xs,
   },
   weatherText: {
     color: COLORS.theme,

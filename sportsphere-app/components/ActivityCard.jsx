@@ -100,8 +100,7 @@ const styles = StyleSheet.create({
     marginHorizontal: SPACING.xsmall,
   },
   infoContainer: {
-    marginTop: SPACING.None,
-    marginBottom: SPACING.small,
+    marginVertical: SPACING.small,
   },
   joinedText: {
     borderColor: COLORS.primary,
@@ -119,8 +118,7 @@ const styles = StyleSheet.create({
   progressContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: SPACING.None,
-    marginBottom: SPACING.small,
+    marginVertical: SPACING.small,
   },
   peopleCount: {
     fontSize: FONTSIZE.body,
@@ -140,7 +138,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.small,
     borderRadius: ROUNDED.default,
     alignSelf: 'flex-end',
-    marginTop: SPACING.xs,
   },
   buttonText: {
     color: COLORS.background,
