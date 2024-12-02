@@ -185,6 +185,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: SPACING.None,
     marginBottom: SPACING.None,
+    paddingLeft: SPACING.xs,
   },
   welcome: {
     fontFamily: 'Montserrat_700Bold',
@@ -208,13 +209,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_600SemiBold',
     fontSize: FONTSIZE.h1,
     marginTop: SPACING.xxl,
-    marginLeft: SPACING.xs,
   },
   btnContainer: {
     flexDirection: 'row',
     //justifyContent: "space-between",
     marginTop: SPACING.m,
-    marginLeft: SPACING.s,
   },
   btn: {
     backgroundColor: COLORS.theme,

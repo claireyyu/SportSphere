@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useState, useEffect } from 'react'
 import { findUserByUid } from '../Firebase/firebaseHelper'
 
-export default function MessageScreenHeader({uid}) {
+export default function MessageScreenHeader({uid, otherUserAvatar}) {
   const navigation = useNavigation();
   const [viewingUserInfo, setViewingUserInfo] = useState({});
 
@@ -34,11 +34,19 @@ export default function MessageScreenHeader({uid}) {
         </PressableButton>
 
         <View style={styles.profileContainer}>
-          <Avatar
-            size={SIZE.smallAvatar}
-            rounded
-            source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
-          />
+        {otherUserAvatar ? (
+        <Avatar
+          size={SIZE.smallAvatar}
+          rounded
+          source={{ uri: otherUserAvatar }}
+        />
+      ) : (
+        <Avatar
+          size={SIZE.smallAvatar}
+          rounded
+          source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
+        />
+      )}
           <View style={styles.profileInfo}>
             <Text style={styles.username}>{viewingUserInfo?.username || 'Anonymous'}</Text>
             <Text style={styles.bio}>{viewingUserInfo?.bio || ''}</Text>

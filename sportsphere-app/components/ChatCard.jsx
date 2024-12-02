@@ -8,12 +8,12 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../Firebase/firebaseSetup';
 import { query, collection, where, getDocs, deleteDoc } from 'firebase/firestore';
 
-export default function ChatCard({ username, message, timestamp, uid, isUnread, messageId, currentUserUid, recipientId }) {
+export default function ChatCard({ username, message, timestamp, uid, isUnread, messageId, currentUserUid, recipientId, otherUserAvatar }) {
   const navigation = useNavigation();
 
   async function handleToChatDetail() {
     // Update the isRead field to true
-    navigation.navigate('Message', { uid });
+    navigation.navigate('Message', { uid, otherUserAvatar });
     console.log('recipientId', recipientId);
     console.log('currentUserUid', currentUserUid);
     if (recipientId === currentUserUid) {
@@ -64,11 +64,24 @@ export default function ChatCard({ username, message, timestamp, uid, isUnread, 
       pressedFunction={handleToChatDetail}
       onLongPress={confirmDeleteChat}
     >
-      <Avatar
+      {otherUserAvatar ? (
+        <Avatar
+          size={SIZE.smallAvatar}
+          rounded
+          source={{ uri: otherUserAvatar }}
+        />
+      ) : (
+        <Avatar
+          size={SIZE.smallAvatar}
+          rounded
+          source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
+        />
+      )}
+      {/* <Avatar
         size={SIZE.smallAvatar}
         rounded
         source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
-      />
+      /> */}
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <Text style={styles.username}>{username}</Text>
