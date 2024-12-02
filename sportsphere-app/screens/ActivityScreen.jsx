@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
   },
   top: {
     flex: 1,
+    paddingLeft: SPACING.xs,
   },
   welcome: {
     fontFamily: 'Montserrat_700Bold',
@@ -196,20 +197,23 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_600SemiBold',
     fontSize: FONTSIZE.h1,
     marginTop: SPACING.xxl,
+    marginLeft: SPACING.xs,
   },
   btnContainer: {
     flexDirection: 'row',
     marginTop: SPACING.xl,
+    marginLeft: SPACING.xs,
   },
   btn: {
     backgroundColor: COLORS.theme,
-    padding: SPACING.m,
-    paddingHorizontal: SPACING.xl,
+    padding: SPACING.s,
+    paddingHorizontal: SPACING.l,
     borderRadius: SPACING.m,
   },
   btnText: {
     color: COLORS.themeLight,
     fontSize: FONTSIZE.body,
+    fontWeight: 'bold',
   },
   weather: {
     alignSelf: 'flex-start',
