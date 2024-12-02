@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     //justifyContent: "space-between",
     marginTop: SPACING.m,
-    marginLeft: SPACING.s,
+    // marginLeft: SPACING.s,
   },
   btn: {
     backgroundColor: COLORS.theme,
