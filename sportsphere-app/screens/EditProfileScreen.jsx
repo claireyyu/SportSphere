@@ -12,11 +12,13 @@ import { QueryContext } from '../context/QueryProvider';
 import * as ImagePicker from 'expo-image-picker';
 
 
-export default function EditProfileScreen() {
+export default function EditProfileScreen({route}) {
   const { userProfile } = useContext(UserContext);
   const navigation = useNavigation();
   const { imagePermission, setImagePermission } = useContext(QueryContext);
   const [profilePicture, setProfilePicture] = React.useState(null);
+  const profileDownloadURL = route.params.profileDownloadurl;
+  
  
 
   async function changeProfilePicture() {
@@ -54,21 +56,35 @@ export default function EditProfileScreen() {
       </View>
       <View style={styles.avatarContainer}>
         <PressableButton pressedFunction={changeProfilePicture}>
-        {profilePicture ? 
-        <Avatar
-          size={SIZE.avatar}
-          rounded
-          source={{
-            uri: profilePicture
-          }}
-        />: 
-        <Avatar
-          size={SIZE.avatar}
-          rounded
-          source={{
-            uri: "https://avatar.iran.liara.run/public/girl"
-          }}
-        />}
+        {
+          profilePicture ? (
+            <Avatar
+              size={SIZE.avatar}
+              rounded
+              source={{
+                uri: profilePicture
+              }}
+            />
+          ) : (
+            profileDownloadURL ? (
+              <Avatar
+                size={SIZE.avatar}
+                rounded
+                source={{
+                  uri: profileDownloadURL
+                }}
+              />
+            ) : (
+              <Avatar
+                size={SIZE.avatar}
+                rounded
+                source={{
+                  uri: "https://avatar.iran.liara.run/public/girl"
+                }}
+              />
+            )
+          )
+        }
         </PressableButton>
         {/* <PressableButton>
           <Text style={styles.editProfile}>Change Profile Photo</Text>

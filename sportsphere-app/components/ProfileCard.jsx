@@ -8,6 +8,9 @@ import { auth } from '../Firebase/firebaseSetup';
 import { Alert } from 'react-native';
 import { UserContext } from '../context/UserProvider';
 import { useNavigation } from '@react-navigation/native';
+import { uploadBytesResumable, ref } from 'firebase/storage';
+import { storage } from '../Firebase/firebaseSetup';
+
   
 export default function ProfileCard({ name, email, bio, newProfilePicture }) {
   const { setUserProfile } = useContext(UserContext);
@@ -27,21 +30,48 @@ export default function ProfileCard({ name, email, bio, newProfilePicture }) {
       return;
     }
     const uid = auth.currentUser.uid;
+    const profileUploadurl = await handleImageData(newProfilePicture);
     const updatedProfile = {
       username: nameInput,
       bio: bioInput,
-      profilePicture: newProfilePicture,
-      
+      //profilePicture: profileUploadurl,
     };
+    if (profileUploadurl) {
+      updatedProfile.profilePicture = profileUploadurl;
+    }
     await updateUserProfile(uid, updatedProfile);
     setUserProfile((prevProfile) => ({
       ...prevProfile,
       username: nameInput,
       bio: bioInput,
+      ...(profileUploadurl && { profilePicture: profileUploadurl }),
     }));
     Alert.alert("Profile Updated", "Your profile has been updated successfully.");
-    navigation.navigate("Profile");
+    navigation.navigate("Profile", {profileUploadurl});
   };
+
+  async function handleImageData(uri) {
+    if (!uri) {
+      return null;
+    }
+    try {
+      let uploadURl = "";
+      //fetch the image data
+      const response = await fetch(uri);
+      if (!response.ok) {
+        throw new Error(`fetch error happened with status ${response.status}`);
+      }
+      const blob = await response.blob();
+      const imageName = uri.substring(uri.lastIndexOf("/") + 1);
+      const imageRef = ref(storage, `images/${imageName}`);
+      const uploadResult = await uploadBytesResumable(imageRef, blob);
+      uploadURl = uploadResult.metadata.fullPath;
+      return uploadURl;
+    } catch (err) {
+      console.log("handle Image data ", err);
+      return null;
+    }
+  }
 
   useEffect(() => {
     if (nameInputRef.current) {
