@@ -1,23 +1,27 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { View, StyleSheet, Image, Text, Button } from 'react-native'
 import MapView, { Callout } from 'react-native-maps'
 import LocationManager from './LocationManager'
-import { readAllFiles } from '../Firebase/firebaseHelper'
+import { readAllFiles, readProfile } from '../Firebase/firebaseHelper'
 import { Marker } from 'react-native-maps';
 import { COLORS, SPACING, ROUNDED, SHADOW, FONTSIZE } from '../global';
 import { ProgressBar } from './ProgressBar';
 import PressableButton from './PressableButton'
 import { useNavigation } from '@react-navigation/native'
+import { UserContext } from '../context/UserProvider'
 
 
 export default function Map({currentLocation}) {
   const [activityItems, setActivityItems] = useState([]);
   const collectionName = "activities";
   const navigation = useNavigation();
+  const { userProfile } = useContext(UserContext);
+  const [profileDownloadurl, setProfileDownloadurl] = React.useState(null);
   useEffect(() => {
     readAllFiles(collectionName, null, 'date', currentLocation, setActivityItems, (error) => {
       console.log("Error fetching activities in map", error.message);
     });
+    readProfile("users", userProfile.userDocId, setProfileDownloadurl);
   }, []);
 
   function handleNavigateToDetails(id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition) {
@@ -50,7 +54,12 @@ export default function Map({currentLocation}) {
                         longitude: item.venuePosition.longitude,
                     }}
                 >
-                  <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }} style={{width: 50, height: 50}} />
+                  {profileDownloadurl ? (
+                    <Image source={{ uri: profileDownloadurl }} style={{width: 50, height: 50}} />
+                  ) : (
+                    <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }} style={{width: 50, height: 50}} />
+                  )}
+                  
                   <Callout onPress={()=>handleNavigateToDetails(item.id, item.activityName, item.venue, item.date, item.time, item.peopleGoing, item.totalMembers, item.description, item.owner, item.venuePosition)}>
                     <View style={styles.customCallout}>
                       <Text style={styles.calloutTitle}>{item.activityName}</Text>
