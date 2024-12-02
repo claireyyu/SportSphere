@@ -4,7 +4,7 @@ import MapView, { Callout } from 'react-native-maps'
 import LocationManager from './LocationManager'
 import { findUserByUid, readAllFiles, readProfile } from '../Firebase/firebaseHelper'
 import { Marker } from 'react-native-maps';
-import { COLORS, SPACING, ROUNDED, SHADOW, FONTSIZE } from '../global';
+import { COLORS, SPACING, ROUNDED, SHADOW, FONTSIZE, SIZE } from '../global';
 import { ProgressBar } from './ProgressBar';
 import PressableButton from './PressableButton'
 import { useNavigation } from '@react-navigation/native'
@@ -12,6 +12,9 @@ import { UserContext } from '../context/UserProvider'
 import { ref, getDownloadURL } from 'firebase/storage';
 import { storage } from '../Firebase/firebaseSetup';
 import { set } from 'date-fns'
+import { useFocusEffect } from '@react-navigation/native';
+import { Avatar } from '@rneui/themed';
+
 
 
 
@@ -21,7 +24,9 @@ export default function Map({currentLocation}) {
   const navigation = useNavigation();
   const { userProfile } = useContext(UserContext);
   //const [profileDownloadurl, setProfileDownloadurl] = React.useState(null);
-  useEffect(() => {
+  // useEffect(() => {
+  useFocusEffect(
+    React.useCallback(() => {
 
     async function getProfileDownloadURL(profileUploadURL) {
       try {
@@ -73,7 +78,8 @@ export default function Map({currentLocation}) {
         console.log("Error fetching activities in map", error.message);
       }
     );
-  }, []);
+  }, [currentLocation])
+  );
 
   function handleNavigateToDetails(id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition) {
     console.log("Go to details page.", id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition);
@@ -110,7 +116,13 @@ export default function Map({currentLocation}) {
                   {item.profileDownloadurl ? (
                     <Image source={{ uri: item.profileDownloadurl }} style={styles.marker} />
                   ) : (
-                    <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }} style={{width: 50, height: 50}} />
+                    <Avatar
+                      size={SIZE.smallAvatar}
+                      rounded
+                      source={{
+                        uri: "https://avatar.iran.liara.run/public/girl"
+                }}
+              />
                   )}
                   
                   <Callout onPress={()=>handleNavigateToDetails(item.id, item.activityName, item.venue, item.date, item.time, item.peopleGoing, item.totalMembers, item.description, item.owner, item.venuePosition)}>
@@ -184,9 +196,9 @@ export const styles = StyleSheet.create({
       fontWeight: 'bold',
     },
     marker : {
-      cornerRadius: 50, 
-      width: 50,
-      height: 50
+      borderRadius: ROUNDED.l,
+      width: SIZE.smallAvatar,
+      height: SIZE.smallAvatar,
     }
   });
 
