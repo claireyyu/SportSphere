@@ -121,8 +121,8 @@ export default function Map({currentLocation}) {
                       rounded
                       source={{
                         uri: "https://avatar.iran.liara.run/public/girl"
-                }}
-              />
+                      }}
+                    />
                   )}
                   
                   <Callout onPress={()=>handleNavigateToDetails(item.id, item.activityName, item.venue, item.date, item.time, item.peopleGoing, item.totalMembers, item.description, item.owner, item.venuePosition)}>
