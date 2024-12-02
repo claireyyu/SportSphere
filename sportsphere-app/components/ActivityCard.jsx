@@ -9,7 +9,7 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useState, useContext } from 'react';
 import { UserContext } from '../context/UserProvider';  
 
-export default function ActivityCard({ activityName, venue, date, time, peopleGoing, totalMembers, description, id, owner, venuePosition, images}) {
+export default function ActivityCard({ activityName, venue, date, time, peopleGoing, totalMembers, description, id, owner, venuePosition, images, profileDownloadurl }) {
   const navigation = useNavigation();
   const [hasJoined, setHasJoined] = useState(false);
   const [isFull, setIsFull] = useState(false);
@@ -39,7 +39,8 @@ export default function ActivityCard({ activityName, venue, date, time, peopleGo
       description,
       owner,
       venuePosition,
-      images
+      images,
+      profileDownloadurl,
     });
   }
 
@@ -48,12 +49,19 @@ export default function ActivityCard({ activityName, venue, date, time, peopleGo
       <View style={styles.headerContainer}>
         <FontAwesome5 name="dot-circle" size={SIZE.badge} color={peopleGoing.includes(currentUser) ? COLORS.primary : (peopleGoing.length == totalMembers ? COLORS.delete : COLORS.theme)} />
         <Text style={styles.title}>{activityName}</Text>
-
-        <Avatar
-          size={SIZE.smallAvatar}
-          rounded
-          source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
-        />
+        {profileDownloadurl ? (
+          <Avatar
+            size={SIZE.smallAvatar}
+            rounded
+            source={{ uri: profileDownloadurl }}
+          />
+        ) : (
+          <Avatar
+            size={SIZE.smallAvatar}
+            rounded
+            source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
+          />
+        )}
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.infoText}>{venue}</Text>
