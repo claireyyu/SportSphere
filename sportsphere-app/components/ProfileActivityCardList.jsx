@@ -6,6 +6,8 @@ import { QueryContext } from "../context/QueryProvider";
 import { readAllFiles } from '../Firebase/firebaseHelper';
 import { UserContext } from '../context/UserProvider';
 import { findUserByUid } from '../Firebase/firebaseHelper';
+import { parse } from 'date-fns';
+import { SIZE, SPACING } from '../global';
 
 export default function ProfileActivityCardList({uid}) {
   const [viewingUserInfo, setViewingUserInfo] = useState({});
@@ -76,5 +78,6 @@ export default function ProfileActivityCardList({uid}) {
 const styles = StyleSheet.create({
   listContainer: {
     width: '100%',
+    paddingBottom: SIZE.avatar,
   },
 })

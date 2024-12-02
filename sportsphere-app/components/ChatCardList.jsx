@@ -50,7 +50,8 @@ export default function ChatCardList() {
         const latestMessage = conversationMessages[conversationMessages.length - 1]; // Messages are already sorted by timestamp descending
 
         // Trim the message text to 10 words
-        const trimmedMessage = latestMessage.text.split(' ').slice(0, 10).join(' ') + '...';
+        const messageWords = latestMessage.text.split(' ');
+        const trimmedMessage = messageWords.length > 10 ? messageWords.slice(0, 10).join(' ') + '...' : latestMessage.text;
 
         // Format the timestamp
         const formattedTimestamp = format(latestMessage.timestamp.toDate(), 'HH:mm');

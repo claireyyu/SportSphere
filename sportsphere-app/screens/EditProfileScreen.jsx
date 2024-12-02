@@ -16,6 +16,7 @@ import * as ImagePicker from 'expo-image-picker';
 export default function EditProfileScreen({route}) {
   const { userProfile } = useContext(UserContext);
   const navigation = useNavigation();
+
   const [profilePicture, setProfilePicture] = React.useState(null);
   const profileDownloadURL = route.params.profileDownloadurl;
   const [imageResponse, requestImagePermission] = ImagePicker.useMediaLibraryPermissions();
@@ -57,7 +58,7 @@ export default function EditProfileScreen({route}) {
         console.log("Error picking image", error);
       } 
   }
-
+  
   return (
     <View style={styles.container}>
       <PressableButton
