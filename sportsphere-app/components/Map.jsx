@@ -34,9 +34,7 @@ export default function Map({currentLocation}) {
           const imageRef = ref(storage, profileUploadURL);
           const downloadURL = await getDownloadURL(imageRef);
           console.log("Profile picture URL:", downloadURL);
-          //setProfileDownloadurl(downloadURL);
           return downloadURL;
-          //item.profileDownloadurl = downloadURL;
         }
       } catch (err) {
         console.log("Error getting profile picture URL: ", err);
