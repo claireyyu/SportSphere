@@ -14,6 +14,8 @@ import { storage } from '../Firebase/firebaseSetup';
 import { set } from 'date-fns'
 import { useFocusEffect } from '@react-navigation/native';
 import { Avatar } from '@rneui/themed';
+import { parse } from 'date-fns';
+import { QueryContext } from '../context/QueryProvider';
 
 
 
@@ -23,6 +25,7 @@ export default function Map({currentLocation}) {
   const collectionName = "activities";
   const navigation = useNavigation();
   const { userProfile } = useContext(UserContext);
+  const { searchQuery } = useContext(QueryContext);
   //const [profileDownloadurl, setProfileDownloadurl] = React.useState(null);
   // useEffect(() => {
   useFocusEffect(
@@ -79,10 +82,30 @@ export default function Map({currentLocation}) {
   }, [currentLocation])
   );
 
+  const filteredActivityItems = activityItems.filter(item => {
+    const now = new Date(); // Current date and time
+    const itemDate = parse(item.date, 'MMM dd, yyyy', new Date());
+    const itemTime = parse(item.time, 'HH:mm', new Date());
+    itemDate.setHours(itemTime.getHours(), itemTime.getMinutes(), 0);
+
+    // Check if the item's date is after now
+    if (itemDate <= now) return false;
+    const terms = searchQuery.toLowerCase().split(' ');
+  
+    // Check if any term matches activityName, venue, description, or date
+    return terms.some(term =>
+      item.activityName.toLowerCase().includes(term) ||
+      item.venue.toLowerCase().includes(term) ||
+      item.description.toLowerCase().includes(term) ||
+      item.date.toLowerCase().includes(term)
+    );
+  });
+
   function handleNavigateToDetails(id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition) {
     console.log("Go to details page.", id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition);
     navigation.navigate('ActivityDetails', {id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition});
   }
+
 
   
 
@@ -103,7 +126,7 @@ export default function Map({currentLocation}) {
               }}
               title="You're Here!" />
 
-            {activityItems.map((item) => (
+            {filteredActivityItems.map((item) => (
                 <Marker
                     key={item.id}
                     coordinate={{
@@ -123,7 +146,7 @@ export default function Map({currentLocation}) {
                     />
                   )}
                   
-                  <Callout onPress={()=>handleNavigateToDetails(item.id, item.activityName, item.venue, item.date, item.time, item.peopleGoing, item.totalMembers, item.description, item.owner, item.venuePosition)}>
+                  <Callout onPress={()=>handleNavigateToDetails(item.id, item.activityName, item.venue, item.date, item.time, item.peopleGoing, item.totalMembers, item.description, item.owner, item.venuePosition, item.profileDownloadurl)}>
                     <View style={styles.customCallout}>
                       <Text style={styles.calloutTitle}>{item.activityName}</Text>
                       <Text style={styles.infoText}>{item.venue.split(',')[0]}</Text>

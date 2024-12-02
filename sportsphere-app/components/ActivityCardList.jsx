@@ -11,6 +11,7 @@ import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../Firebase/firebaseSetup';
 import { findUserByUid } from '../Firebase/firebaseHelper';
 import { useFocusEffect } from "@react-navigation/native";
+import filterActivityItems from "../utils/filterActivityItems";
 
 
 
@@ -72,7 +73,7 @@ export default function ActivityCardList({modalVisible, modalHandler, currentLoc
   }, [sortPreference, isDateSelected, isDistanceSelected])
 );
 
-
+  
   const filteredActivityItems = activityItems.filter(item => {
     const now = new Date(); // Current date and time
     const itemDate = parse(item.date, 'MMM dd, yyyy', new Date());
@@ -91,6 +92,7 @@ export default function ActivityCardList({modalVisible, modalHandler, currentLoc
       item.date.toLowerCase().includes(term)
     );
   });
+  
 
   return (
     <View>
