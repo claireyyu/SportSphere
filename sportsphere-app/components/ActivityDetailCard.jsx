@@ -12,6 +12,10 @@ import { set } from 'date-fns';
 import { ref, getDownloadURL } from 'firebase/storage';
 import { storage } from '../Firebase/firebaseSetup';
 import { parse } from 'date-fns';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { Dimensions } from 'react-native';
+const screenWidth = Dimensions.get('window').width;
+
 
 export default function ActivityDetailCard({ route }) {
   const { userProfile } = useContext(UserContext);
@@ -167,20 +171,23 @@ export default function ActivityDetailCard({ route }) {
           <Text style={styles.buttonText}>{hasJoined ? 'Joined' : (peopleGoing.length >= totalMembers?'Full': 'Join Now')}</Text>
       </PressableButton>
       </View>
-
-      <View style={styles.infoContainer}>
-        <Text style={styles.labelText}>Location</Text>
-        <Text style={styles.infoText}>{venue}{`\n`}</Text>
-        <Text style={styles.labelText}>Date & Time</Text>
-        <Text style={styles.infoText}>{`${date} - ${time}\n`}</Text>
-        <Text style={styles.labelText}>Description</Text>
-        <Text style={styles.infoText}>{description}{`\n`}</Text>
-        <Text style={styles.labelText}>Pictures</Text>
-        <ScrollView horizontal={true} style={{marginTop: SPACING.small}}>
+        <View style={styles.infoContainer}>
+          <View style={[styles.detailContainer, {marginTop: SPACING.small}]}>
+          <Ionicons name="location-sharp" size={24} color={COLORS.theme} />
+            <Text style={styles.infoText}>{venue}{`\n`}</Text>
+          </View>
+          <View style={styles.detailContainer}>
+            <Ionicons name="time" size={24} color="black" />
+            <Text style={styles.infoText}>{`${date} - ${time}\n`}</Text>
+          </View>
+          <Text style={[styles.infoText, {color: COLORS.theme, fontFamily: 'Montserrat_600SemiBold', marginTop: SPACING.l}]}>{description}{`\n`}</Text>
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'center', marginTop: SPACING.small }}
+          >
           {downloadURLs.map((url, index) => (
             <Image key={index} source={{ uri: url }} style={styles.image} />
           ))}
-        </ScrollView>
+        </View>
       </View>
       <View style={styles.progressContainer}>
         <ProgressBar value={pplGoingNumber} total={totalMembers} />
@@ -206,12 +213,13 @@ export default function ActivityDetailCard({ route }) {
 
 const styles = StyleSheet.create({
   cardContainer: {
+    flex: 1,
     backgroundColor: COLORS.background,
     borderRadius: ROUNDED.default,
     paddingVertical: SPACING.small,
-    paddingHorizontal: SPACING.medium,
-    margin: SPACING.medium,
-    marginHorizontal: SPACING.s,
+    paddingHorizontal: SPACING.xxl,
+    marginVertical: SPACING.medium,
+    // marginHorizontal: SPACING.s,
     // Shadow properties
     shadowColor: SHADOW.color,
     shadowOffset: SHADOW.offset,
@@ -242,15 +250,17 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.xsmall,
   },
   infoText: {
+    marginLeft: SPACING.xs,
     fontSize: FONTSIZE.body,
     color: COLORS.secondaryText,
-    marginBottom: SPACING.xsmall,
+    textAlignVertical: 'center',
+    // textAlign: 'center',
     //marginVertical: SPACING.xsmall,
   },
   progressContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: SPACING.small,
+    marginVertical: SPACING.m,
   },
   peopleCount: {
     fontSize: FONTSIZE.body,
@@ -290,10 +300,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   image: {
-    width: SIZE.image,
-    height: SIZE.image,
+    width: screenWidth * 0.8,
+    height: screenWidth * 0.8,
     margin: SPACING.xsmall,
     opacity: 0.9,
     marginLeft: SPACING.None,
+    borderRadius: ROUNDED.m,
+  },
+  detailContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
   },
 });

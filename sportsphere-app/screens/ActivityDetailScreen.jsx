@@ -13,7 +13,7 @@ export default function ActivityDetailScreen({ route }) {
     <View style={styles.container}>
       <PressableButton
         pressedFunction={() => navigation.goBack()}
-        componentStyle={{marginTop: SPACING.xxl}}
+        componentStyle={{marginTop: SPACING.xxl, paddingHorizontal: SPACING.l, paddingTop: SPACING.l}}
       >
         <Ionicons name="chevron-back-sharp" size={SIZE.pressableIcon} color={COLORS.theme} />
       </PressableButton>
@@ -30,12 +30,12 @@ const styles = StyleSheet.create({
     flex: 1,
     // marginHorizontal: SPACING.medium,
     backgroundColor: COLORS.themeLight,
-    padding: SPACING.l,
   },
 
   title: {
     fontFamily: 'Montserrat_700Bold',
     fontSize: FONTSIZE.header,
     marginTop: SPACING.l,
+    paddingHorizontal: SPACING.l,
   }
 })
