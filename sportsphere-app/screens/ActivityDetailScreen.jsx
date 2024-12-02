@@ -17,9 +17,9 @@ export default function ActivityDetailScreen({ route }) {
       >
         <Ionicons name="chevron-back-sharp" size={SIZE.pressableIcon} color={COLORS.theme} />
       </PressableButton>
-      <View>
+      {/* <View>
         <Text style={styles.title}>More</Text>
-      </View>
+      </View> */}
       <ActivityDetailCard route={route}/>
     </View>
   )

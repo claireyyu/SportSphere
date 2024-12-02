@@ -215,11 +215,12 @@ const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
     backgroundColor: COLORS.background,
-    borderRadius: ROUNDED.default,
+    borderRadius: ROUNDED.l,
     paddingVertical: SPACING.small,
     paddingHorizontal: SPACING.xxl,
     marginVertical: SPACING.medium,
-    // marginHorizontal: SPACING.s,
+    marginTop: SPACING.xxl,
+    // marginHorizontal: SPACING.l,
     // Shadow properties
     shadowColor: SHADOW.color,
     shadowOffset: SHADOW.offset,
