@@ -1,26 +1,29 @@
+import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import ActivityDetailCard from '../components/ActivityDetailCard'
-import { SPACING, COLORS, FONTSIZE, SIZE } from '../global'
+import ChatCard from '../components/ChatCard'
+import { COLORS, SPACING, FONTSIZE, SIZE } from '../global'
+import ProfileActivityCardList from '../components/ProfileActivityCardList'
 import PressableButton from '../components/PressableButton'
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 
-export default function ActivityDetailScreen({ route }) {
+export default function JoinedActivitiesScreen() {
   const navigation = useNavigation();
-
+  
   return (
     <View style={styles.container}>
       <PressableButton
         pressedFunction={() => navigation.goBack()}
-        componentStyle={{marginTop: SPACING.xxl, paddingHorizontal: SPACING.l, paddingTop: SPACING.l}}
+        componentStyle={{marginTop: SPACING.xxl}}
       >
         <Ionicons name="chevron-back-sharp" size={SIZE.pressableIcon} color={COLORS.theme} />
       </PressableButton>
-      {/* <View>
-        <Text style={styles.title}>More</Text>
-      </View> */}
-      <ActivityDetailCard route={route}/>
+      <View>
+        <Text style={styles.title}>Joined Activities</Text>
+      </View>
+      <View style={{marginTop: SPACING.l}}>
+        <ProfileActivityCardList />
+      </View>
     </View>
   )
 }
@@ -30,12 +33,12 @@ const styles = StyleSheet.create({
     flex: 1,
     // marginHorizontal: SPACING.medium,
     backgroundColor: COLORS.themeLight,
+    padding: SPACING.l,
   },
 
   title: {
     fontFamily: 'Montserrat_700Bold',
-    fontSize: FONTSIZE.header,
-    marginTop: SPACING.l,
-    paddingHorizontal: SPACING.l,
+    fontSize: FONTSIZE.h0,
+    marginTop: SPACING.xxl,
   }
 })

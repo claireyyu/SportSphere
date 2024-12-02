@@ -38,7 +38,6 @@ export default function ChatCard({ username, message, timestamp, uid, isUnread, 
       });
 
       await Promise.all(deletePromises);
-      Alert.alert('Chat deleted successfully');
     } catch (error) {
       console.error('Error deleting chat: ', error);
       Alert.alert('Error deleting chat');
@@ -86,12 +85,13 @@ export default function ChatCard({ username, message, timestamp, uid, isUnread, 
 
 const styles = StyleSheet.create({
   cardContainer: {
-    minHeight: SIZE.tabBar,
-    backgroundColor: COLORS.background,
+    minHeight: SIZE.chatCard,
+    backgroundColor: COLORS.themeLight,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: SPACING.small,
-    paddingHorizontal: SPACING.medium,
+    marginTop: SPACING.s,
+    paddingVertical: SPACING.s,
+    paddingHorizontal: SPACING.s,
   },
   container: {
     flex: 1,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   username: {
     flex: 1,
-    fontSize: FONTSIZE.body,
+    fontSize: FONTSIZE.h3,
     fontWeight: 'bold',
     color: COLORS.foreground,
     marginBottom: SPACING.xsmall,
@@ -133,7 +133,8 @@ const styles = StyleSheet.create({
     height: SIZE.badge,
     flexDirection: 'row',
     justifyContent: 'flex-end',
+    marginRight: SPACING.s,
     borderRadius: ROUNDED.small,
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.theme,
   },
 });

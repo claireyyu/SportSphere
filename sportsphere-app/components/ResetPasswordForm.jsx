@@ -5,6 +5,8 @@ import { auth } from '../Firebase/firebaseSetup';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { COLORS, FONTSIZE, SPACING, ROUNDED } from '../global';
 import PressableButton from './PressableButton';
+import Logo from './Logo';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ResetPasswordForm({ navigation }) {
   const [email, setEmail] = useState('');
@@ -32,6 +34,9 @@ export default function ResetPasswordForm({ navigation }) {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : undefined} keyboardVerticalOffset={60}>
+      <SafeAreaView>
+      <Logo />
+      <Text style={styles.title}>RESET PASSWORD</Text>
       <View style={styles.inputContainer}>
         <TextInput 
           value={email} 
@@ -48,15 +53,17 @@ export default function ResetPasswordForm({ navigation }) {
           pressedFunction={resetHandler}
           componentStyle={styles.loginButton}
         >
-          <Text style={styles.btnLoginText}>Confirm</Text>
+          <Text style={styles.btnLoginText}>SUBMIT</Text>
         </PressableButton>
         <PressableButton
-          pressedFunction={handleToSignup}
-          componentStyle={styles.registerButton}
-        >
-          <Text style={styles.btnRegisterText}>New User? Create an account!</Text>
-        </PressableButton>
+            pressedFunction={handleToSignup}
+            componentStyle={styles.registerButton}
+          >
+            <Text style={styles.btnRegisterText}>DON'T HAVE AN ACCOUNT?</Text>
+            <Text style={[styles.btnRegisterText, {marginLeft: SPACING.xs, color: COLORS.secondary}]}>SIGN UP</Text>
+          </PressableButton>
       </View>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   )
 }
@@ -64,56 +71,56 @@ export default function ResetPasswordForm({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: SPACING.medium,
-    backgroundColor: COLORS.background,
+    padding: SPACING.m,
+    paddingTop: SPACING.xxl,
+    backgroundColor: COLORS.themeLight,
+    fontFamily: 'Rubik_400Regular',
+  },
+  title: {
+    fontSize: FONTSIZE.h2,
+    fontFamily: 'Rubik_500Medium',
+    marginTop: SPACING.l,
   },
   inputContainer: {
-    width: '80%',
-    justifyContent: 'center',
+    marginTop: SPACING.xxl,
     alignItems: 'stretch',
   },
   input: {
-    width: '100%',
-    padding: SPACING.small,
-    marginVertical: SPACING.default,
-    borderWidth: 2,
-    borderColor: COLORS.secondaryText,
-    borderRadius: ROUNDED.small,
-    backgroundColor: COLORS.background,
-    color: COLORS.foreground,
+    padding: SPACING.m,
+    marginVertical: SPACING.m,
+    borderRadius: ROUNDED.xs,
+    backgroundColor: COLORS.inputBg,
+    color: COLORS.theme,
+    fontSize: FONTSIZE.body,
   },
   buttonContainer: {
-    marginTop: SPACING.medium,
+    marginTop: SPACING.xxl,
     justifyContent: 'space-between',
   },
   loginButton: {
-    backgroundColor: COLORS.primary,
-    padding: SPACING.small,
-    borderRadius: ROUNDED.small,
+    backgroundColor: COLORS.secondary,
+    padding: SPACING.s,
+    borderRadius: ROUNDED.xs,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: SPACING.xsmall,
+    marginBottom: SPACING.xl,
   },
   registerButton: {
-    backgroundColor: COLORS.background,
-    padding: SPACING.small,
-    borderRadius: ROUNDED.small,
+    padding: SPACING.s,
+    borderRadius: ROUNDED.xs,
     justifyContent: 'center',
     alignItems: 'center',
   },
   btnLoginText: {
     fontSize: FONTSIZE.body,
     textAlign: 'center',
-    color: COLORS.background,
+    color: COLORS.theme,
     fontWeight: 'bold'
   },
   btnRegisterText: {
-    fontSize: FONTSIZE.body,
+    fontSize: FONTSIZE.small,
     textAlign: 'center',
-    color: COLORS.foreground,
-    fontStyle: 'italic',
-    'textDecorationLine': 'underline',
+    color: COLORS.theme,
+    fontFamily: 'Rubik_500Medium',
   },
 });

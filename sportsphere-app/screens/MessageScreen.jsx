@@ -72,7 +72,7 @@ export default function MessageScreen({ route }) {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : undefined} keyboardVerticalOffset={60}>
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : undefined} keyboardVerticalOffset={10}>
       {/* Header */}
       <MessageScreenHeader uid={uid} />
 
@@ -84,13 +84,14 @@ export default function MessageScreen({ route }) {
       <FlatList
         data={messages}
         keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => {
           const messageTime = format(item.timestamp.toDate(), 'HH:mm'); // Format the timestamp
 
           return (
             <View style={item.sender === currentUserUid ? styles.sentMessage : styles.receivedMessage}>
-              <Text style={styles.messageText}>{item.text}</Text>
-              <Text style={[styles.messageTime]}>{messageTime}</Text>
+              <Text style={[styles.messageText, item.sender !== currentUserUid && {color: COLORS.theme}]}>{item.text}</Text>
+              <Text style={[styles.messageTime, item.sender !== currentUserUid && {color: COLORS.theme}]}>{messageTime}</Text>
             </View>
           )
         }}
@@ -110,7 +111,7 @@ export default function MessageScreen({ route }) {
         <PressableButton
           pressedFunction={sendMessage}
         >
-          <Ionicons name="send" size={20} color={COLORS.primary} />
+          <Ionicons name="send" size={20} color={COLORS.theme} />
         </PressableButton>
       </View>
     </KeyboardAvoidingView>
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
   },
   sentMessage: {
     alignSelf: 'flex-end',
-    backgroundColor: COLORS.message,
+    backgroundColor: COLORS.sentMessage,
     padding: SPACING.small,
     marginVertical: SPACING.xsmall,
     borderRadius: SPACING.small,
@@ -142,11 +143,11 @@ const styles = StyleSheet.create({
   },
   messageText: {
     fontSize: FONTSIZE.body,
+    color: COLORS.themeLight,
   },
   messageTime: {
     fontSize: FONTSIZE.tiny,
-    color: COLORS.secondaryText,
-    textAlign: 'right',
+    color: COLORS.themeLight,
     marginTop: SPACING.xsmall,
   },
   inputContainer: {
@@ -157,6 +158,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: SPACING.small,
   },
   input: {
     flex: 1,

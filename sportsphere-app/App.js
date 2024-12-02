@@ -4,15 +4,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import TabNavigator from './components/TabNavigator'
 import { COLORS, FONTSIZE, SIZE } from './global';
-import CustomStatusBar from './components/CustomStatusBar';
 import db from './Firebase/firebaseSetup';
 import ActivityDetailScreen from './screens/ActivityDetailScreen';
 import AddActivityScreen from './screens/AddActivityScreen';
-import TitleScreenHeader from './components/TitleScreenHeader';
 import EditProfileScreen from './screens/EditProfileScreen';
 import ReminderScreen from './screens/ReminderScreen';
 import AddReminderButton from './components/AddReminderButton';
-import ChatDetailScreen from './screens/ChatDetailScreen';
 import { QueryProvider } from './context/QueryProvider';
 import EditActivityScreen from './screens/EditActivityScreen';
 import SignUpForm from './components/SignUpForm';
@@ -21,11 +18,11 @@ import ResetPasswordForm from './components/ResetPasswordForm';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from './Firebase/firebaseSetup';
 import { useEffect, useState } from 'react';
-import AuthScreenHeader from './components/AuthScreenHeader';
 import { UserProvider } from './context/UserProvider';
-import OrganizerProfileScreen from './screens/OrganizerProfileScreen';
 import MessageScreen from './screens/MessageScreen';
+import WelcomeScreen from './screens/WelcomeScreen';
 import * as Notifications from 'expo-notifications';
+import JoinedActivitiesScreen from './screens/JoinedActivitiesScreen';
 import { NotificationProvider } from './context/NotificationProvider';
 Notifications.setNotificationHandler({ handleNotification: async () => ({ shouldShowAlert: true }) });
 
@@ -33,19 +30,24 @@ const Stack = createNativeStackNavigator();
 
 const AuthStack = (
   <>
+    <Stack.Screen name="Welcome" component={WelcomeScreen}
+      options={{
+        headerShown: false,
+      }}
+    />
     <Stack.Screen name="Login" component={LoginForm}
       options={{
-        header: AuthScreenHeader,
+        headerShown: false,
       }}
     />
     <Stack.Screen name="ResetPassword" component={ResetPasswordForm}
       options={{
-        header: AuthScreenHeader,
+        headerShown: false,
       }}
     />
     <Stack.Screen name="SignUp" component={SignUpForm}
       options={{
-        header: AuthScreenHeader,
+        headerShown: false,
       }}
     />
   </>
@@ -61,123 +63,33 @@ const AppStack = (
     <Stack.Screen
       name="ActivityDetails"
       component={ActivityDetailScreen}
-      options={{title: "Activity Details", 
-        headerStyle: {
-          backgroundColor: COLORS.primary,
-        },
-        headerTitleStyle: {
-          fontSize: FONTSIZE.h3,
-          color: COLORS.background,
-          fontWeight: 'bold',
-        },
-        headerBackTitleVisible: false,
-        headerTintColor: COLORS.background,
-      }}
-    />
-    <Stack.Screen
-      name="AddActivity"
-      component={AddActivityScreen}
-      options={{
-        title: "New Activity",
-        headerStyle: {
-          backgroundColor: COLORS.primary,
-        },
-        headerTitleStyle: {
-          fontSize: FONTSIZE.h3,
-          color: COLORS.background,
-          fontWeight: 'bold',
-        },
-        headerBackTitleVisible: false,
-        headerTintColor: COLORS.background,
-      }}
+      options={{ headerShown: false }}
     />
     <Stack.Screen
       name="EditActivity"
       component={EditActivityScreen}
-      options={{
-        title: "Edit Activity",
-        headerStyle: {
-          backgroundColor: COLORS.primary,
-        },
-        headerTitleStyle: {
-          fontSize: FONTSIZE.h3,
-          color: COLORS.background,
-          fontWeight: 'bold',
-        },
-        headerBackTitleVisible: false,
-        headerTintColor: COLORS.background,
-      }}
+      options={{ headerShown: false }}
     />
     <Stack.Screen
       name="EditProfile"
       component={EditProfileScreen}
-      options={{
-        title: "Edit Profile",
-        headerStyle: {
-          backgroundColor: COLORS.primary,
-        },
-        headerTitleStyle: {
-          fontSize: FONTSIZE.h3,
-          color: COLORS.background,
-          fontWeight: 'bold',
-        },
-        headerBackTitleVisible: false,
-        headerTintColor: COLORS.background,
-      }}
-      />
-      <Stack.Screen
-        name="Reminder"
-        component={ReminderScreen}
-        options={{
-          title: "Schedule Your Workout",
-          headerStyle: {
-            backgroundColor: COLORS.primary,
-          },
-          headerTitleStyle: {
-            fontSize: FONTSIZE.h3,
-            color: COLORS.background,
-            fontWeight: 'bold',
-          },
-          headerBackTitleVisible: false,
-          headerTintColor: COLORS.background,
-        }}
-        />
-      <Stack.Screen
-        name="ChatDetail"
-        component={ChatDetailScreen}
-        options={{
-          title: "Chat Detail",
-          headerStyle: {
-            backgroundColor: COLORS.primary,
-          },
-          headerTitleStyle: {
-            fontSize: FONTSIZE.h3,
-            color: COLORS.background,
-            fontWeight: 'bold',
-          },
-          headerBackTitleVisible: false,
-          headerTintColor: COLORS.background,
-        }}
-      />
-      <Stack.Screen
-        name="OrganizerProfile"
-        component={OrganizerProfileScreen}
-        options={{
-          headerShown: false,
-        }}
+      options={{ headerShown: false }}
     />
-      <Stack.Screen
-        name="Message"
-        component={MessageScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: COLORS.primary,
-          },
-          headerShown: false,
-          headerBackTitleVisible: false,
-          headerTintColor: COLORS.background,
-        }}
-      />
+    <Stack.Screen
+      name="Reminder"
+      component={ReminderScreen}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name="JoinedActivities"
+      component={JoinedActivitiesScreen}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name="Message"
+      component={MessageScreen}
+      options={{ headerShown: false }}
+    />
     </>
     )
 
@@ -210,24 +122,17 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <CustomStatusBar
-        statusBgColor={COLORS.primary}
-        barStyle="light-content"
-        backgroundColor={COLORS.primary}
-        // backgroundColor={getBackgroundColor(isUserLoggedIn ? 'AppStack' : 'AuthStack')}
-      >
         <UserProvider>
           <NotificationProvider>
             <QueryProvider>
               <NavigationContainer>
                 <Stack.Navigator>
-                  {isUserLoggedIn ? AppStack : AuthStack}
+                {isUserLoggedIn ? AppStack : AuthStack}
                 </Stack.Navigator>
               </NavigationContainer>
             </QueryProvider>
           </NotificationProvider>
         </UserProvider>
-      </CustomStatusBar>
     </View>
   );
 }
@@ -235,5 +140,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: COLORS.themeLight,
   },
 });

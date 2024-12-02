@@ -1,9 +1,11 @@
-import { View, Text, TextInput, Button, StyleSheet, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, Alert, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../Firebase/firebaseSetup';
 import { COLORS, FONTSIZE, SPACING, ROUNDED } from '../global';
 import PressableButton from './PressableButton';
+import Logo from './Logo';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function LoginForm({ navigation }) {
   const [email, setEmail] = useState('');
@@ -29,110 +31,116 @@ export default function LoginForm({ navigation }) {
       if (error.code === "auth/wrong-password") {
         Alert.alert('Incorrect password');
       } else if (error.code === "auth/user-not-found") {
+        Alert.alert('User not found');
       } else {
         Alert.alert('Error', error.message);
       }
       console.log(error);
     }
-  }
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : undefined} keyboardVerticalOffset={60}>
-      <View style={styles.inputContainer}>
-        <TextInput 
-          value={email} 
-          onChangeText={setEmail} 
-          autoCapitalize="none"
-          keyboardType="email-address"
-          placeholder='Email'
-          style={styles.input}
-        />
-        <TextInput 
-          value={password} 
-          onChangeText={setPassword} 
-          secureTextEntry
-          placeholder='Password'
-          style={styles.input}
-        />
-      </View>
+      <SafeAreaView>
+        <Logo />
+        <Text style={styles.title}>SIGN IN</Text>
+        <View style={styles.inputContainer}>
+          <TextInput 
+            value={email} 
+            onChangeText={setEmail} 
+            autoCapitalize="none"
+            keyboardType="email-address"
+            placeholder='Email'
+            style={styles.input}
+          />
+          <TextInput 
+            value={password} 
+            onChangeText={setPassword} 
+            secureTextEntry
+            placeholder='Password'
+            style={styles.input}
+          />
+        </View>
 
-      <View style={styles.buttonContainer}>
-        <PressableButton
-          pressedFunction={loginHandler}
-          componentStyle={styles.loginButton}
-        >
-          <Text style={styles.btnLoginText}>Log in</Text>
-        </PressableButton>
-        <PressableButton
-          pressedFunction={handleToResetPassword}
-          componentStyle={styles.registerButton}
-        >
-          <Text style={[styles.btnRegisterText, {color: COLORS.primary}]}>Forgot your password?</Text>
-        </PressableButton>
-        <PressableButton
-          pressedFunction={handleToSignup}
-          componentStyle={styles.registerButton}
-        >
-          <Text style={styles.btnRegisterText}>New User? Create an account!</Text>
-        </PressableButton>
-      </View>
+        <View style={styles.buttonContainer}>
+          <PressableButton
+            pressedFunction={loginHandler}
+            componentStyle={styles.loginButton}
+          >
+            <Text style={styles.btnLoginText}>LOGIN</Text>
+          </PressableButton>
+          <PressableButton
+            pressedFunction={handleToResetPassword}
+            componentStyle={[styles.btn, {marginTop: SPACING.xxl}]}
+          >
+            <Text style={styles.btnText}>FORGOT YOUR PASSWORD?</Text>
+          </PressableButton>
+          <PressableButton
+            pressedFunction={handleToSignup}
+            componentStyle={styles.btn}
+          >
+            <Text style={styles.btnText}>DON'T HAVE AN ACCOUNT?</Text>
+            <Text style={[styles.btnText, {marginLeft: SPACING.xs, color: COLORS.secondary}]}>SIGN UP</Text>
+          </PressableButton>
+        </View>
+      </SafeAreaView>
     </KeyboardAvoidingView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: SPACING.medium,
-    backgroundColor: COLORS.background,
+    padding: SPACING.m,
+    paddingTop: SPACING.xxl,
+    backgroundColor: COLORS.themeLight,
+    fontFamily: 'Rubik_400Regular',
+  },
+  title: {
+    fontSize: FONTSIZE.h2,
+    fontFamily: 'Rubik_500Medium',
+    marginTop: SPACING.l,
   },
   inputContainer: {
-    width: '80%',
-    justifyContent: 'center',
+    marginTop: SPACING.xxl,
     alignItems: 'stretch',
   },
   input: {
-    width: '100%',
-    padding: SPACING.small,
-    marginVertical: SPACING.default,
-    borderWidth: 2,
-    borderColor: COLORS.secondaryText,
-    borderRadius: ROUNDED.small,
-    backgroundColor: COLORS.background,
-    color: COLORS.foreground,
+    padding: SPACING.m,
+    marginVertical: SPACING.m,
+    borderRadius: ROUNDED.xs,
+    backgroundColor: COLORS.inputBg,
+    color: COLORS.theme,
+    fontSize: FONTSIZE.body,
   },
   buttonContainer: {
-    marginTop: SPACING.medium,
+    marginTop: SPACING.m,
     justifyContent: 'space-between',
   },
   loginButton: {
-    backgroundColor: COLORS.primary,
-    padding: SPACING.small,
-    borderRadius: ROUNDED.small,
+    backgroundColor: COLORS.secondary,
+    padding: SPACING.s,
+    borderRadius: ROUNDED.xs,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: SPACING.xsmall,
-  },
-  registerButton: {
-    backgroundColor: COLORS.background,
-    padding: SPACING.small,
-    borderRadius: ROUNDED.small,
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginBottom: SPACING.xs,
   },
   btnLoginText: {
     fontSize: FONTSIZE.body,
     textAlign: 'center',
-    color: COLORS.background,
-    fontWeight: 'bold'
+    color: COLORS.theme,
+    fontFamily: 'Rubik_500Medium',
   },
-  btnRegisterText: {
-    fontSize: FONTSIZE.body,
+  btn: {
+    padding: SPACING.s,
+    borderRadius: ROUNDED.xs,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  btnText: {
+    fontSize: FONTSIZE.small,
     textAlign: 'center',
-    color: COLORS.foreground,
-    fontStyle: 'italic',
-    'textDecorationLine': 'underline',
+    color: COLORS.theme,
+    fontFamily: 'Rubik_500Medium',
   },
 });

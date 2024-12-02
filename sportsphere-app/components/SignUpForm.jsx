@@ -1,11 +1,11 @@
-import { View, Text, TextInput, Button, StyleSheet, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, Alert, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../Firebase/firebaseSetup';
 import { writeToDB } from '../Firebase/firebaseHelper';
 import { COLORS, FONTSIZE, SPACING, ROUNDED } from '../global';
 import PressableButton from './PressableButton';
-import { set } from 'date-fns';
+import Logo from './Logo';
 
 export default function SignUpForm({ navigation }) {
   const [email, setEmail] = useState('');
@@ -32,15 +32,23 @@ export default function SignUpForm({ navigation }) {
         Alert.alert('Password should be at least 15 characters long!');
         return;
       }
+      if (username.length > 20) { 
+        Alert.alert('Username should be less than 20 characters');
+        return;
+      }
+      if (bio.length > 20) {
+        Alert.alert('Bio should be less than 20 words');
+        return;
+      }
       const userCred = await createUserWithEmailAndPassword(auth, email, password);
       console.log(userCred.user);
 
       // Add user profile to Firestore
       const userProfile = {
         uid: userCred.user.uid,
-        username: username? username : 'Anonymous',
+        username: username ? username : 'Anonymous',
         email: email,
-        bio: bio ? bio : 'Nothing yet',
+        bio: bio ? bio : '',
       };
       await writeToDB(userProfile, 'users');
 
@@ -56,68 +64,77 @@ export default function SignUpForm({ navigation }) {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : undefined} keyboardVerticalOffset={260}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          value={username}
-          onChangeText={setUsername}
-          autoCapitalize="none"
-          placeholder="Username" 
-          style={styles.input}
-        />
-        <View style={styles.requiredContainer}>
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : undefined} keyboardVerticalOffset={50}>
+      <SafeAreaView>
+        <ScrollView>
+          <View style={{marginTop: SPACING.xl}}>
+            <Logo />
+          </View>
+        <Text style={styles.title}>SIGN UP</Text>
+        <View style={styles.inputContainer}>
           <TextInput
-            value={email}
-            onChangeText={setEmail}
+            value={username}
+            onChangeText={setUsername}
             autoCapitalize="none"
-            keyboardType="email-address"
-            placeholder="Email"
-            style={styles.inputRequired}
+            placeholder="Username (less than 20 characters)" 
+            style={styles.input}
           />
-          <Text style={styles.required}>*</Text>
-        </View>
-        <View style={styles.requiredContainer}>
+          <View style={styles.requiredContainer}>
+            <TextInput
+              value={email}
+              onChangeText={setEmail}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              placeholder="Email"
+              style={styles.inputRequired}
+            />
+            <Text style={styles.required}>*</Text>
+          </View>
+          <View style={styles.requiredContainer}>
+            <TextInput
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+              placeholder="Password (at least 15 characters)"
+              style={styles.inputRequired}
+            />
+            <Text style={styles.required}>*</Text>
+          </View>
+          <View style={styles.requiredContainer}>
+            <TextInput
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              secureTextEntry
+              placeholder="Confirm Password"
+              style={styles.inputRequired}
+            />
+            <Text style={styles.required}>*</Text>
+          </View>
           <TextInput
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-            placeholder="Password (at least 15 characters)"
-            style={styles.inputRequired}
+            value={bio}
+            onChangeText={setBio}
+            placeholder="Bio (less than 20 words)"
+            style={styles.input}
           />
-          <Text style={styles.required}>*</Text>
         </View>
-        <View style={styles.requiredContainer}>
-          <TextInput
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-            secureTextEntry
-            placeholder="Confirm Password"
-            style={styles.inputRequired}
-          />
-          <Text style={styles.required}>*</Text>
-        </View>
-        <TextInput
-          value={bio}
-          onChangeText={setBio}
-          placeholder="Bio"
-          style={styles.input}
-        />
-      </View>
 
-      <View style={styles.buttonContainer}>
-        <PressableButton
-          pressedFunction={signupHandler}
-          componentStyle={styles.registerButton}
-        >
-          <Text style={styles.btnRegisterText}>Register</Text>
-        </PressableButton>
-        <PressableButton
-          pressedFunction={handleToLogin}
-          componentStyle={styles.loginButton}
-        >
-          <Text style={styles.btnLoginText}>Already Registered? Login</Text>
-        </PressableButton>
-      </View>
+        <View style={styles.buttonContainer}>
+          <PressableButton
+            pressedFunction={signupHandler}
+            componentStyle={styles.btn}
+          >
+            <Text style={styles.btnText}>CREATE ACCOUNT</Text>
+          </PressableButton>
+          <PressableButton
+            pressedFunction={handleToLogin}
+            componentStyle={styles.registerButton}
+          >
+            <Text style={styles.btnText}>ALREADY HAVE AN ACOOUNT?</Text>
+            <Text style={[styles.btnText, {marginLeft: SPACING.xs, color: COLORS.secondary}]}>SIGN IN</Text>
+          </PressableButton>
+          </View>
+          </ ScrollView>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 }
@@ -125,81 +142,68 @@ export default function SignUpForm({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: SPACING.medium,
-    backgroundColor: COLORS.background,
+    padding: SPACING.m,
+    paddingTop: SPACING.xxl,
+    backgroundColor: COLORS.themeLight,
+    fontFamily: 'Rubik_400Regular',
+  },
+  title: {
+    fontSize: FONTSIZE.h2,
+    fontFamily: 'Rubik_500Medium',
+    marginTop: SPACING.l,
   },
   inputContainer: {
-    width: '80%',
-    justifyContent: 'center',
+    marginTop: SPACING.xxl,
     alignItems: 'stretch',
   },
   input: {
-    width: '100%',
-    padding: SPACING.small,
-    marginVertical: SPACING.small,
-    borderWidth: 2,
-    borderColor: COLORS.secondaryText,
-    borderRadius: ROUNDED.small,
-    backgroundColor: COLORS.background,
-    color: COLORS.foreground,
+    padding: SPACING.m,
+    marginVertical: SPACING.m,
+    borderRadius: ROUNDED.xs,
+    backgroundColor: COLORS.inputBg,
+    color: COLORS.theme,
+    fontSize: FONTSIZE.body,
   },
   inputRequired: {
-    width: '100%',
-    padding: SPACING.small,
-    //marginVertical: SPACING.small,
-    borderWidth: 2,
-    borderColor: COLORS.secondaryText,
-    borderRadius: ROUNDED.small,
-    backgroundColor: COLORS.background,
-    color: COLORS.foreground,
+    flex: 1,
+    padding: SPACING.m,
+    borderRadius: ROUNDED.xs,
+    backgroundColor: COLORS.inputBg,
+    color: COLORS.theme,
+    fontSize: FONTSIZE.body,
   },
   buttonContainer: {
-    marginTop: SPACING.medium,
+    marginTop: SPACING.s,
     justifyContent: 'space-between',
   },
-  loginButton: {
-    backgroundColor: COLORS.background,
-    padding: SPACING.small,
-    borderRadius: ROUNDED.small,
+  btn: {
+    backgroundColor: COLORS.secondary,
+    padding: SPACING.s,
+    borderRadius: ROUNDED.xs,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: SPACING.xsmall,
+    marginTop: SPACING.l,
+    marginBottom: SPACING.xs,
   },
   registerButton: {
-    backgroundColor: COLORS.primary,
-    padding: SPACING.small,
-    borderRadius: ROUNDED.small,
+    padding: SPACING.s,
+    borderRadius: ROUNDED.xs,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  btnLoginText: {
-    fontSize: FONTSIZE.body,
+  btnText: {
+    fontSize: FONTSIZE.small,
     textAlign: 'center',
-    color: COLORS.foreground,
-    fontStyle: 'italic',
-    textDecorationLine: 'underline',
-  },
-  btnRegisterText: {
-    fontSize: FONTSIZE.body,
-    textAlign: 'center',
-    color: COLORS.background,
-    fontWeight: 'bold',
+    color: COLORS.theme,
+    fontFamily: 'Rubik_500Medium',
   },
   requiredContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: SPACING.small,
+    marginVertical: SPACING.s,
   },
   required: {
     color: COLORS.required,
-    fontSize: FONTSIZE.h2,
-    marginLeft: SPACING.xsmall,
-  },
-  prompt: {
-    color: COLORS.secondaryText,
     fontSize: FONTSIZE.tiny,
-    textAlign: 'center',
+    marginLeft: SPACING.s,
+    alignSelf: 'flex-end',
   },
 });

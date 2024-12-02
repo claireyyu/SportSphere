@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
-import { View, Text, StyleSheet, TextInput, Alert, Platform } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Alert, Platform, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, SIZE, SPACING, ROUNDED, FONTSIZE, SHADOW } from '../global';
 import PressableButton from './PressableButton';
@@ -15,8 +15,6 @@ import { Timestamp } from 'firebase/firestore';
 import ImageManager from './ImageManager';
 import { ref, uploadBytesResumable, deleteObject } from 'firebase/storage';
 import { storage } from '../Firebase/firebaseSetup';
-
-
 
 export default function AddActivityCard({ route, currentLocation }) {
   const { userProfile } = useContext(UserContext);
@@ -84,11 +82,14 @@ export default function AddActivityCard({ route, currentLocation }) {
       setImages(images);
       setDownloadURLs(downloadURLs);
 
-      const combinedImages = images.map((storagePath, index) => ({
-        storagePath,
-        downloadURL: downloadURLs[index],
-      }));
-      setExistingImages(combinedImages); // Set existingImages with both storage paths and download URLs
+      if (images) {
+        const combinedImages = images.map((storagePath, index) => ({
+          storagePath,
+          downloadURL: downloadURLs[index],
+        }));
+        setExistingImages(combinedImages); // Set existingImages with both storage paths and download URLs
+      }
+
     }
   }, [route?.params]);
 
@@ -222,26 +223,32 @@ export default function AddActivityCard({ route, currentLocation }) {
         navigation.navigate('ActivityDetails', passToDetail);
       } else {
         writeToDB(newActivity, "activities");
-        navigation.goBack();
+        setActivityName('');
+        setVenue('');
+        googlePlacesRef.current?.setAddressText(''); // Clear the GooglePlacesAutocomplete input
+        setDate(new Date());
+        setTime(new Date());
+        setTotalMembers(0);
+        setDescription('');
+        setImages([]);
+        setNewImages([]);
+        setIsEditMode(false);
+
+        navigation.navigate('Activity');
       }
       
     } catch (error) {
       console.error("Error adding document: ", error);
     }
   }
-  
-  // function handlePlaceSelected(data, details) {
-  //   console.log('data:', data);
-  //   console.log('details:', details);
-  //   setVenue(data.description);
-  //   setVenuePosition({
-  //     latitude: details.geometry.location.lat,
-  //     longitude: details.geometry.location.lng,
-  //   });
-  // }
 
   return (
     <SafeAreaView>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={isEditMode && { paddingBottom: SIZE.tabBar }}
+        keyboardShouldPersistTaps='always' 
+      >
       <View style={styles.cardContainer}>
         <Text style={styles.textInfo}>Activity Name</Text>
         <TextInput
@@ -257,7 +264,8 @@ export default function AddActivityCard({ route, currentLocation }) {
           <GooglePlacesAutocomplete
             ref={googlePlacesRef}
             placeholder={isEditMode ? venue : "410 W Georgia St"} // Add 和 Edit 模式的 placeholder
-            fetchDetails={true}
+              fetchDetails={true}
+              keepResultAfterBlur={true} // Keep the result after blur
             disableScroll={true} // Prevent nested scrolling issues
             onPress={(data, details = null) => {
               console.log('Selected Data:', data, details);
@@ -327,11 +335,10 @@ export default function AddActivityCard({ route, currentLocation }) {
 
         <Text style={styles.textInfo}>Description</Text>
         <TextInput
-          style={styles.inputDescription}
+          style={styles.input}
           onChangeText={setDescription}
           value={description}
-          placeholder="Please bring your own racket..."
-          multiline={true}
+          placeholder="Bring your own racket..."
         />
         {/* <ImageManager images={images} imagesHandler={handleImages} downloadURLs={downloadURLs}
                       newImages={newImages} newImagesHandler={setNewImages}/> */}
@@ -343,7 +350,9 @@ export default function AddActivityCard({ route, currentLocation }) {
           <Text style={styles.buttonText}>Submit</Text>
         </PressableButton>
         <Text style={styles.erroText}>{error}</Text>
-      </View>
+        </View>
+        </ ScrollView>
+
     </SafeAreaView>
   );
 }
@@ -353,7 +362,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
     borderRadius: ROUNDED.default,
     padding: SPACING.medium,
-    margin: SPACING.medium,
+    margin: SPACING.xs,
     shadowColor: SHADOW.color,
     shadowOffset: SHADOW.offset,
     shadowOpacity: SHADOW.opacity,
@@ -389,7 +398,7 @@ const styles = StyleSheet.create({
     color: COLORS.foreground,
   },
   inputDescription: {
-    height: 100,
+    // height: 100,
     marginTop: SPACING.small,
     marginBottom: SPACING.medium,
     borderWidth: 1,
@@ -410,12 +419,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   button: {
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.theme,
     paddingVertical: SPACING.small,
     paddingHorizontal: SPACING.small,
     borderRadius: ROUNDED.default,
-    alignSelf: 'flex-end',
+    // alignSelf: 'flex-end',
     marginTop: SPACING.medium,
+    alignItems: 'center',
   },
   erroText: {
     color: COLORS.delete,

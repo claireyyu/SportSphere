@@ -6,12 +6,23 @@ import PressableButton from '../components/PressableButton';
 import ProfileCard from '../components/ProfileCard';
 import { UserContext } from '../context/UserProvider';
 import { useContext } from 'react';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-export default function ProfileScreen() {
+export default function EditProfileScreen() {
   const { userProfile } = useContext(UserContext);
-
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
+      <PressableButton
+        pressedFunction={() => navigation.goBack()}
+        componentStyle={{marginTop: SPACING.xxl}}
+      >
+        <Ionicons name="chevron-back-sharp" size={SIZE.pressableIcon} color={COLORS.theme} />
+      </PressableButton>
+      <View>
+        <Text style={styles.title}>Profile Detail</Text>
+      </View>
       <View style={styles.avatarContainer}>
         <Avatar
           size={SIZE.avatar}
@@ -20,9 +31,9 @@ export default function ProfileScreen() {
             uri: "https://avatar.iran.liara.run/public/girl"
           }}
         />
-        <PressableButton>
+        {/* <PressableButton>
           <Text style={styles.editProfile}>Change Profile Photo</Text>
-        </PressableButton>
+        </PressableButton> */}
       </View>
       <View style={styles.editProfileContainer}>
         <ProfileCard name={userProfile.username} email={userProfile.email} bio={userProfile.bio}/>
@@ -34,12 +45,18 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'start',
-    alignItems: 'center',
+    // marginHorizontal: SPACING.medium,
+    backgroundColor: COLORS.themeLight,
+    padding: SPACING.l, 
+    },
+  title: {
+    fontFamily: 'Montserrat_700Bold',
+    fontSize: FONTSIZE.header,
+    marginTop: SPACING.l,
   },
   avatarContainer: {
     alignItems: 'center',
-    marginTop: SPACING.large,
+    marginTop: SPACING.l,
   },
   editProfile: {
     fontSize: FONTSIZE.body,

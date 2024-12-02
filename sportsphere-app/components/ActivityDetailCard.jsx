@@ -12,6 +12,10 @@ import { set } from 'date-fns';
 import { ref, getDownloadURL } from 'firebase/storage';
 import { storage } from '../Firebase/firebaseSetup';
 import { parse } from 'date-fns';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { Dimensions } from 'react-native';
+const screenWidth = Dimensions.get('window').width;
+
 
 export default function ActivityDetailCard({ route }) {
   const { userProfile } = useContext(UserContext);
@@ -89,9 +93,6 @@ export default function ActivityDetailCard({ route }) {
     navigation.navigate('TabNavigator');
   }
 
-  
-    
-
   function handleDeleteActivity() {
     Alert.alert("Delete Activity", "Are you sure you want to delete this activity?", [
       {
@@ -138,21 +139,23 @@ export default function ActivityDetailCard({ route }) {
     }
   }
 
-  function handleViewProfile() {
+  function handleToMessage() {
     if (owner == userProfile.uid) {
       navigation.navigate('Profile');
       return;
     }
-    navigation.navigate('OrganizerProfile', { uid: owner });
-    console.log("View Profile");
+    navigation.navigate('Message', { uid: owner });
   }
 
   return (
     <View style={styles.cardContainer}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+      >
       <View style={styles.headerContainer}>
         <Text style={styles.title}>{activityName}</Text>
         <PressableButton
-          pressedFunction={handleViewProfile}>
+          pressedFunction={handleToMessage}>
         <Avatar
           size={SIZE.mediumAvatar}
             rounded
@@ -168,20 +171,23 @@ export default function ActivityDetailCard({ route }) {
           <Text style={styles.buttonText}>{hasJoined ? 'Joined' : (peopleGoing.length >= totalMembers?'Full': 'Join Now')}</Text>
       </PressableButton>
       </View>
-
-      <View style={styles.infoContainer}>
-        <Text style={styles.labelText}>Location</Text>
-        <Text style={styles.infoText}>{venue}{`\n`}</Text>
-        <Text style={styles.labelText}>Date & Time</Text>
-        <Text style={styles.infoText}>{`${date} - ${time}\n`}</Text>
-        <Text style={styles.labelText}>Description</Text>
-        <Text style={styles.infoText}>{description}{`\n`}</Text>
-        <Text style={styles.labelText}>Pictures</Text>
-        <ScrollView horizontal={true} style={{marginTop: SPACING.small}}>
+        <View style={styles.infoContainer}>
+          <View style={[styles.detailContainer, {marginTop: SPACING.small}]}>
+          <Ionicons name="location-sharp" size={24} color={COLORS.theme} />
+            <Text style={styles.infoText}>{venue}{`\n`}</Text>
+          </View>
+          <View style={styles.detailContainer}>
+            <Ionicons name="time" size={24} color="black" />
+            <Text style={styles.infoText}>{`${date} - ${time}\n`}</Text>
+          </View>
+          <Text style={[styles.infoText, {color: COLORS.theme, fontFamily: 'Montserrat_600SemiBold', marginTop: SPACING.l}]}>{description}{`\n`}</Text>
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'center', marginTop: SPACING.small }}
+          >
           {downloadURLs.map((url, index) => (
             <Image key={index} source={{ uri: url }} style={styles.image} />
           ))}
-        </ScrollView>
+        </View>
       </View>
       <View style={styles.progressContainer}>
         <ProgressBar value={pplGoingNumber} total={totalMembers} />
@@ -190,27 +196,31 @@ export default function ActivityDetailCard({ route }) {
       <Text style={styles.goingText}>{pplGoingNumber} ppl going</Text>
       {isOwner && <View style={styles.btnContainer}>
         <PressableButton
-          componentStyle={[styles.button, { backgroundColor: COLORS.edit }]}
+          componentStyle={[styles.button]}
           pressedFunction={handleEditActivity}>
           <Text style={styles.buttonText}>Edit</Text>
         </PressableButton>
         <PressableButton
-          componentStyle={[styles.button, { backgroundColor: COLORS.delete }]}
+          componentStyle={[styles.button, { backgroundColor: COLORS.themeLight }]}
           pressedFunction={handleDeleteActivity}>
-          <Text style={styles.buttonText}>Delete</Text>
+          <Text style={[styles.buttonText, {color: COLORS.theme}]}>Delete</Text>
         </PressableButton>
-      </View>}
+        </View>}
+        </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   cardContainer: {
+    flex: 1,
     backgroundColor: COLORS.background,
-    borderRadius: ROUNDED.default,
+    borderRadius: ROUNDED.l,
     paddingVertical: SPACING.small,
-    paddingHorizontal: SPACING.medium,
-    margin: SPACING.medium,
+    paddingHorizontal: SPACING.xxl,
+    marginVertical: SPACING.medium,
+    marginTop: SPACING.xxl,
+    // marginHorizontal: SPACING.l,
     // Shadow properties
     shadowColor: SHADOW.color,
     shadowOffset: SHADOW.offset,
@@ -241,15 +251,17 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.xsmall,
   },
   infoText: {
+    marginLeft: SPACING.xs,
     fontSize: FONTSIZE.body,
     color: COLORS.secondaryText,
-    marginBottom: SPACING.xsmall,
+    textAlignVertical: 'center',
+    // textAlign: 'center',
     //marginVertical: SPACING.xsmall,
   },
   progressContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: SPACING.small,
+    marginVertical: SPACING.m,
   },
   peopleCount: {
     fontSize: FONTSIZE.body,
@@ -275,7 +287,7 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.theme,
     paddingVertical: SPACING.xsmall,
     paddingHorizontal: SPACING.small,
     borderRadius: ROUNDED.small,
@@ -289,10 +301,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   image: {
-    width: SIZE.image,
-    height: SIZE.image,
+    width: screenWidth * 0.8,
+    height: screenWidth * 0.8,
     margin: SPACING.xsmall,
     opacity: 0.9,
     marginLeft: SPACING.None,
+    borderRadius: ROUNDED.m,
+  },
+  detailContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
   },
 });

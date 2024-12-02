@@ -30,7 +30,7 @@ export default function MessageScreenHeader({uid}) {
       <View style={styles.topBtnContainer}>
         <PressableButton
           pressedFunction={() => navigation.goBack()}>
-          <Ionicons name="chevron-back-sharp" size={SIZE.pressableIcon} color="white" />
+          <Ionicons name="chevron-back-sharp" size={SIZE.pressableIcon} color={COLORS.theme} />
         </PressableButton>
 
         <View style={styles.profileContainer}>
@@ -40,7 +40,8 @@ export default function MessageScreenHeader({uid}) {
             source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
           />
           <View style={styles.profileInfo}>
-            <Text style={styles.username}>{viewingUserInfo?.username || 'User Name'}</Text>
+            <Text style={styles.username}>{viewingUserInfo?.username || 'Anonymous'}</Text>
+            <Text style={styles.bio}>{viewingUserInfo?.bio || ''}</Text>
           </View>
         </View>
       </View>
@@ -50,7 +51,7 @@ export default function MessageScreenHeader({uid}) {
 
 const styles = StyleSheet.create({
   view: {
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.themeLight,
   },
   topBtnContainer: {
     flexDirection: 'row',
@@ -67,9 +68,14 @@ const styles = StyleSheet.create({
     marginLeft: SPACING.default,
   },
   username: {
-    color: COLORS.background,
+    color: COLORS.theme,
     fontSize: FONTSIZE.h2,
     fontWeight: 'bold',
+  },
+  bio: {
+    color: COLORS.secondaryText,
+    fontSize: FONTSIZE.tiny,
+    fontStyle: 'italic',
   },
   buttonContainer: {
     flexDirection: 'row',
