@@ -12,18 +12,33 @@ import { QueryContext } from '../context/QueryProvider';
 import * as ImagePicker from 'expo-image-picker';
 
 
+
 export default function EditProfileScreen({route}) {
   const { userProfile } = useContext(UserContext);
   const navigation = useNavigation();
-  const { imagePermission, setImagePermission } = useContext(QueryContext);
   const [profilePicture, setProfilePicture] = React.useState(null);
   const profileDownloadURL = route.params.profileDownloadurl;
+  const [imageResponse, requestImagePermission] = ImagePicker.useMediaLibraryPermissions();
+
   
- 
+  async function verifyImagePermissions() {
+    try {
+        if (imageResponse.granted) {
+            return true;
+        }
+        const permissionRequest = await requestImagePermission();
+        return permissionRequest.granted;
+      } catch (error) {
+        console.log("verifying library access permission", error);
+        return false;
+      }
+    }
+
 
   async function changeProfilePicture() {
     try {
-      if (!imagePermission) {
+      const hasPermission = await verifyImagePermissions();
+      if (!hasPermission) {
         Alert.alert("Permission required", "You need to grant permission to access your library to pick an image.");
             return;
       }

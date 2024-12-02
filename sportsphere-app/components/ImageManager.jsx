@@ -58,11 +58,9 @@ import { QueryContext } from '../context/QueryProvider';
   async function verifyImagePermissions() {
     try {
         if (imageResponse.granted) {
-          setImagePermission(true);
             return true;
         }
         const permissionRequest = await requestImagePermission();
-        setImagePermission(permissionRequest.granted);
         return permissionRequest.granted;
       } catch (error) {
         console.log("verifying library access permission", error);
