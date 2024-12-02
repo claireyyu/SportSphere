@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import React, {useContext, useEffect, useState} from 'react'
 import ActivityCard from '../components/ActivityCard'
 import { COLORS, FONTSIZE, SPACING, ROUNDED, SIZE } from '../global'
@@ -13,6 +13,8 @@ import { UserContext } from '../context/UserProvider'
 import * as Location from 'expo-location';
 import { Ionicons } from '@expo/vector-icons'
 import { set } from 'date-fns'
+import LottieView from 'lottie-react-native';
+
 
 export default function ActivityScreen({ modalVisible, modalHandler, currentLocation }) {
   const { userProfile } = useContext(UserContext);
@@ -144,6 +146,8 @@ export default function ActivityScreen({ modalVisible, modalHandler, currentLoca
         />
       </View>
       <View style={styles.bottom}>
+        <View style={styles.activitySortAnimationContainer}>
+        <View style={styles.activitySortContainer}>
         <Text style={styles.title}>Popular Activities</Text>
         <View style={styles.btnContainer}>
           <PressableButton
@@ -158,6 +162,11 @@ export default function ActivityScreen({ modalVisible, modalHandler, currentLoca
           >
             <Text style={[styles.btnText, { color: isDistanceSelected? COLORS.themeLight : COLORS.border }]}>Nearby</Text>
           </PressableButton>
+        </View>
+        </View>
+        <View style={styles.animation}>
+            <LottieView source={require('../assets/kickSoccer.json')} autoPlay loop style={{width: 100, height: 100}} />
+          </View>
         </View>
         <ActivityCardList modalVisible={modalVisible} modalHandler={modalHandler} currentLocation={currentLocation} isDateSelected={isDateSelected} isDistanceSelected={isDistanceSelected}/>
       </View>
@@ -174,14 +183,17 @@ const styles = StyleSheet.create({
   },
   top: {
     flex: 1,
+    marginTop: SPACING.None,
+    marginBottom: SPACING.None,
   },
   welcome: {
     fontFamily: 'Montserrat_700Bold',
     fontSize: FONTSIZE.h0,
-    marginTop: SPACING.m,
+    marginTop: SPACING.None,
   },
   bottom: {
-    flex: 3,
+    flex: 4.4,
+    marginTop: SPACING.None,
   },
   locationContainer: {
     flexDirection: 'row',
@@ -199,17 +211,20 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     flexDirection: 'row',
-    marginTop: SPACING.xl,
+    //justifyContent: "space-between",
+    marginTop: SPACING.m,
+    marginLeft: SPACING.s,
   },
   btn: {
     backgroundColor: COLORS.theme,
-    padding: SPACING.m,
-    paddingHorizontal: SPACING.xl,
+    padding: SPACING.s,
+    paddingHorizontal: SPACING.l,
     borderRadius: SPACING.m,
   },
   btnText: {
     color: COLORS.themeLight,
     fontSize: FONTSIZE.body,
+    fontWeight: 'bold',
   },
   weather: {
     alignSelf: 'flex-start',
@@ -219,6 +234,7 @@ const styles = StyleSheet.create({
     borderRadius: ROUNDED.small,
     padding: SPACING.xsmall,
     marginRight: SPACING.xsmall,
+    marginTop: SPACING.xs,
   },
   weatherText: {
     color: COLORS.theme,
@@ -226,4 +242,14 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.tiny,
     marginRight: SPACING.xsmall,
   },
+  animation: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: SPACING.l,
+  },
+
+  activitySortAnimationContainer: {
+    marginLeft: SPACING.s,
+    flexDirection: 'row',
+  }
 })

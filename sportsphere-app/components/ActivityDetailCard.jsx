@@ -43,12 +43,6 @@ export default function ActivityDetailCard({ route }) {
     async function getImageDownloadURL() {
       try {
         if (route.params && route.params.images && route.params.images.length > 0) {
-          // const imageDownloadUrls = [];
-          // for (let i = 0; i < images.length; i++) {
-          //   const imageRef = ref(storage, images[i]);
-          //   const url = await getDownloadURL(imageRef);
-          //   imageDownloadUrls.push(url);
-          // }
           const imageDownloadUrls = await Promise.all(
             images.map(async (imagePath) => {
               const imageRef = ref(storage, imagePath);
@@ -66,7 +60,7 @@ export default function ActivityDetailCard({ route }) {
     getImageDownloadURL();
   }, [route.params]);
   
-  const { id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition, images } = route.params;
+  const { id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition, images, profileDownloadurl } = route.params;
   console.log("Route Params ActivityDetailCard: ", route.params);
   const navigation = useNavigation();
   const [pplGoingNumber, setPplGoingNumber] = useState(peopleGoing.length);
@@ -156,11 +150,19 @@ export default function ActivityDetailCard({ route }) {
         <Text style={styles.title}>{activityName}</Text>
         <PressableButton
           pressedFunction={handleToMessage}>
-        <Avatar
+        {profileDownloadurl ? (
+          <Avatar
+            size={SIZE.mediumAvatar}
+            rounded
+            source={{ uri: profileDownloadurl }}
+          />
+        ) : (
+          <Avatar
           size={SIZE.mediumAvatar}
             rounded
             source={{ uri: "https://avatar.iran.liara.run/public/girl" }}
-        />
+          />
+        )}
         </PressableButton>
       </View>
       <View style={styles.joinBtnContainer}>

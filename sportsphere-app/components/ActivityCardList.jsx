@@ -7,6 +7,11 @@ import { readAllFiles } from '../Firebase/firebaseHelper';
 import { parse } from 'date-fns';
 import { SIZE } from '../global';
 import * as geolib from 'geolib';
+import { getDownloadURL, ref } from 'firebase/storage';
+import { storage } from '../Firebase/firebaseSetup';
+import { findUserByUid } from '../Firebase/firebaseHelper';
+import { useFocusEffect } from "@react-navigation/native";
+import filterActivityItems from "../utils/filterActivityItems";
 
 
 
@@ -20,14 +25,55 @@ export default function ActivityCardList({modalVisible, modalHandler, currentLoc
     setActivityItems(items);
   }
   
-  useEffect(() => {
-    readAllFiles(collectionName, null, sortPreference, currentLocation, handleActivityItems, (error) => {
+  // useEffect(() => {
+    useFocusEffect(
+      React.useCallback(() => {
+
+    async function getProfileDownloadURL(profileUploadURL) {
+      try {
+        if (profileUploadURL) {
+          const imageRef = ref(storage, profileUploadURL);
+          const downloadURL = await getDownloadURL(imageRef);
+          console.log("Profile picture URL:", downloadURL);
+          return downloadURL;
+        }
+      } catch (err) {
+        console.log("Error getting profile picture URL: ", err);
+        return null;
+      }
+    }
+
+    async function fetchProfileUrls(activityItems) {
+      try {
+        const updatedItems = await Promise.all(
+          activityItems.map(async (item) => {
+            const user = await findUserByUid(item.owner);
+            let profileDownloadURL = null;
+    
+            if (user && user.userInfo && user.userInfo.profilePicture) {
+              const profileUploadURL = user.userInfo.profilePicture;
+              profileDownloadURL = await getProfileDownloadURL(profileUploadURL);
+            }
+    
+            return { ...item, profileDownloadurl: profileDownloadURL };
+          })
+        );
+    
+        setActivityItems(updatedItems);
+      } catch (error) {
+        console.log("Error fetching profile URLs to display in map: ", error.message);
+      }
+    }
+
+    readAllFiles(collectionName, null, sortPreference, currentLocation, (items)=> fetchProfileUrls(items), (error) => {
       console.log("Error fetching activities", error.message);
     });
     console.log("ActivityItems: ", activityItems);
-    console.log("Activity distance 1: ", activityItems[0]?.distance, "2: ", activityItems[1]?.distance, "3: ", activityItems[2]?.distance);
-  }, [sortPreference, isDateSelected, isDistanceSelected]);
+    //console.log("Activity distance 1: ", activityItems[0]?.distance, "2: ", activityItems[1]?.distance, "3: ", activityItems[2]?.distance);
+  }, [sortPreference, isDateSelected, isDistanceSelected])
+);
 
+  
   const filteredActivityItems = activityItems.filter(item => {
     const now = new Date(); // Current date and time
     const itemDate = parse(item.date, 'MMM dd, yyyy', new Date());
@@ -46,6 +92,7 @@ export default function ActivityCardList({modalVisible, modalHandler, currentLoc
       item.date.toLowerCase().includes(term)
     );
   });
+  
 
   return (
     <View>
@@ -65,6 +112,7 @@ export default function ActivityCardList({modalVisible, modalHandler, currentLoc
             owner={item.owner}
             venuePosition={item.venuePosition}
             images={item.images}
+            profileDownloadurl={item.profileDownloadurl}
           />
         )}
         contentContainerStyle={styles.listContainer}

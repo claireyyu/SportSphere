@@ -1,29 +1,113 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { View, StyleSheet, Image, Text, Button } from 'react-native'
 import MapView, { Callout } from 'react-native-maps'
 import LocationManager from './LocationManager'
-import { readAllFiles } from '../Firebase/firebaseHelper'
+import { findUserByUid, readAllFiles, readProfile } from '../Firebase/firebaseHelper'
 import { Marker } from 'react-native-maps';
-import { COLORS, SPACING, ROUNDED, SHADOW, FONTSIZE } from '../global';
+import { COLORS, SPACING, ROUNDED, SHADOW, FONTSIZE, SIZE } from '../global';
 import { ProgressBar } from './ProgressBar';
 import PressableButton from './PressableButton'
 import { useNavigation } from '@react-navigation/native'
+import { UserContext } from '../context/UserProvider'
+import { ref, getDownloadURL } from 'firebase/storage';
+import { storage } from '../Firebase/firebaseSetup';
+import { set } from 'date-fns'
+import { useFocusEffect } from '@react-navigation/native';
+import { Avatar } from '@rneui/themed';
+import { parse } from 'date-fns';
+import { QueryContext } from '../context/QueryProvider';
+
+
 
 
 export default function Map({currentLocation}) {
   const [activityItems, setActivityItems] = useState([]);
   const collectionName = "activities";
   const navigation = useNavigation();
-  useEffect(() => {
-    readAllFiles(collectionName, null, 'date', currentLocation, setActivityItems, (error) => {
-      console.log("Error fetching activities in map", error.message);
-    });
-  }, []);
+  const { userProfile } = useContext(UserContext);
+  const { searchQuery } = useContext(QueryContext);
+  //const [profileDownloadurl, setProfileDownloadurl] = React.useState(null);
+  // useEffect(() => {
+  useFocusEffect(
+    React.useCallback(() => {
 
-  function handleNavigateToDetails(id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition) {
-    console.log("Go to details page.", id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition);
-    navigation.navigate('ActivityDetails', {id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition});
+    async function getProfileDownloadURL(profileUploadURL) {
+      try {
+        if (profileUploadURL) {
+          const imageRef = ref(storage, profileUploadURL);
+          const downloadURL = await getDownloadURL(imageRef);
+          console.log("Profile picture URL:", downloadURL);
+          return downloadURL;
+        }
+      } catch (err) {
+        console.log("Error getting profile picture URL: ", err);
+        return null;
+      }
+    }
+
+    async function fetchProfileUrls(activityItems) {
+      try {
+        const updatedItems = await Promise.all(
+          activityItems.map(async (item) => {
+            const user = await findUserByUid(item.owner);
+            let profileDownloadURL = null;
+    
+            if (user && user.userInfo && user.userInfo.profilePicture) {
+              const profileUploadURL = user.userInfo.profilePicture;
+              profileDownloadURL = await getProfileDownloadURL(profileUploadURL);
+            }
+    
+            return { ...item, profileDownloadurl: profileDownloadURL };
+          })
+        );
+    
+        setActivityItems(updatedItems);
+      } catch (error) {
+        console.log("Error fetching profile URLs to display in map: ", error.message);
+      }
+    }
+
+    readAllFiles(
+      collectionName,
+      null,
+      'date',
+      currentLocation,
+      (items) => {
+        fetchProfileUrls(items);
+      },
+      (error) => {
+        console.log("Error fetching activities in map", error.message);
+      }
+    );
+  }, [currentLocation])
+  );
+
+  const filteredActivityItems = activityItems.filter(item => {
+    const now = new Date(); // Current date and time
+    const itemDate = parse(item.date, 'MMM dd, yyyy', new Date());
+    const itemTime = parse(item.time, 'HH:mm', new Date());
+    itemDate.setHours(itemTime.getHours(), itemTime.getMinutes(), 0);
+
+    // Check if the item's date is after now
+    if (itemDate <= now) return false;
+    const terms = searchQuery.toLowerCase().split(' ');
+  
+    // Check if any term matches activityName, venue, description, or date
+    return terms.some(term =>
+      item.activityName.toLowerCase().includes(term) ||
+      item.venue.toLowerCase().includes(term) ||
+      item.description.toLowerCase().includes(term) ||
+      item.date.toLowerCase().includes(term)
+    );
+  });
+
+  function handleNavigateToDetails(id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition, profileDownloadurl) {
+    console.log("Go to details page.", id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition, profileDownloadurl);
+    navigation.navigate('ActivityDetails', {id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition, profileDownloadurl});
   }
+
+
+  
 
   return (
     <>
@@ -42,7 +126,7 @@ export default function Map({currentLocation}) {
               }}
               title="You're Here!" />
 
-            {activityItems.map((item) => (
+            {filteredActivityItems.map((item) => (
                 <Marker
                     key={item.id}
                     coordinate={{
@@ -50,8 +134,19 @@ export default function Map({currentLocation}) {
                         longitude: item.venuePosition.longitude,
                     }}
                 >
-                  <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }} style={{width: 50, height: 50}} />
-                  <Callout onPress={()=>handleNavigateToDetails(item.id, item.activityName, item.venue, item.date, item.time, item.peopleGoing, item.totalMembers, item.description, item.owner, item.venuePosition)}>
+                  {item.profileDownloadurl ? (
+                    <Image source={{ uri: item.profileDownloadurl }} style={styles.marker} />
+                  ) : (
+                    <Avatar
+                      size={SIZE.smallAvatar}
+                      rounded
+                      source={{
+                        uri: "https://avatar.iran.liara.run/public/girl"
+                      }}
+                    />
+                  )}
+                  
+                  <Callout onPress={()=>handleNavigateToDetails(item.id, item.activityName, item.venue, item.date, item.time, item.peopleGoing, item.totalMembers, item.description, item.owner, item.venuePosition, item.profileDownloadurl)}>
                     <View style={styles.customCallout}>
                       <Text style={styles.calloutTitle}>{item.activityName}</Text>
                       <Text style={styles.infoText}>{item.venue.split(',')[0]}</Text>
@@ -121,5 +216,10 @@ export const styles = StyleSheet.create({
       fontSize: FONTSIZE.tiny,
       fontWeight: 'bold',
     },
+    marker : {
+      borderRadius: ROUNDED.l,
+      width: SIZE.smallAvatar,
+      height: SIZE.smallAvatar,
+    }
   });
 
