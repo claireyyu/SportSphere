@@ -164,9 +164,9 @@ export default function ActivityScreen({ modalVisible, modalHandler, currentLoca
           </PressableButton>
         </View>
         </View>
-        <View style={styles.animation}>
+        {/* <View style={styles.animation}>
             <LottieView source={require('../assets/kickSoccer.json')} autoPlay loop style={{width: 100, height: 100}} />
-          </View>
+          </View> */}
         </View>
         <ActivityCardList modalVisible={modalVisible} modalHandler={modalHandler} currentLocation={currentLocation} isDateSelected={isDateSelected} isDistanceSelected={isDistanceSelected}/>
       </View>
