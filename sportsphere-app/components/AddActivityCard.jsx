@@ -15,6 +15,8 @@ import { Timestamp } from 'firebase/firestore';
 import ImageManager from './ImageManager';
 import { ref, uploadBytesResumable, deleteObject } from 'firebase/storage';
 import { storage } from '../Firebase/firebaseSetup';
+import { useFocusEffect } from '@react-navigation/native';
+
 
 export default function AddActivityCard({ route, currentLocation }) {
   const { userProfile } = useContext(UserContext);
@@ -51,6 +53,27 @@ export default function AddActivityCard({ route, currentLocation }) {
     
   }
 
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!route?.params) {
+        // Reset state variables
+        setActivityName('');
+        setVenue('');
+        googlePlacesRef.current?.setAddressText('');
+        setDate(new Date());
+        setTime(new Date());
+        setTotalMembers(0);
+        setDescription('');
+        setImages([]);
+        setNewImages([]);          // Reset newImages
+        setExistingImages([]);     
+        setDeletedImages([]);      // Reset deletedImages
+        setIsEditMode(false);
+      }
+    }, [route?.params])
+  );
+
+  
   useEffect(() => {
     if (activityName.split(" ").length > 5) {
       setError("Activity name should be no more than five words!");
@@ -189,7 +212,9 @@ export default function AddActivityCard({ route, currentLocation }) {
       }
       
       const updatedImages = [
-        ...existingImages.filter((image) => !deletedImages.includes(image.storagePath)).map((image) => image.storagePath),// convert existingImages to storage paths
+        ...existingImages
+          .filter((image) => !deletedImages.includes(image.storagePath))
+          .map((image) => image.storagePath),
         ...imageUploadUrls,
       ];
       //const updatedImages = [...existingImages.filter((url)=> !deletedImages.includes(url)), ...imageUploadUrls];
@@ -223,18 +248,7 @@ export default function AddActivityCard({ route, currentLocation }) {
         navigation.navigate('ActivityDetails', passToDetail);
       } else {
         writeToDB(newActivity, "activities");
-        setActivityName('');
-        setVenue('');
-        googlePlacesRef.current?.setAddressText(''); // Clear the GooglePlacesAutocomplete input
-        setDate(new Date());
-        setTime(new Date());
-        setTotalMembers(0);
-        setDescription('');
-        setImages([]);
-        setNewImages([]);
-        setIsEditMode(false);
-
-        navigation.navigate('Activity');
+        navigation.navigate('Activity', { params: null });
       }
       
     } catch (error) {
@@ -342,7 +356,13 @@ export default function AddActivityCard({ route, currentLocation }) {
         />
         {/* <ImageManager images={images} imagesHandler={handleImages} downloadURLs={downloadURLs}
                       newImages={newImages} newImagesHandler={setNewImages}/> */}
-        <ImageManager existingImages={existingImages} onImagesChange={handleImagesChange} />
+        <ImageManager
+          existingImages={existingImages}
+          newImages={newImages}
+          setNewImages={setNewImages}
+          deletedImages={deletedImages}
+          setDeletedImages={setDeletedImages}
+        />
         <PressableButton
           componentStyle={styles.button}
           pressedFunction={submitActivity}
