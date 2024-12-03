@@ -44,11 +44,29 @@ export default function Map({currentLocation}) {
         return null;
       }
     }
+    async function getImagesDownloadURL(images) {
+      try {
+        if (images) {
+          const imageDownloadURLs = await Promise.all(
+            images.map(async (image) => {
+              const imageRef = ref(storage, image);
+              const downloadURL = await getDownloadURL(imageRef);
+              return downloadURL;
+            })
+          );
+          return imageDownloadURLs;
+        }
+      } catch (err) {
+        console.log("Error getting image download URLs: ", err);
+        return null;
+      }
+    }
 
     async function fetchProfileUrls(activityItems) {
       try {
         const updatedItems = await Promise.all(
           activityItems.map(async (item) => {
+            const imagesDownloadurl = await getImagesDownloadURL(item.images);
             const user = await findUserByUid(item.owner);
             let profileDownloadURL = null;
     
@@ -57,7 +75,7 @@ export default function Map({currentLocation}) {
               profileDownloadURL = await getProfileDownloadURL(profileUploadURL);
             }
     
-            return { ...item, profileDownloadurl: profileDownloadURL };
+            return { ...item, profileDownloadurl: profileDownloadURL};
           })
         );
     
@@ -101,9 +119,9 @@ export default function Map({currentLocation}) {
     );
   });
 
-  function handleNavigateToDetails(id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition, profileDownloadurl) {
-    console.log("Go to details page.", id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition, profileDownloadurl);
-    navigation.navigate('ActivityDetails', {id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition, profileDownloadurl});
+  function handleNavigateToDetails(id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition, profileDownloadurl, images) {
+    console.log("Go to details page.", id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition, profileDownloadurl, images);
+    navigation.navigate('ActivityDetails', {id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition, profileDownloadurl, images});
   }
 
 
@@ -146,7 +164,7 @@ export default function Map({currentLocation}) {
                     />
                   )}
                   
-                  <Callout onPress={()=>handleNavigateToDetails(item.id, item.activityName, item.venue, item.date, item.time, item.peopleGoing, item.totalMembers, item.description, item.owner, item.venuePosition, item.profileDownloadurl)}>
+                  <Callout onPress={()=>handleNavigateToDetails(item.id, item.activityName, item.venue, item.date, item.time, item.peopleGoing, item.totalMembers, item.description, item.owner, item.venuePosition, item.profileDownloadurl, item.images)}>
                     <View style={styles.customCallout}>
                       <Text style={styles.calloutTitle}>{item.activityName}</Text>
                       <Text style={styles.infoText}>{item.venue.split(',')[0]}</Text>
