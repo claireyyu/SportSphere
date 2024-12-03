@@ -82,7 +82,7 @@ export default function ChatCardList() {
           const latestMessage = conversationMessages[conversationMessages.length - 1];
 
           const messageWords = latestMessage.text.split(' ');
-          const trimmedMessage = messageWords.length > 10 ? messageWords.slice(0, 10).join(' ') + '...' : latestMessage.text;
+          const trimmedMessage = messageWords.length > 5 ? messageWords.slice(0, 5).join(' ') + '...' : latestMessage.text;
 
           const formattedTimestamp = format(latestMessage.timestamp.toDate(), 'HH:mm');
 
