@@ -182,7 +182,7 @@ export default function ActivityDetailCard({ route }) {
             <Ionicons name="time" size={24} color="black" />
             <Text style={styles.infoText}>{`${date} - ${time}\n`}</Text>
           </View>
-          <Text style={[styles.infoText, {color: COLORS.theme, fontFamily: 'Montserrat_600SemiBold', marginTop: SPACING.l}]}>{description}{`\n`}</Text>
+          <Text style={[styles.infoText, {color: COLORS.secondaryText, marginLeft: SPACING.s, marginTop: SPACING.s, textAlign: 'left', fontSize: FONTSIZE.small, fontFamily: 'Poppins_400Regular'}]}>{description}{`\n`}</Text>
           <View
             style={{ flexDirection: 'row', justifyContent: 'center', marginTop: SPACING.small }}
           >
@@ -242,6 +242,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: COLORS.text,
     marginRight: SPACING.xsmall, 
+    marginTop: SPACING.small,
   },
   infoContainer: {
     marginVertical: SPACING.small,
@@ -255,7 +256,7 @@ const styles = StyleSheet.create({
   infoText: {
     marginLeft: SPACING.xs,
     fontSize: FONTSIZE.body,
-    color: COLORS.secondaryText,
+    color: COLORS.theme,
     textAlignVertical: 'center',
     // textAlign: 'center',
     //marginVertical: SPACING.xsmall,
