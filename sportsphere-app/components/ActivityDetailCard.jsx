@@ -203,7 +203,7 @@ export default function ActivityDetailCard({ route }) {
           <Text style={styles.buttonText}>Edit</Text>
         </PressableButton>
         <PressableButton
-          componentStyle={[styles.button, { backgroundColor: COLORS.themeLight }]}
+          componentStyle={[styles.button, { backgroundColor: COLORS.themeLight, borderColor: COLORS.theme, borderWidth: 2 }]}
           pressedFunction={handleDeleteActivity}>
           <Text style={[styles.buttonText, {color: COLORS.theme}]}>Delete</Text>
         </PressableButton>
