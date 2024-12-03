@@ -10,6 +10,7 @@ import { format } from 'date-fns'; // Import date-fns for formatting
 
 export default function MessageScreen({ route }) {
   const [uid, setUid] = useState(route.params.uid); // Chatting user's UID
+  const [otherUserAvatar, setOtherUserAvatar] = useState(route.params.otherUserAvatar); // Chatting user's avatar
   const [messages, setMessages] = useState([]); // List of messages
   const [text, setText] = useState(''); // Current text input
   const [loading, setLoading] = useState(true); // Loading state for fetching messages
@@ -43,14 +44,6 @@ export default function MessageScreen({ route }) {
     }
   }, [currentUserUid, uid]);
 
-  // useEffect(() => {
-  //   // Scroll to the bottom when messages are updated
-  //   if (flatListRef.current && messages.length > 0) {
-  //     flatListRef.current.scrollToEnd({ animated: true });
-  //   }
-  // }, [messages]);
-
-
   // Function to send a message
   const sendMessage = async () => {
     if (text.trim() === '') return; // Ignore empty messages
@@ -74,7 +67,7 @@ export default function MessageScreen({ route }) {
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : undefined} keyboardVerticalOffset={10}>
       {/* Header */}
-      <MessageScreenHeader uid={uid} />
+      <MessageScreenHeader uid={uid} otherUserAvatar={otherUserAvatar} />
 
       {/* Loading or Error State */}
       {loading && <Text>Loading messages...</Text>}

@@ -22,8 +22,7 @@ export default function ActivityDetailCard({ route }) {
   const [hasJoined, setHasJoined] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
   const [downloadURLs, setDownloadURLs] = useState([]);
-
-  
+  const [hasCustomImage, setHasCustomImage] = useState(false);
 
   useEffect(() => {
     console.log("isOwner: ", isOwner);  
@@ -51,6 +50,7 @@ export default function ActivityDetailCard({ route }) {
             })
           );
           setDownloadURLs(imageDownloadUrls);
+          setHasCustomImage(true);
           console.log("Download URLs: ", downloadURLs);
         }
       } catch (error) {
@@ -138,7 +138,7 @@ export default function ActivityDetailCard({ route }) {
       navigation.navigate('Profile');
       return;
     }
-    navigation.navigate('Message', { uid: owner });
+    navigation.navigate('Message', { uid: owner, otherUserAvatar: profileDownloadurl });
   }
 
   return (
@@ -186,9 +186,9 @@ export default function ActivityDetailCard({ route }) {
           <View
             style={{ flexDirection: 'row', justifyContent: 'center', marginTop: SPACING.small }}
           >
-          {downloadURLs.map((url, index) => (
+          {hasCustomImage ? downloadURLs.map((url, index) => (
             <Image key={index} source={{ uri: url }} style={styles.image} />
-          ))}
+          )) : <Image source={require('../assets/default-detail-photo.png')} style={styles.image} />}
         </View>
       </View>
       <View style={styles.progressContainer}>

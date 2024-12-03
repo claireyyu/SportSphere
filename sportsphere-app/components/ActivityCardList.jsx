@@ -14,7 +14,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import filterActivityItems from "../utils/filterActivityItems";
 
 
-
 export default function ActivityCardList({modalVisible, modalHandler, currentLocation, isDateSelected, isDistanceSelected}) {
   const {searchQuery, sortPreference} = useContext(QueryContext);
 

@@ -164,9 +164,9 @@ export default function ActivityScreen({ modalVisible, modalHandler, currentLoca
           </PressableButton>
         </View>
         </View>
-        <View style={styles.animation}>
+        {/* <View style={styles.animation}>
             <LottieView source={require('../assets/kickSoccer.json')} autoPlay loop style={{width: 100, height: 100}} />
-          </View>
+          </View> */}
         </View>
         <ActivityCardList modalVisible={modalVisible} modalHandler={modalHandler} currentLocation={currentLocation} isDateSelected={isDateSelected} isDistanceSelected={isDistanceSelected}/>
       </View>
@@ -185,6 +185,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: SPACING.None,
     marginBottom: SPACING.None,
+    paddingLeft: SPACING.xs,
   },
   welcome: {
     fontFamily: 'Montserrat_700Bold',
@@ -208,13 +209,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_600SemiBold',
     fontSize: FONTSIZE.h1,
     marginTop: SPACING.xxl,
-    marginLeft: SPACING.xs,
   },
   btnContainer: {
     flexDirection: 'row',
     //justifyContent: "space-between",
     marginTop: SPACING.m,
-    marginLeft: SPACING.s,
   },
   btn: {
     backgroundColor: COLORS.theme,

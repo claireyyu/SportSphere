@@ -77,6 +77,7 @@ export default function EditProfileScreen({route}) {
             <Avatar
               size={SIZE.avatar}
               rounded
+              containerStyle={{ borderWidth: 5, borderColor: COLORS.theme }}
               source={{
                 uri: profilePicture
               }}
@@ -86,6 +87,7 @@ export default function EditProfileScreen({route}) {
               <Avatar
                 size={SIZE.avatar}
                 rounded
+                containerStyle={{ borderWidth: 5, borderColor: COLORS.theme }}
                 source={{
                   uri: profileDownloadURL
                 }}
@@ -94,6 +96,7 @@ export default function EditProfileScreen({route}) {
               <Avatar
                 size={SIZE.avatar}
                 rounded
+                containerStyle={{ borderWidth: 5, borderColor: COLORS.theme }}
                 source={{
                   uri: "https://avatar.iran.liara.run/public/girl"
                 }}
