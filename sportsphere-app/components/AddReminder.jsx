@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Modal, StyleSheet, TextInput, Text, Alert, Platform } from 'react-native';
+import { View, Modal, StyleSheet, TextInput, Text, Alert, Platform , KeyboardAvoidingView} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, ROUNDED, SPACING, FONTSIZE } from '../global';
 import { updateDB, writeToDB, writeToSubcollection, updateByCollectionRef } from '../Firebase/firebaseHelper';
@@ -95,6 +95,8 @@ export default function AddReminder({ modalVisible, handleModalVisible, route })
           handleModalVisible();
         }}
       >
+      <KeyboardAvoidingView style={{flex: 1}} behavior={Platform.OS === "ios" ? "padding" : undefined} keyboardVerticalOffset={0}>
+
         <SafeAreaView style={styles.modalContainer}>
           <View style={styles.pickerContainer}>
             <DateInputer date={date} setDate={setDate} inputerStyle={styles.reminderInput} />
@@ -123,7 +125,9 @@ export default function AddReminder({ modalVisible, handleModalVisible, route })
             </View>
             <Text style={styles.erroText}>{error}</Text>
           </View>
-        </SafeAreaView>
+          </SafeAreaView>
+          </KeyboardAvoidingView>
+
       </Modal>
     </SafeAreaView>
   );
