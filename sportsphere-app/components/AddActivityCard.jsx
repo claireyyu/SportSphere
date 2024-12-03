@@ -40,6 +40,7 @@ export default function AddActivityCard({ route, currentLocation }) {
   const [existingImages, setExistingImages] = useState([]);
   const [deletedImages, setDeletedImages] = useState([]);
   const [downloadURLs, setDownloadURLs] = useState(null);
+  const [profileDownloadurl, setProfileDownloadurl] = useState(null);
   //const [imageUrls, setImageUrls] = useState([]);
 
 
@@ -86,7 +87,7 @@ export default function AddActivityCard({ route, currentLocation }) {
 
   useEffect(() => {
     if (route?.params) {
-      const { id, activityName, venue, date, time, totalMembers, description, venuePosition, images, downloadURLs } = route.params;
+      const { id, activityName, venue, date, time, totalMembers, description, venuePosition, images, downloadURLs, profileDownloadurl } = route.params;
       console.log('route.params to edit activity:', route.params);
       const dateObj = parse(date, 'MMM dd, yyyy', new Date());
       const formattedDate = format(dateObj, 'yyyy-MM-dd');
@@ -104,6 +105,7 @@ export default function AddActivityCard({ route, currentLocation }) {
       setId(id);
       setImages(images);
       setDownloadURLs(downloadURLs);
+      setProfileDownloadurl(profileDownloadurl);
 
       if (images) {
         const combinedImages = images.map((storagePath, index) => ({
@@ -231,7 +233,6 @@ export default function AddActivityCard({ route, currentLocation }) {
         peopleGoing: [userProfile.uid],
         venuePosition: venuePosition,
         images: updatedImages || null,
-
       };
       const strNewDate = format(newActivity.date, 'MMM dd, yyyy');
       const strNewTime = format(newActivity.time, 'HH:mm');
@@ -240,6 +241,7 @@ export default function AddActivityCard({ route, currentLocation }) {
         date: strNewDate,
         time: strNewTime,
         id: id,
+        profileDownloadurl: profileDownloadurl,
       };
 
       if (isEditMode) {
