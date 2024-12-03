@@ -138,7 +138,7 @@ export default function ActivityDetailCard({ route }) {
       navigation.navigate('Profile');
       return;
     }
-    navigation.navigate('Message', { uid: owner });
+    navigation.navigate('Message', { uid: owner, otherUserAvatar: profileDownloadurl });
   }
 
   return (
