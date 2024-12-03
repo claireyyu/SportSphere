@@ -184,13 +184,20 @@ export default function ActivityDetailCard({ route }) {
             <Text style={styles.infoText}>{`${date} - ${time}\n`}</Text>
           </View>
           <Text style={[styles.infoText, {color: COLORS.secondaryText, marginLeft: SPACING.s, marginTop: SPACING.s, textAlign: 'left', fontSize: FONTSIZE.small, fontFamily: 'Poppins_400Regular'}]}>{description}{`\n`}</Text>
-          <View
+          {/* <View
             style={{ flexDirection: 'row', justifyContent: 'center', marginTop: SPACING.small }}
           >
           {hasCustomImage ? downloadURLs.map((url, index) => (
-            <Image key={index} source={{ uri: url }} style={styles.image} />
+            <ScrollView key={index} horizontal={true} style={{marginTop: SPACING.small}}>
+              <Image source={{ uri: url }} style={styles.image} />
+            </ScrollView>
           )) : <Image source={require('../assets/default-detail-photo.png')} style={styles.image} />}
-        </View>
+        </View> */}
+          {hasCustomImage ? <ScrollView horizontal={true} style={{ marginTop: SPACING.small }} showsHorizontalScrollIndicator={false}>
+            {downloadURLs.map((url, index) => (
+              <Image key={index} source={{ uri: url }} style={styles.image} />
+            ))}
+          </ScrollView> : <Image source={require('../assets/default-detail-photo.png')} style={styles.image} />}
       </View>
       <View style={styles.progressContainer}>
         <ProgressBar value={pplGoingNumber} total={totalMembers} />
