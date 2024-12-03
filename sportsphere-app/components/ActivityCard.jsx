@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useState, useContext } from 'react';
 import { UserContext } from '../context/UserProvider';  
+import Entypo from '@expo/vector-icons/Entypo';
 
 export default function ActivityCard({ activityName, venue, date, time, peopleGoing, totalMembers, description, id, owner, venuePosition, images, profileDownloadurl }) {
   const navigation = useNavigation();
@@ -74,8 +75,9 @@ export default function ActivityCard({ activityName, venue, date, time, peopleGo
       <View style={styles.goingTxBtn}>
       <Text style={styles.goingText}>{peopleGoing.length} ppl going</Text>
       <PressableButton componentStyle={styles.button} pressedFunction={handleToActivityDetail}>
-        <Text style={styles.buttonText}>Learn More</Text>
-      </PressableButton>
+          {/* <Text style={styles.buttonText}>Learn More</Text> */}
+          <Entypo name="chevron-right" size={18} color="white" />
+        </PressableButton>
       </View>
     </View>
   );
@@ -146,9 +148,9 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: COLORS.theme,
-    paddingVertical: SPACING.small,
-    paddingHorizontal: SPACING.small,
-    borderRadius: ROUNDED.default,
+    paddingVertical: SPACING.s,
+    paddingHorizontal: SPACING.s,
+    borderRadius: ROUNDED.s,
     alignSelf: 'flex-end',
     marginTop: SPACING.xs,
   },

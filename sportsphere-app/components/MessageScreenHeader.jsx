@@ -30,7 +30,7 @@ export default function MessageScreenHeader({uid, otherUserAvatar}) {
       <View style={styles.topBtnContainer}>
         <PressableButton
           pressedFunction={() => navigation.goBack()}>
-          <Ionicons name="chevron-back-sharp" size={SIZE.pressableIcon} color={COLORS.theme} />
+          <Ionicons name="chevron-back-sharp" size={SIZE.pressableIcon} color={COLORS.themeDark} />
         </PressableButton>
 
         <View style={styles.profileContainer}>
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     marginLeft: SPACING.default,
   },
   username: {
-    color: COLORS.theme,
+    color: COLORS.themeDark,
     fontSize: FONTSIZE.h2,
     fontWeight: 'bold',
   },

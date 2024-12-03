@@ -65,7 +65,7 @@ export default function EditProfileScreen({route}) {
         pressedFunction={() => navigation.goBack()}
         componentStyle={{marginTop: SPACING.xxl}}
       >
-        <Ionicons name="chevron-back-sharp" size={SIZE.pressableIcon} color={COLORS.theme} />
+        <Ionicons name="chevron-back-sharp" size={SIZE.pressableIcon} color={COLORS.themeDark} />
       </PressableButton>
       <View>
         <Text style={styles.title}>Profile Detail</Text>

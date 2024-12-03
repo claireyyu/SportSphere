@@ -176,7 +176,7 @@ export default function ActivityDetailCard({ route }) {
       </View>
         <View style={styles.infoContainer}>
           <View style={[styles.detailContainer, {marginTop: SPACING.small}]}>
-          <Ionicons name="location-sharp" size={24} color={COLORS.theme} />
+          <Ionicons name="location-sharp" size={24} color={COLORS.themeDark} />
             <Text style={styles.infoText}>{venue}{`\n`}</Text>
           </View>
           <View style={styles.detailContainer}>
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
   infoText: {
     marginLeft: SPACING.xs,
     fontSize: FONTSIZE.body,
-    color: COLORS.theme,
+    color: COLORS.themeDark,
     textAlignVertical: 'center',
     // textAlign: 'center',
     //marginVertical: SPACING.xsmall,
