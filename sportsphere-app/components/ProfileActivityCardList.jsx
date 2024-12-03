@@ -115,6 +115,7 @@ export default function ProfileActivityCardList({uid}) {
               owner={item.owner}
               venuePosition={item.venuePosition}
               profileDownloadurl={item.profileDownloadurl}
+              images={item.images}
             />
           )}
           contentContainerStyle={styles.listContainer}

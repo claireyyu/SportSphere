@@ -44,29 +44,12 @@ export default function Map({currentLocation}) {
         return null;
       }
     }
-    async function getImagesDownloadURL(images) {
-      try {
-        if (images) {
-          const imageDownloadURLs = await Promise.all(
-            images.map(async (image) => {
-              const imageRef = ref(storage, image);
-              const downloadURL = await getDownloadURL(imageRef);
-              return downloadURL;
-            })
-          );
-          return imageDownloadURLs;
-        }
-      } catch (err) {
-        console.log("Error getting image download URLs: ", err);
-        return null;
-      }
-    }
+    
 
     async function fetchProfileUrls(activityItems) {
       try {
         const updatedItems = await Promise.all(
           activityItems.map(async (item) => {
-            const imagesDownloadurl = await getImagesDownloadURL(item.images);
             const user = await findUserByUid(item.owner);
             let profileDownloadURL = null;
     
