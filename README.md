@@ -184,6 +184,7 @@ service cloud.firestore {
 - Implemented the instant messaging feature, allowing participants to send messages to organizers.
 - Implemented the notification feature for user's workout reminder.
 - Integrated the third-party weather API for better user experience.
+- Implemented the reset password feature to allow changing user's password.
 
 ### Xinxin (Amelia) Li
 
