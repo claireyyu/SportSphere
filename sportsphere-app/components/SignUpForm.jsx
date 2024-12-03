@@ -66,7 +66,7 @@ export default function SignUpForm({ navigation }) {
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : undefined} keyboardVerticalOffset={50}>
       <SafeAreaView>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{marginTop: SPACING.xl}}>
             <Logo />
           </View>
