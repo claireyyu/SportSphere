@@ -100,11 +100,11 @@ export default function ProfileScreen({ navigation, route }) {
         >
           <View style={styles.buttonContent}>
           <View style={styles.leftContainer}>
-            <Ionicons name="person-circle-outline" size={24} color={COLORS.theme} />
+            <Ionicons name="person-circle-outline" size={24} color={COLORS.themeDark} />
               <Text style={styles.buttonText}>Profile Details</Text>
             </View>
             <View style={{flex: 1}}>
-              <Ionicons name="chevron-forward-outline" size={24} color={COLORS.theme} />
+              <Ionicons name="chevron-forward-outline" size={24} color={COLORS.themeDark} />
             </View>
           </View>
         </PressableButton>
@@ -115,11 +115,11 @@ export default function ProfileScreen({ navigation, route }) {
         >
           <View style={styles.buttonContent}>
           <View style={styles.leftContainer}>
-            <Ionicons name="flag-outline" size={SIZE.tabDot} color={COLORS.theme} />
+            <Ionicons name="flag-outline" size={SIZE.tabDot} color={COLORS.themeDark} />
               <Text style={styles.buttonText}>Joined Activities</Text>
             </View>
             <View style={{flex: 1}}>
-              <Ionicons name="chevron-forward-outline" size={SIZE.tabDot} color={COLORS.theme} />
+              <Ionicons name="chevron-forward-outline" size={SIZE.tabDot} color={COLORS.themeDark} />
             </View>
           </View>
         </PressableButton>
@@ -130,11 +130,11 @@ export default function ProfileScreen({ navigation, route }) {
         >
           <View style={styles.buttonContent}>
             <View style={styles.leftContainer}>
-              <Ionicons name="notifications-outline" size={SIZE.tabDot} color={COLORS.theme} />
+              <Ionicons name="notifications-outline" size={SIZE.tabDot} color={COLORS.themeDark} />
               <Text style={styles.buttonText}>Reminders</Text>
             </View>
             <View style={{flex: 1}}>
-              <Ionicons name="chevron-forward-outline" size={SIZE.tabDot} color={COLORS.theme} />
+              <Ionicons name="chevron-forward-outline" size={SIZE.tabDot} color={COLORS.themeDark} />
             </View>
           </View>
         </PressableButton>
@@ -145,11 +145,11 @@ export default function ProfileScreen({ navigation, route }) {
         >
         <View style={styles.buttonContent}>
           <View style={styles.leftContainer}>
-            <Ionicons name="log-out-outline" size={SIZE.tabDot} color={COLORS.theme} />
+            <Ionicons name="log-out-outline" size={SIZE.tabDot} color={COLORS.themeDark} />
             <Text style={styles.buttonText}>Logout</Text>
           </View>
           <View style={{flex: 1}}>
-            <Ionicons name="chevron-forward-outline" size={SIZE.tabDot} color={COLORS.theme} />
+            <Ionicons name="chevron-forward-outline" size={SIZE.tabDot} color={COLORS.themeDark} />
           </View>
         </View>
         </PressableButton>
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
 
   profileContainer: {
     alignItems: 'center',
-    marginTop: SPACING.xl,
+    // marginTop: SPACING.xl,
   },
 
   profileInfo: {
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   },
 
   username: {
-    color: COLORS.theme,
+    color: COLORS.themeDark,
     fontSize: FONTSIZE.h1,
     fontWeight: 'bold',
     marginTop: SPACING.l,
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    color: COLORS.theme,
+    color: COLORS.themeDark,
     fontSize: FONTSIZE.h3,
     marginLeft: SPACING.m,
     fontWeight: 'semibold',

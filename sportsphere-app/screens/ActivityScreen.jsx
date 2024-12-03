@@ -94,13 +94,13 @@ export default function ActivityScreen({ modalVisible, modalHandler, currentLoca
 
   function matchWeatherCode(code) {
     if (code === 1) {
-      return <Ionicons name="sunny-outline" size={14} color={COLORS.theme} />;
+      return <Ionicons name="sunny-outline" size={14} color={COLORS.themeDark} />;
     } else if (code === 2 || code === 3) {
-      return <Ionicons name="partly-sunny-outline" size={14} color={COLORS.theme}  />;
+      return <Ionicons name="partly-sunny-outline" size={14} color={COLORS.themeDark}  />;
     } else if (code === 4 || code == 5) {
-      return <Ionicons name="cloudy-outline" size={14} color={COLORS.theme}  />;
+      return <Ionicons name="cloudy-outline" size={14} color={COLORS.themeDark}  />;
     } else {
-      return <Ionicons name="rainy-outline" size={14} color={COLORS.theme}  />;
+      return <Ionicons name="rainy-outline" size={14} color={COLORS.themeDark}  />;
     }
   }
 
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     marginTop: SPACING.xs,
   },
   weatherText: {
-    color: COLORS.theme,
+    color: COLORS.themeDark,
     fontWeight: 'bold',
     fontSize: FONTSIZE.tiny,
     marginRight: SPACING.xsmall,

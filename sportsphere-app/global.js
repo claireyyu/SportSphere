@@ -11,6 +11,7 @@ export const COLORS = {
   'message': '#d1f7c4',
 
   'theme': '#101010',
+  'themeDark': '#101010',
   'themeLight': '#ffffff',
   'secondary': '#34E0A1',
   'inputBg': '#F2F2F2',
@@ -22,9 +23,9 @@ export const COLORS = {
 
 export const FONTSIZE = {
   'huge': 48,
-  'h0': 36,
-  'header': 30,
-  'h1': 24,
+  'h0': 32,
+  'header': 26,
+  'h1': 22,
   'h2': 20,
   'h3': 18,
   'body': 16,

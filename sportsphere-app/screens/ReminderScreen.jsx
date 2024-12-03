@@ -31,7 +31,7 @@ export default function ReminderScreen({ navigation }) {
         pressedFunction={() => navigation.goBack()}
         componentStyle={{marginTop: SPACING.xxl}}
       >
-        <Ionicons name="chevron-back-sharp" size={SIZE.pressableIcon} color={COLORS.theme} />
+        <Ionicons name="chevron-back-sharp" size={SIZE.pressableIcon} color={COLORS.themeDark} />
       </PressableButton>
       <View>
         <View style={styles.headerContainer}>

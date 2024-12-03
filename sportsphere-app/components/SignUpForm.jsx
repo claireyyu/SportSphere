@@ -66,7 +66,7 @@ export default function SignUpForm({ navigation }) {
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : undefined} keyboardVerticalOffset={50}>
       <SafeAreaView>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{marginTop: SPACING.xl}}>
             <Logo />
           </View>
@@ -79,7 +79,8 @@ export default function SignUpForm({ navigation }) {
             placeholder="Username (less than 20 characters)" 
             style={styles.input}
           />
-          <View style={styles.requiredContainer}>
+            <View style={styles.requiredContainer}>
+            <Text style={styles.required}>*</Text>
             <TextInput
               value={email}
               onChangeText={setEmail}
@@ -88,9 +89,9 @@ export default function SignUpForm({ navigation }) {
               placeholder="Email"
               style={styles.inputRequired}
             />
-            <Text style={styles.required}>*</Text>
           </View>
-          <View style={styles.requiredContainer}>
+            <View style={styles.requiredContainer}>
+            <Text style={styles.required}>*</Text>
             <TextInput
               value={password}
               onChangeText={setPassword}
@@ -98,9 +99,9 @@ export default function SignUpForm({ navigation }) {
               placeholder="Password (at least 15 characters)"
               style={styles.inputRequired}
             />
-            <Text style={styles.required}>*</Text>
           </View>
-          <View style={styles.requiredContainer}>
+            <View style={styles.requiredContainer}>
+            <Text style={styles.required}>*</Text>
             <TextInput
               value={confirmPassword}
               onChangeText={setConfirmPassword}
@@ -108,7 +109,6 @@ export default function SignUpForm({ navigation }) {
               placeholder="Confirm Password"
               style={styles.inputRequired}
             />
-            <Text style={styles.required}>*</Text>
           </View>
           <TextInput
             value={bio}

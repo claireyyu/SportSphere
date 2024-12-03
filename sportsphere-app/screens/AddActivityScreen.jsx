@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'Montserrat_700Bold',
-    fontSize: FONTSIZE.header,
+    fontSize: FONTSIZE.h0,
     marginTop: SPACING.xxl,
   }
 })

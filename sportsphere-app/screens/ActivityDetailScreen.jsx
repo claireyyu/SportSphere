@@ -15,7 +15,7 @@ export default function ActivityDetailScreen({ route }) {
         pressedFunction={() => navigation.goBack()}
         componentStyle={{marginTop: SPACING.xxl, paddingHorizontal: SPACING.l, paddingTop: SPACING.l}}
       >
-        <Ionicons name="chevron-back-sharp" size={SIZE.pressableIcon} color={COLORS.theme} />
+        <Ionicons name="chevron-back-sharp" size={SIZE.pressableIcon} color={COLORS.themeDark} />
       </PressableButton>
       {/* <View>
         <Text style={styles.title}>More</Text>
