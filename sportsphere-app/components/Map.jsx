@@ -107,9 +107,6 @@ export default function Map({currentLocation}) {
     navigation.navigate('ActivityDetails', {id, activityName, venue, date, time, peopleGoing, totalMembers, description, owner, venuePosition, profileDownloadurl, images});
   }
 
-
-  
-
   return (
     <>
         <MapView

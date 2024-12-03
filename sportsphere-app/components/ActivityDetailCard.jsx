@@ -78,7 +78,8 @@ export default function ActivityDetailCard({ route }) {
       owner,
       venuePosition,
       images,
-      downloadURLs
+      downloadURLs,
+      profileDownloadurl,
     });
   }
 
