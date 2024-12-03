@@ -118,22 +118,33 @@ service cloud.firestore {
 
 
 ## Screenshots
-
-![Log In](https://github.com/user-attachments/assets/f4030bfb-3247-459d-8077-8dc5cb71cc63)
-![Sign Up](https://github.com/user-attachments/assets/0d380243-a19a-4b7f-8994-b12b1357e5cd)
-![Main Page](https://github.com/user-attachments/assets/24f794fe-92ed-445c-a521-c118da8e8db7)
-![Activity Details of the One User Created](https://github.com/user-attachments/assets/9d450fab-06dd-4011-adf4-fe2ef5720fa1)
-![Activity Details of the One Others Created](https://github.com/user-attachments/assets/716a6f41-d012-43aa-b82d-5cb427a36e6d)
-![Add New Activity](https://github.com/user-attachments/assets/bbb9b7e0-f142-4d02-8d83-b4d4d6c0ed42)
-![Select Date for New Activity](https://github.com/user-attachments/assets/bda989c2-a310-4ddb-b4df-d55a66779fec)
-![Sort Activities](https://github.com/user-attachments/assets/2d544a98-4802-43d1-9303-4e6e4b49db4d)
-![Instant Messaging](https://github.com/user-attachments/assets/89e45f72-22ee-4dc2-9fd4-b19a5b41f398)
-![Map](https://github.com/user-attachments/assets/8aa3f221-cba4-420c-b345-a41cd2023ce4)
-![Profile Page with weather](https://github.com/user-attachments/assets/9c18ffa9-7750-4bd5-86a5-92b6823aa70d)
-![Edit Profile](https://github.com/user-attachments/assets/24d3821c-3bb9-44bf-81ab-c6c7378c30fd)
-![Workout Notifications Page](https://github.com/user-attachments/assets/d1f681c0-066a-4911-bb12-e75bde19e0fd)
-![Add New Notification](https://github.com/user-attachments/assets/e65b2645-1999-473d-b7cb-7a1017bd1972)
-
+![Opening-animation-1](https://github.com/user-attachments/assets/1293ba75-b456-4c0a-bf78-8d15baa6e3fa)
+![Opening-animation-2](https://github.com/user-attachments/assets/ac2f9343-2ab4-4abd-9d23-e16f79c58d8b)
+![Opening-animation-3](https://github.com/user-attachments/assets/4c11cd0a-ec71-4124-84af-2f161fb7ec92)
+![Opening-animation-4](https://github.com/user-attachments/assets/5c410203-00d2-4775-8f9b-a2766fc60f85)
+![welcome](https://github.com/user-attachments/assets/f41f2b1f-8409-4bae-a86d-648f8aa8783a)
+![signup](https://github.com/user-attachments/assets/3a6fdba1-23f1-42ce-ade9-9a9d1e1bf65f)
+![signin](https://github.com/user-attachments/assets/cbd46eba-1da4-4fb5-bdf8-1e4fb67787be)
+![Homepage-activity-sort-by-time](https://github.com/user-attachments/assets/519791a2-1321-44ef-b1f4-9a5248cbea27)
+![Homepage-aactivity-sort-by-distance](https://github.com/user-attachments/assets/9632e046-a24b-42cb-8834-f38665cc2f48)
+![Activity-detail-page](https://github.com/user-attachments/assets/c98bd48d-6d05-439b-b29d-8a89317adc14)
+![Join-activity](https://github.com/user-attachments/assets/2b3f4352-be08-469e-b9ce-7d87fb670b6d)
+![my-activity's-detail](https://github.com/user-attachments/assets/03471194-9b68-404a-b4ca-35b4a3f5486a)
+![edit-activity-page](https://github.com/user-attachments/assets/bf66cc4f-ceda-431f-a4a1-5c62d9453ecd)
+![edit-page-with-submit](https://github.com/user-attachments/assets/d37bbc5d-711e-4070-9c37-05c42e4a0323)
+![Chat-page](https://github.com/user-attachments/assets/a27eca5d-9f9e-4bdf-8870-be9062d8c47b)
+![Chat-detail-page](https://github.com/user-attachments/assets/839d3c9d-36c2-4b9d-aeba-807ce2acc7ba)
+![New-activity-page](https://github.com/user-attachments/assets/6c82be8a-14b0-46ea-94e2-3f347ce8d8c1)
+![Edit:delete-button-for-my-activity](https://github.com/user-attachments/assets/3e1601e8-d359-4020-80a7-9d6e76059133)
+![New-activity-page-with-submit](https://github.com/user-attachments/assets/861e38ff-f03f-4115-9e57-a3a600e5f28d)
+![Map-with-user-marker](https://github.com/user-attachments/assets/e2ffb187-efca-4684-a073-6ff744616a1d)
+![Map-showing-activities](https://github.com/user-attachments/assets/b6d8f136-f922-4365-a3df-02e21b812794)
+![Callout-with-activity-info(redirect-to-detail-page)](https://github.com/user-attachments/assets/6f853030-70cb-43f2-abfd-77f4e748b49c)
+![Profile-page](https://github.com/user-attachments/assets/8ec4d613-bb79-4aed-8c67-fe709ad8bb9f)
+![Edit-profile-detail](https://github.com/user-attachments/assets/495f798f-cc5c-4d7f-af24-5fd2683bdddb)
+![Joined-activity-page](https://github.com/user-attachments/assets/5aa7e3d8-0fe0-4d5a-a32d-320b593d06bb)
+![Reminders-page](https://github.com/user-attachments/assets/0ddb4a1b-3ad2-4894-910a-87e784420552)
+![Log-out](https://github.com/user-attachments/assets/e1cc0a8e-e40e-4caf-a31a-23c4ae27dbb7)
 
 ## Installation
 
@@ -178,6 +189,9 @@ service cloud.firestore {
 
 - Built and integrated full CRUD functionality for activities and reminders.
 - Implemented secure user authentication using Firebase.
+- Implemented Map features to show user's current location and display activities on the map
+- Integrated Google places and auto-complete API for user experience
+- Implemented Camera features for uploading activity images, take activity pictures, and changing profile photo
 
 ## Usage
 
@@ -203,6 +217,11 @@ service cloud.firestore {
 - Click on icons of different activities on the map for information
 - Click on the information callout to navigate to activity details page
 - Edit/delete/join/leave activities from the details page
+
+### Image Management
+- Use camera to take photos or select photos from library to upload in activities
+- In edit activity page, long press image to delete an image, click on camera/photo icon to upload more images
+- In edit profile page, click on profile to select image from library to change profile
 
 ### Profile Management
 
